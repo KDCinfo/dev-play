@@ -1,0 +1,42 @@
+name: dev_play_tictactoe
+description: "Dev Play: Tic Tac Toe"
+
+# Prevent accidental publishing to pub.dev.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.5.0-7.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
+  flutter_test:
+    sdk: flutter
+
+flutter_launcher_icons:
+  ios: true
+  android: true
+  remove_alpha_ios: true
+  image_path_ios: "assets/images/logo_tictactoe_1024.png"
+  image_path_android: "assets/images/logo_tictactoe_1024.png"
+  # adaptive_icon_background: "assets/images/kdrecall_icon_1024_back.png"
+  # adaptive_icon_foreground: "assets/images/kdrecall_icon_1024_h_fore.png"
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  assets:
+    # Add assets from the images directory to the application.
+    - assets/images/
