@@ -1,7 +1,6 @@
 @4/12/2024 1:00:23 AM
-- Trying to come up with a name for a public-facing (open source) dev folder
-  for creating simple games and utility apps for my practicing app design, TDD, OOP, and SOLID.
-  I may show these apps during interviews to show app development.
+- Trying to come up with a name for a public-facing (open source) dev folder for creating simple games and utility apps for my practicing app design, TDD, OOP, and SOLID.
+- I may show these apps during interviews to show app development.
 
 ```
   practice
@@ -36,7 +35,7 @@
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
 @
-- Initial project thoughts:
+# Initial project thoughts:
 
 - Project: Tic-Tac-Toe
   - Step 1: CRC
@@ -80,6 +79,7 @@
 
 Research: starting a project using "CRC" "TDD" "OOP" "SOLID" flutter
 
+```
 - Project: Tic-Tac-Toe
   - Step 1: CRC
   - Step 2: TDD
@@ -90,46 +90,49 @@ Research: starting a project using "CRC" "TDD" "OOP" "SOLID" flutter
 4 Use design patterns
 5 Use SOLID principles
 
-Class types
+Class types (re-studying; food for thought)
   - abstract
   - abstract interface
   - mixin
   - extension
     Dart Classes Explained II - Inheritance(extends) vs. Abstraction(implements) vs. Mixins(with)
     https://youtu.be/OThpFGSzV1g?t=1743 | 12K views | 2 years ago | Dart - from Novice to Expert
+```
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
 @4/12/2024 4:53:33 PM
 - Project: TicTacToe
-    Still pondering (on and off; more off than on)
+
+Still pondering (on and off; more off than on)
 
 @4/12/2024 7:33:16 PM
 - Project: TicTacToe
-    Finally just now thought of a couple class names I was having a hard time figuring out.
 
-  There was an initial thought for an 'AllGames',
-    but there is really no such thing as an 'all games',
-    and in that train of thought, how are games recorded?
-    ... ScoreBooks (or whatever they might be called).
-  This then made senese because it can store GameData,
-    and the GameData can represent both in-play games
-    as well as archived games.
+Finally just now thought of a couple class names I was having a hard time figuring out.
 
+There was an initial thought for an 'AllGames' class, but there is really no such thing as an 'all games' object, per se, and in that train of thought, how are games recorded?
+
+... ScoreBooks (or whatever they might be called).
+
+This then made senese because it can store GameData, and the GameData can represent both in-play games as well as archived games.
+
+```
 [Board]       Board(n) => n x n Tiles
 [Tile]        occupiedBy => User? (nullables should be avoided; create an empty user instance)
 [CurrentPlay] User 1 symbol (e.g. X)
 [UserData]    UserId
 [GameData]    UserId
 [ScoreBook]   GameId => Map<int, GameData> // Reminder to convert `int` key to `string` when JSONifying.
+```
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
 # Schematic
 
-- Need CRCs; then create.
+Need CRC cards, then tests, then code.
 
-Will be using draw.io for CRC cards.
+- Will be using draw.io for CRC cards.
 
 ```
 [Board]
@@ -185,30 +188,32 @@ Will be using draw.io for CRC cards.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
-## Explain it to CG4
+## CG4 as RubberDuck
 
 - Never ended up posting or asking; just rubber ducked through it.
 
 I am trying to break out (design) objects for a simple game.
-  - The game can have 1 or more players; an 'auto' player can also be selected.
-  - It is a turn-based game.
-  - Games should be saved long term, and could be used to:
-    - Show stats based on all games.
-    - Restore any game, no matter if it is in progress or coompleted.
+- The game can have 1 or more players; an 'auto' player can also be selected.
+- It is a turn-based game.
+- Games should be saved long term, and could be used to:
+  - Show stats based on all games.
+  - Restore any game, no matter if it is in progress or coompleted.
 
 Where should game history be stored?
-  - Individual user games? Should the players store their own games?
-  - A more global, all-inclusive Map or List?
+- Individual user games? Should the players store their own games?
+- A more global, all-inclusive Map or List?
 
 How do sports games results get recorded:
-  - During the game, on the score board.
-  - After the game, for persistence: in a score book? What gets logged?
-    - Teams
-    - Scores
-    - Date played
+- During the game, on the score board.
+- After the game, for persistence: in a score book? What gets logged?
+  - Teams
+  - Scores
+  - Date played
 
-  // Users => [] // Storing all users and all games will
-  // Games => [] // slow down `.where` type calls as the lists grow (On).
+```
+// Users => [] // Storing all users and all games in Lists will
+// Games => [] // slow down `.where` type calls as the lists grow (On).
+```
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
@@ -227,16 +232,16 @@ How do sports games results get recorded:
 
   > `dart run flutter_launcher_icons`
 
-@4/13/2024 4:32:13 AM
-@4/13/2024 4:54:54 AM
+@4/13/2024 4:32:13 AM<br>
+@4/13/2024 5:20:49 AM
 - Dev Play: 1 repo created; 3 commits
 
   [dev-play]
 
-  > This `DevPlay` repository is intended for creating simple open source
-  > Flutter app games and utilities for practicing app design, TDD, OOP, and SOLID.
+> This `DevPlay` repository is intended for creating simple open source
+> Flutter app games and utilities for practicing app design, TDD, OOP, and SOLID.
 
-  - Initial commit for: [dev-play] tic tac toe
-  - Updated readme.
+- Initial commit for: [dev-play] tic tac toe
+- Updated readme.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
