@@ -1,30 +1,32 @@
-# dev_play_tictactoe
+# dev-play-tictactoe
 
-Dev Play: Tic Tac Toe
+> Dev Play: Tic Tac Toe
 
-## Getting Started
+See the [TicTacToe Readme](readme_tictactoe.md) file for design notes and thought process log.
 
-This project is a starting point for a Flutter application that follows the
-[simple app state management
-tutorial](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple).
+-----
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> This `DevPlay` repository is intended for creating simple open source
+> Flutter app games and utilities for practicing app design, TDD, OOP, and SOLID.
 
-## Assets
+-----
 
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
+## Research Notes
 
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/docs/development/ui/assets-and-images#resolution-aware).
+Miscellaneous notes and URLs.
 
-## Localization
+> Google: designing data simple scoring game
 
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+- Experience and Level-Ups
+	https://www.pubnub.com/how-to/develop-game-scoring-system/
+	- Common:
+		- Score
+		- Stats
+	- Other considerations:
+		- Time
+		- Collections (power up items; unlocking abilities)
+		- Lives/Health (n/a)
+		- Unlocking Content
+		- Experience & Level-ups
+		- Achievements
+		- Scoring System: Interactive and Social

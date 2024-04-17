@@ -1,3 +1,23 @@
+# Dev-Play: TicTacToe
+
+This file contains initial thoughts and notes for designing Tic Tac Toe with OOP.
+
+My framework of choice for building mobile apps is Flutter (and Dart).
+
+Although I use a PHP and MySQL back end for my [KD-reCall](https://kdrecall.com) apps, this app will be localized to a device.
+
+Hindsight (2024-04-17):
+
+~~Most~~ A lot of confusion with designing the classes stemmed from cross-designing for a game where players log in and have profiles.
+
+This game is streamlined in which multiple users can play by sharing a device, and there are no profiles (users are semi-transient; generic 'named' users are created along the way instead).
+
+Perhaps I should have started with persistent vs. transient data, and their sources.
+
+-----
+
+## Log
+
 @4/12/2024 1:00:23 AM
 - Trying to come up with a name for a public-facing (open source) dev folder for creating simple games and utility apps for my practicing app design, TDD, OOP, and SOLID.
 - I may show these apps during interviews to show app development.
@@ -28,14 +48,14 @@
 
 ** dev_play **
 
-- Past reference for thought
+- Random past reference for thought (fun utilities)
   typing_tutor
 ```
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
 @
-# Initial project thoughts:
+## Initial project thoughts:
 
 - Project: Tic-Tac-Toe
   - Step 1: CRC
@@ -90,7 +110,7 @@ Research: starting a project using "CRC" "TDD" "OOP" "SOLID" flutter
 4 Use design patterns
 5 Use SOLID principles
 
-Class types (re-studying; food for thought)
+Random thoughts on class types (re-studying; food for thought)
   - abstract
   - abstract interface
   - mixin
@@ -128,7 +148,7 @@ This then made senese because it can store GameData, and the GameData can repres
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
-# Schematic
+## Initial Schematic
 
 Need CRC cards, then tests, then code.
 
@@ -188,9 +208,9 @@ Need CRC cards, then tests, then code.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
-## CG4 as RubberDuck
+**CG4 as a rubber duck**
 
-- Never ended up posting or asking; just rubber ducked through it.
+I never ended up posting or asking any of this; just rubber ducked through it.
 
 I am trying to break out (design) objects for a simple game.
 - The game can have 1 or more players; an 'auto' player can also be selected.
@@ -243,5 +263,237 @@ How do sports games results get recorded:
 
 - Initial commit for: [dev-play] tic tac toe
 - Updated readme.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+- Now, how do we store the data?
+
+- AllGames => Map<int, GameData> // key: gameId
+
+  Need a:
+  > dart map with two lookup keys
+  > `=> Use a join table/map
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/13/2024 11:08:22 PM
+
+- Structuring and persisting an app's multiuser game data over time (couple hours)
+
+> See `Schematic` section above
+
+Thinking through a question for CG4 (never asked):
+
+> Using Dart 3, what might be the best way to structure class data based on the following pseudocode?
+> Note: The data will be stored in local devices via Flutter's `SharedPreferences`.
+
+A game = 2, 3, n `User`s => 1 `GameData`
+
+Use cases:
+  -> allGames<gameId, GameData>
+  -> allGames<userId, GameData>
+  -> User.myGames<gameId, GameData>
+  -> User.myGames => <GameData>[]
+
+## Solution
+
+After pondering on this, I realized
+  the issue with my premise for storing data was my conflating
+  a 'multi-user' game with a 'multi-player' game.
+The former could be a local game that allows for multiple users on one device.
+The latter would apply to games played from multiple sources,
+  where storage would reside in a central location, such as a remote database
+  (cousideration should be made for synchronization between local and remote server).
+
+I am used to coding for users within my custom authenticated realm of KD-reCall.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/14/2024 2:47:02 AM
+- Dev Play: TicTacToe (hour or two)
+		A bit more progress on class design.
+			Moved `GameBoard` inside `GameData`.
+			Feeling like `GameData` is getting kinda big.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/15/2024 9:46:15 PM
+- Dev Play: TicTacToe (hour or two)
+
+  - Began a step-through process.
+
+  - Created [GamePlay] because [GameData] was getting to big.
+
+  - Began setting up a visual draw.io of users, a gameboard, and other elements,
+		  but switched back to the outlined walkthrough,
+			then ended up going with a hybrid of the 'pseudo classes' and the 'step-by-step walkthrough'.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/16/2024 1:34:42 AM
+- Dev Play: TicTacToe
+
+    Still moving things around
+
+@4/16/2024 2:34:42 AM
+- Dev Play: TicTacToe (couple hours)
+
+		/// Transient Data
+		[GamePlay](int boardSize) (thought: putting a quarter in the slot kicks off `GamePlay`)
+
+		/// Persisted Data
+		[GameData](<User>[] players)
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/17/2024 4:16:32 AM
+- Dev Play: TicTacToe (couple hours)
+
+		More class structuring.
+    Been getting more into the class details.
+    Need to walk through every step.
+
+    New class: [TurnPlay]
+    Added to [ScoreBook] => allPlayers
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+### Hybrid => Classes -> Walkthrough
+
+Thinking through the flows, and what should update what.
+
+> [GamePlay](int boardSize) (thought: putting a quarter in the slot kicks off `GamePlay`)
+  -> Update: GameData
+  -> Update: GameBoard (adds a Tile to the GameBoard)
+  -> Update: User
+  -> Update: ScoreBook
+> [GameData](<User>[] players)
+> [GameBoard](int edgeSize)
+  > [Tile]
+> [User] => UserData
+> [ScoreBook]
+
+### Step-by-step Walkthrough
+
+- When a game is started:
+  - GamePlay initializes the Game
+    - GameData is initialized
+    - Users are added
+    - GameBoard is initialized
+    - ScoreBook is initialized
+- When a play is made:
+  - GamePlay updates its instance properties
+    - GameBoard is updated
+      - A `Tile` is placed in the `GameBoard`.
+    Is game won?
+      - No
+        - GameData is updated
+        - User is updated
+        - ScoreBook is updated
+      - Yes
+        - GameData is updated
+        - All Users are updated
+        - ScoreBook is updated
+        - Close game
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+### Pseudo Classes (Latest Draft)
+
+@ is-a | has-a |
+
+/// Transient Data
+[GamePlay](int boardSize) (putting a quarter in the slot kicks off `GamePlay`)
+  + Ask for players name(s) : or select from `allPlayers` in [ScoreBook]
+  + Ask for edgeSize
+    -------------------------------- Init
+    players => <UserData>[
+      userData1,
+      userData2,
+      // userData3,
+    ]
+    turn => int 1 // 1, 2, 3
+    plays => <TurnPlay>[]
+  > [GameData](<UserData>[] players, int edgeSize) => gameData
+  > [GameBoard](int edgeSize) => gameBoard
+  > [ScoreBook](<UserData>[] players) => scoreBook
+    -------------------------------- Play
+    turn => 2 // 3, 1
+    plays.add(TurnPlay) // > [TurnPlay]
+  > gameData.add(UserData) // > [UserData]
+  > gameBoard.add(Tile) // > [Tile]
+  > scoreBook.update()
+
+[TurnPlay]
+  userId,
+  tileId,
+  duration,
+
+/// Persisted Data
+[GameData](<UserData>[] players, int edgeSize)
+  gameId
+  dateCreated => DateTime,
+  dateLastPlayed => DateTime,
+  gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
+
+  edgeSize => 3 // Square: X or Y | 3 => 3x x 3y (= 9 tiles) | set when GameData created
+  players => [
+    { userId, },
+    { userId, },
+    // { userId, },
+  ]
+  gameBoard(edgeSize) // Should gameBoard maintain `plays` (and/or `turn`)?
+  gamePlay(boardSize)
+  endGameScore => {
+    userId1: score, // +1 for each game won; +0 for lost games.
+    userId2: score,
+    // userId3: score,
+  }
+
+[GameBoard](int edgeSize, List<TurnPlay> plays)
+  // boardId // [Q] If a `GameBoard` instance is persisted with `GameData`, is there a need for an ID?
+  get boardSize => edgeSize * edgeSize
+  get rowFilled => checkRows(boardSize)
+  get colFilled => checkCols(boardSize)
+  get diagFilled => checkDiags(boardSize)
+  usedTiles => plays.where(play.tileId) // <Tiles>[]
+  availableTiles => boardSize - usedTiles // <Tiles>[]
+
+[Tile]
+  tileId
+  userId
+  occupiedBy => UserData(userId)
+
+[UserData]
+  userId
+  userName
+  UserSymbol => UserSymbolX, UserSymbolO, UserSymbolP // A user's symbol can change per game.
+  PlayerType => PlayerTypeHuman, PlayerTypeBot // Non-OO: IsHuman => true
+
+  // Players have no local profiles (enhancement feature?).
+  // 2+ players can take turns playing, or 1 player with a bot.
+  // User data is transient; games are not stored by user.
+  // Individual game-based [UserData] instances are persisted within [GameData] in the [ScoreBook].
+  // Games => [gameData1, gameData2, ...] // Subset of [ScoreBook]
+  // wins => Games.where(userDataGame. && userDataGame.gameStatus == GameStatusComplete)
+
+[UserSymbol] abstract interface => // Dart 3 :+1:
+  UserSymbolX implements UserSymbol => shape = 'X'
+  UserSymbolO implements UserSymbol => shape = 'O'
+  // UserSymbolP implements UserSymbol => shape = '+'
+
+[ScoreBook](List<UserData> currentPlayers)
+  // Reminder to convert `int` key to `string` when JSONifying.
+  allGames: <int, GameData>{
+    gameId1: GameData,
+    gameId2: GameData,
+  }
+  // To be updated at the same time `allGames` is updated.
+  allGamesByUserId: {
+    userId: gameId1,
+  }
+  allPlayers: Map<UserData>(userId: UserData).putIfAbsent(currentPlayers)
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
