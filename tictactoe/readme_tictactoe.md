@@ -217,7 +217,7 @@ I am trying to break out (design) objects for a simple game.
 - It is a turn-based game.
 - Games should be saved long term, and could be used to:
   - Show stats based on all games.
-  - Restore any game, no matter if it is in progress or coompleted.
+  - Restore any game, no matter if it is in progress or completed.
 
 Where should game history be stored?
 - Individual user games? Should the players store their own games?
@@ -278,7 +278,7 @@ How do sports games results get recorded:
 
 @4/13/2024 11:08:22 PM
 
-- Structuring and persisting an app's multiuser game data over time (couple hours)
+- Structuring and persisting an app's multi-user game data over time (couple hours)
 
 > See `Schematic` section above
 
@@ -303,7 +303,7 @@ After pondering on this, I realized
 The former could be a local game that allows for multiple users on one device.
 The latter would apply to games played from multiple sources,
   where storage would reside in a central location, such as a remote database
-  (cousideration should be made for synchronization between local and remote server).
+  (consideration should be made for synchronization between local and remote server).
 
 I am used to coding for users within my custom authenticated realm of KD-reCall.
 
@@ -363,6 +363,8 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 
 Thinking through the flows, and what should update what.
 
+(obsolete)
+
 > [GamePlay](int boardSize) (thought: putting a quarter in the slot kicks off `GamePlay`)
   -> Update: GameData
   -> Update: GameBoard (adds a Tile to the GameBoard)
@@ -374,13 +376,21 @@ Thinking through the flows, and what should update what.
 > [User] => UserData
 > [ScoreBook]
 
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
 ### Step-by-step Walkthrough
 
+// [2024-04-17] I hesitate getting more granular here;
+//              while the pseudo classes below are also getting more and more detailed.
+
 - When a game is started:
+  - Questions are asked:
+    - Player names and symbols
+    - Board size
   - GamePlay initializes the Game
     - GameData is initialized
-    - Users are added
-    - GameBoard is initialized
+      - Users are added
+      - GameBoard is initialized
     - ScoreBook is initialized
 - When a play is made:
   - GamePlay updates its instance properties
@@ -404,62 +414,93 @@ Thinking through the flows, and what should update what.
 
 @ is-a | has-a |
 
-/// Transient Data
-[GamePlay](int boardSize) (putting a quarter in the slot kicks off `GamePlay`)
-  + Ask for players name(s) : or select from `allPlayers` in [ScoreBook]
-  + Ask for edgeSize
-    -------------------------------- Init
-    players => <UserData>[
-      userData1,
-      userData2,
-      // userData3,
-    ]
-    turn => int 1 // 1, 2, 3
-    plays => <TurnPlay>[]
-  > [GameData](<UserData>[] players, int edgeSize) => gameData
-  > [GameBoard](int edgeSize) => gameBoard
-  > [ScoreBook](<UserData>[] players) => scoreBook
-    -------------------------------- Play
-    turn => 2 // 3, 1
-    plays.add(TurnPlay) // > [TurnPlay]
-  > gameData.add(UserData) // > [UserData]
-  > gameBoard.add(Tile) // > [Tile]
-  > scoreBook.update()
+// [2024-04-17 @3:15 PM] At what point should the schematic below be moved to the next phase?
+//                       It is not fully complete as it is getting more challenging to walk through the parts.
 
-[TurnPlay]
-  userId,
-  tileId,
-  duration,
+// Latest update: 2024-04-14 - ~hour+
+// Latest update: 2024-04-15 - ~hour+
+// Latest update: 2024-04-16 - ~1-2 hours
+// Latest update: 2024-04-17 - ~1-2 hours
+// Latest update: 2024-04-18 - 2 hours
+// Latest update: 2024-04-19 - 2 hours | Consolidating and synchronizing:
+//                -- Done with design? | [GameInit], [GamePlay], [ScoreBook], [GameData]
 
-/// Persisted Data
-[GameData](<UserData>[] players, int edgeSize)
-  gameId
-  dateCreated => DateTime,
-  dateLastPlayed => DateTime,
-  gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
+/// # Temporary Initialization Data
+[GameInit]
+  + Ask for
+    - playerList: player name(s) | or select from `allPlayers` in [ScoreBook] [1=4]
+    - symbol(s) | select from prefilled symbols list
+  + Ask for board size (edgeSize) | Assert: 5 >= edgeSize[3] > players.length >= 1
+  // edgeSize => 3 // Square: X or Y | 3 => 3x x 3y (= 9 tiles) | set when GameBoard created
+  //
+  // Note: With being able to play Tic Tac Toe with more than 3 edge tiles and more than 2 players,
+  //       perhaps this app should be named
+  //        - tic-tac-mo
+  //        - tic-tac-toesies
+  //        - tic-tac-titan
+  //        - tic-tac-tuple
 
-  edgeSize => 3 // Square: X or Y | 3 => 3x x 3y (= 9 tiles) | set when GameData created
-  players => [
-    { userId, },
-    { userId, },
-    // { userId, },
+  /// Object Instantiation
+  --> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
+  --> players => List.of(playerList.forEach(UserData(name, symbol)))
+  --> gameBoard => GameBoard(int edgeSize)
+  --> [GameData](int gameId, <UserData>[] players, gameBoard) => gameData
+  --> [ScoreBook](GameData gameData) => scoreBook | initGame(gameData)
+
+/// # Transient Data
+/// Putting a quarter in the slot kicks off `GamePlay`
+/// The bloc for the properties in this class should be hydrated.
+[GamePlay](GameData gameData)
+  + turn => Map<int, UserData> {[1], 2: userData} // 3, 1, 2, ...
+  + set gameData(players, ScoreBook.allGames.last+1).plays.add(TurnPlay(UserData, Tile))
+  + ScoreBook.update(gameData)
+  // Callbacks to make ScoreBook calls; such as when a game is done
+
+/// # Persisted Data
+[ScoreBook](List<UserData> currentPlayers)
+  // Reminder to convert `int` keys to `string` when JSONifying.
+  + allPlayers: Map<UserData>(userId: UserData).putIfAbsent(currentPlayers)
+    // The symbol in here is irrelevant; this could just be a list of used names.
+    // Unless we wanted to store a history of symbols used.
+  + allGamesByUserId: Map<int, int>{ userId: gameId1 }
+  + get|set allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
+  + initGame(gameData.players) =>
+      allGames.add(),
+      allGamesByUserId.addAll()
+      allPlayers.putIfAbsent(),
+
+/// # Persisted Data
+[GameData](<UserData>[] players, int gameId)
+  + gameId
+  + dateCreated => DateTime,
+  + dateLastPlayed => DateTime,
+  + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
+  + plays => <TurnPlay>[].add(TurnPlay) // > [TurnPlay]
+
+  + players => <Map<int, UserData>>[
+    { userId1, userData1 }, { userId2, userData2 },
   ]
-  gameBoard(edgeSize) // Should gameBoard maintain `plays` (and/or `turn`)?
-  gamePlay(boardSize)
-  endGameScore => {
+  + gameBoard(edgeSize) // Should gameBoard maintain `plays` (and/or `turn`)?
+  + endGameScore => {
     userId1: score, // +1 for each game won; +0 for lost games.
     userId2: score,
     // userId3: score,
   }
 
-[GameBoard](int edgeSize, List<TurnPlay> plays)
-  // boardId // [Q] If a `GameBoard` instance is persisted with `GameData`, is there a need for an ID?
-  get boardSize => edgeSize * edgeSize
-  get rowFilled => checkRows(boardSize)
-  get colFilled => checkCols(boardSize)
-  get diagFilled => checkDiags(boardSize)
-  usedTiles => plays.where(play.tileId) // <Tiles>[]
-  availableTiles => boardSize - usedTiles // <Tiles>[]
+[GameBoard](int edgeSize, List<TurnPlay>[] plays)
+  // boardId // [Q] If there is only one `GameBoard` instance, and it is persisted
+  //                within `GameData`, is there a need for an ID? [A] I don't believe so.
+  - _boardSize => edgeSize * edgeSize
+  get rowFilled => checkRows(_boardSize)
+  get colFilled => checkCols(_boardSize)
+  get diagFilled => checkDiags(_boardSize)
+  get usedTiles => plays.where(play.tileId) // <Tiles>[]
+  get availableTiles => _boardSize - usedTiles // <Tiles>[]
+
+[TurnPlay]
+  userId,
+  tileId,
+  duration,
 
 [Tile]
   tileId
@@ -467,7 +508,12 @@ Thinking through the flows, and what should update what.
   occupiedBy => UserData(userId)
 
 [UserData]
-  userId
+  userId // Users are created based on a given, non-existing name.
+  //        Existing UserData symbols may be overridden when another user has the same symbol.
+  //        User names and symbols used for players are stored within every `gameData.players`.
+  //        The `id` used as a key in `allGamesByUserId` for game lookups is based on user names,
+  //        not symbols. The symbols used for each name's game can be derived from
+  //        looping through all `gameData.players`.
   userName
   UserSymbol => UserSymbolX, UserSymbolO, UserSymbolP // A user's symbol can change per game.
   PlayerType => PlayerTypeHuman, PlayerTypeBot // Non-OO: IsHuman => true
@@ -479,21 +525,44 @@ Thinking through the flows, and what should update what.
   // Games => [gameData1, gameData2, ...] // Subset of [ScoreBook]
   // wins => Games.where(userDataGame. && userDataGame.gameStatus == GameStatusComplete)
 
+// + Ask for player symbol ['X', 'O', '+', '/', '^', '@', '$']
 [UserSymbol] abstract interface => // Dart 3 :+1:
   UserSymbolX implements UserSymbol => shape = 'X'
   UserSymbolO implements UserSymbol => shape = 'O'
   // UserSymbolP implements UserSymbol => shape = '+'
 
-[ScoreBook](List<UserData> currentPlayers)
-  // Reminder to convert `int` key to `string` when JSONifying.
-  allGames: <int, GameData>{
-    gameId1: GameData,
-    gameId2: GameData,
-  }
-  // To be updated at the same time `allGames` is updated.
-  allGamesByUserId: {
-    userId: gameId1,
-  }
-  allPlayers: Map<UserData>(userId: UserData).putIfAbsent(currentPlayers)
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+## Extracurricular Research
+
+- Implementing complex UI with Flutter - Marcin Szałek | Flutter Europe
+    Flutter was created to make beautiful apps but do we really know how to use it?
+    When coming across complex designs we might think that they are impossible to implement
+    or too difficult to handle without weeks of development. In this talk, I will show you
+    how you can approach complex designs and translate them into widgets. We will look
+    closely at some mobile designs, break them down and figure out how to code them.
+  Flutter Europe | 16.9K subscribers | 9.6K
+  297K views | 4 years ago | Flutter Europe talks
+  https://www.youtube.com/watch?v=FCyoHclCqc8&t=1s&ab_channel=FlutterEurope
+    Speaker: Marcin Szałek | fidev.io/complex-ui
+
+                  AnimationController
+                          /\      \
+                         /  \     SingleTickerProviderStateMixin
+                        /    \
+                       /      \
+                    [ Complex UI ]
+                     /          \
+                    /____________\
+              Transform         Stack
+                  /                \
+      offset, scale, angle          Positioned
+       transform
+         ..translate
+         ..rotateZ
+
+  - Identify static elements
+    'What matters' and 'what is a placeholder' and can be replaced
+
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
