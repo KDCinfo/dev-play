@@ -428,7 +428,7 @@ Thinking through the flows, and what should update what.
 /// # Temporary Initialization Data
 [GameInit]
   + Ask for
-    - playerList: player name(s) | or select from `allPlayers` in [ScoreBook] [1=4]
+    - playerList [1-4]: player name(s) | or select from `ScoreBook.allPlayers`
     - symbol(s) | select from prefilled symbols list
   + Ask for board size (edgeSize) | Assert: 5 >= edgeSize[3] > players.length >= 1
   // edgeSize => 3 // Square: X or Y | 3 => 3x x 3y (= 9 tiles) | set when GameBoard created
@@ -444,7 +444,8 @@ Thinking through the flows, and what should update what.
   --> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
   --> players => List.of(playerList.forEach(UserData(name, symbol)))
   --> gameBoard => GameBoard(int edgeSize)
-  --> [GameData](int gameId, <UserData>[] players, gameBoard) => gameData
+  --> [GamePlay]
+    --> [GameData](int gameId, <UserData>[] players, gameBoard) => gameData
   --> [ScoreBook](GameData gameData) => scoreBook | initGame(gameData)
 
 /// # Transient Data
@@ -452,42 +453,42 @@ Thinking through the flows, and what should update what.
 /// The bloc for the properties in this class should be hydrated.
 [GamePlay](GameData gameData)
   + turn => Map<int, UserData> {[1], 2: userData} // 3, 1, 2, ...
-  + set gameData(players, ScoreBook.allGames.last+1).plays.add(TurnPlay(UserData, Tile))
+  + gameData.plays.add(TurnPlayTile(userId, duration))
   + ScoreBook.update(gameData)
   // Callbacks to make ScoreBook calls; such as when a game is done
 
 /// # Persisted Data
-[ScoreBook](List<UserData> currentPlayers)
+[ScoreBook]
   // Reminder to convert `int` keys to `string` when JSONifying.
   + allPlayers: Map<UserData>(userId: UserData).putIfAbsent(currentPlayers)
     // The symbol in here is irrelevant; this could just be a list of used names.
     // Unless we wanted to store a history of symbols used.
   + allGamesByUserId: Map<int, int>{ userId: gameId1 }
-  + get|set allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
+  + allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
+  + updateGame(gameData) => allGames.updateWhere(gameData)
   + initGame(gameData.players) =>
       allGames.add(),
-      allGamesByUserId.addAll()
+      allGamesByUserId.addAll(),
       allPlayers.putIfAbsent(),
 
 /// # Persisted Data
-[GameData](<UserData>[] players, int gameId)
+[GameData](<UserData>[] players, int gameId, gameBoard)
   + gameId
   + dateCreated => DateTime,
   + dateLastPlayed => DateTime,
   + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
-  + plays => <TurnPlay>[].add(TurnPlay) // > [TurnPlay]
-
+  + plays => <TurnPlayTile>[].add(TurnPlayTile)
   + players => <Map<int, UserData>>[
     { userId1, userData1 }, { userId2, userData2 },
   ]
-  + gameBoard(edgeSize) // Should gameBoard maintain `plays` (and/or `turn`)?
+  + gameBoard
   + endGameScore => {
     userId1: score, // +1 for each game won; +0 for lost games.
     userId2: score,
     // userId3: score,
   }
 
-[GameBoard](int edgeSize, List<TurnPlay>[] plays)
+[GameBoard](int edgeSize, List<TurnPlayTile>[] plays)
   // boardId // [Q] If there is only one `GameBoard` instance, and it is persisted
   //                within `GameData`, is there a need for an ID? [A] I don't believe so.
   - _boardSize => edgeSize * edgeSize
@@ -497,14 +498,10 @@ Thinking through the flows, and what should update what.
   get usedTiles => plays.where(play.tileId) // <Tiles>[]
   get availableTiles => _boardSize - usedTiles // <Tiles>[]
 
-[TurnPlay]
-  userId,
-  tileId,
-  duration,
-
-[Tile]
+[TurnPlayTile]
   tileId
-  userId
+  userId,
+  duration,
   occupiedBy => UserData(userId)
 
 [UserData]
