@@ -16,7 +16,7 @@ Perhaps I should have started with persistent vs. transient data, and their sour
 
 -----
 
-## Log
+## Logs
 
 @4/12/2024 1:00:23 AM
 - Trying to come up with a name for a public-facing (open source) dev folder for creating simple games and utility apps for my practicing app design, TDD, OOP, and SOLID.
@@ -259,6 +259,7 @@ How do sports games results get recorded:
   [dev-play]
 
 > This `DevPlay` repository is intended for creating simple open source
+
 > Flutter app games and utilities for practicing app design, TDD, OOP, and SOLID.
 
 - Initial commit for: [dev-play] tic tac toe
@@ -270,9 +271,9 @@ How do sports games results get recorded:
 
 - AllGames => Map<int, GameData> // key: gameId
 
-  Need a:
-  > dart map with two lookup keys
-  > `=> Use a join table/map
+Need a:
+  - > dart map with two lookup keys
+  - > `=> Use a join table/map
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
@@ -285,22 +286,25 @@ How do sports games results get recorded:
 Thinking through a question for CG4 (never asked):
 
 > Using Dart 3, what might be the best way to structure class data based on the following pseudocode?
+
 > Note: The data will be stored in local devices via Flutter's `SharedPreferences`.
 
 A game = 2, 3, n `User`s => 1 `GameData`
 
 Use cases:
-  -> allGames<gameId, GameData>
-  -> allGames<userId, GameData>
-  -> User.myGames<gameId, GameData>
-  -> User.myGames => <GameData>[]
+  - -> allGames<gameId, GameData>
+  - -> allGames<userId, GameData>
+  - -> User.myGames<gameId, GameData>
+  - -> User.myGames => <GameData>[]
 
 ## Solution
 
 After pondering on this, I realized
   the issue with my premise for storing data was my conflating
   a 'multi-user' game with a 'multi-player' game.
+
 The former could be a local game that allows for multiple users on one device.
+
 The latter would apply to games played from multiple sources,
   where storage would reside in a central location, such as a remote database
   (consideration should be made for synchronization between local and remote server).
@@ -311,9 +315,10 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 
 @4/14/2024 2:47:02 AM
 - Dev Play: TicTacToe (hour or two)
+
 		A bit more progress on class design.
-			Moved `GameBoard` inside `GameData`.
-			Feeling like `GameData` is getting kinda big.
+			- Moved `GameBoard` inside `GameData`.
+			- Feeling like `GameData` is getting kinda big.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
@@ -350,14 +355,16 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 - Dev Play: TicTacToe (couple hours)
 
 		More class structuring.
-    Been getting more into the class details.
-    Need to walk through every step.
+    - Been getting more into the class details.
+    - Need to walk through every step.
 
     New class: [TurnPlay]
-    Added to [ScoreBook] => allPlayers
+    - Added to [ScoreBook] => allPlayers
 
+```
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+```
 
 ### Hybrid => Classes -> Walkthrough
 
@@ -366,13 +373,13 @@ Thinking through the flows, and what should update what.
 (obsolete)
 
 > [GamePlay](int boardSize) (thought: putting a quarter in the slot kicks off `GamePlay`)
-  -> Update: GameData
-  -> Update: GameBoard (adds a Tile to the GameBoard)
-  -> Update: User
-  -> Update: ScoreBook
+  - -> Update: GameData
+  - -> Update: GameBoard (adds a Tile to the GameBoard)
+  - -> Update: User
+  - -> Update: ScoreBook
 > [GameData](<User>[] players)
 > [GameBoard](int edgeSize)
-  > [Tile]
+  - -> [Tile]
 > [User] => UserData
 > [ScoreBook]
 
@@ -380,8 +387,10 @@ Thinking through the flows, and what should update what.
 
 ### Step-by-step Walkthrough
 
+```
 // [2024-04-17] I hesitate getting more granular here;
 //              while the pseudo classes below are also getting more and more detailed.
+```
 
 - When a game is started:
   - Questions are asked:
@@ -407,13 +416,16 @@ Thinking through the flows, and what should update what.
         - ScoreBook is updated
         - Close game
 
+```
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+```
 
 ### Pseudo Classes (Latest Draft)
 
 @ is-a | has-a |
 
+```dart
 // [2024-04-17 @3:15 PM] At what point should the schematic below be moved to the next phase?
 //                       It is not fully complete as it is getting more challenging to walk through the parts.
 
@@ -527,20 +539,23 @@ Thinking through the flows, and what should update what.
   UserSymbolX implements UserSymbol => shape = 'X'
   UserSymbolO implements UserSymbol => shape = 'O'
   // UserSymbolP implements UserSymbol => shape = '+'
+```
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
 ## Extracurricular Research
 
+```
 - Implementing complex UI with Flutter - Marcin Szałek | Flutter Europe
     Flutter was created to make beautiful apps but do we really know how to use it?
     When coming across complex designs we might think that they are impossible to implement
     or too difficult to handle without weeks of development. In this talk, I will show you
     how you can approach complex designs and translate them into widgets. We will look
     closely at some mobile designs, break them down and figure out how to code them.
+
   Flutter Europe | 16.9K subscribers | 9.6K
-  297K views | 4 years ago | Flutter Europe talks
-  https://www.youtube.com/watch?v=FCyoHclCqc8&t=1s&ab_channel=FlutterEurope
+    297K views | 4 years ago | Flutter Europe talks
+    https://www.youtube.com/watch?v=FCyoHclCqc8&t=1s&ab_channel=FlutterEurope
     Speaker: Marcin Szałek | fidev.io/complex-ui
 
                   AnimationController
@@ -560,6 +575,103 @@ Thinking through the flows, and what should update what.
 
   - Identify static elements
     'What matters' and 'what is a placeholder' and can be replaced
+```
 
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+```
+  .---.---.---.
+  | X |   |   |
+  |---+---+---|
+  |   | X |   |
+  |---+---+---|
+  |   |   | X |
+  '---.---.---'
+
+  .---.---.---.---.
+  | X |   |   | O |
+  |---+---+---+---|
+  |   | X | O |   |
+  |---+---+---+---|
+  |   | O | X |   |
+  |---+---+---+---|
+  | O |   |   | X |
+  '---.---.---.---'
+
+  .---.---.---.---.---.
+  | X |   |   |   | O |
+  |---+---+---+---+---|
+  |   | X |   | O |   |
+  |---+---+---+---+---|
+  |   |   | X |   |   |
+  |---+---+---+---+---|
+  |   | O |   | X |   |
+  |---+---+---+---+---|
+  | O |   |   |   | X |
+  '---.---.---.---.---'
+```
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+##
+
+@4/20/2024 3:45:30 AM
+- Dev Play: TicTacToe
+
+		Lots more class design refactoring
+		Refining CRC cards
+
+			`+ updateGame(gameData) => allGames.updateWhere(gameData)`
+
+@4/20/2024 5:01:49 AM
+- Dev Play: TicTacToe
+
+		Think I''m done with the class design (above)
+			and CRC cards.
+
+```
+	> tictactoe\assets\_src\dev_play_tictactoe.drawio
+	> tictactoe\assets\_src\dev_play_tictactoe.png
+```
+
+@4/20/2024 5:13:48 AM
+- Dev Play: TicTacToe - 3 commits
+
+		More class design updates (added `TurnPlayTile`)
+		Added TicTacToe logo PNG (used for icons).
+		Added TicTacToe CRC & class design flow (draw.io)
+
+@4/20/2024 5:43:03 AM
+- Dev Play: TicTacToe
+
+		Cleared out all existing new project errors.
+			Had to add a few dependencies.
+```
+			dev_dependencies:
+			  build_runner: ^2.4.9
+			  flutter_lints: ^3.0.2
+			  flutter_localization: ^0.2.0
+```
+
+@4/20/2024 6:31:36 AM
+- Dev Play: TicTacToe - 7 commits today
+
+		Started up emulator and fired up the TicTacToe app.
+			Icons look good.
+			Flutter skeleton runs good.
+
+@4/20/2024 6:46:05 AM
+- Dev Play: TicTacToe (~4 hours)
+
+		Prepped app for first go at TDD.
+			Backed up, then stripped out all the code in the app.
+			Hoping the class design is ironed out enough.
+
+@4/20/2024 7:27:58 AM
+- Dev Play: TicTacToe
+
+		Cleaned and caught up readme_tictactoe.md
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
