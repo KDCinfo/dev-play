@@ -1,4 +1,5 @@
 {
+  "@@locale": "en",
   "appTitle": "dev_play_tictactoe",
   "@appTitle": {
     "description": "The title of the application"
