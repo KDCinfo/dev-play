@@ -316,9 +316,9 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/14/2024 2:47:02 AM
 - Dev Play: TicTacToe (hour or two)
 
-		A bit more progress on class design.
-			- Moved `GameBoard` inside `GameData`.
-			- Feeling like `GameData` is getting kinda big.
+    A bit more progress on class design.
+      - Moved `GameBoard` inside `GameData`.
+      - Feeling like `GameData` is getting kinda big.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
@@ -330,8 +330,8 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
   - Created [GamePlay] because [GameData] was getting to big.
 
   - Began setting up a visual draw.io of users, a gameboard, and other elements,
-		  but switched back to the outlined walkthrough,
-			then ended up going with a hybrid of the 'pseudo classes' and the 'step-by-step walkthrough'.
+      but switched back to the outlined walkthrough,
+      then ended up going with a hybrid of the 'pseudo classes' and the 'step-by-step walkthrough'.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
@@ -343,18 +343,18 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/16/2024 2:34:42 AM
 - Dev Play: TicTacToe (couple hours)
 
-		/// Transient Data
-		[GamePlay](int boardSize) (thought: putting a quarter in the slot kicks off `GamePlay`)
+    /// Transient Data
+    [GamePlay](int boardSize) (thought: putting a quarter in the slot kicks off `GamePlay`)
 
-		/// Persisted Data
-		[GameData](<User>[] players)
+    /// Persisted Data
+    [GameData](<User>[] players)
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
 @4/17/2024 4:16:32 AM
 - Dev Play: TicTacToe (couple hours)
 
-		More class structuring.
+    More class structuring.
     - Been getting more into the class details.
     - Need to walk through every step.
 
@@ -394,8 +394,8 @@ Thinking through the flows, and what should update what.
 
 - When a game is started:
   - Questions are asked:
-    - Player names and symbols
-    - Board size
+    - Player names and symbols [1-4]
+    - Board size [3-5]
   - GamePlay initializes the Game
     - GameData is initialized
       - Users are added
@@ -421,7 +421,7 @@ Thinking through the flows, and what should update what.
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 ```
 
-### Pseudo Classes (Latest Draft)
+### Pseudo Classes (~~Latest~~ Final Draft)
 
 @ is-a | has-a |
 
@@ -439,8 +439,8 @@ Thinking through the flows, and what should update what.
 
 /// # Temporary Initialization Data
 [GameInit]
-  + Ask for
-    - playerList [1-4]: player name(s) | or select from `ScoreBook.allPlayers`
+  + Ask for - playerList [1-4]:
+    - name(s) | or select from `ScoreBook.allPlayers`
     - symbol(s) | select from prefilled symbols list
   + Ask for board size (edgeSize) | Assert: 5 >= edgeSize[3] > players.length >= 1
   // edgeSize => 3 // Square: X or Y | 3 => 3x x 3y (= 9 tiles) | set when GameBoard created
@@ -452,13 +452,13 @@ Thinking through the flows, and what should update what.
   //        - tic-tac-titan
   //        - tic-tac-tuple
 
-  /// Object Instantiation
+  /// Object Instantiation - Performed after initialization form (above) is submitted.
   --> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
   --> players => List.of(playerList.forEach(UserData(name, symbol)))
   --> gameBoard => GameBoard(int edgeSize)
-  --> [GamePlay]
-    --> [GameData](int gameId, <UserData>[] players, gameBoard) => gameData
-  --> [ScoreBook](GameData gameData) => scoreBook | initGame(gameData)
+  --> gameData => [GameData](int gameId, <UserData>[] players, gameBoard)
+  --> [GamePlay](gameData)
+  --> [ScoreBook].initGame(gameData)
 
 /// # Transient Data
 /// Putting a quarter in the slot kicks off `GamePlay`
@@ -484,7 +484,7 @@ Thinking through the flows, and what should update what.
       allPlayers.putIfAbsent(),
 
 /// # Persisted Data
-[GameData](<UserData>[] players, int gameId, gameBoard)
+[GameData](int gameId, <UserData>[] players, gameBoard)
   + gameId
   + dateCreated => DateTime,
   + dateLastPlayed => DateTime,
@@ -618,59 +618,201 @@ Thinking through the flows, and what should update what.
 @4/20/2024 3:45:30 AM
 - Dev Play: TicTacToe
 
-		Lots more class design refactoring
-		Refining CRC cards
+    Lots more class design refactoring
+    Refining CRC cards
 
-			`+ updateGame(gameData) => allGames.updateWhere(gameData)`
+      `+ updateGame(gameData) => allGames.updateWhere(gameData)`
 
 @4/20/2024 5:01:49 AM
 - Dev Play: TicTacToe
 
-		Think I''m done with the class design (above)
-			and CRC cards.
+    Think I''m done with the class design (above)
+      and CRC cards.
 
 ```
-	> tictactoe\assets\_src\dev_play_tictactoe.drawio
-	> tictactoe\assets\_src\dev_play_tictactoe.png
+  > tictactoe\assets\_src\dev_play_tictactoe.drawio
+  > tictactoe\assets\_src\dev_play_tictactoe.png
 ```
 
 @4/20/2024 5:13:48 AM
 - Dev Play: TicTacToe - 3 commits
 
-		More class design updates (added `TurnPlayTile`)
-		Added TicTacToe logo PNG (used for icons).
-		Added TicTacToe CRC & class design flow (draw.io)
+    More class design updates (added `TurnPlayTile`)
+    Added TicTacToe logo PNG (used for icons).
+    Added TicTacToe CRC & class design flow (draw.io)
 
 @4/20/2024 5:43:03 AM
 - Dev Play: TicTacToe
 
-		Cleared out all existing new project errors.
-			Had to add a few dependencies.
+    Cleared out all existing new project errors.
+      Had to add a few dependencies.
 ```
-			dev_dependencies:
-			  build_runner: ^2.4.9
-			  flutter_lints: ^3.0.2
-			  flutter_localization: ^0.2.0
+      dev_dependencies:
+        build_runner: ^2.4.9
+        flutter_lints: ^3.0.2
+        flutter_localization: ^0.2.0
 ```
 
 @4/20/2024 6:31:36 AM
 - Dev Play: TicTacToe - 7 commits today
 
-		Started up emulator and fired up the TicTacToe app.
-			Icons look good.
-			Flutter skeleton runs good.
+    Started up emulator and fired up the TicTacToe app.
+      Icons look good.
+      Flutter skeleton runs good.
 
 @4/20/2024 6:46:05 AM
 - Dev Play: TicTacToe (~4 hours)
 
-		Prepped app for first go at TDD.
-			Backed up, then stripped out all the code in the app.
-			Hoping the class design is ironed out enough.
+    Prepped app for first go at TDD.
+      Backed up, then stripped out all the code in the app.
+      Hoping the class design is ironed out enough.
 
 @4/20/2024 7:27:58 AM
 - Dev Play: TicTacToe
 
-		Cleaned and caught up readme_tictactoe.md
+    Cleaned and caught up readme_tictactoe.md
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/22/2024 3:49:49 AM
+- Dev Play: Tic Tac Toe
+
+    Created a theme:
+
+      /// Material Theme Builder
+      /// https://m3.material.io/theme-builder#/custom
+
+@4/22/2024 5:56:01 AM
+- Dev Play: Tic Tac Toe
+
+  Created 'up' and 'down' buttons.
+    - Getting inner shadows was tricky.
+
+  Looked at a couple packages,
+    but they have not been updated in awhile.
+
+  But just looked for: flutter neumorphic
+    and found below. Will look at it when I get up.
+
+```
+    > flutter_neumorphic_plus: ^3.3.0
+      https://pub.dev/packages/flutter_neumorphic_plus
+      https://github.com/gsmlg-dev/Flutter-Neumorphic
+```
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/22/2024 4:46:35 PM
+- Dev Play: Tic Tac Toe
+
+  Tried integrating the Neumorphic package, but it had some issues.
+  Cloned the app, spent a lot of time cleaning it up, tried building, and it failed.
+
+      flutter_neumorphic_example
+
+@4/22/2024 7:38:05 PM
+- Dev Play: Tic Tac Toe
+
+  Been working with `flutter_neumorphic_plus`
+    (which is a fork someone created from `flutter_neumorphic`).
+  Got it working locally using a cloned copy that I fixed.
+
+```
+      > flutter_neumorphic_plus: ^3.3.0
+        https://github.com/gsmlg-dev/Flutter-Neumorphic
+        https://pub.dev/packages/flutter_neumorphic_plus
+        https://pub.dev/documentation/flutter_neumorphic_plus/latest/flutter_neumorphic/flutter_neumorphic-library.html
+
+      > Old readme with descriptions
+        https://github.com/Idean/Flutter-Neumorphic?tab=readme-ov-file
+```
+
+  Had to also fix `ColorPicker` (thanks to a github issue commenter).
+
+```
+        // https://github.com/mchome/flutter_colorpicker/issues/105#issuecomment-2041025904
+        flutter_colorpicker:
+          git:
+            url: https://github.com/mchome/flutter_colorpicker
+            ref: master
+```
+
+@4/22/2024 10:59:50 PM
+@4/22/2024 11:17:31 PM
+@4/23/2024 12:01:27 AM
+- Dev Play: Tic Tac Toe
+
+  Can't really get what I'm looking for on a button style,
+    but then I only have a vague idea of what I'm aiming for.
+
+  I just know I wanted a semi-sharp bevel and embossing effect.
+
+  But I'm wondering if what I created from yesterday isn't closer,
+    or maybe just more easily understandable or customizable,
+    and doesn't require an entire package.
+
+  But I think I'm going a bit too far with this design stuff (right now),
+    and I'm thinking I should just fork the `neumorphic_plus` repo
+    and commit my changes to save it for later use,
+    then get back to just making the game, or, er, TDD.
+
+  But in doing that I had to come up with the design,
+    which then took a turn to designing the buttons.
+  I did get a theme going,
+    but it didn't seem to cover any of the widgets
+    that I am using for testing
+    without having to add to the customization.
+
+  Will need to just get back to working with that theming
+    and moving back to focusing on converting my CRC cards to TDD.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/23/2024 12:09:54 AM
+- Dev Play: Neumorphism Fork
+
+  - Created a GitHub Fork
+
+    `Flutter-Neumorphic-Plus-Fork`
+
+  A forked and updated (but unpublished) copy of the Neumorphic Plus package,
+    which is a fork of the Neumorphic package, both of which are available on pub.dev.
+
+@4/23/2024 1:18:35 AM
+- Dev Play: Neumorphic Plus Fork
+
+      gh add .
+      gh commit -m "Updated and fixed package with `flutter_lints`."
+      gh push
+
+@4/23/2024 3:48:29 AM
+- Dev Play: Tic Tac Toe (~2 hours)
+
+  Got the 'button up' looking decent.
+
+  - Moved all the button code over to a new file [app_buttons.dart].
+  - Stripped [app.dart] and think I'm ready for TDD once again.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@4/23/2024 1:55:56 PM
+- Recorded new component diagram in new RightNote Page for PlantUML.
+
+@4/23/2024 11:48:17 PM
+- Dev Play: Tic Tac Toe (now also, Tic Tac Tuple)
+
+  - Finished a flow diagram in draw.io.
+  - Finiahed 2 screen mocks in draw.io.
+
+    - Took about ~5-6 hours.
+    - Will post both when I post a blog.
+      - Also, the PlantUML component diagram created earlier.
+
+      dev-play\tictactoe\assets\_src\
+        - devplay_tictactoe_flow.png
+        - devplay_tictactoe_screens.drawio
+        - devplay_tictactoe_screens.png
+        - devplay_tictactoe_screens_and_flow_02.png
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
