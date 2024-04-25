@@ -6,15 +6,21 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('MyWidget', () {
+    late Widget widgetToTest;
+
+    setUp(() async {
+      widgetToTest = const MyApp();
+    });
+
     testWidgets('MyWidget has a MaterialApp', (WidgetTester tester) async {
-      await tester.pumpWidget(const MyApp());
+      await tester.pumpWidget(widgetToTest);
       final materialAppFinder = find.byType(MaterialApp);
 
       expect(materialAppFinder, findsOneWidget);
     });
 
     testWidgets('MyWidget has a GameEntry', (WidgetTester tester) async {
-      await tester.pumpWidget(const MyApp());
+      await tester.pumpWidget(widgetToTest);
       final materialAppFinder = find.byType(GameEntry);
 
       expect(materialAppFinder, findsOneWidget);
