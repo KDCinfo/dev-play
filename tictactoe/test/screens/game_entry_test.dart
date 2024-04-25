@@ -19,10 +19,13 @@ void main() {
     testWidgets('GameEntry has a title.', (WidgetTester tester) async {
       await tester.pumpWidget(wrappedWidget);
 
-      final appTitleFinder = find.byKey(const ValueKey(AppConstants.appTitleKey));
-      expect(appTitleFinder, findsOneWidget);
+      final widgetFinderTitleRow = find.byType(GameEntryTitleRow);
+      expect(widgetFinderTitleRow, findsOneWidget);
 
-      final appTitleWidget = tester.widget(appTitleFinder) as Text;
+      final widgetFinderTitleText = find.byKey(const ValueKey(AppConstants.appTitleKey));
+      expect(widgetFinderTitleText, findsOneWidget);
+
+      final appTitleWidget = tester.widget(widgetFinderTitleText) as Text;
       expect(appTitleWidget, isA<Text>());
 
       expect(
