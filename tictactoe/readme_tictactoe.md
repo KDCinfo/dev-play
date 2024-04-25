@@ -816,4 +816,58 @@ Thinking through the flows, and what should update what.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
+@4/24/2024 4:03:45 PM
+- Dev Play: Tic Tac Toe
+
+	Let's start with widget tests.
+
+	Wait, what routing are we using?
+  The `onGenerateRoute` routing doesn't seem to like hot refreshes,
+    or at least it didn't when playing with the neumorphic package.
+  And I haven't gotten to testing on GoRouter yet.
+
+  On second thought, testing individual widgets should not require routing.
+  That'll be for navigation testing when the first screen's form is submitted.
+
+@
+- Never got to the tests...
+
+/// ---------- ---------- ----------
+
+@4/25/2024 1:46:23 AM
+- Dev Play: Tic Tac Toe
+
+	Let's try those widget tests again.
+
+- Created first failing test.
+
+@4/25/2024 2:02:29 AM
+- Dev Play: Tic Tac Toe
+
+  - Created first failing and passing tests.
+    - Actually created a passing test first,
+      which was a check that the `MaterialApp` exists,
+      but guess I could have deleted `app.dart`,
+      but let's not go overboard with this.
+  - Created the first widget: `GameEntry`
+
+@4/25/2024 2:21:26 AM
+- Dev Play: Tic Tac Toe | 4 commits
+
+  > - Added first screen widget: `GameEntry`.
+  > - First 2 widget tests: `MaterialApp` & `GameEntry`
+
+@4/25/2024 4:35:11 AM
+@4/25/2024 5:11:04 AM
+- Dev Play: Tic Tac Toe | 4 commits (+ readme update = 5 == 9 today)
+
+  After getting the title tests working,
+    I refactored the tests to use a helpers file for
+    pumping widgets into a `MaterialApp` wrapper.
+
+  > - Added abstract static class: `AppConstants`
+  > - Added title (first widget) to the GameEntry screen
+  > - Wrote tests for `GameEntry` screen title.
+  > - Added a `helpers` folder with abstract `PumpApp`.
+
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
