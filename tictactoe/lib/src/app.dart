@@ -23,9 +23,14 @@ class MyApp extends StatelessWidget {
       // The appTitle is defined in .arb files found in the localization directory.
       onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
 
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        colorSchemeSeed: const Color(0xFF800000),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        colorSchemeSeed: const Color(0xFF800000),
+      ),
 
       onGenerateRoute: (RouteSettings routeSettings) {
         return MaterialPageRoute<void>(
