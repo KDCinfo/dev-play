@@ -11,31 +11,50 @@ void main() {
     late Widget widgetToTest;
     late Widget wrappedWidget;
 
-    setUp(() async {
-      widgetToTest = const GameEntry();
-      wrappedWidget = PumpApp.materialApp(widgetToTest);
+    group('GameEntry Title', () {
+      setUp(() async {
+        widgetToTest = const GameEntryScreen();
+        wrappedWidget = PumpApp.materialApp(widgetToTest);
+      });
+
+      testWidgets('[GameEntry Title] has a title.', (WidgetTester tester) async {
+        await tester.pumpWidget(wrappedWidget);
+
+        final widgetFinderTitleRow = find.byType(GameEntryTitleRow);
+        expect(widgetFinderTitleRow, findsOneWidget);
+
+        final widgetFinderTitleText = find.byKey(const ValueKey(AppConstants.appTitleKey));
+        expect(widgetFinderTitleText, findsOneWidget);
+
+        final appTitleWidget = tester.widget(widgetFinderTitleText) as Text;
+        expect(appTitleWidget, isA<Text>());
+
+        expect(
+          appTitleWidget,
+          isA<Text>().having(
+            (t) => t.data,
+            'text',
+            equals(AppConstants.appTitle),
+          ),
+        );
+      });
     });
 
-    testWidgets('GameEntry has a title.', (WidgetTester tester) async {
-      await tester.pumpWidget(wrappedWidget);
+    group('GameEntry Player Name List', () {
+      setUp(() async {
+        widgetToTest = const GameEntryScreen();
+        wrappedWidget = PumpApp.materialApp(widgetToTest);
+      });
 
-      final widgetFinderTitleRow = find.byType(GameEntryTitleRow);
-      expect(widgetFinderTitleRow, findsOneWidget);
+      testWidgets('[GameEntry Player Name List] has a player list.', (WidgetTester tester) async {
+        await tester.pumpWidget(wrappedWidget);
 
-      final widgetFinderTitleText = find.byKey(const ValueKey(AppConstants.appTitleKey));
-      expect(widgetFinderTitleText, findsOneWidget);
+        final widgetFinderNameList = find.byType(GameEntryNameList);
+        expect(widgetFinderNameList, findsOneWidget);
 
-      final appTitleWidget = tester.widget(widgetFinderTitleText) as Text;
-      expect(appTitleWidget, isA<Text>());
-
-      expect(
-        appTitleWidget,
-        isA<Text>().having(
-          (t) => t.data,
-          'text',
-          equals(AppConstants.appTitle),
-        ),
-      );
+        final widgetFinderNameListRow = find.byType(GameEntryNameListRow);
+        expect(widgetFinderNameListRow, findsNWidgets(4));
+      });
     });
   });
 }

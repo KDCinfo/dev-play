@@ -12,16 +12,16 @@ void main() {
       widgetToTest = const MyApp();
     });
 
-    testWidgets('MyWidget has a MaterialApp', (WidgetTester tester) async {
+    testWidgets('[MyWidget] has a MaterialApp', (WidgetTester tester) async {
       await tester.pumpWidget(widgetToTest);
       final materialAppFinder = find.byType(MaterialApp);
 
       expect(materialAppFinder, findsOneWidget);
     });
 
-    testWidgets('MyWidget has a GameEntry', (WidgetTester tester) async {
+    testWidgets('[MyWidget] has a GameEntry', (WidgetTester tester) async {
       await tester.pumpWidget(widgetToTest);
-      final materialAppFinder = find.byType(GameEntry);
+      final materialAppFinder = find.byType(GameEntryScreen);
 
       expect(materialAppFinder, findsOneWidget);
     });

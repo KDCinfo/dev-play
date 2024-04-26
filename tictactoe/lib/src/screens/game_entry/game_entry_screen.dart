@@ -2,8 +2,8 @@ import 'package:dev_play_tictactoe/src/src.dart';
 
 import 'package:flutter/material.dart';
 
-class GameEntry extends StatelessWidget {
-  const GameEntry({super.key});
+class GameEntryScreen extends StatelessWidget {
+  const GameEntryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +17,7 @@ class GameEntry extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GameEntryTitleRow(),
+                GameEntryNameList(),
               ],
             ),
           );
