@@ -13,4 +13,10 @@ abstract class AppConstants {
   static const boardSizeSliderKey = "BoardSizeSliderKey";
   static const boardSizes = ["3x3", "4x4", "5x5"];
   static String sliderLabelKey(int labelIndex) => 'SliderLabelKey$labelIndex';
+
+  /// Buttons
+  static const buttonPlayText = "Let's Play!";
+  static const buttonPlayKey = "LetsPlayButtonKey";
+  static const buttonReset = 'Reset';
+  static const buttonResetKey = 'ResetButtonKey';
 }
