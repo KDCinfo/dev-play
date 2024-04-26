@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactoe/src/src.dart';
 import 'package:flutter/material.dart';
 
 class GameEntryNameListRow extends StatelessWidget {
@@ -10,13 +11,16 @@ class GameEntryNameListRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// 'Player $playerNum Name:'
+    final playerLabel = AppConstants.playerLabel(playerNum);
+
     return Column(
       children: [
-        Text('Player $playerNum Name:'),
+        Text(playerLabel),
         const Row(
           children: [
             // GameEntryNameListRowInputName(),
-            // GameEntryNameListRowPlayerList(),
+            // GameEntryNameListRowPlayerNameList(),
           ],
         ),
       ],

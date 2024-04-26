@@ -12,7 +12,13 @@ class GameEntryNameList extends StatelessWidget {
     return const SingleChildScrollView(
       child: Column(
         children: [
+          /// There will only be 1 row to start
+          /// with a line below it to add players.
           GameEntryNameListRow(playerNum: 1),
+
+          /// if (playerList < AppConstants.playerListMax)
+          ///   AddAPlayerButton('+ Add a Player')
+
           GameEntryNameListRow(playerNum: 2),
           GameEntryNameListRow(playerNum: 3),
           GameEntryNameListRow(playerNum: 4),

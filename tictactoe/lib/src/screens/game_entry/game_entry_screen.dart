@@ -18,6 +18,8 @@ class GameEntryScreen extends StatelessWidget {
               children: [
                 GameEntryTitleRow(),
                 GameEntryNameList(),
+                // GameEntryBoardSize(),
+                // GameEntryButtons(),
               ],
             ),
           );
