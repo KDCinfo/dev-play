@@ -31,9 +31,6 @@ class GameEntryNameListRow extends StatelessWidget {
           const SizedBox(height: 5),
           const Row(
             children: [
-              // GameEntryNameListRowInputName(),
-              // GameEntryNameListRowPlayerNameList(),
-              // 50% width for each widget.
               Expanded(
                 child: GameEntryNameListRowInputName(),
               ),

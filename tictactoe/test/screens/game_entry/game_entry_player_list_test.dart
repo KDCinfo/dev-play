@@ -17,7 +17,7 @@ void main() {
 
     group('GameEntry Player Name List', () {
       setUp(() async {
-        widgetToTest = const GameEntryScreen();
+        widgetToTest = const GameEntryNameList();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
 

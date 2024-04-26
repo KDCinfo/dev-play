@@ -10,6 +10,8 @@ abstract class PumpApp {
           brightness: Brightness.dark,
           colorSchemeSeed: const Color(0xFF800000),
         ),
-        home: child,
+        home: Scaffold(
+          body: child,
+        ),
       );
 }

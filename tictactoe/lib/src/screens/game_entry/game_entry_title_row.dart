@@ -10,7 +10,10 @@ class GameEntryTitleRow extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final headlineLargeBold = textTheme
         .copyWith(
-          headlineLarge: const TextStyle(fontWeight: FontWeight.bold),
+          headlineLarge: TextStyle(
+            fontSize: textTheme.headlineLarge?.fontSize ?? 32.0,
+            fontWeight: FontWeight.bold,
+          ),
         )
         .headlineLarge;
 
