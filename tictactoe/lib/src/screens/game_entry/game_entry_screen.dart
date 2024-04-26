@@ -17,9 +17,9 @@ class GameEntryScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GameEntryTitleRow(),
-                // GameEntryBoardSize(),
                 // GameEntryButtons(),
                 Expanded(child: GameEntryNameList()),
+                GameEntryBoardSizeRow(),
               ],
             ),
           );

@@ -38,11 +38,11 @@ void main() {
         final widgetFinderNameList = find.byType(GameEntryNameList);
         expect(widgetFinderNameList, findsOneWidget);
       });
-      // testWidgets('[GameEntry Screen] has board size controls.', (WidgetTester tester) async {
-      //   await tester.pumpWidget(wrappedWidget);
-      //   final widgetFinderBoardSize = find.byType(GameEntryBoardSize);
-      //   expect(widgetFinderBoardSize, findsOneWidget);
-      // });
+      testWidgets('[GameEntry Screen] has board size controls.', (WidgetTester tester) async {
+        await tester.pumpWidget(wrappedWidget);
+        final widgetFinderBoardSize = find.byType(GameEntryBoardSizeRow);
+        expect(widgetFinderBoardSize, findsOneWidget);
+      });
       // testWidgets('[GameEntry Screen] has buttons.', (WidgetTester tester) async {
       //   await tester.pumpWidget(wrappedWidget);
       //   final widgetFinderButtons = find.byType(GameEntryButtons);
