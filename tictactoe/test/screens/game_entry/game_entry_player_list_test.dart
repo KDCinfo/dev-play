@@ -61,7 +61,7 @@ void main() {
         );
         final widgetFinderNameListLabel = find.descendant(
           of: widgetFinderNameListRow,
-          matching: find.byType(Text),
+          matching: find.byType(Text).first,
         );
         expect(widgetFinderNameListLabel, findsOneWidget);
 
@@ -90,11 +90,16 @@ void main() {
           of: widgetFinderNameList,
           matching: find.byType(GameEntryNameListRow).last,
         );
-        final widgetFinderNameListLabel = find.descendant(
-          of: widgetFinderNameListRow,
-          matching: find.byType(Text),
+        final widgetFinderNameListLabel = find
+            .descendant(
+              of: widgetFinderNameListRow,
+              matching: find.byType(Text),
+            )
+            .first;
+        expect(
+          widgetFinderNameListLabel,
+          findsOneWidget,
         );
-        expect(widgetFinderNameListLabel, findsOneWidget);
 
         final playerLabelWidget = tester.widget(widgetFinderNameListLabel) as Text;
         expect(

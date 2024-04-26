@@ -22,7 +22,7 @@ class GameEntryBoardSizeRow extends StatelessWidget {
         Text(
           boardSizeLabel,
           key: boardSizeLabelKey,
-          style: textTheme.headlineMedium,
+          style: textTheme.headlineSmall,
         ),
         const SizedBox(height: 10),
         Column(
