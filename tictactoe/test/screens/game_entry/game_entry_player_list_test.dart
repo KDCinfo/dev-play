@@ -107,39 +107,39 @@ void main() {
         );
       });
 
-      // testWidgets('[GameEntry Name List] [1] has an InputName.', (
-      //   WidgetTester tester,
-      // ) async {
-      //   await tester.pumpWidget(wrappedWidget);
+      testWidgets('[GameEntry Name List] [1] has an InputName.', (
+        WidgetTester tester,
+      ) async {
+        await tester.pumpWidget(wrappedWidget);
 
-      //   final widgetFinderNameList = find.byType(GameEntryNameList);
-      //   final widgetFinderNameListRow = find.descendant(
-      //     of: widgetFinderNameList,
-      //     matching: find.byType(GameEntryNameListRow).first,
-      //   );
-      //   final widgetFinderNameListInputName = find.descendant(
-      //     of: widgetFinderNameListRow,
-      //     matching: find.byType(GameEntryNameListRowInputName),
-      //   );
-      //   expect(widgetFinderNameListInputName, findsOneWidget);
-      // });
+        final widgetFinderNameList = find.byType(GameEntryNameList);
+        final widgetFinderNameListRow = find.descendant(
+          of: widgetFinderNameList,
+          matching: find.byType(GameEntryNameListRow).first,
+        );
+        final widgetFinderNameListInputName = find.descendant(
+          of: widgetFinderNameListRow,
+          matching: find.byType(GameEntryNameListRowInputName),
+        );
+        expect(widgetFinderNameListInputName, findsOneWidget);
+      });
 
-      // testWidgets('[GameEntry Name List] [1] has a PlayerNameList.', (
-      //   WidgetTester tester,
-      // ) async {
-      //   await tester.pumpWidget(wrappedWidget);
+      testWidgets('[GameEntry Name List] [1] has a PlayerNameList.', (
+        WidgetTester tester,
+      ) async {
+        await tester.pumpWidget(wrappedWidget);
 
-      //   final widgetFinderNameList = find.byType(GameEntryNameList);
-      //   final widgetFinderNameListRow = find.descendant(
-      //     of: widgetFinderNameList,
-      //     matching: find.byType(GameEntryNameListRow).first,
-      //   );
-      //   final widgetFinderNameListPlayerNameList = find.descendant(
-      //     of: widgetFinderNameListRow,
-      //     matching: find.byType(GameEntryNameListRowInputName),
-      //   );
-      //   expect(widgetFinderNameListPlayerNameList, findsOneWidget);
-      // });
+        final widgetFinderNameList = find.byType(GameEntryNameList);
+        final widgetFinderNameListRow = find.descendant(
+          of: widgetFinderNameList,
+          matching: find.byType(GameEntryNameListRow).first,
+        );
+        final widgetFinderNameListPlayerNameList = find.descendant(
+          of: widgetFinderNameListRow,
+          matching: find.byType(GameEntryNameListRowInputName),
+        );
+        expect(widgetFinderNameListPlayerNameList, findsOneWidget);
+      });
     });
   });
 }
