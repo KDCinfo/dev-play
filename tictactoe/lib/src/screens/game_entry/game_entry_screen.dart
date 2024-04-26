@@ -9,19 +9,67 @@ class GameEntryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Builder(builder: (context) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GameEntryTitleRow(),
-                // GameEntryButtons(),
-                Expanded(child: GameEntryNameList()),
-                GameEntryBoardSizeRow(),
-              ],
-            ),
+        body: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+          ///
+          /// Determine available height minus static elements.
+          final availableHeight = constraints.maxHeight - 60 - 40 - 10;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 30),
+            child: availableHeight < 300
+                // For landscape or small screens, we'll move the
+                // board size and buttons to the right of the player list.
+                ? const Column(
+                    children: [
+                      Expanded(
+                        child: ColoredBox(
+                          color: Colors.lightBlue,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GameEntryTitleRow(),
+                              SizedBox(height: 10),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Expanded(child: GameEntryNameList()),
+                                    SizedBox(width: 20),
+                                    SizedBox(
+                                      width: 300,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          GameEntryBoardSizeRow(),
+                                          // SizedBox(height: 20),
+                                          // GameEntryButtonsRow(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GameEntryTitleRow(),
+                        SizedBox(height: 10),
+                        GameEntryNameList(),
+                        SizedBox(height: 20),
+                        GameEntryBoardSizeRow(),
+                        // SizedBox(height: 20),
+                        // GameEntryButtonsRow(),
+                      ],
+                    ),
+                  ),
           );
         }),
       ),

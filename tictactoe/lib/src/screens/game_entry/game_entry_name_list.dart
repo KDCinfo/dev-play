@@ -9,6 +9,8 @@ class GameEntryNameList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// The `SingleChildScrollView` is needed for scrolling
+    /// in landscape mode or on small screens.
     return const SingleChildScrollView(
       child: Column(
         children: [
