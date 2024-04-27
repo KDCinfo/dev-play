@@ -43,11 +43,11 @@ void main() {
         final widgetFinderBoardSize = find.byType(GameEntryBoardSizeRow);
         expect(widgetFinderBoardSize, findsOneWidget);
       });
-      // testWidgets('[GameEntry Screen] has buttons.', (WidgetTester tester) async {
-      //   await tester.pumpWidget(wrappedWidget);
-      //   final widgetFinderButtons = find.byType(GameEntryButtons);
-      //   expect(widgetFinderButtons, findsOneWidget);
-      // });
+      testWidgets('[GameEntry Screen] has buttons.', (WidgetTester tester) async {
+        await tester.pumpWidget(wrappedWidget);
+        final widgetFinderButtons = find.byType(GameEntryButtonsRow);
+        expect(widgetFinderButtons, findsOneWidget);
+      });
     });
   });
 }
