@@ -2,8 +2,8 @@ import 'package:dev_play_tictactoe/src/app_constants.dart';
 
 import 'package:flutter/material.dart';
 
-class GameEntryTitleRow extends StatelessWidget {
-  const GameEntryTitleRow({super.key});
+class GameTitleRow extends StatelessWidget {
+  const GameTitleRow({super.key});
 
   @override
   Widget build(BuildContext context) {

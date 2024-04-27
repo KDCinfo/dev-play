@@ -28,7 +28,7 @@ class GameEntryScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              GameEntryTitleRow(),
+                              GameTitleRow(),
                               SizedBox(height: 10),
                               Expanded(
                                 child: Row(
@@ -60,7 +60,7 @@ class GameEntryScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GameEntryTitleRow(),
+                        GameTitleRow(),
                         SizedBox(height: 10),
                         GameEntryNameList(),
                         SizedBox(height: 20),

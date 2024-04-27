@@ -30,7 +30,7 @@ void main() {
 
       testWidgets('[GameEntry Screen] has a title.', (WidgetTester tester) async {
         await tester.pumpWidget(wrappedWidget);
-        final widgetFinderTitleRow = find.byType(GameEntryTitleRow);
+        final widgetFinderTitleRow = find.byType(GameTitleRow);
         expect(widgetFinderTitleRow, findsOneWidget);
       });
       testWidgets('[GameEntry Screen] has a player list.', (WidgetTester tester) async {

@@ -7,21 +7,21 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/helpers.dart';
 
 void main() {
-  group('GameEntry Testing:', () {
+  group('GameWidget Testing:', () {
     late Widget widgetToTest;
     late Widget wrappedWidget;
 
     ///
-    /// [ GameEntry Title ]
+    /// [ GameWidget Title ]
     ///
 
-    group('GameEntry Title', () {
+    group('GameWidget Title', () {
       setUp(() async {
-        widgetToTest = const GameEntryTitleRow();
+        widgetToTest = const GameTitleRow();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
 
-      testWidgets('[GameEntry Title] has a title.', (WidgetTester tester) async {
+      testWidgets('[GameWidget Title] has a title.', (WidgetTester tester) async {
         await tester.pumpWidget(wrappedWidget);
 
         final widgetFinderTitleText = find.byKey(const ValueKey(AppConstants.appTitleKey));
