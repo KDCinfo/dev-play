@@ -20,15 +20,12 @@ class GameTitleRow extends StatelessWidget {
     const screenTitle = AppConstants.appTitle;
     const titleKey = Key(AppConstants.appTitleKey);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          screenTitle,
-          key: titleKey,
-          style: headlineLargeBold,
-        ),
-      ],
+    return Text(
+      screenTitle,
+      key: titleKey,
+      style: headlineLargeBold,
+      softWrap: false,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
