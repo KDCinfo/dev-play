@@ -12,31 +12,29 @@ class GameEntryButtonsRow extends StatelessWidget {
     const buttonReset = AppConstants.buttonReset;
     const buttonResetKey = Key(AppConstants.buttonResetKey);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      direction: Axis.vertical,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 10,
+      runSpacing: 10,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                buttonPlayText,
-                key: buttonPlayKey,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text(
+            buttonPlayText,
+            key: buttonPlayKey,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text(
-                buttonReset,
-                key: buttonResetKey,
-              ),
-            ),
-          ],
+          ),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: const Text(
+            buttonReset,
+            key: buttonResetKey,
+          ),
         ),
       ],
     );
