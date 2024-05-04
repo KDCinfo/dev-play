@@ -235,132 +235,6 @@ How do sports games results get recorded:
 // Games => [] // slow down `.where` type calls as the lists grow (On).
 ```
 
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/13/2024 3:07:56 AM
-- Dev Play
-
-```
-  > `flutter create tictactoe
-    --description "Dev Play: Tic Tac Toe"
-    --org "com.kdcinfo.tictactoe"
-    --project-name "dev_play_tictactoe"
-    -t skeleton`
-```
-
-- Created PSD and 1024 image
-
-  > `dart run flutter_launcher_icons`
-
-@4/13/2024 4:32:13 AM<br>
-@4/13/2024 5:20:49 AM
-- Dev Play: 1 repo created; 3 commits
-
-  [dev-play]
-
-> This `DevPlay` repository is intended for creating simple open source
-
-> Flutter app games and utilities for practicing app design, TDD, OOP, and SOLID.
-
-- Initial commit for: [dev-play] tic tac toe
-- Updated readme.
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-- Now, how do we store the data?
-
-- AllGames => Map<int, GameData> // key: gameId
-
-Need a:
-  - > dart map with two lookup keys
-  - > `=> Use a join table/map
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/13/2024 11:08:22 PM
-
-- Structuring and persisting an app's multi-user game data over time (couple hours)
-
-> See `Schematic` section above
-
-Thinking through a question for CG4 (never asked):
-
-> Using Dart 3, what might be the best way to structure class data based on the following pseudocode?
-
-> Note: The data will be stored in local devices via Flutter's `SharedPreferences`.
-
-A game = 2, 3, n `User`s => 1 `GameData`
-
-Use cases:
-  - -> allGames<gameId, GameData>
-  - -> allGames<userId, GameData>
-  - -> User.myGames<gameId, GameData>
-  - -> User.myGames => <GameData>[]
-
-## Solution
-
-After pondering on this, I realized
-  the issue with my premise for storing data was my conflating
-  a 'multi-user' game with a 'multi-player' game.
-
-The former could be a local game that allows for multiple users on one device.
-
-The latter would apply to games played from multiple sources,
-  where storage would reside in a central location, such as a remote database
-  (consideration should be made for synchronization between local and remote server).
-
-I am used to coding for users within my custom authenticated realm of KD-reCall.
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/14/2024 2:47:02 AM
-- Dev Play: TicTacToe (hour or two)
-
-    A bit more progress on class design.
-      - Moved `GameBoard` inside `GameData`.
-      - Feeling like `GameData` is getting kinda big.
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/15/2024 9:46:15 PM
-- Dev Play: TicTacToe (hour or two)
-
-  - Began a step-through process.
-
-  - Created [GamePlay] because [GameData] was getting to big.
-
-  - Began setting up a visual draw.io of users, a gameboard, and other elements,
-      but switched back to the outlined walkthrough,
-      then ended up going with a hybrid of the 'pseudo classes' and the 'step-by-step walkthrough'.
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/16/2024 1:34:42 AM
-- Dev Play: TicTacToe
-
-    Still moving things around
-
-@4/16/2024 2:34:42 AM
-- Dev Play: TicTacToe (couple hours)
-
-    /// Transient Data
-    [GamePlay](int boardSize) (thought: putting a quarter in the slot kicks off `GamePlay`)
-
-    /// Persisted Data
-    [GameData](<User>[] players)
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/17/2024 4:16:32 AM
-- Dev Play: TicTacToe (couple hours)
-
-    More class structuring.
-    - Been getting more into the class details.
-    - Need to walk through every step.
-
-    New class: [TurnPlay]
-    - Added to [ScoreBook] => allPlayers
-
 ```
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
@@ -535,6 +409,15 @@ Thinking through the flows, and what should update what.
   // wins => Games.where(userDataGame. && userDataGame.gameStatus == GameStatusComplete)
 
 // + Ask for player symbol ['X', 'O', '+', '/', '^', '@', '$']
+// + Ask for player symbol [
+//  'X': close (clear_rounded)
+//  'O':
+//  '+':
+//  '#':
+//  '?':
+//  '@':
+//  '$': attach_money
+// ]
 [UserSymbol] abstract interface => // Dart 3 :+1:
   UserSymbolX implements UserSymbol => shape = 'X'
   UserSymbolO implements UserSymbol => shape = 'O'
@@ -613,261 +496,41 @@ Thinking through the flows, and what should update what.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
-##
+## Naming Consistency
 
-@4/20/2024 3:45:30 AM
-- Dev Play: TicTacToe
+\lib\src\screens\game_entry\
 
-    Lots more class design refactoring
-    Refining CRC cards
+  [0] game_entry_screen.dart                             | GameEntryScreen()
+  [1] game_entry_title_row.dart                          | GameEntryTitleRow()
+  [2] game_entry_name_list.dart                          | GameEntryNameList()
+        game_entry_name_list_row.dart                    | GameEntryNameListRow()
+          game_entry_name_list_row_input_name.dart       | GameEntryNameListRowInputName()
+          game_entry_name_list_row_player_name_list.dart | GameEntryNameListRowPlayerNameList()
+        game_entry_name_list_row.dart
+          game_entry_name_list_row_input_name.dart
+          game_entry_name_list_row_player_name_list.dart
+  [3] game_entry_board_size_row.dart                     | GameEntryBoardSizeRow()
+  [4] game_entry_buttons_row.dart                        | GameEntryButtonsRow()
 
-      `+ updateGame(gameData) => allGames.updateWhere(gameData)`
+--- Tests
 
-@4/20/2024 5:01:49 AM
-- Dev Play: TicTacToe
+\test\
+  app_test.dart
 
-    Think I''m done with the class design (above)
-      and CRC cards.
-
-```
-  > tictactoe\assets\_src\dev_play_tictactoe.drawio
-  > tictactoe\assets\_src\dev_play_tictactoe.png
-```
-
-@4/20/2024 5:13:48 AM
-- Dev Play: TicTacToe - 3 commits
-
-    More class design updates (added `TurnPlayTile`)
-    Added TicTacToe logo PNG (used for icons).
-    Added TicTacToe CRC & class design flow (draw.io)
-
-@4/20/2024 5:43:03 AM
-- Dev Play: TicTacToe
-
-    Cleared out all existing new project errors.
-      Had to add a few dependencies.
-```
-      dev_dependencies:
-        build_runner: ^2.4.9
-        flutter_lints: ^3.0.2
-        flutter_localization: ^0.2.0
-```
-
-@4/20/2024 6:31:36 AM
-- Dev Play: TicTacToe - 7 commits today
-
-    Started up emulator and fired up the TicTacToe app.
-      Icons look good.
-      Flutter skeleton runs good.
-
-@4/20/2024 6:46:05 AM
-- Dev Play: TicTacToe (~4 hours)
-
-    Prepped app for first go at TDD.
-      Backed up, then stripped out all the code in the app.
-      Hoping the class design is ironed out enough.
-
-@4/20/2024 7:27:58 AM
-- Dev Play: TicTacToe
-
-    Cleaned and caught up readme_tictactoe.md
+\test\screens\game_entry\
+  [0] game_entry_screen_test.dart                        | GameEntryScreen
+  [1] game_entry_title_test.dart
+  [2] game_entry_player_list_test.dart <-- Renamed to `game_entry_name_list` (changed 'player')
+  [3] game_entry_board_size_test.dart
+  [4] game_entry_buttons_test.dart
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
-@4/22/2024 3:49:49 AM
-- Dev Play: Tic Tac Toe
 
-    Created a theme:
+- Begin a New Game
 
-      /// Material Theme Builder
-      /// https://m3.material.io/theme-builder#/custom
 
-@4/22/2024 5:56:01 AM
-- Dev Play: Tic Tac Toe
 
-  Created 'up' and 'down' buttons.
-    - Getting inner shadows was tricky.
-
-  Looked at a couple packages,
-    but they have not been updated in awhile.
-
-  But just looked for: flutter neumorphic
-    and found below. Will look at it when I get up.
-
-```
-    > flutter_neumorphic_plus: ^3.3.0
-      https://pub.dev/packages/flutter_neumorphic_plus
-      https://github.com/gsmlg-dev/Flutter-Neumorphic
-```
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/22/2024 4:46:35 PM
-- Dev Play: Tic Tac Toe
-
-  Tried integrating the Neumorphic package, but it had some issues.
-  Cloned the app, spent a lot of time cleaning it up, tried building, and it failed.
-
-      flutter_neumorphic_example
-
-@4/22/2024 7:38:05 PM
-- Dev Play: Tic Tac Toe
-
-  Been working with `flutter_neumorphic_plus`
-    (which is a fork someone created from `flutter_neumorphic`).
-  Got it working locally using a cloned copy that I fixed.
-
-```
-      > flutter_neumorphic_plus: ^3.3.0
-        https://github.com/gsmlg-dev/Flutter-Neumorphic
-        https://pub.dev/packages/flutter_neumorphic_plus
-        https://pub.dev/documentation/flutter_neumorphic_plus/latest/flutter_neumorphic/flutter_neumorphic-library.html
-
-      > Old readme with descriptions
-        https://github.com/Idean/Flutter-Neumorphic?tab=readme-ov-file
-```
-
-  Had to also fix `ColorPicker` (thanks to a github issue commenter).
-
-```
-        // https://github.com/mchome/flutter_colorpicker/issues/105#issuecomment-2041025904
-        flutter_colorpicker:
-          git:
-            url: https://github.com/mchome/flutter_colorpicker
-            ref: master
-```
-
-@4/22/2024 10:59:50 PM
-@4/22/2024 11:17:31 PM
-@4/23/2024 12:01:27 AM
-- Dev Play: Tic Tac Toe
-
-  Can't really get what I'm looking for on a button style,
-    but then I only have a vague idea of what I'm aiming for.
-
-  I just know I wanted a semi-sharp bevel and embossing effect.
-
-  But I'm wondering if what I created from yesterday isn't closer,
-    or maybe just more easily understandable or customizable,
-    and doesn't require an entire package.
-
-  But I think I'm going a bit too far with this design stuff (right now),
-    and I'm thinking I should just fork the `neumorphic_plus` repo
-    and commit my changes to save it for later use,
-    then get back to just making the game, or, er, TDD.
-
-  But in doing that I had to come up with the design,
-    which then took a turn to designing the buttons.
-  I did get a theme going,
-    but it didn't seem to cover any of the widgets
-    that I am using for testing
-    without having to add to the customization.
-
-  Will need to just get back to working with that theming
-    and moving back to focusing on converting my CRC cards to TDD.
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/23/2024 12:09:54 AM
-- Dev Play: Neumorphism Fork
-
-  - Created a GitHub Fork
-
-    `Flutter-Neumorphic-Plus-Fork`
-
-  A forked and updated (but unpublished) copy of the Neumorphic Plus package,
-    which is a fork of the Neumorphic package, both of which are available on pub.dev.
-
-@4/23/2024 1:18:35 AM
-- Dev Play: Neumorphic Plus Fork
-
-      gh add .
-      gh commit -m "Updated and fixed package with `flutter_lints`."
-      gh push
-
-@4/23/2024 3:48:29 AM
-- Dev Play: Tic Tac Toe (~2 hours)
-
-  Got the 'button up' looking decent.
-
-  - Moved all the button code over to a new file [app_buttons.dart].
-  - Stripped [app.dart] and think I'm ready for TDD once again.
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/23/2024 1:55:56 PM
-- Recorded new component diagram in new RightNote Page for PlantUML.
-
-@4/23/2024 11:48:17 PM
-- Dev Play: Tic Tac Toe (now also, Tic Tac Tuple)
-
-  - Finished a flow diagram in draw.io.
-  - Finiahed 2 screen mocks in draw.io.
-
-    - Took about ~5-6 hours.
-    - Will post both when I post a blog.
-      - Also, the PlantUML component diagram created earlier.
-
-      dev-play\tictactoe\assets\_src\
-        - devplay_tictactoe_flow.png
-        - devplay_tictactoe_screens.drawio
-        - devplay_tictactoe_screens.png
-        - devplay_tictactoe_screens_and_flow_02.png
-
-/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
-
-@4/24/2024 4:03:45 PM
-- Dev Play: Tic Tac Toe
-
-	Let's start with widget tests.
-
-	Wait, what routing are we using?
-  The `onGenerateRoute` routing doesn't seem to like hot refreshes,
-    or at least it didn't when playing with the neumorphic package.
-  And I haven't gotten to testing on GoRouter yet.
-
-  On second thought, testing individual widgets should not require routing.
-  That'll be for navigation testing when the first screen's form is submitted.
-
-@
-- Never got to the tests...
-
-/// ---------- ---------- ----------
-
-@4/25/2024 1:46:23 AM
-- Dev Play: Tic Tac Toe
-
-	Let's try those widget tests again.
-
-- Created first failing test.
-
-@4/25/2024 2:02:29 AM
-- Dev Play: Tic Tac Toe
-
-  - Created first failing and passing tests.
-    - Actually created a passing test first,
-      which was a check that the `MaterialApp` exists,
-      but guess I could have deleted `app.dart`,
-      but let's not go overboard with this.
-  - Created the first widget: `GameEntry`
-
-@4/25/2024 2:21:26 AM
-- Dev Play: Tic Tac Toe | 4 commits
-
-  > - Added first screen widget: `GameEntry`.
-  > - First 2 widget tests: `MaterialApp` & `GameEntry`
-
-@4/25/2024 4:35:11 AM
-@4/25/2024 5:11:04 AM
-- Dev Play: Tic Tac Toe | 4 commits (+ readme update = 5 == 9 today)
-
-  After getting the title tests working,
-    I refactored the tests to use a helpers file for
-    pumping widgets into a `MaterialApp` wrapper.
-
-  > - Added abstract static class: `AppConstants`
-  > - Added title (first widget) to the GameEntry screen
-  > - Wrote tests for `GameEntry` screen title.
-  > - Added a `helpers` folder with abstract `PumpApp`.
+- View Past Games
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
