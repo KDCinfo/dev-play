@@ -1,4 +1,5 @@
 import 'package:dev_play_tictactoe/src/screens/game_entry/game_entry.dart';
+import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,11 +36,11 @@ void main() {
         final widgetFinderTitleRow = find.byType(GameEntryNameListRowInputName);
         expect(widgetFinderTitleRow, findsOneWidget);
       });
-      testWidgets('[GameEntryNameListRow Widget] has a GameEntryNameListRowPlayerNameList.', (
+      testWidgets('[GameEntryNameListRow Widget] has a PlayerList.', (
         WidgetTester tester,
       ) async {
         await tester.pumpWidget(wrappedWidget);
-        final widgetFinderTitleRow = find.byType(GameEntryNameListRowPlayerNameList);
+        final widgetFinderTitleRow = find.byType(PlayerList);
         expect(widgetFinderTitleRow, findsOneWidget);
       });
     });
