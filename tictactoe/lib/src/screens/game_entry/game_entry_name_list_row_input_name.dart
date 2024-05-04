@@ -1,50 +1,34 @@
-import 'dart:developer';
+import 'package:dev_play_tictactoe/src/app_constants.dart';
+import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 
 class GameEntryNameListRowInputName extends StatelessWidget {
-  const GameEntryNameListRowInputName({super.key});
+  const GameEntryNameListRowInputName({
+    super.key,
+    required this.player,
+  });
+
+  final GamePlayer player;
 
   @override
   Widget build(BuildContext context) {
+    //
     return TextFormField(
       // initialValue: 'John',
       decoration: InputDecoration(
+        /// The `label` is shown instead of the `hintText` when the field is empty and unfocused.
+        /// When focused, the label moves up, and the `hintText` is shown.
+        label: Text(
+          player.label,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          overflow: TextOverflow.ellipsis,
+        ),
+        hintText: AppConstants.hintText,
+        isDense: true,
         border: const OutlineInputBorder(),
-        hintText: 'Enter player name',
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.list),
-          iconSize: 20,
-          alignment: Alignment.centerRight,
-          onPressed: () async {
-            /// Show popup menu for Markers ('x', 'o', '+').
-            final marker = await showDialog<String>(
-              context: context,
-              builder: (context) {
-                return PopupMenuButton<String>(
-                  itemBuilder: (context) {
-                    return const [
-                      PopupMenuItem(
-                        value: 'x',
-                        child: Text('x'),
-                      ),
-                      PopupMenuItem(
-                        value: 'o',
-                        child: Text('o'),
-                      ),
-                      PopupMenuItem(
-                        value: '+',
-                        child: Text('+'),
-                      ),
-                    ];
-                  },
-                );
-              },
-            );
-            if (marker != null) {
-              log('Marker: $marker');
-            }
-          },
+        suffixIcon: MarkerMenu(
+          markerIcon: player.userSymbol.markerIcon,
         ),
       ),
     );
