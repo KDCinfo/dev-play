@@ -18,6 +18,8 @@ abstract class AppConstants {
     '+': const Icon(Icons.favorite),
     '*': const Icon(Icons.star_border),
   };
+  static const nameListFontSize = 24.0;
+  static const nameListSize = 32.0;
 
   /// Board Size
   static const boardSizeLabel = "Board Size";

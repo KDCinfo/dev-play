@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/src.dart';
+import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class GameEntryNameListRow extends StatelessWidget {
     final player = GamePlayer(playerNum: playerNum);
 
     final inputName = GameEntryNameListRowInputName(player: player);
-    const savedNames = GameEntryNameListRowPlayerNameList();
+    const savedNames = PlayerList();
 
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
