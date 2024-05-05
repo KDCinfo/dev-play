@@ -100,6 +100,7 @@ void main() {
         final widgetFinderBoard = find.byType(GameBoardLayoutPortrait);
         expect(widgetFinderBoard, findsOneWidget);
 
+        // The fallback `edgeSize` for `GameBoardPanel` is 3x3.
         final widgetFinderTile = find.byType(PanelTile);
         expect(widgetFinderTile, findsNWidgets(9));
       });
@@ -116,6 +117,7 @@ void main() {
         final widgetFinderBoard = find.byType(GameBoardLayoutLandscape);
         expect(widgetFinderBoard, findsOneWidget);
 
+        // The fallback `edgeSize` for `GameBoardPanel` is 3x3.
         final widgetFinderTile = find.byType(PanelTile);
         expect(widgetFinderTile, findsNWidgets(9));
 
