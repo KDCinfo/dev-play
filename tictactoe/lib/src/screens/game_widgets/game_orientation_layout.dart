@@ -1,6 +1,13 @@
 import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
 import 'package:flutter/material.dart';
 
+/// This widget is used to determine the layout of the
+/// game screen based on the orientation of the device.
+///
+/// It will render the appropriate layout for any
+/// `OrientationScreenWidget` passed in as a parameter,
+/// such as `OrientationScreenGameEntry()` or `OrientationScreenGameBoard()`.
+///
 class GameOrientationLayout extends StatelessWidget {
   const GameOrientationLayout({
     super.key,
@@ -15,6 +22,7 @@ class GameOrientationLayout extends StatelessWidget {
       BuildContext context,
       BoxConstraints maxConstraints,
     ) {
+      /// Are these constrained to the device's width and height?
       final maxWidth = maxConstraints.maxWidth;
       final maxHeight = maxConstraints.maxHeight;
 
