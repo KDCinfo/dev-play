@@ -15,10 +15,10 @@ class OrientationScreenGameEntry implements OrientationScreenWidget {
   Widget get landscape => const GameEntryLayoutLandscape();
 }
 
-class OrientationScreenGamePlay implements OrientationScreenWidget {
+class OrientationScreenGameBoard implements OrientationScreenWidget {
   @override
-  Widget get portrait => const GameBoardScreenPortrait();
+  Widget get portrait => const GameBoardLayoutPortrait();
 
   @override
-  Widget get landscape => const GameBoardScreenLandscape();
+  Widget get landscape => const GameBoardLayoutLandscape();
 }

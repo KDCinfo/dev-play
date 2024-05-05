@@ -18,17 +18,17 @@ void main() {
       });
     });
 
-    group('[OrientationScreenGamePlay] screens', () {
-      test('[portrait] should return [GameBoardScreenPortrait]', () {
-        final gamePlay = OrientationScreenGamePlay();
-        final portraitWidget = gamePlay.portrait;
-        expect(portraitWidget, isA<GameBoardScreenPortrait>());
+    group('[OrientationScreenGameBoard] screens', () {
+      test('[portrait] should return [GameBoardLayoutPortrait]', () {
+        final gameBoard = OrientationScreenGameBoard();
+        final portraitWidget = gameBoard.portrait;
+        expect(portraitWidget, isA<GameBoardLayoutPortrait>());
       });
 
-      test('[landscape] should return [GameBoardScreenLandscape]', () {
-        final gamePlay = OrientationScreenGamePlay();
-        final landscapeWidget = gamePlay.landscape;
-        expect(landscapeWidget, isA<GameBoardScreenLandscape>());
+      test('[landscape] should return [GameBoardLayoutLandscape]', () {
+        final gameBoard = OrientationScreenGameBoard();
+        final landscapeWidget = gameBoard.landscape;
+        expect(landscapeWidget, isA<GameBoardLayoutLandscape>());
       });
     });
   });
