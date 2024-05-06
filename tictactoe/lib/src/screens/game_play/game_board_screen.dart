@@ -37,12 +37,12 @@ class GameBoardLayoutPortrait extends StatelessWidget {
       children: [
         GameTitleRow(),
         SizedBox(height: 10),
-        Expanded(child: GameBoardPanel()),
+        Expanded(flex: 2, child: GameBoardPanel()),
         SizedBox(height: 20),
         GameBoardPlayerPanel(),
-        Spacer(),
-        // SizedBox(height: 20),
-        // GameBoardButtonsRow(),
+        SizedBox(height: 20),
+        GameBoardButtonPanel(),
+        Spacer(flex: 1),
       ],
     );
   }
@@ -70,7 +70,7 @@ class GameBoardLayoutLandscape extends StatelessWidget {
                 SizedBox(height: 20),
                 GameBoardPlayerPanel(),
                 SizedBox(height: 20),
-                // GameBoardButtonsRow(),
+                GameBoardButtonPanel(),
               ],
             ),
           ),
