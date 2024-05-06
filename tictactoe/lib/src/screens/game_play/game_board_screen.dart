@@ -33,14 +33,15 @@ class GameBoardLayoutPortrait extends StatelessWidget {
     /// log('GameBoardLayoutPortrait: constraints: $constraints');
     /// [log] GameBoardLayoutPortrait: constraints: BoxConstraints(0.0<=w<=399.4, 0.0<=h<=806.3)
     return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         GameTitleRow(),
         SizedBox(height: 10),
         Expanded(child: GameBoardPanel()),
         SizedBox(height: 20),
-        // GameBoardPlayerPanel(),
-        SizedBox(height: 20),
+        GameBoardPlayerPanel(),
+        Spacer(),
+        // SizedBox(height: 20),
         // GameBoardButtonsRow(),
       ],
     );
@@ -67,7 +68,7 @@ class GameBoardLayoutLandscape extends StatelessWidget {
               children: [
                 GameTitleRow(),
                 SizedBox(height: 20),
-                // GameBoardPlayerPanel(),
+                GameBoardPlayerPanel(),
                 SizedBox(height: 20),
                 // GameBoardButtonsRow(),
               ],
