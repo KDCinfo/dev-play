@@ -44,8 +44,10 @@ class MyApp extends StatelessWidget {
               // case SampleItemDetailsView.routeName:
               //   return const SampleItemDetailsView();
               // case SampleItemListView.routeName:
+              // default:
+              //   return const GameEntryScreen();
               default:
-                return const GameEntryScreen();
+                return const GameBoardScreen();
             }
           },
         );

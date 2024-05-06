@@ -22,9 +22,13 @@ class GameOrientationLayout extends StatelessWidget {
       BuildContext context,
       BoxConstraints maxConstraints,
     ) {
-      /// Are these constrained to the device's width and height?
-      final maxWidth = maxConstraints.maxWidth;
-      final maxHeight = maxConstraints.maxHeight;
+      // [Q] Are these constrained to the device's width and height?
+      // [A] Yes.
+      // Testing sizes:
+      // - Size(299, 599)
+      // - Size(599, 299)
+      final double maxWidth = maxConstraints.maxWidth;
+      final double maxHeight = maxConstraints.maxHeight;
 
       return ConstrainedBox(
         constraints: BoxConstraints(

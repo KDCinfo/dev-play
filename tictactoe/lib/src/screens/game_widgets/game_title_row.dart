@@ -26,6 +26,7 @@ class GameTitleRow extends StatelessWidget {
       style: headlineLargeBold,
       softWrap: false,
       overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
     );
   }
 }
