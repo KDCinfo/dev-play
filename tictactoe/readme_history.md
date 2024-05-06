@@ -47,6 +47,7 @@ This then made senese because it can store GameData, and the GameData can repres
   > `dart run flutter_launcher_icons`
 
 @4/13/2024 4:32:13 AM<br>
+
 @4/13/2024 5:20:49 AM
 - Dev Play: 1 repo created; 3 commits
 
@@ -280,7 +281,9 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 ```
 
 @4/22/2024 10:59:50 PM
+
 @4/22/2024 11:17:31 PM
+
 @4/23/2024 12:01:27 AM
 - Dev Play: Tic Tac Toe
 
@@ -361,9 +364,9 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/24/2024 4:03:45 PM
 - Dev Play: Tic Tac Toe
 
-	Let's start with widget tests.
+  Let's start with widget tests.
 
-	Wait, what routing are we using?
+  Wait, what routing are we using?
   The `onGenerateRoute` routing doesn't seem to like hot refreshes,
     or at least it didn't when playing with the neumorphic package.
   And I haven't gotten to testing on GoRouter yet.
@@ -379,7 +382,7 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/25/2024 1:46:23 AM
 - Dev Play: Tic Tac Toe
 
-	Let's try those widget tests again.
+  Let's try those widget tests again.
 
 - Created first failing test.
 
@@ -400,6 +403,7 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
   > - First 2 widget tests: `MaterialApp` & `GameEntry`
 
 @4/25/2024 4:35:11 AM
+
 @4/25/2024 5:11:04 AM
 - Dev Play: Tic Tac Toe | 4 commits (+ readme update = 5 == 9 today)
 
@@ -417,12 +421,12 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/25/2024 4:27:04 PM
 - Dev Play: Tic Tac Toe | 1 commit
 
-	> Refactored out `GameEntryTitleRow` & updated tests
+  > Refactored out `GameEntryTitleRow` & updated tests
 
 @4/25/2024 5:02:49 PM
 - Dev Play: Tic Tac Toe | 1 commit
 
-	> Added tests & widgets: `GameEntryNameList` & `Row`
+  > Added tests & widgets: `GameEntryNameList` & `Row`
 
 @4/25/2024 5:11:05 PM
 - Break
@@ -430,21 +434,21 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/25/2024 7:23:01 PM
 - Dev Play: Tic Tac Toe | 1 commit
 
-	> Added and refactored `GameEntry` tests.
+  > Added and refactored `GameEntry` tests.
 
 @4/26/2024 2:46:33 AM
 - Dev Play: Tic Tac Toe | 2 commits
 
-	> Various minor fixes and refactors.
-	> Added widgets & tests for `GameEntryBoardSizeRow`.
+  > Various minor fixes and refactors.
+  > Added widgets & tests for `GameEntryBoardSizeRow`.
 
 @4/26/2024 7:14:33 AM
 - Dev Play: Tic Tac Toe | 4 commits
 
-	> Added mock `DropdownMenu` to `PlayerNameList`.
-	> Added `PopupMenu` for Marker select; fixed tests.
-	> Added widgets & tests for `GameEntryButtonsRow`.
-	> Added adaptive layout for landscape, small screens
+  > Added mock `DropdownMenu` to `PlayerNameList`.
+  > Added `PopupMenu` for Marker select; fixed tests.
+  > Added widgets & tests for `GameEntryButtonsRow`.
+  > Added adaptive layout for landscape, small screens
 
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
@@ -455,10 +459,10 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/26/2024 11:24:47 PM
 - Dev Play: Tic Tac Toe (1.5 hrs) | 4 commits
 
-	> Renamed test filename for consistency with class.
-	> Moved `game_entry_title` to shared `game_title`.
-	> Added in test for `GameEntryButtonsRow`.
-	> Added tests and widgets for `GameBoardScreen`
+  > Renamed test filename for consistency with class.
+  > Moved `game_entry_title` to shared `game_title`.
+  > Added in test for `GameEntryButtonsRow`.
+  > Added tests and widgets for `GameBoardScreen`
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
@@ -537,10 +541,10 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
 @4/29/2024 3:05:49 AM
 - Dev Play: Device Size Constraints
 
-	On second thought,
-		continuing my readings from a Medium article:
+  On second thought,
+    continuing my readings from a Medium article:
 
-	https://dev.to/dariodigregorio/mastering-responsive-uis-in-flutter-the-full-guide-3g6i
+  https://dev.to/dariodigregorio/mastering-responsive-uis-in-flutter-the-full-guide-3g6i
 
   > Why do we use LayoutBuilder instead of MediaQuery?
   > Since we are showing the NavigationRail on larger screens,
@@ -549,23 +553,23 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
   > Read more in this section: Builder vs MediaQuery
   >   https://dev.to/dariodigregorio/mastering-responsive-uis-in-flutter-the-full-guide-3g6i#builder-vs-mediaquery
 
-	The new setup failed when I turned the emulator to landscape.
-	Then Flutter hung up when hot refreshing.
+  The new setup failed when I turned the emulator to landscape.
+  Then Flutter hung up when hot refreshing.
 
 @4/30/2024 4:04:46 AM
 - Dev Play:
 
-	My android emulators all shows a DPR of 1.
-	Trying to figure out how to view a Flutter app with a DPR of 3.
+  My android emulators all shows a DPR of 1.
+  Trying to figure out how to view a Flutter app with a DPR of 3.
 
-	> `MediaQueryData().devicePixelRatio`
+  > `MediaQueryData().devicePixelRatio`
 
-	In the VDC when creating a new phone, the emulators have Size, Resolution, and Density columns.
-	There are 4 densities; 400dpi, 420dpi, 440dpi, and 560dpi which seem to directly map to each resolution.
-	How might these translate to DPR? Or is that somewhere else?
-	I'm running Pixel 7 API 33 which is listed with 420dpi. So maybe if I choose
+  In the VDC when creating a new phone, the emulators have Size, Resolution, and Density columns.
+  There are 4 densities; 400dpi, 420dpi, 440dpi, and 560dpi which seem to directly map to each resolution.
+  How might these translate to DPR? Or is that somewhere else?
+  I'm running Pixel 7 API 33 which is listed with 420dpi. So maybe if I choose
 
-	I installed Pixel 8 Pro emulator with 6.7" 1344x2992 xxhdpi but Flutter showed the DPR as 3
+  I installed Pixel 8 Pro emulator with 6.7" 1344x2992 xxhdpi but Flutter showed the DPR as 3
 
 @4/30/2024 12:34:23 PM
 - Dev Play:
@@ -583,7 +587,7 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
             body: FakeDevicePixelRatio(
               fakeDevicePixelRatio: 1.0,
 
-4/30/2024 7:42:41 PM
+@4/30/2024 7:42:41 PM
 - Dev Play:
 
   Still reading through widget composition.
@@ -592,12 +596,14 @@ I am used to coding for users within my custom authenticated realm of KD-reCall.
   Need to determine a strategy for developing and testing between the DPRs though.
 
 @4/30/2024 8:53:23 PM
+
 @4/30/2024 9:01:05 PM
 - CG4
 
 I think I get it all now. ...
 
 @4/30/2024 11:55:23 PM
+
 @5/1/2024 12:02:52 AM
 - Dev Play:
 
@@ -627,31 +633,31 @@ CG4:
   https://dev.to/dariodigregorio/mastering-responsive-uis-in-flutter-the-full-guide-3g6i
 
 - Flutter Docs:
-	Adaptive Desgin - Layout Widgets | https://docs.flutter.dev/ui/layout/responsive/building-adaptive-apps#layout-widgets
-	Widget Catalog - Layout widgets | https://docs.flutter.dev/ui/widgets/layout
-	Youtube Flutter - Widget of the Week | https://www.youtube.com/playlist?list=PLjxrf2q8roU2HdJQDjJzOeO6J3FoFLWr2
-		Most of them are also showcased in the Flutter Widget of the Week series.
+  Adaptive Desgin - Layout Widgets | https://docs.flutter.dev/ui/layout/responsive/building-adaptive-apps#layout-widgets
+  Widget Catalog - Layout widgets | https://docs.flutter.dev/ui/widgets/layout
+  Youtube Flutter - Widget of the Week | https://www.youtube.com/playlist?list=PLjxrf2q8roU2HdJQDjJzOeO6J3FoFLWr2
+    Most of them are also showcased in the Flutter Widget of the Week series.
 
 @5/1/2024 12:40:52 AM
 - Using enum as a class (Dart 3)
 
-	https://dev.to/dariodigregorio/mastering-responsive-uis-in-flutter-the-full-guide-3g6i
+  https://dev.to/dariodigregorio/mastering-responsive-uis-in-flutter-the-full-guide-3g6i
 
-			enum ScreenSize {
-			  small(300),
-			  normal(400),
-			  large(600),
-			  extraLarge(1200);
-			  final double size;
-			  const ScreenSize(this.size);
-			}
-			ScreenSize getScreenSize(BuildContext context) {
-			  double deviceWidth = MediaQuery.sizeOf(context).shortestSide;
-			  if (deviceWidth > ScreenSize.extraLarge.size) return ScreenSize.extraLarge;
-			  if (deviceWidth > ScreenSize.large.size) return ScreenSize.large;
-			  if (deviceWidth > ScreenSize.normal.size) return ScreenSize.normal;
-			  return ScreenSize.small;
-			}
+      enum ScreenSize {
+        small(300),
+        normal(400),
+        large(600),
+        extraLarge(1200);
+        final double size;
+        const ScreenSize(this.size);
+      }
+      ScreenSize getScreenSize(BuildContext context) {
+        double deviceWidth = MediaQuery.sizeOf(context).shortestSide;
+        if (deviceWidth > ScreenSize.extraLarge.size) return ScreenSize.extraLarge;
+        if (deviceWidth > ScreenSize.large.size) return ScreenSize.large;
+        if (deviceWidth > ScreenSize.normal.size) return ScreenSize.normal;
+        return ScreenSize.small;
+      }
 
 @5/1/2024 1:04:18 AM
 - Dev Play:
@@ -708,16 +714,16 @@ CG4:
 @5/1/2024 11:50:10 PM
 - Dev Play: Tic Tac Toe | 5 commits
 
-	> Fixed layout issues: GameEntryBoardSizeRow
-	> Fixed layout issues: GameEntryButtonsRow
-	> Fixed layout issues: GameTitleRow
-	> Fixed layout and tests for `GameEntryScreen`.
-	> Added `@TODO` notes for multi-screen size testing.
+  > Fixed layout issues: GameEntryBoardSizeRow
+  > Fixed layout issues: GameEntryButtonsRow
+  > Fixed layout issues: GameTitleRow
+  > Fixed layout and tests for `GameEntryScreen`.
+  > Added `@TODO` notes for multi-screen size testing.
 
-	After fixing the screen orientation tests,
-		been working on upgrading the `PopupMenuButton`
-		because it and one or more other widgets
-		have been deprecated in favor of Material 3-based widgets.
+  After fixing the screen orientation tests,
+    been working on upgrading the `PopupMenuButton`
+    because it and one or more other widgets
+    have been deprecated in favor of Material 3-based widgets.
 
   - Been working on the marker dropdown menu on the player's name text field.
 
@@ -738,7 +744,7 @@ CG4:
 @5/2/2024 6:28:40 PM
 - Dev Play: Tic Tac Toe
 
-	What a difference a comma (or two) make!!
+  What a difference a comma (or two) make!!
 
   > final markerList = const ['x' 'o' '+'];
   > final markerList = const ['x', 'o', '+']; // Duh!!
@@ -746,26 +752,26 @@ CG4:
 @5/2/2024 7:23:02 PM
 - Dev Play: Tic Tac Toe
 
-	More issues with getting a divider in.
+  More issues with getting a divider in.
 
-	Got it.
+  Got it.
 
-	Just put the returned widget in a Column with a divider below each marker.
+  Just put the returned widget in a Column with a divider below each marker.
 
-			const Divider()
+      const Divider()
 
 @5/2/2024 11:35:08 PM
 - Dev Play: Tic Tac Toe
 
-	Meandered into creating `GamePlayer` and `Marker` data classes.
+  Meandered into creating `GamePlayer` and `Marker` data classes.
 
-			String get markerKey
-			Icon get markerIcon
+      String get markerKey
+      Icon get markerIcon
 
 @5/3/2024 1:00:34 AM
 - Dev Play: Tic Tac Toe
 
-	Created 3 new class files.
+  Created 3 new class files.
 
     class GamePlayer extends Equatable {
       GamePlayer({
@@ -779,7 +785,7 @@ CG4:
 @5/3/2024 1:12:58 AM
 - Dev Play: Tic Tac Toe
 
-	- Got `MenuAnchor` working.
+  - Got `MenuAnchor` working.
 
   Fixed the new marker/symbol selection menu.
     Looking good, although that's NOT THE POINT!!
@@ -792,11 +798,12 @@ CG4:
   Fixed layout issues: GameEntryScreen
 
 @5/3/2024 1:38:06 AM
+
 @5/3/2024 1:57:12 AM
 - Dev Play: Tic Tac Toe
 
-	- To make up for my loss of TDD,
-		I will not be committing any widgets until tests are met.
+  - To make up for my loss of TDD,
+    I will not be committing any widgets until tests are met.
 
 @5/3/2024 2:41:54 AM
 - Dev Play: Tic Tac Toe
@@ -821,16 +828,16 @@ CG4:
 @5/3/2024 6:00:58 AM
 - Dev Play: Tic Tac Toe | 5 commits
 
-	> Added `MarkerMenu` widget and tests.
-	> Added `UserSymbol` abstract & 5 concretes w tests.
-	> Added `PlayerType` abstract & 2 concretes w tests.
-	> Added more tests for `PlayerType` classes.
-	> Added model and tests for `GamePlayer`.
+  > Added `MarkerMenu` widget and tests.
+  > Added `UserSymbol` abstract & 5 concretes w tests.
+  > Added `PlayerType` abstract & 2 concretes w tests.
+  > Added more tests for `PlayerType` classes.
+  > Added model and tests for `GamePlayer`.
 
 @5/4/2024 12:17:37 AM
 - Dev Play: Tic Tac Toe
 
-	Got a few test files written.
+  Got a few test files written.
 
     // Use specific finders to check for the label and hintText as they are rendered in the UI
     final labelFinder = find.text(player.label);
@@ -845,23 +852,186 @@ CG4:
 @5/4/2024 6:43:28 AM
 - Dev Play: Tic Tac Toe | 5 commits
 
-			widgetFinderDropdownMenuEntry
+      widgetFinderDropdownMenuEntry
 
-	I believe the Game Entry screen is structurally complete
+  I believe the Game Entry screen is structurally complete
     with all tests.
 
-	> Widgets and tests: `GameEntryNameListRow`
-	> Widgets and tests: `GameEntryNameListRowInputName`
-	> Added fake `GamePlayer` data for testing.
-	> Renamed `GameEnt...PlayerNameList` to `PlayerList`
-	> Added tests for `PlayerList`.
+  > Widgets and tests: `GameEntryNameListRow`
+  > Widgets and tests: `GameEntryNameListRowInputName`
+  > Added fake `GamePlayer` data for testing.
+  > Renamed `GameEnt...PlayerNameList` to `PlayerList`
+  > Added tests for `PlayerList`.
 
 @5/4/2024 7:24:47 AM
+
 @5/4/2024 7:48:28 AM
 - Dev Play: Tic Tac Toe
 
-	Split `readme_tictactoe.md` to new `readme_history.md`.
+  Split `readme_tictactoe.md` to new `readme_history.md`.
 
   The `_tictactoe` readme is more about the project's inception and design.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/4/2024 3:27:00 PM
+
+@5/4/2024 3:32:29 PM
+- Dev Play: Tic Tac Toe
+
+  Starting back on the `GameBoardScreen` and `GameBoardPanel`.
+  Brought up tests.
+
+  @Thought:
+  With the troubles I had with overflows on the `GameEntryScreen`,
+    I'm wondering if TDD isn't as well suited for widget development?
+
+      group('GamePlay GameBoard Screen Testing:', () {
+
+  On second thought, considering it should be built from the inside out,
+    you should be able to do the same for the tests
+    by starting with the smallest widgets before having to deal with overflows.
+
+  TDD can still apply.
+
+  You can still start with the overall screen,
+    and for each piece within the screen,
+    start small from within those.
+
+  So, where to start?
+    - I've already got the outer shell.
+      - It has tests: [x]
+        - Screen renders
+        - Has a title
+        - Has a GameBoardPanel <-- where I left off
+        - x Has a NameBoard
+        - x Has a GameBoardButtonRow
+
+@5/4/2024 3:48:20 PM
+- Dev Play: Tic Tac Toe
+
+  Before getting back into the `GameBoardPanel` testing,
+    just noticed (and remembered) that the `GameEntry` screen
+    is now adaptive to orientation.
+
+  Will need to extract that orientation code
+    to allow for individual screens to be passed in.
+  It will also need tests.
+
+@5/4/2024 4:39:58 PM
+- Dev Play: Tic Tac Toe
+
+  Neck deep into a variety of orientation-based widgets and tests.
+
+      GameEntryLayoutPortrait
+
+@5/4/2024 8:02:33 PM
+- Dev Play: Tic Tac Toe
+
+  Progress on new classes (with tests).
+
+      body: GameOrientationLayout(
+        orientationScreen: OrientationScreenGameEntry(),
+      ),
+
+@5/4/2024 9:23:54 PM
+- Dev Play: Tic Tac Toe | 3 commits (9 today)
+
+  > Added classes and tests: `OrientationScreenWidget`
+  > Added new class and tests: `GameOrientationLayout`
+    This only covers `GameEntry`, not `GameBoard` (IP).
+  > Implemented new `GameOrientationLayout`.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/5/2024 12:50:23 AM
+- Dev Play: Tic Tac Toe
+
+  Trying to get the tic tac toe grid to show properly.
+    3x3 looks good, but 5x5 crops the grids from 5x5 to 3x3 when it's too small.
+    Don't understand it... yet.
+
+@5/5/2024 5:53:03 AM
+- Dev Play: Tic Tac Toe
+
+  Trying to get landscape working for GameBoard.
+
+@5/5/2024 6:21:23 PM
+- Dev Play: Tic Tac Toe
+
+  Small progress on the layout.
+
+  Fixed the `GameEntry` layout while using it as a guide for the `GameBoard` layout.
+    I had unnecessary nested Rows and Columns.
+
+@5/5/2024 6:39:02 PM
+- Dev Play: Tic Tac Toe
+
+  I got the grid going well, with one issue in landscape.
+    The grid is inside of a `Row` where it shares with another widget where both widgets
+    are wrapped with an `Expanded` widget so they share the same space and to avoid pixel
+    overflows. The issue is because the `GridView` is inside of an `Expanded` widget, and
+    for some reason it won't respect either a `SizedBox` or a `ConstrainedBox` max width
+    within that `Expanded` widget, and so the Grid expands the full half width of the screen,
+    which results in cropping the bottom layer and a half of tiles.
+
+  ChatGPT4 helped to fix the issue.
+    The solution was to remove the `SizedBox` and `ConstrainedBox` widgets,
+    and instead add `Align` and `AspectRatio`. Together, they fixed the issue.
+
+  I then had ChatGPT4 explain the reasoning behind the solution.
+
+  > ### The Challenge with SizedBox and ConstrainedBox
+  >
+  > **Space Allocation**: Both `SizedBox` and `ConstrainedBox` are designed to impose
+  >   constraints on their children, but when used with inherently expanding widgets
+  >   like GridView, the results might not always align with expectations. This is due to
+  >   how intrinsic dimensions are calculated by GridView and how it decides to lay out
+  >   its children based on the given constraints. If the constraints are not strict or
+  >   if the inherent behavior of the grid (like wanting to expand) conflicts with these
+  >   constraints, the grid may end up taking more space.
+
+  That became the last major hurdle for the UI in this project.
+
+@5/6/2024 2:38:28 AM
+- Dev Play: Tic Tac Toe | 5 commits
+
+  > Added widget and tests: `GameBoardPanel`
+  > Added horizontal padding to `BoardSize` slider row
+  > Removed unnecessary wrapper widgets.
+
+  > Split out `GameBoardPanelTile` into its own file.
+  > Fixed `GameBoardPanel` sizing layout. | Thanks to ChatGPT4.
+
+  > Synced & fixed `GameBoard` with `GameEntryScreen`.
+    123456789 123456789 123456789 123456789 123456789|
+
+@5/6/2024 4:07:11 AM
+- Dev Play: Tic Tac Toe | 1 commit
+
+  > Added widget and tests: `GameBoardPlayerPanel`
+    Also covers `PanelTitle` and `PanelNames` widgets and tests.
+
+@5/6/2024 5:27:54 AM
+- Dev Play: Tic Tac Toe
+
+  Got ButtonPanel laid out.
+  Now for the tests.
+
+@5/6/2024 6:06:51 AM
+- Dev Play: Tic Tac Toe | 2 commits (8 today)
+
+  > Formatting `PlayerPanel` and some cleanup.
+  > Added widget and tests: `GameBoardButtonPanel`
+
+  I believe both screens are done.
+    What now?
+    - Add lint analysis (borrow from KD-reCall: Hungry)
+    - Routing (GoRouter: borrow from KD-reCall: Hungry)
+    - Move data model files
+    - Repositories and streams
+    - Bloc: Providers
+    - Bloc: Events
+    - Bloc: Listeners and builders
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
