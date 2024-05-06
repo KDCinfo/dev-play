@@ -526,6 +526,49 @@ Thinking through the flows, and what should update what.
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
+## Fix: GridView does not respect `SizedBox` or `ConstrainedBox`
+
+> Use `Align` and `AspectRatio` instead.
+
+- Thanks to ChatGPT4 for this solution.
+
+    /// From: [ GameBoardPanel ]
+    ///
+    Widget build(BuildContext context) {
+      //
+      // @TODO: Add a `BlocBuilder` here for `edgeSize`.
+      //
+      return LayoutBuilder(builder: (context, constraints) {
+        /// Height and width should only be as big as the smallest size available.
+        final smallestSize = constraints.maxWidth < constraints.maxHeight
+            ? constraints.maxWidth
+            : constraints.maxHeight;
+        final tileCount = edgeSize * edgeSize;
+
+        log('GameBoardPanel: smallestSize: $smallestSize');
+        log('GameBoardPanel: max W: [${constraints.maxWidth}] | H: [${constraints.maxHeight}]');
+        log('GameBoardPanel: edgeSize: $edgeSize, tileCount: $tileCount');
+        // [log] GameBoardLayoutLandscape: constraints: BoxConstraints(0.0<=w<=488.0, 0.0<=h<=303.4)
+        // [log] GameBoardPanel: smallestSize: 224.0
+        // [log] GameBoardPanel: max W: [224.0] | H: [303.42857142857144]
+        // [log] GameBoardPanel: edgeSize: 5, tileCount: 25
+
+        // return SizedBox(
+        return Align(
+          // width: smallestSize,
+          // height: smallestSize,
+          alignment: Alignment.center,
+          // child: ConstrainedBox(
+          child: AspectRatio(
+            // constraints: BoxConstraints(
+            //   maxHeight: smallestSize,
+            //   maxWidth: smallestSize,
+            // ),
+            aspectRatio: 1,
+            child: GridView.builder(
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
 
 - Begin a New Game
 
