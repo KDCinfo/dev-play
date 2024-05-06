@@ -101,7 +101,7 @@ void main() {
         expect(widgetFinderBoard, findsOneWidget);
 
         // The fallback `edgeSize` for `GameBoardPanel` is 3x3.
-        final widgetFinderTile = find.byType(PanelTile);
+        final widgetFinderTile = find.byType(GameBoardPanelTile);
         expect(widgetFinderTile, findsNWidgets(9));
       });
 
@@ -118,7 +118,7 @@ void main() {
         expect(widgetFinderBoard, findsOneWidget);
 
         // The fallback `edgeSize` for `GameBoardPanel` is 3x3.
-        final widgetFinderTile = find.byType(PanelTile);
+        final widgetFinderTile = find.byType(GameBoardPanelTile);
         expect(widgetFinderTile, findsNWidgets(9));
 
         addTearDown(tester.view.resetDevicePixelRatio);

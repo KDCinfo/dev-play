@@ -5,14 +5,25 @@ class GameBoardPlayerPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        SizedBox(height: 12),
-        GameBoardPlayerPanelTitle(),
-        SizedBox(height: 12),
-        GameBoardPlayerPanelNames(),
-      ],
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      return SizedBox(
+        width: constraints.maxWidth * 0.9,
+        child: const Card(
+          elevation: 3,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 15),
+            child: Column(
+              children: [
+                SizedBox(height: 12),
+                GameBoardPlayerPanelTitle(),
+                SizedBox(height: 12),
+                GameBoardPlayerPanelNames(),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }
 

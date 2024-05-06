@@ -54,7 +54,7 @@ void main() {
 
         /// Check gridview has `countSize` children.
         final gridViewChildren = tester.widgetList(
-          find.byType(PanelTile),
+          find.byType(GameBoardPanelTile),
         );
         expect(gridViewChildren.length, countSize);
       });
@@ -84,7 +84,7 @@ void main() {
 
         /// Check gridview has `countSize` children.
         final gridViewChildren = tester.widgetList(
-          find.byType(PanelTile),
+          find.byType(GameBoardPanelTile),
         );
         expect(gridViewChildren.length, countSize);
       });
@@ -114,7 +114,7 @@ void main() {
 
         /// Check gridview has `countSize` children.
         final gridViewChildren = tester.widgetList(
-          find.byType(PanelTile),
+          find.byType(GameBoardPanelTile),
         );
         expect(gridViewChildren.length, countSize);
       });
