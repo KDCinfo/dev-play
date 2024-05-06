@@ -14,39 +14,42 @@ class GameEntryBoardSizeRow extends StatelessWidget {
     const boardSizes = AppConstants.boardSizes;
     const boardSizeSliderKey = Key(AppConstants.boardSizeSliderKey);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          boardSizeLabel,
-          key: boardSizeLabelKey,
-          style: textTheme.headlineSmall,
-          softWrap: false,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              for (var labelIndex = 0; labelIndex < boardSizes.length; labelIndex++)
-                Text(
-                  boardSizes[labelIndex],
-                  key: Key(AppConstants.sliderLabelKey(labelIndex)),
-                ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            boardSizeLabel,
+            key: boardSizeLabelKey,
+            style: textTheme.headlineSmall,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
           ),
-        ),
-        Slider(
-          key: boardSizeSliderKey,
-          value: 1,
-          min: 1,
-          max: boardSizes.length.toDouble(),
-          onChanged: (value) {},
-          divisions: boardSizes.length - 1,
-        )
-      ],
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (var labelIndex = 0; labelIndex < boardSizes.length; labelIndex++)
+                  Text(
+                    boardSizes[labelIndex],
+                    key: Key(AppConstants.sliderLabelKey(labelIndex)),
+                  ),
+              ],
+            ),
+          ),
+          Slider(
+            key: boardSizeSliderKey,
+            value: 1,
+            min: 1,
+            max: boardSizes.length.toDouble(),
+            onChanged: (value) {},
+            divisions: boardSizes.length - 1,
+          )
+        ],
+      ),
     );
   }
 }
