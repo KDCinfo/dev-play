@@ -14,27 +14,32 @@ class GameBoardPanel extends StatelessWidget {
     //
     // @TODO: Add a `BlocBuilder` here for `edgeSize`.
     //
-    return LayoutBuilder(builder: (context, constraints) {
-      final tileCount = edgeSize * edgeSize;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final tileCount = edgeSize * edgeSize;
 
-      return Align(
-        alignment: Alignment.center,
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: GridView.builder(
-            itemCount: tileCount,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: edgeSize, // Number of columns.
-              childAspectRatio: 1, // Aspect ratio of each tile.
+        return Align(
+          // alignment: Alignment.center,
+          // Although `.center` is the default, the `Align` wrapper is still required
+          // in conjunction with the `AspectRatio` widget wrapper to contain the grid
+          // within the available viewing area, else it will expand and get cropped.
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: GridView.builder(
+              itemCount: tileCount,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: edgeSize, // Number of columns.
+                // childAspectRatio: 1, // Aspect ratio of each tile.
+              ),
+              itemBuilder: (context, index) {
+                return GridTile(
+                  child: GameBoardPanelTile(index),
+                );
+              },
             ),
-            itemBuilder: (context, index) {
-              return GridTile(
-                child: GameBoardPanelTile(index),
-              );
-            },
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

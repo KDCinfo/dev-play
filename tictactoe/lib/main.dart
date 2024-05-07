@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:dev_play_tictactoe/src/app.dart';
 
-import 'src/src.dart';
+import 'package:flutter/material.dart';
 
 void main() async {
   runApp(

@@ -1,18 +1,23 @@
 import 'package:equatable/equatable.dart';
 
-abstract interface class PlayerType extends Equatable {
+abstract class PlayerType extends Equatable {
   const PlayerType(this.playerType);
+
   final PlayerTypeEnum playerType;
-  @override
-  List<Object?> get props => [playerType];
 }
 
 class PlayerTypeHuman extends PlayerType {
   const PlayerTypeHuman() : super(PlayerTypeEnum.human);
+
+  @override
+  List<Object?> get props => [playerType];
 }
 
 class PlayerTypeBot extends PlayerType {
   const PlayerTypeBot() : super(PlayerTypeEnum.bot);
+
+  @override
+  List<Object?> get props => [playerType];
 }
 
 enum PlayerTypeEnum {

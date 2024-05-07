@@ -54,7 +54,7 @@ void main() {
 
         final hintTextFinder = find.descendant(
           of: widgetFinderTextFormField,
-          matching: find.text(AppConstants.hintText),
+          matching: find.text(AppConstants.playerNameHintText),
         );
         expect(hintTextFinder, findsOneWidget);
       });

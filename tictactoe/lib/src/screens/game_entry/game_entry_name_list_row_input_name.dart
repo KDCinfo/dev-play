@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class GameEntryNameListRowInputName extends StatelessWidget {
   const GameEntryNameListRowInputName({
-    super.key,
     required this.player,
+    super.key,
   });
 
   final GamePlayer player;
@@ -24,7 +24,7 @@ class GameEntryNameListRowInputName extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
           overflow: TextOverflow.ellipsis,
         ),
-        hintText: AppConstants.hintText,
+        hintText: AppConstants.playerNameHintText,
         isDense: true,
         border: const OutlineInputBorder(),
         suffixIcon: MarkerMenu(

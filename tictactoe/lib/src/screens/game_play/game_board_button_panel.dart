@@ -24,7 +24,6 @@ class GameBoardButtonPanel extends StatelessWidget {
             border: const Border(
               bottom: BorderSide(
                 color: lightBlack,
-                width: 1,
               ),
             ),
             borderRadius: BorderRadius.circular(15),
@@ -39,6 +38,7 @@ class GameBoardButtonPanel extends StatelessWidget {
             child: const Text(
               buttonReturn,
               key: buttonReturnKey,
+              softWrap: false,
               style: TextStyle(
                 fontSize: buttonFontSize,
                 fontWeight: FontWeight.bold,

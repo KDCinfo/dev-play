@@ -16,7 +16,7 @@ void main() {
 
     group('GamePanel Tile', () {
       //
-      const int index = 5;
+      const index = 5;
 
       setUp(() async {
         widgetToTest = const GameBoardPanelTile(index);

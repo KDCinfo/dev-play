@@ -8,7 +8,8 @@ abstract class AppConstants {
   /// Player Names List
   static const playerListMax = 4;
   static String playerLabel(int playerNum) => 'Player $playerNum Name:';
-  static const hintText = 'Enter name';
+  static const playerNameHintText = 'Enter name';
+  static const playerListHintText = 'Previous';
   static const markerFontSize = 24.0;
   static const markerSize = 32.0;
   static Map<String, Icon> markerList = {
@@ -22,15 +23,15 @@ abstract class AppConstants {
   static const nameListSize = 32.0;
 
   /// Board Size
-  static const boardSizeLabel = "Board Size";
-  static const boardSizeLabelKey = "BoardSizeKey";
-  static const boardSizeSliderKey = "BoardSizeSliderKey";
-  static const boardSizes = ["3x3", "4x4", "5x5"];
+  static const boardSizeLabel = 'Board Size';
+  static const boardSizeLabelKey = 'BoardSizeKey';
+  static const boardSizeSliderKey = 'BoardSizeSliderKey';
+  static const boardSizes = ['3x3', '4x4', '5x5'];
   static String sliderLabelKey(int labelIndex) => 'SliderLabelKey$labelIndex';
 
   /// Buttons
   static const buttonPlayText = "Let's Play!";
-  static const buttonPlayKey = "LetsPlayButtonKey";
+  static const buttonPlayKey = 'LetsPlayButtonKey';
   static const buttonReset = 'Reset';
   static const buttonResetKey = 'ResetButtonKey';
   static const buttonReturnHome = 'Return to Home';

@@ -10,7 +10,7 @@ void main() {
         playerNum: 1,
         playerId: 123,
         playerName: 'John',
-        playerType: PlayerTypeBot(),
+        // playerType: PlayerTypeBot(),
         userSymbol: UserSymbolEmpty(),
       );
 
@@ -28,7 +28,7 @@ void main() {
         playerNum: 1,
         playerId: 123,
         playerName: 'John',
-        playerType: PlayerTypeBot(),
+        // playerType: PlayerTypeBot(),
         userSymbol: UserSymbolEmpty(),
       );
 
@@ -43,7 +43,7 @@ void main() {
         playerNum: 1,
         playerId: 123,
         playerName: 'John',
-        playerType: PlayerTypeBot(),
+        // playerType: PlayerTypeBot(),
         userSymbol: UserSymbolEmpty(),
       );
 
@@ -67,7 +67,7 @@ void main() {
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
-          playerType: PlayerTypeBot(),
+          // playerType: PlayerTypeBot(),
           userSymbol: UserSymbolEmpty(),
         );
 
@@ -79,7 +79,7 @@ void main() {
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
-          playerType: PlayerTypeBot(),
+          // playerType: PlayerTypeBot(),
           userSymbol: UserSymbolEmpty(),
         );
 
@@ -102,7 +102,7 @@ void main() {
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
-          playerType: PlayerTypeBot(),
+          // playerType: PlayerTypeBot(),
           userSymbol: UserSymbolEmpty(),
         );
 
@@ -110,7 +110,7 @@ void main() {
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
-          playerType: PlayerTypeBot(),
+          // playerType: PlayerTypeBot(),
           userSymbol: UserSymbolEmpty(),
         );
 
@@ -122,7 +122,7 @@ void main() {
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
-          playerType: PlayerTypeBot(),
+          // playerType: PlayerTypeBot(),
           userSymbol: UserSymbolEmpty(),
         );
 
@@ -146,14 +146,14 @@ void main() {
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
-          playerType: PlayerTypeBot(),
+          // playerType: PlayerTypeBot(),
           userSymbol: UserSymbolEmpty(),
         );
         const gamePlayer2 = GamePlayer(
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
-          playerType: PlayerTypeBot(),
+          // playerType: PlayerTypeBot(),
           userSymbol: UserSymbolEmpty(),
         );
 

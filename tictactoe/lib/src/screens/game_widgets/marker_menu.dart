@@ -36,18 +36,12 @@ class MarkerMenu extends StatelessWidget {
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(14)),
                     border: Border(
-                      top: BorderSide(
-                        color: Colors.black38,
-                        width: 1,
-                      ),
-                      bottom: BorderSide(
-                        color: Colors.black38,
-                        width: 1,
-                      ),
+                      top: BorderSide(color: Colors.black38),
+                      bottom: BorderSide(color: Colors.black38),
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(0),
+                    padding: EdgeInsets.zero,
                     child: Text(
                       entry.key, // Marker
                       textAlign: TextAlign.center,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// The `OrientationScreenGameEntry()` class
 /// that is provided as the `orientationScreen` parameter
-/// injects both the [Portrait] and [Landscape] classes below.
+/// injects both the [[Portrait]] and [[Landscape]] classes below.
 ///
 class GameEntryScreen extends StatelessWidget {
   const GameEntryScreen({super.key});
@@ -30,8 +30,6 @@ class GameEntryLayoutPortrait extends StatelessWidget {
     /// This `Column` has a fixed size from within the `GameOrientationLayout()`.
     return const SingleChildScrollView(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GameTitleRow(),
           SizedBox(height: 10),
@@ -65,7 +63,6 @@ class GameEntryLayoutLandscape extends StatelessWidget {
           ),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GameTitleRow(),
                 SizedBox(height: 10),

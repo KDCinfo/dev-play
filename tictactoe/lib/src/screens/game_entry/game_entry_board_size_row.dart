@@ -47,7 +47,7 @@ class GameEntryBoardSizeRow extends StatelessWidget {
             max: boardSizes.length.toDouble(),
             onChanged: (value) {},
             divisions: boardSizes.length - 1,
-          )
+          ),
         ],
       ),
     );

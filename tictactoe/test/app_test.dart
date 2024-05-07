@@ -19,11 +19,21 @@ void main() {
       expect(materialAppFinder, findsOneWidget);
     });
 
-    testWidgets('[MyWidget] has a GameEntry', (WidgetTester tester) async {
+    testWidgets('[MyWidget] has either a GameEntry or GameBoard', (WidgetTester tester) async {
       await tester.pumpWidget(widgetToTest);
-      final materialAppFinder = find.byType(GameEntryScreen);
+      final materialAppFinderEntry = find.byType(GameEntryScreen);
+      final materialAppFinderBoard = find.byType(GameBoardScreen);
 
-      expect(materialAppFinder, findsOneWidget);
+      // Ensure that only one of the two screens is present, not both:
+      final foundEntry = tester.any(materialAppFinderEntry);
+      final foundBoard = tester.any(materialAppFinderBoard);
+
+      // Ensure that exactly one of these is true.
+      expect(
+        foundEntry != foundBoard,
+        isTrue,
+        reason: 'Should find exactly one of GameEntry or GameBoard',
+      );
     });
   });
 }

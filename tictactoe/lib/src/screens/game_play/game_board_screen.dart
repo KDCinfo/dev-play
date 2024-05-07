@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// The `OrientationScreenGameBoard()` class
 /// that is provided as the `orientationScreen` parameter
-/// injects both the [Portrait] and [Landscape] classes below.
+/// injects both the [[Portrait]] and [[Landscape]] classes below.
 ///
 class GameBoardScreen extends StatelessWidget {
   const GameBoardScreen({super.key});
@@ -33,16 +33,15 @@ class GameBoardLayoutPortrait extends StatelessWidget {
     /// log('GameBoardLayoutPortrait: constraints: $constraints');
     /// [log] GameBoardLayoutPortrait: constraints: BoxConstraints(0.0<=w<=399.4, 0.0<=h<=806.3)
     return const Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         GameTitleRow(),
         SizedBox(height: 10),
-        Expanded(flex: 2, child: GameBoardPanel()),
+        Expanded(flex: 2, child: GameBoardPanel()), // edgeSize: 5
         SizedBox(height: 20),
         GameBoardPlayerPanel(),
         SizedBox(height: 20),
         GameBoardButtonPanel(),
-        Spacer(flex: 1),
+        Spacer(),
       ],
     );
   }
@@ -60,18 +59,19 @@ class GameBoardLayoutLandscape extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: GameBoardPanel(),
+            child: GameBoardPanel(), // edgeSize: 5
           ),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GameTitleRow(),
-                SizedBox(height: 20),
-                GameBoardPlayerPanel(),
-                SizedBox(height: 20),
-                GameBoardButtonPanel(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  GameTitleRow(),
+                  SizedBox(height: 20),
+                  GameBoardPlayerPanel(),
+                  SizedBox(height: 20),
+                  GameBoardButtonPanel(),
+                ],
+              ),
             ),
           ),
         ],

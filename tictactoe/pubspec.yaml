@@ -24,6 +24,7 @@ dev_dependencies:
   flutter_lints: ^3.0.2
   flutter_test:
     sdk: flutter
+  very_good_analysis: ^5.1.0
 
 flutter_launcher_icons:
   ios: true
@@ -33,8 +34,6 @@ flutter_launcher_icons:
   image_path_android: "assets/images/logo_tictactoe_1024.png"
   # adaptive_icon_background: "assets/images/kdrecall_icon_1024_back.png"
   # adaptive_icon_foreground: "assets/images/kdrecall_icon_1024_h_fore.png"
-
-  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true

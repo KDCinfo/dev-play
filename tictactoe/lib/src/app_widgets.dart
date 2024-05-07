@@ -24,10 +24,10 @@ class ButtonUp extends StatelessWidget {
             color: Colors.white,
           ),
           BoxShadow(
-            offset: Offset(2.0, 2.0),
+            offset: Offset(2, 2),
             color: Color(0xFF800000),
-            spreadRadius: -1.0,
-            blurRadius: 4.0,
+            spreadRadius: -1,
+            blurRadius: 4,
           ),
         ],
       ),
@@ -63,10 +63,10 @@ class ButtonDown extends StatelessWidget {
             color: Color(0xFF400000),
           ),
           BoxShadow(
-            offset: Offset(3.0, 3.0),
+            offset: Offset(3, 3),
             color: Color(0xFF800000),
-            spreadRadius: -4.0,
-            blurRadius: 6.0,
+            spreadRadius: -4,
+            blurRadius: 6,
           ),
         ],
       ),
@@ -138,30 +138,22 @@ class AppButtonRow1 extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonUp(),
             ),
             const ButtonSpacer(),
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonUp(),
             ),
             const ButtonSpacer(),
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonDown(),
             ),
             const ButtonSpacer(),
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonDown(),
             ),
           ],
@@ -200,30 +192,22 @@ class AppButtonRow2 extends StatelessWidget {
           // mainAxisSize: MainAxisSize.min,
           children: [
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonUp(),
             ),
             const ButtonSpacer(),
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonDown(),
             ),
             const ButtonSpacer(),
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonDown(),
             ),
             const ButtonSpacer(),
             InkWell(
-              onTap: () {
-                runTap();
-              },
+              onTap: runTap,
               child: const ButtonDown(),
             ),
           ],

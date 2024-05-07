@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class GameEntryNameListRow extends StatelessWidget {
   const GameEntryNameListRow({
-    super.key,
     required this.playerNum,
+    super.key,
   });
 
   final int playerNum;
@@ -18,9 +18,7 @@ class GameEntryNameListRow extends StatelessWidget {
     const savedNames = PlayerList();
 
     return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
       child: Wrap(
-        direction: Axis.horizontal,
         // Adds spacing horizontally between wrapped children.
         spacing: 10,
         // Adds spacing vertically between wrapped lines.

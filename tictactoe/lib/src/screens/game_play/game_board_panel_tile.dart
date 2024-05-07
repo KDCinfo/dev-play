@@ -24,10 +24,10 @@ class GameBoardPanelTile extends StatelessWidget {
             color: Colors.white,
           ),
           BoxShadow(
-            offset: Offset(2.0, 2.0),
+            offset: Offset(2, 2),
             color: Color(0xFF800000),
-            spreadRadius: -1.0,
-            blurRadius: 4.0,
+            spreadRadius: -1,
+            blurRadius: 4,
           ),
         ],
       ),
