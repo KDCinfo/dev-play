@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/models/models.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/game_entry/game_entry.dart';
 import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
 

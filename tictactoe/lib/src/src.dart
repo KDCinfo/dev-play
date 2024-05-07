@@ -1,5 +1,5 @@
 export 'app.dart';
 export 'app_constants.dart';
 export 'app_widgets.dart';
-export 'models/models.dart';
+export 'data/data.dart';
 export 'screens/screens.dart';

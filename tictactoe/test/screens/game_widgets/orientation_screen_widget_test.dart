@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/models/models.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter_test/flutter_test.dart';

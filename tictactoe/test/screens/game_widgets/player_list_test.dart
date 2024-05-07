@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/models/app_data_fake.dart';
+import 'package:dev_play_tictactoe/src/data/models/app_data_fake.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
