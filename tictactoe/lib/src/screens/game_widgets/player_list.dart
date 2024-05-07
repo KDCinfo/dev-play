@@ -1,8 +1,7 @@
 import 'dart:developer';
 
 import 'package:dev_play_tictactoe/src/app_constants.dart';
-import 'package:dev_play_tictactoe/src/app_data.dart';
-import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
+import 'package:dev_play_tictactoe/src/models/models.dart';
 
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,7 @@ class PlayerList extends StatelessWidget {
       builder: (context) {
         //
         // @TODO: To be replaced by a BlocBuilder.
-        final playerList = AppData.fakePlayerList3;
+        final playerList = AppDataFake.fakePlayerList3;
 
         return ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 150),

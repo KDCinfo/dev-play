@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/screens/game_widgets/user_symbol.dart';
+import 'package:dev_play_tictactoe/src/models/user_symbol.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

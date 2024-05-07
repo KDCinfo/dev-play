@@ -572,8 +572,169 @@ Thinking through the flows, and what should update what.
 
 - Begin a New Game
 
-
-
 - View Past Games
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+[GameInit]
+
+[GamePlay]
+
+[ScoreBook]
+
+[GameData]
+
+[GameBoard]
+
+[TurnPlayTile]
+
+[UserData]
+
+[UserSymbol]
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+- [game_data]
+
+      class GameData extends Equatable {
+
+- [game_player] (a.k.a. `UserData`)
+
+      class GamePlayer extends Equatable {
+
+- [player_type]
+
+      abstract class PlayerType extends Equatable {
+      class PlayerTypeHuman extends PlayerType {
+      class PlayerTypeBot extends PlayerType {
+      enum PlayerTypeEnum {human, bot}
+
+- [user_symbol]
+
+      abstract class UserSymbol extends Equatable {
+      class UserSymbolEmpty extends UserSymbol {
+      class UserSymbolX extends UserSymbol {
+      class UserSymbolO extends UserSymbol {
+      class UserSymbolPlus extends UserSymbol {
+      class UserSymbolStar extends UserSymbol {
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+/// # CRC Data and Flows
+
+/// ## Temporary Initialization Data
+[GameInit]
++ Ask for - playerList [1-4]:
+  - name(s) | or select from `ScoreBook.allPlayers`
+  - symbol(s) | select from prefilled symbols list
++ Ask for board size (edgeSize) | Assert: 5 >= edgeSize[3] > players.length >= 1
+
+--> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
+--> players => List.of(playerList.forEach(UserData(name, symbol)))
+--> gameBoard => GameBoard(int edgeSize)
+--> gameData => [GameData](int gameId, <UserData>[] players, gameBoard)
+--> [GamePlay](gameData)
+--> [ScoreBook].initGame(gameData)
+
+/// ## Transient Data
+/// The bloc for the properties in this class should be hydrated.
+[GamePlay](GameData gameData)
++ turn => Map<int, UserData> {[1], 2: userData} // 3, 1, 2, ...
++ gameData.plays.add(TurnPlayTile(userId, duration))
++ ScoreBook.update(gameData)
+// Callbacks to make ScoreBook calls; such as when a game is done
+
+/// ## Persisted Data
+[ScoreBook]
+  // Reminder to convert `int` keys to `string` when JSONifying.
++ allPlayers: Map<UserData>(userId: UserData).putIfAbsent(currentPlayers)
++ allGamesByUserId: Map<int, int>{ userId: gameId1 }
++ allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
++ updateGame(gameData) => allGames.updateWhere(gameData)
++ initGame(gameData.players) =>
+    allGames.add(),
+    allGamesByUserId.addAll(),
+    allPlayers.putIfAbsent(),
+
+/// ## Persisted Data
+[GameData](int gameId, <UserData>[] players, gameBoard)
+  + gameId
+  + dateCreated => DateTime,
+  + dateLastPlayed => DateTime,
+  + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
+  + plays => <TurnPlayTile>[].add(TurnPlayTile)
+  + players => <Map<int, UserData>>[
+    { userId1, userData1 }, { userId2, userData2 },
+  ]
+  + gameBoard
+  + endGameScore => {
+    userId1: score, // +1 for each game won; +0 for lost games.
+    userId2: score,
+  }
+
+[GameBoard](int edgeSize, List<TurnPlayTile>[] plays)
+  - _boardSize => edgeSize * edgeSize
+  get rowFilled => checkRows(_boardSize)
+  get colFilled => checkCols(_boardSize)
+  get diagFilled => checkDiags(_boardSize)
+  get usedTiles => plays.where(play.tileId) // <Tiles>[]
+  get availableTiles => _boardSize - usedTiles // <Tiles>[]
+
+[TurnPlayTile]
+  tileId
+  userId,
+  duration,
+  occupiedBy => UserData(userId)
+
+[UserData]
+  userId
+  userName
+  UserSymbol => UserSymbolX, UserSymbolO, UserSymbolP // A user's symbol can change per game.
+  PlayerType => PlayerTypeHuman, PlayerTypeBot // Non-OO: IsHuman => true
+
+// + Ask for player symbol ['X', 'O', '+', '/', '^', '@', '$']
+[UserSymbol] abstract interface => // Dart 3 :+1:
+  UserSymbolX implements UserSymbol => shape = 'X'
+  UserSymbolO implements UserSymbol => shape = 'O'
+  // UserSymbolP implements UserSymbol => shape = '+'
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+### Translating CRC and Data Flow to UI and State Management
+
+1. **Identify UI Components**:
+    Start by identifying which parts of your CRC and class design relate directly to user interaction.
+    These will form the basis of your Flutter widgets.
+    For instance, any class that involves user input or displays information can be considered for a corresponding widget.
+
+2. **Map State Management**: Decide how you will manage state based on your CRC flow. In Flutter, state management could be done through various methods such as Provider, BLoC, Riverpod, etc. Consider which state management pattern fits best with your design:
+   - **BLoC (Business Logic Component)**: Useful for separating business logic from UI. It can integrate neatly if your CRC includes clear responsibilities and interactions.
+   - **Provider/Riverpod**: These are more straightforward for simpler state management and might be easier to implement initially.
+
+3. **Detailing Data Flow**:
+   - **Between UI and State Management**: Determine how data flows from your UI (widgets) to the state management solution and back. This includes triggering actions from the user interface, processing those actions in your business logic (which could be encapsulated in blocs or similar structures), and then updating the UI based on state changes.
+   - **Between State Management and Repositories**: If your application involves more complex data handling (like network requests or local database interactions), you might need repositories. These will handle data fetching and sending, decoupling it from the business logic layers.
+
+4. **Create Component Diagrams**: Similar to CRC cards but more focused on interaction and data flow, component diagrams can help visualize the relationship between UI components, state management, and backend services (if any). This helps in understanding how data moves through your system.
+
+5. **Prototyping UI**: Start building the UI components in Flutter. Create simple versions of the widgets that represent the main interface elements. Use dummy data initially to ensure that the widgets are rendered as expected.
+
+6. **Implement TDD for Each Layer**:
+   - **UI Testing**: Write widget tests to ensure that the UI behaves as expected. This includes testing state changes, user interactions, and rendering.
+   - **Logic Testing**: For your business logic (like blocs), write unit tests that test every function and scenario that can occur based on user actions and data handling.
+   - **Integration Testing**: Once individual parts are tested, write integration tests that cover the flow from UI interaction through state management down to data handling.
+
+7. **Iterative Development and Testing**: As you develop these components, continuously test and refine. TDD will guide the development process and ensure each part meets its requirements before moving on.
+
+8. **Documentation and Refinement**: Keep documenting your progress and any changes from the original design. This documentation will be invaluable for future maintenance or further development.
+
+By methodically building and testing each part of your application, you ensure that the final product is robust and meets the design specifications you have laid out in your CRC and class diagrams. This approach also allows you to catch and fix issues early in the development process, making it more manageable and less error-prone.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------

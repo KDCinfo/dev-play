@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/app_data.dart';
+import 'package:dev_play_tictactoe/src/models/app_data_fake.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ void main() {
         WidgetTester tester,
       ) async {
         /// @TODO: This will change to be a `when` stub when bloc is implemented.
-        final playerList = AppData.fakePlayerList3;
+        final playerList = AppDataFake.fakePlayerList3;
 
         await tester.pumpWidget(wrappedWidget);
         final widgetFinderDropdownMenuEntry = find.byType(DropdownMenu<int>);

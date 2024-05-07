@@ -1,6 +1,6 @@
-import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
+import 'package:dev_play_tictactoe/src/models/models.dart';
 
-abstract class AppData {
+abstract class AppDataFake {
   /// Only fully populated players can be in the list,
   ///   because they've played before.
   ///

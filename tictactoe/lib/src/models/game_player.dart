@@ -1,8 +1,9 @@
 import 'package:dev_play_tictactoe/src/app_constants.dart';
-import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
+import 'package:dev_play_tictactoe/src/models/models.dart';
 
 import 'package:equatable/equatable.dart';
 
+/// This class could also be referred to as `UserData`.
 class GamePlayer extends Equatable {
   const GamePlayer({
     required this.playerNum,

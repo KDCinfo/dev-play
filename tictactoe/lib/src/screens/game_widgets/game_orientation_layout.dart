@@ -1,4 +1,5 @@
-import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
+import 'package:dev_play_tictactoe/src/models/models.dart';
+
 import 'package:flutter/material.dart';
 
 /// This widget is used to determine the layout of the
