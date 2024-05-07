@@ -19,7 +19,9 @@ class GameEntryButtonsRow extends StatelessWidget {
       runSpacing: 10,
       children: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/play');
+          },
           child: const Text(
             buttonPlayText,
             key: buttonPlayKey,

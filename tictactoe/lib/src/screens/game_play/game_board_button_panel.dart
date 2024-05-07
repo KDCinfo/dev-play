@@ -34,7 +34,9 @@ class GameBoardButtonPanel extends StatelessWidget {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 7),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: const Text(
               buttonReturn,
               key: buttonReturnKey,

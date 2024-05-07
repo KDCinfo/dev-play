@@ -33,24 +33,10 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         colorSchemeSeed: const Color(0xFF800000),
       ),
-
-      onGenerateRoute: (RouteSettings routeSettings) {
-        return MaterialPageRoute<void>(
-          settings: routeSettings,
-          builder: (BuildContext context) {
-            switch (routeSettings.name) {
-              // case SettingsView.routeName:
-              //   return SettingsView(controller: settingsController);
-              // case SampleItemDetailsView.routeName:
-              //   return const SampleItemDetailsView();
-              // case SampleItemListView.routeName:
-              // default:
-              //   return const GameEntryScreen();
-              default:
-                return const GameBoardScreen();
-            }
-          },
-        );
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const GameEntryScreen(),
+        '/play': (context) => const GameBoardScreen(),
       },
     );
   }
