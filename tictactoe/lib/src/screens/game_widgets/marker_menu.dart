@@ -22,7 +22,7 @@ class MarkerMenu extends StatelessWidget {
       icon: MenuAnchor(
         controller: _menuController,
         consumeOutsideTap: true,
-        menuChildren: <Widget>[
+        menuChildren: [
           // Skip the first entry because it is used for empty slots.
           ...AppConstants.markerList.entries.skip(1).map((MapEntry<String, Icon> entry) {
             return ConstrainedBox(

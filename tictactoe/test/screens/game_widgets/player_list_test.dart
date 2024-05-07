@@ -16,7 +16,7 @@ void main() {
     ///
 
     group('PlayerList Widget', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const PlayerList();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
@@ -28,29 +28,29 @@ void main() {
       });
 
       testWidgets(
-          '[PlayerList Widget] has [DropdownMenu] '
-          'and correct [DropdownMenuEntry] labels.', (
-        WidgetTester tester,
-      ) async {
-        /// @TODO: This will change to be a `when` stub when bloc is implemented.
-        final playerList = AppDataFake.fakePlayerList3;
+        '[PlayerList Widget] has [DropdownMenu] '
+        'and correct [DropdownMenuEntry] labels.',
+        (WidgetTester tester) async {
+          /// @TODO: This will change to be a `when` stub when bloc is implemented.
+          final playerList = AppDataFake.fakePlayerList3;
 
-        await tester.pumpWidget(wrappedWidget);
-        final widgetFinderDropdownMenuEntry = find.byType(DropdownMenu<int>);
-        expect(widgetFinderDropdownMenuEntry, findsOneWidget);
+          await tester.pumpWidget(wrappedWidget);
+          final widgetFinderDropdownMenuEntry = find.byType(DropdownMenu<int>);
+          expect(widgetFinderDropdownMenuEntry, findsOneWidget);
 
-        final labelFinderFirst = find.descendant(
-          of: widgetFinderDropdownMenuEntry,
-          matching: find.text(playerList.first.playerName),
-        );
-        expect(labelFinderFirst, findsOneWidget);
+          final labelFinderFirst = find.descendant(
+            of: widgetFinderDropdownMenuEntry,
+            matching: find.text(playerList.firstOrNull?.playerName ?? 'Oops'),
+          );
+          expect(labelFinderFirst, findsOneWidget);
 
-        final labelFinderLast = find.descendant(
-          of: widgetFinderDropdownMenuEntry,
-          matching: find.text(playerList.last.playerName),
-        );
-        expect(labelFinderLast, findsOneWidget);
-      });
+          final labelFinderLast = find.descendant(
+            of: widgetFinderDropdownMenuEntry,
+            matching: find.text(playerList.lastOrNull?.playerName ?? 'Oops'),
+          );
+          expect(labelFinderLast, findsOneWidget);
+        },
+      );
     });
   });
 }

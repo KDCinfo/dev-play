@@ -8,7 +8,7 @@ void main() {
   group('MyWidget', () {
     late Widget widgetToTest;
 
-    setUp(() async {
+    setUp(() {
       widgetToTest = const MyApp();
     });
 

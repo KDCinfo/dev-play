@@ -15,7 +15,7 @@ void main() {
     ///
 
     group('GameWidget Marker Menu', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = MarkerMenu();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

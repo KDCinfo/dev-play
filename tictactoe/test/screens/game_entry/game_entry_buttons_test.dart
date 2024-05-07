@@ -16,7 +16,7 @@ void main() {
     ///
 
     group('GameEntry Buttons', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameEntryButtonsRow();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

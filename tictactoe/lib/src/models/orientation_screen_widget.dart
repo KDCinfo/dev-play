@@ -8,6 +8,8 @@ abstract interface class OrientationScreenWidget {
 }
 
 class OrientationScreenGameEntry implements OrientationScreenWidget {
+  const OrientationScreenGameEntry();
+
   @override
   Widget get portrait => const GameEntryLayoutPortrait();
 
@@ -16,6 +18,8 @@ class OrientationScreenGameEntry implements OrientationScreenWidget {
 }
 
 class OrientationScreenGameBoard implements OrientationScreenWidget {
+  const OrientationScreenGameBoard();
+
   @override
   Widget get portrait => const GameBoardLayoutPortrait();
 

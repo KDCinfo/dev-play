@@ -24,7 +24,7 @@ class GameEntryNameListRow extends StatelessWidget {
         spacing: 10,
         // Adds spacing vertically between wrapped lines.
         runSpacing: 4,
-        children: <Widget>[
+        children: [
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 150),
             child: inputName,

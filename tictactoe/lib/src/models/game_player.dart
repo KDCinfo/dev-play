@@ -26,13 +26,14 @@ class GamePlayer extends Equatable {
   String get label => AppConstants.playerLabel(playerNum);
 
   GamePlayer copyWith({
+    int? playerNum,
     int? playerId,
     String? playerName,
     PlayerType? playerType,
     UserSymbol? userSymbol,
   }) {
     return GamePlayer(
-      playerNum: playerNum,
+      playerNum: playerNum ?? this.playerNum,
       playerId: playerId ?? this.playerId,
       playerName: playerName ?? this.playerName,
       playerType: playerType ?? this.playerType,

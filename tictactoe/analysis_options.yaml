@@ -36,5 +36,17 @@ linter:
     lines_longer_than_80_chars: false
     public_member_api_docs: false
 
+# This is for anyone using DCM.
+#
+# dart_code_metrics:
+#   extends:
+#     - recommended
+#   rules:
+#     - avoid-shadowing: false
+#     - prefer-match-file-name: false
+#     - prefer-single-widget-per-file: false
+#     - no-empty-block: false
+#     - unnecessary-trailing-comma: false
+
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

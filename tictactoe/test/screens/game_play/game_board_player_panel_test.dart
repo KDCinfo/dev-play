@@ -15,7 +15,7 @@ void main() {
     ///
 
     group('GameBoard Player Panel', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPlayerPanel();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
@@ -50,8 +50,8 @@ void main() {
 
         await tester.pumpWidget(wrappedWidget);
 
-        expect(find.text('[ ${players[0]} ]'), findsOneWidget);
-        expect(find.text('[ ${players[1]} ]'), findsOneWidget);
+        expect(find.text('[ ${players.elementAtOrNull(0) ?? 'Oops'} ]'), findsOneWidget);
+        expect(find.text('[ ${players.elementAtOrNull(1) ?? 'Oops'} ]'), findsOneWidget);
       });
 
       testWidgets('[GameBoard Player Panel] should highlight the current player', (
@@ -64,8 +64,12 @@ void main() {
 
         await tester.pumpWidget(wrappedWidget);
 
-        final player1Text = tester.widget<Text>(find.text('[ ${players[currentPlayer]} ]'));
-        final player2Text = tester.widget<Text>(find.text('[ ${players[1]} ]'));
+        final player1Text = tester.widget<Text>(
+          find.text('[ ${players.elementAtOrNull(currentPlayer) ?? 'Oops'} ]'),
+        );
+        final player2Text = tester.widget<Text>(
+          find.text('[ ${players.elementAtOrNull(1) ?? 'Oops'} ]'),
+        );
 
         expect(player1Text.style?.fontWeight, equals(FontWeight.bold));
         expect(player2Text.style?.fontWeight, equals(FontWeight.normal));

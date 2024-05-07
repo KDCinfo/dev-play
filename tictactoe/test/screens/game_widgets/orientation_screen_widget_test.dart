@@ -7,13 +7,13 @@ void main() {
   group('[OrientationScreenWidget] tests', () {
     group('[OrientationScreenGameEntry] screens', () {
       test('[portrait] should return [GameEntryLayoutPortrait]', () {
-        final gameEntry = OrientationScreenGameEntry();
+        const gameEntry = OrientationScreenGameEntry();
         final portraitWidget = gameEntry.portrait;
         expect(portraitWidget, isA<GameEntryLayoutPortrait>());
       });
 
       test('[landscape] should return [GameEntryLayoutLandscape]', () {
-        final gameEntry = OrientationScreenGameEntry();
+        const gameEntry = OrientationScreenGameEntry();
         final landscapeWidget = gameEntry.landscape;
         expect(landscapeWidget, isA<GameEntryLayoutLandscape>());
       });
@@ -21,13 +21,13 @@ void main() {
 
     group('[OrientationScreenGameBoard] screens', () {
       test('[portrait] should return [GameBoardLayoutPortrait]', () {
-        final gameBoard = OrientationScreenGameBoard();
+        const gameBoard = OrientationScreenGameBoard();
         final portraitWidget = gameBoard.portrait;
         expect(portraitWidget, isA<GameBoardLayoutPortrait>());
       });
 
       test('[landscape] should return [GameBoardLayoutLandscape]', () {
-        final gameBoard = OrientationScreenGameBoard();
+        const gameBoard = OrientationScreenGameBoard();
         final landscapeWidget = gameBoard.landscape;
         expect(landscapeWidget, isA<GameBoardLayoutLandscape>());
       });

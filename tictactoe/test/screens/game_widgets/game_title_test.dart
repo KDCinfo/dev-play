@@ -16,7 +16,7 @@ void main() {
     ///
 
     group('GameWidget Title', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameTitleRow();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

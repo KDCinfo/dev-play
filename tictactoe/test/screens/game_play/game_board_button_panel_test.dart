@@ -20,7 +20,7 @@ void main() {
     const buttonReturnMsg = AppConstants.buttonReturnHomeMsg;
 
     group('GameBoard Button Panel', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardButtonPanel();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

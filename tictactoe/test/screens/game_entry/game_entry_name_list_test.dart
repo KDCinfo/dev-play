@@ -16,7 +16,7 @@ void main() {
     ///
 
     group('GameEntry Player Name List', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameEntryNameList();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
@@ -68,11 +68,7 @@ void main() {
         final playerLabelWidget = tester.widget(widgetFinderNameListLabel) as Text;
         expect(
           playerLabelWidget,
-          isA<Text>().having(
-            (t) => t.data,
-            'text',
-            equals(playerLabel),
-          ),
+          isA<Text>().having((t) => t.data, 'text', equals(playerLabel)),
         );
       });
 
@@ -96,19 +92,12 @@ void main() {
               matching: find.byType(Text),
             )
             .first;
-        expect(
-          widgetFinderNameListLabel,
-          findsOneWidget,
-        );
+        expect(widgetFinderNameListLabel, findsOneWidget);
 
         final playerLabelWidget = tester.widget(widgetFinderNameListLabel) as Text;
         expect(
           playerLabelWidget,
-          isA<Text>().having(
-            (t) => t.data,
-            'text',
-            equals(playerLabel),
-          ),
+          isA<Text>().having((t) => t.data, 'text', equals(playerLabel)),
         );
       });
 

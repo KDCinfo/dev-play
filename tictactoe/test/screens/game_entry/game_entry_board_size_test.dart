@@ -16,7 +16,7 @@ void main() {
     ///
 
     group('GameEntry Board Size', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameEntryBoardSizeRow();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

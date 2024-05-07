@@ -18,7 +18,7 @@ void main() {
       //
       const index = 5;
 
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanelTile(index);
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

@@ -15,7 +15,7 @@ void main() {
     ///
 
     group('GameEntry Screen', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameEntryScreen();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

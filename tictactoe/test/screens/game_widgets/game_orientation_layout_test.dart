@@ -16,8 +16,8 @@ void main() {
     ///
 
     group('[GameEntry Layout] Screen', () {
-      setUp(() async {
-        widgetToTest = GameOrientationLayout(
+      setUp(() {
+        widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameEntry(),
         );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
@@ -70,8 +70,8 @@ void main() {
     ///
 
     group('[GameBoard Layout] Screen', () {
-      setUp(() async {
-        widgetToTest = GameOrientationLayout(
+      setUp(() {
+        widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameBoard(),
         );
         wrappedWidget = PumpApp.materialApp(widgetToTest);

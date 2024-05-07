@@ -54,7 +54,7 @@ class GameBoardPlayerPanelNames extends StatelessWidget {
       children: [
         for (var idx = 0; idx < players.length; idx++)
           Text(
-            '[ ${players[idx]} ]',
+            '[ ${players.elementAtOrNull(idx) ?? 'Missing a name'} ]',
             style: TextStyle(
               fontWeight: idx == currentPlayer ? FontWeight.bold : FontWeight.normal,
             ),

@@ -21,11 +21,7 @@ class GameBoardButtonPanel extends StatelessWidget {
       children: [
         DecoratedBox(
           decoration: BoxDecoration(
-            border: const Border(
-              bottom: BorderSide(
-                color: lightBlack,
-              ),
-            ),
+            border: const Border(bottom: BorderSide(color: lightBlack)),
             borderRadius: BorderRadius.circular(15),
           ),
           child: TextButton(
@@ -52,10 +48,7 @@ class GameBoardButtonPanel extends StatelessWidget {
           padding: EdgeInsets.only(top: 5),
           child: Text(
             buttonReturnMsg,
-            style: TextStyle(
-              fontSize: msgFontSize,
-              color: lightBlack,
-            ),
+            style: TextStyle(fontSize: msgFontSize, color: lightBlack),
           ),
         ),
       ],

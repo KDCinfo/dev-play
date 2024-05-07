@@ -3,9 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class ButtonUp extends StatelessWidget {
-  const ButtonUp({
-    super.key,
-  });
+  const ButtonUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +14,9 @@ class ButtonUp extends StatelessWidget {
           color: const Color(0xFF800000).withOpacity(0.5),
           width: 2,
         ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         boxShadow: const [
-          BoxShadow(
-            color: Colors.white,
-          ),
+          BoxShadow(color: Colors.white),
           BoxShadow(
             offset: Offset(2, 2),
             color: Color(0xFF800000),
@@ -42,9 +36,7 @@ class ButtonUp extends StatelessWidget {
 }
 
 class ButtonDown extends StatelessWidget {
-  const ButtonDown({
-    super.key,
-  });
+  const ButtonDown({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +47,9 @@ class ButtonDown extends StatelessWidget {
           color: Colors.brown,
           width: 2,
         ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         boxShadow: const [
-          BoxShadow(
-            color: Color(0xFF400000),
-          ),
+          BoxShadow(color: Color(0xFF400000)),
           BoxShadow(
             offset: Offset(3, 3),
             color: Color(0xFF800000),

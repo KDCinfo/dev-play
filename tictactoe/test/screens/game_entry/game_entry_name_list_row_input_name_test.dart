@@ -19,7 +19,7 @@ void main() {
     ///
 
     group('GameEntryNameListRowInputName Widget', () {
-      setUp(() async {
+      setUp(() {
         player = const GamePlayer(
           playerNum: 1,
         );
@@ -37,28 +37,28 @@ void main() {
       /// Note: Deeper individual widget tests are in their own respective test files.
 
       testWidgets(
-          '[GameEntryNameListRowInputName Widget] has a TextFormField '
-          'with a [player.label] and [hintText].', (
-        WidgetTester tester,
-      ) async {
-        await tester.pumpWidget(wrappedWidget);
-        final widgetFinderTextFormField = find.byType(TextFormField);
-        expect(widgetFinderTextFormField, findsOneWidget);
+        '[GameEntryNameListRowInputName Widget] has a TextFormField '
+        'with a [player.label] and [hintText].',
+        (WidgetTester tester) async {
+          await tester.pumpWidget(wrappedWidget);
+          final widgetFinderTextFormField = find.byType(TextFormField);
+          expect(widgetFinderTextFormField, findsOneWidget);
 
-        // Use specific finders to check for the 'label' and 'hintText'
-        // as they are rendered in the UI.
-        final labelFinder = find.descendant(
-          of: widgetFinderTextFormField,
-          matching: find.text(player.label),
-        );
-        expect(labelFinder, findsOneWidget);
+          // Use specific finders to check for the 'label' and 'hintText'
+          // as they are rendered in the UI.
+          final labelFinder = find.descendant(
+            of: widgetFinderTextFormField,
+            matching: find.text(player.label),
+          );
+          expect(labelFinder, findsOneWidget);
 
-        final hintTextFinder = find.descendant(
-          of: widgetFinderTextFormField,
-          matching: find.text(AppConstants.playerNameHintText),
-        );
-        expect(hintTextFinder, findsOneWidget);
-      });
+          final hintTextFinder = find.descendant(
+            of: widgetFinderTextFormField,
+            matching: find.text(AppConstants.playerNameHintText),
+          );
+          expect(hintTextFinder, findsOneWidget);
+        },
+      );
 
       testWidgets('[GameEntryNameListRowInputName Widget] has a MarkerMenu.', (
         WidgetTester tester,

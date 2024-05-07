@@ -140,25 +140,27 @@ void main() {
 
     group('Hashes:', () {
       test(
-          'GamePlayer PlayerTypeBot [hashCode] should return '
-          'consistent results for equal objects', () {
-        const gamePlayer1 = GamePlayer(
-          playerNum: 1,
-          playerId: 123,
-          playerName: 'John',
-          // playerType: PlayerTypeBot(),
-          userSymbol: UserSymbolEmpty(),
-        );
-        const gamePlayer2 = GamePlayer(
-          playerNum: 1,
-          playerId: 123,
-          playerName: 'John',
-          // playerType: PlayerTypeBot(),
-          userSymbol: UserSymbolEmpty(),
-        );
+        'GamePlayer PlayerTypeBot [hashCode] should return '
+        'consistent results for equal objects',
+        () {
+          const gamePlayer1 = GamePlayer(
+            playerNum: 1,
+            playerId: 123,
+            playerName: 'John',
+            // playerType: PlayerTypeBot(),
+            userSymbol: UserSymbolEmpty(),
+          );
+          const gamePlayer2 = GamePlayer(
+            playerNum: 1,
+            playerId: 123,
+            playerName: 'John',
+            // playerType: PlayerTypeBot(),
+            userSymbol: UserSymbolEmpty(),
+          );
 
-        expect(gamePlayer1.hashCode, equals(gamePlayer2.hashCode));
-      });
+          expect(gamePlayer1.hashCode, equals(gamePlayer2.hashCode));
+        },
+      );
       test('GamePlayer PlayerTypeBot [hashCode] should be based on properties', () {
         const playerTypeBot = PlayerTypeBot();
         const anotherPlayerTypeBot = PlayerTypeBot();

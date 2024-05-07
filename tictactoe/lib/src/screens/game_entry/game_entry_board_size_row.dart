@@ -34,7 +34,7 @@ class GameEntryBoardSizeRow extends StatelessWidget {
               children: [
                 for (var labelIndex = 0; labelIndex < boardSizes.length; labelIndex++)
                   Text(
-                    boardSizes[labelIndex],
+                    boardSizes.elementAtOrNull(labelIndex) ?? '3x3',
                     key: Key(AppConstants.sliderLabelKey(labelIndex)),
                   ),
               ],

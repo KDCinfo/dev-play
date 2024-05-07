@@ -15,7 +15,7 @@ void main() {
     ///
 
     group('GamePlay GameBoard Panel', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanel();
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
@@ -34,7 +34,7 @@ void main() {
       const edgeSize = 3;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanel(); // Default is 3.
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
@@ -64,7 +64,7 @@ void main() {
       const edgeSize = 4;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanel(edgeSize: edgeSize);
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
@@ -94,7 +94,7 @@ void main() {
       const edgeSize = 5;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanel(edgeSize: edgeSize);
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

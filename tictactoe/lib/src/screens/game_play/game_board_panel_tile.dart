@@ -16,13 +16,9 @@ class GameBoardPanelTile extends StatelessWidget {
           color: const Color(0xFF800000).withOpacity(0.5),
           width: 2,
         ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         boxShadow: const [
-          BoxShadow(
-            color: Colors.white,
-          ),
+          BoxShadow(color: Colors.white),
           BoxShadow(
             offset: Offset(2, 2),
             color: Color(0xFF800000),
@@ -34,10 +30,7 @@ class GameBoardPanelTile extends StatelessWidget {
       child: Center(
         child: Text(
           '$index',
-          style: const TextStyle(
-            color: Color(0xFFFFDDDD),
-            fontSize: 20,
-          ),
+          style: const TextStyle(color: Color(0xFFFFDDDD), fontSize: 20),
         ),
       ),
     );

@@ -27,9 +27,7 @@ class PlayerList extends StatelessWidget {
             // Hintext should be a label less than 10 characters
             hintText: AppConstants.playerListHintText,
             inputDecorationTheme: InputDecorationTheme(
-              labelStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               isDense: true,
               border: UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -47,7 +45,7 @@ class PlayerList extends StatelessWidget {
               }),
             ],
             onSelected: (int? value) {
-              log('Selected: $value');
+              log('Selected: ${value ?? 'null'}');
             },
           ),
         );
