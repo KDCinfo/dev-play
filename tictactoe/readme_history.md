@@ -1034,4 +1034,31 @@ CG4:
     - Bloc: Events
     - Bloc: Listeners and builders
 
+@5/6/2024 6:45:37 AM
+- Dev Play: Tic Tac Toe | 1 commit (9 today)
+
+	> Updated `readme_history.md` with latest activities
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/8/2024 4:50:44 AM
+- Dev Play: Tic Tac Toe | 1 commit
+
+	> Added `BaseService` package w `SharedPreferences`.
+	>   Borrowed from my `KD-reCall: Hungry` app.
+
+@5/8/2024 5:53:55 AM
+- Dev Play: Tic Tac Toe | 1 commit
+
+	> Renamed `GamePlayer` to `PlayerData`.
+
+@5/8/2024 6:43:04 AM
+@5/8/2024 7:07:47 AM
+- Dev Play: Tic Tac Toe | 3 commits
+
+	> Added `GameData` model and tests.
+	> Added `GameStatus` model and tests.
+	> Added `PlayerTurn` model and tests.
+
+
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
