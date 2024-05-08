@@ -12,7 +12,7 @@ void main() {
     late Widget widgetToTest;
     late Widget wrappedWidget;
 
-    late GamePlayer player;
+    late PlayerData player;
 
     ///
     /// [ GameEntryNameListRowInputName Widget ]
@@ -20,7 +20,7 @@ void main() {
 
     group('GameEntryNameListRowInputName Widget', () {
       setUp(() {
-        player = const GamePlayer(
+        player = const PlayerData(
           playerNum: 1,
         );
 

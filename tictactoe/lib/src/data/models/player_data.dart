@@ -4,8 +4,8 @@ import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 /// This class could also be referred to as `UserData`.
-class GamePlayer extends Equatable {
-  const GamePlayer({
+class PlayerData extends Equatable {
+  const PlayerData({
     required this.playerNum,
     this.playerId,
     this.playerName = '',
@@ -25,14 +25,14 @@ class GamePlayer extends Equatable {
   /// The label is used on the `TextFormField` as the `label`: 'Player $playerNum Name:'
   String get label => AppConstants.playerLabel(playerNum);
 
-  GamePlayer copyWith({
+  PlayerData copyWith({
     int? playerNum,
     int? playerId,
     String? playerName,
     PlayerType? playerType,
     UserSymbol? userSymbol,
   }) {
-    return GamePlayer(
+    return PlayerData(
       playerNum: playerNum ?? this.playerNum,
       playerId: playerId ?? this.playerId,
       playerName: playerName ?? this.playerName,

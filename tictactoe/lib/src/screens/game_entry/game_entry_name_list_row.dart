@@ -13,7 +13,7 @@ class GameEntryNameListRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final player = GamePlayer(playerNum: playerNum);
+    final player = PlayerData(playerNum: playerNum);
 
     final inputName = GameEntryNameListRowInputName(player: player);
     const savedNames = PlayerList();

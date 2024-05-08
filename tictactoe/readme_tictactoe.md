@@ -83,7 +83,7 @@ Perhaps I should have started with persistent vs. transient data, and their sour
   User ID
   User name
   IsHuman => true
-  Games => [userDataGame1, userDataGame2, ...]
+  Games => [playerDataGame1, playerDataGame2, ...]
 
   User Data Games
   User ID
@@ -141,8 +141,8 @@ This then made senese because it can store GameData, and the GameData can repres
 [Board]       Board(n) => n x n Tiles
 [Tile]        occupiedBy => User? (nullables should be avoided; create an empty user instance)
 [CurrentPlay] User 1 symbol (e.g. X)
-[UserData]    UserId
-[GameData]    UserId
+[PlayerData]    PlayerId
+[GameData]    PlayerId
 [ScoreBook]   GameId => Map<int, GameData> // Reminder to convert `int` key to `string` when JSONifying.
 ```
 
@@ -164,24 +164,24 @@ Need CRC cards, then tests, then code.
 [Tile]
   occupiedBy => User? (nullables should be avoided; create an empty user instance)
 
-[UserData]
-  UserId
+[PlayerData]
+  PlayerId
   User name
   IsHuman => true
-  Games => [userDataGame1, userDataGame2, ...]
-  wins => Games.where(userDataGame. && userDataGame.gameStatus == GameStatusComplete)
+  Games => [playerDataGame1, playerDataGame2, ...]
+  wins => Games.where(playerDataGame. && playerDataGame.gameStatus == GameStatusComplete)
 
 [GameData]
   GameId
-  // UserId // More than one user can be in this GameData
+  // PlayerId // More than one user can be in this GameData
   boardSize => 3 // Square: X or Y | 3 => 3x x 3y (= 9 tiles)
   Players => [user1, user2]
   dateCreated => DateTime,
   dateLastPlayed => DateTime,
   gameResults => {
     userScores => {
-      userId1: score,
-      userId2: score,
+      playerId1: score,
+      playerId2: score,
     }
   }
   User turn (e.g. 1, 2)
@@ -192,11 +192,11 @@ Need CRC cards, then tests, then code.
     // user3 => '+'
   }
   Plays => [{
-    userId,
-    tileId,
+    playerId,
+    playerTurnId,
     duration,
   }]
-  usedTiles => Plays.where(tileId) // <Tiles>[]
+  usedTiles => Plays.where(playerTurnId) // <Tiles>[]
   availableTiles => _boardSize - usedTiles // <Tiles>[]
 
 [ScoreBook] => Map<int, GameData> // Reminder to convert `int` key to `string` when JSONifying.
@@ -254,7 +254,7 @@ Thinking through the flows, and what should update what.
 > [GameData](<User>[] players)
 > [GameBoard](int edgeSize)
   - -> [Tile]
-> [User] => UserData
+> [User] => PlayerData
 > [ScoreBook]
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
@@ -328,9 +328,9 @@ Thinking through the flows, and what should update what.
 
   /// Object Instantiation - Performed after initialization form (above) is submitted.
   --> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
-  --> players => List.of(playerList.forEach(UserData(name, symbol)))
+  --> players => List.of(playerList.forEach(PlayerData(name, symbol)))
   --> gameBoard => GameBoard(int edgeSize)
-  --> gameData => [GameData](int gameId, <UserData>[] players, gameBoard)
+  --> gameData => [GameData](int gameId, <PlayerData>[] players, gameBoard)
   --> [GamePlay](gameData)
   --> [ScoreBook].initGame(gameData)
 
@@ -338,75 +338,75 @@ Thinking through the flows, and what should update what.
 /// Putting a quarter in the slot kicks off `GamePlay`
 /// The bloc for the properties in this class should be hydrated.
 [GamePlay](GameData gameData)
-  + turn => Map<int, UserData> {[1], 2: userData} // 3, 1, 2, ...
-  + gameData.plays.add(TurnPlayTile(userId, duration))
+  + turn => Map<int, PlayerData> {[1], 2: playerData} // 3, 1, 2, ...
+  + gameData.plays.add(PlayerTurn(playerId, duration))
   + ScoreBook.update(gameData)
   // Callbacks to make ScoreBook calls; such as when a game is done
 
 /// # Persisted Data
 [ScoreBook]
   // Reminder to convert `int` keys to `string` when JSONifying.
-  + allPlayers: Map<UserData>(userId: UserData).putIfAbsent(currentPlayers)
+  + allPlayers: Map<PlayerData>(playerId: PlayerData).putIfAbsent(currentPlayers)
     // The symbol in here is irrelevant; this could just be a list of used names.
     // Unless we wanted to store a history of symbols used.
-  + allGamesByUserId: Map<int, int>{ userId: gameId1 }
+  + allGamesByPlayerId: Map<int, int>{ playerId: gameId1 }
   + allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
   + updateGame(gameData) => allGames.updateWhere(gameData)
   + initGame(gameData.players) =>
       allGames.add(),
-      allGamesByUserId.addAll(),
+      allGamesByPlayerId.addAll(),
       allPlayers.putIfAbsent(),
 
 /// # Persisted Data
-[GameData](int gameId, <UserData>[] players, gameBoard)
+[GameData](int gameId, <PlayerData>[] players, gameBoard)
   + gameId
   + dateCreated => DateTime,
   + dateLastPlayed => DateTime,
   + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
-  + plays => <TurnPlayTile>[].add(TurnPlayTile)
-  + players => <Map<int, UserData>>[
-    { userId1, userData1 }, { userId2, userData2 },
+  + plays => <PlayerTurn>[].add(PlayerTurn)
+  + players => <Map<int, PlayerData>>[
+    { playerId1, playerData1 }, { playerId2, playerData2 },
   ]
   + gameBoard
   + endGameScore => {
-    userId1: score, // +1 for each game won; +0 for lost games.
-    userId2: score,
-    // userId3: score,
+    playerId1: score, // +1 for each game won; +0 for lost games.
+    playerId2: score,
+    // playerId3: score,
   }
 
-[GameBoard](int edgeSize, List<TurnPlayTile>[] plays)
+[GameBoard](int edgeSize, List<PlayerTurn>[] plays)
   // boardId // [Q] If there is only one `GameBoard` instance, and it is persisted
   //                within `GameData`, is there a need for an ID? [A] I don't believe so.
   - _boardSize => edgeSize * edgeSize
   get rowFilled => checkRows(_boardSize)
   get colFilled => checkCols(_boardSize)
   get diagFilled => checkDiags(_boardSize)
-  get usedTiles => plays.where(play.tileId) // <Tiles>[]
+  get usedTiles => plays.where(play.playerTurnId) // <Tiles>[]
   get availableTiles => _boardSize - usedTiles // <Tiles>[]
 
-[TurnPlayTile]
-  tileId
-  userId,
+[PlayerTurn]
+  playerTurnId
+  playerId,
   duration,
-  occupiedBy => UserData(userId)
+  occupiedBy => PlayerData(playerId)
 
-[UserData]
-  userId // Users are created based on a given, non-existing name.
-  //        Existing UserData symbols may be overridden when another user has the same symbol.
+[PlayerData]
+  playerId // Users are created based on a given, non-existing name.
+  //        Existing PlayerData symbols may be overridden when another user has the same symbol.
   //        User names and symbols used for players are stored within every `gameData.players`.
-  //        The `id` used as a key in `allGamesByUserId` for game lookups is based on user names,
+  //        The `id` used as a key in `allGamesByPlayerId` for game lookups is based on user names,
   //        not symbols. The symbols used for each name's game can be derived from
   //        looping through all `gameData.players`.
-  userName
+  playerName
   UserSymbol => UserSymbolX, UserSymbolO, UserSymbolP // A user's symbol can change per game.
   PlayerType => PlayerTypeHuman, PlayerTypeBot // Non-OO: IsHuman => true
 
   // Players have no local profiles (enhancement feature?).
   // 2+ players can take turns playing, or 1 player with a bot.
   // User data is transient; games are not stored by user.
-  // Individual game-based [UserData] instances are persisted within [GameData] in the [ScoreBook].
+  // Individual game-based [PlayerData] instances are persisted within [GameData] in the [ScoreBook].
   // Games => [gameData1, gameData2, ...] // Subset of [ScoreBook]
-  // wins => Games.where(userDataGame. && userDataGame.gameStatus == GameStatusComplete)
+  // wins => Games.where(playerDataGame. && playerDataGame.gameStatus == GameStatusComplete)
 
 // + Ask for player symbol ['X', 'O', '+', '/', '^', '@', '$']
 // + Ask for player symbol [
@@ -590,9 +590,9 @@ Thinking through the flows, and what should update what.
 
 [GameBoard]
 
-[TurnPlayTile]
+[PlayerTurn]
 
-[UserData]
+[PlayerData]
 
 [UserSymbol]
 
@@ -602,7 +602,7 @@ Thinking through the flows, and what should update what.
 
       class GameData extends Equatable {
 
-- [game_player] (a.k.a. `UserData`)
+- [game_player] (a.k.a. `PlayerData`)
 
       class GamePlayer extends Equatable {
 
@@ -634,65 +634,66 @@ Thinking through the flows, and what should update what.
 + Ask for board size (edgeSize) | Assert: 5 >= edgeSize[3] > players.length >= 1
 
 --> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
---> players => List.of(playerList.forEach(UserData(name, symbol)))
+--> players => List.of(playerList.forEach(PlayerData(name, symbol)))
 --> gameBoard => GameBoard(int edgeSize)
---> gameData => [GameData](int gameId, <UserData>[] players, gameBoard)
+--> gameData => [GameData](int gameId, <PlayerData>[] players, gameBoard)
 --> [GamePlay](gameData)
 --> [ScoreBook].initGame(gameData)
 
 /// ## Transient Data
 /// The bloc for the properties in this class should be hydrated.
 [GamePlay](GameData gameData)
-+ turn => Map<int, UserData> {[1], 2: userData} // 3, 1, 2, ...
-+ gameData.plays.add(TurnPlayTile(userId, duration))
++ turn => Map<int, PlayerData> {[1], 2: playerData} // 3, 1, 2, ...
++ gameData.plays.add(PlayerTurn(playerId, duration))
 + ScoreBook.update(gameData)
 // Callbacks to make ScoreBook calls; such as when a game is done
 
 /// ## Persisted Data
 [ScoreBook]
   // Reminder to convert `int` keys to `string` when JSONifying.
-+ allPlayers: Map<UserData>(userId: UserData).putIfAbsent(currentPlayers)
-+ allGamesByUserId: Map<int, int>{ userId: gameId1 }
++ allPlayers: Map<PlayerData>(playerId: PlayerData).putIfAbsent(currentPlayers)
++ allGamesByPlayerId: Map<int, int>{ playerId: gameId1 }
 + allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
 + updateGame(gameData) => allGames.updateWhere(gameData)
 + initGame(gameData.players) =>
     allGames.add(),
-    allGamesByUserId.addAll(),
+    allGamesByPlayerId.addAll(),
     allPlayers.putIfAbsent(),
 
 /// ## Persisted Data
-[GameData](int gameId, <UserData>[] players, gameBoard)
+[GameData](int gameId, <PlayerData>[] players, gameBoard)
   + gameId
   + dateCreated => DateTime,
   + dateLastPlayed => DateTime,
   + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
-  + plays => <TurnPlayTile>[].add(TurnPlayTile)
-  + players => <Map<int, UserData>>[
-    { userId1, userData1 }, { userId2, userData2 },
+  + plays => <PlayerTurn>[].add(PlayerTurn)
+  + players => <Map<int, PlayerData>>[
+    { playerId1, playerData1 }, { playerId2, playerData2 },
   ]
   + gameBoard
   + endGameScore => {
-    userId1: score, // +1 for each game won; +0 for lost games.
-    userId2: score,
+    playerId1: score, // +1 for each game won; +0 for lost games.
+    playerId2: score,
   }
 
-[GameBoard](int edgeSize, List<TurnPlayTile>[] plays)
+[GameBoard](int edgeSize, List<PlayerTurn>[] plays)
   - _boardSize => edgeSize * edgeSize
   get rowFilled => checkRows(_boardSize)
   get colFilled => checkCols(_boardSize)
   get diagFilled => checkDiags(_boardSize)
-  get usedTiles => plays.where(play.tileId) // <Tiles>[]
+  get usedTiles => plays.where(play.playerTurnId) // <Tiles>[]
   get availableTiles => _boardSize - usedTiles // <Tiles>[]
 
-[TurnPlayTile]
-  tileId
-  userId,
+[PlayerTurn]
+  playerTurnId
+  playerId,
   duration,
-  occupiedBy => UserData(userId)
+  occupiedBy => PlayerData(playerId)
 
-[UserData]
-  userId
-  userName
+[PlayerData]
+  playerId
+  playerNum
+  playerName
   UserSymbol => UserSymbolX, UserSymbolO, UserSymbolP // A user's symbol can change per game.
   PlayerType => PlayerTypeHuman, PlayerTypeBot // Non-OO: IsHuman => true
 

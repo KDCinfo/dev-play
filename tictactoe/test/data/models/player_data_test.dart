@@ -4,9 +4,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('GamePlayer tests:', () {
-    test('GamePlayer should be a [GamePlayer]', () {
-      const gamePlayer = GamePlayer(
+  group('PlayerData tests:', () {
+    test('PlayerData should be a [PlayerData]', () {
+      const playerData = PlayerData(
         playerNum: 1,
         playerId: 123,
         playerName: 'John',
@@ -14,17 +14,17 @@ void main() {
         userSymbol: UserSymbolEmpty(),
       );
 
-      expect(gamePlayer, isA<GamePlayer>());
+      expect(playerData, isA<PlayerData>());
     });
 
-    test('GamePlayer [label] should return the correct player label', () {
-      const gamePlayer = GamePlayer(playerNum: 2);
+    test('PlayerData [label] should return the correct player label', () {
+      const playerData = PlayerData(playerNum: 2);
 
-      expect(gamePlayer.label, equals('Player 2 Name:'));
+      expect(playerData.label, equals('Player 2 Name:'));
     });
 
-    test('GamePlayer [toString] should return the correct string representation', () {
-      const gamePlayer = GamePlayer(
+    test('PlayerData [toString] should return the correct string representation', () {
+      const playerData = PlayerData(
         playerNum: 1,
         playerId: 123,
         playerName: 'John',
@@ -33,13 +33,13 @@ void main() {
       );
 
       expect(
-        gamePlayer.toString(),
-        equals('GamePlayer(1, 123, John, PlayerTypeBot(PlayerTypeEnum.bot), UserSymbolEmpty(?))'),
+        playerData.toString(),
+        equals('PlayerData(1, 123, John, PlayerTypeBot(PlayerTypeEnum.bot), UserSymbolEmpty(?))'),
       );
     });
 
-    test('GamePlayer [copyWith] should return a new GamePlayer with updated values', () {
-      const gamePlayer = GamePlayer(
+    test('PlayerData [copyWith] should return a new PlayerData with updated values', () {
+      const playerData = PlayerData(
         playerNum: 1,
         playerId: 123,
         playerName: 'John',
@@ -47,14 +47,14 @@ void main() {
         userSymbol: UserSymbolEmpty(),
       );
 
-      final updatedPlayer = gamePlayer.copyWith(
+      final updatedPlayer = playerData.copyWith(
         playerId: 456,
         playerName: 'Jane',
         playerType: const PlayerTypeHuman(),
         userSymbol: const UserSymbolX(),
       );
 
-      expect(updatedPlayer.playerNum, equals(gamePlayer.playerNum));
+      expect(updatedPlayer.playerNum, equals(playerData.playerNum));
       expect(updatedPlayer.playerId, equals(456));
       expect(updatedPlayer.playerName, equals('Jane'));
       expect(updatedPlayer.playerType, isA<PlayerTypeHuman>());
@@ -62,8 +62,8 @@ void main() {
     });
 
     group('Equatable:', () {
-      test('GamePlayer should be an [Equatable]', () {
-        const gamePlayer = GamePlayer(
+      test('PlayerData should be an [Equatable]', () {
+        const playerData = PlayerData(
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
@@ -71,11 +71,11 @@ void main() {
           userSymbol: UserSymbolEmpty(),
         );
 
-        expect(gamePlayer, isA<Equatable>());
+        expect(playerData, isA<Equatable>());
       });
 
-      test('GamePlayer [props] should return the correct list of properties', () {
-        const gamePlayer = GamePlayer(
+      test('PlayerData [props] should return the correct list of properties', () {
+        const playerData = PlayerData(
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
@@ -84,7 +84,7 @@ void main() {
         );
 
         expect(
-          gamePlayer.props,
+          playerData.props,
           equals([
             1,
             123,
@@ -97,8 +97,8 @@ void main() {
     });
 
     group('Equality:', () {
-      test('GamePlayer [==] should return true if two GamePlayers are equal', () {
-        const gamePlayer1 = GamePlayer(
+      test('PlayerData [==] should return true if two PlayerDatas are equal', () {
+        const playerData1 = PlayerData(
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
@@ -106,7 +106,7 @@ void main() {
           userSymbol: UserSymbolEmpty(),
         );
 
-        const gamePlayer2 = GamePlayer(
+        const playerData2 = PlayerData(
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
@@ -114,11 +114,11 @@ void main() {
           userSymbol: UserSymbolEmpty(),
         );
 
-        expect(gamePlayer1 == gamePlayer2, isTrue);
+        expect(playerData1 == playerData2, isTrue);
       });
 
-      test('GamePlayer [==] should return false if two GamePlayers are not equal', () {
-        const gamePlayer1 = GamePlayer(
+      test('PlayerData [==] should return false if two PlayerDatas are not equal', () {
+        const playerData1 = PlayerData(
           playerNum: 1,
           playerId: 123,
           playerName: 'John',
@@ -126,7 +126,7 @@ void main() {
           userSymbol: UserSymbolEmpty(),
         );
 
-        const gamePlayer2 = GamePlayer(
+        const playerData2 = PlayerData(
           playerNum: 2,
           playerId: 456,
           playerName: 'Jane',
@@ -134,23 +134,23 @@ void main() {
           userSymbol: UserSymbolX(),
         );
 
-        expect(gamePlayer1 == gamePlayer2, isFalse);
+        expect(playerData1 == playerData2, isFalse);
       });
     });
 
     group('Hashes:', () {
       test(
-        'GamePlayer PlayerTypeBot [hashCode] should return '
+        'PlayerData PlayerTypeBot [hashCode] should return '
         'consistent results for equal objects',
         () {
-          const gamePlayer1 = GamePlayer(
+          const playerData1 = PlayerData(
             playerNum: 1,
             playerId: 123,
             playerName: 'John',
             // playerType: PlayerTypeBot(),
             userSymbol: UserSymbolEmpty(),
           );
-          const gamePlayer2 = GamePlayer(
+          const playerData2 = PlayerData(
             playerNum: 1,
             playerId: 123,
             playerName: 'John',
@@ -158,10 +158,10 @@ void main() {
             userSymbol: UserSymbolEmpty(),
           );
 
-          expect(gamePlayer1.hashCode, equals(gamePlayer2.hashCode));
+          expect(playerData1.hashCode, equals(playerData2.hashCode));
         },
       );
-      test('GamePlayer PlayerTypeBot [hashCode] should be based on properties', () {
+      test('PlayerData PlayerTypeBot [hashCode] should be based on properties', () {
         const playerTypeBot = PlayerTypeBot();
         const anotherPlayerTypeBot = PlayerTypeBot();
 

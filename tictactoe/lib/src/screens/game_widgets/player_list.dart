@@ -36,7 +36,7 @@ class PlayerList extends StatelessWidget {
             ),
             dropdownMenuEntries: [
               /// 'Select from previous names:'
-              ...playerList.map((GamePlayer entry) {
+              ...playerList.map((PlayerData entry) {
                 return DropdownMenuEntry(
                   // A player can't be stored without a 'playerId'.
                   value: entry.playerId!,

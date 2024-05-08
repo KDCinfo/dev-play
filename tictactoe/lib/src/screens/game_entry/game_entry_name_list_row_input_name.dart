@@ -10,7 +10,7 @@ class GameEntryNameListRowInputName extends StatelessWidget {
     super.key,
   });
 
-  final GamePlayer player;
+  final PlayerData player;
 
   @override
   Widget build(BuildContext context) {
