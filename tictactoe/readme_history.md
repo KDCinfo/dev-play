@@ -1060,5 +1060,19 @@ CG4:
 	> Added `GameStatus` model and tests.
 	> Added `PlayerTurn` model and tests.
 
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/9/2024 5:00:59 AM
+- Dev Play: Tic Tac Toe | 4 commits
+
+	> Added a testing helper file for navigation.
+	> Added `_row` to `game_entry_buttons_test.dart`
+	> Reordered and categorized properties based on usage.
+	> Ran coverage; added more tests; now at 95.7%.
+
+	Also working on:
+
+  - Created model: `GameBoard`
+  - Adding a `GameData.initial` factory
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------

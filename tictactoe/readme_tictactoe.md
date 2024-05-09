@@ -737,5 +737,40 @@ By methodically building and testing each part of your application, you ensure t
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
 
+@5/9/2024 12:03:38 AM
+- Note: `genhtml` is NOT available for Windows (I have only ever run it on my Mac).
+
+  - You can try running it through Cygwin.
+  - The Coverage Gutters VS Code extension is nice, just wish it had an outline-like view for it
+    (but then maybe it does, or will).
+  - May check some other VS Code extensions.
+
+@5/9/2024 12:40:21 AM
+- Dev Play: Test Coverage Research - VS Code Extensions
+
+## [Installed]
+
+1) Coverage Gutters | ryanluker
+
+ -  https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters
+
+2) Koverage | tenninebt
+
+  - https://marketplace.visualstudio.com/items?itemName=tenninebt.vscode-koverage
+  - Shows overall coverage by folder and file
+  - Updated 7 months ago
+    > https://github.com/tenninebt/vscode-koverage?tab=readme-ov-file#readme
+    > https://raw.githubusercontent.com/tenninebt/vscode-koverage/master/Capture.gif
+
+## [Not Installed]
+
+  - https://marketplace.visualstudio.com/items?itemName=markis.code-coverage
+  - Blends itself in with the Problems tab, which I would prefer not.
+
+- VSCode LCOV | alexdima
+
+  - https://marketplace.visualstudio.com/items?itemName=alexdima.vscode-lcov
+  - Thought this looked line-by-line, but looks like it does have an overall view.
+  - GitHub not updated in 7-8 years. :o | https://github.com/alexdima/vscode-lcov/tree/master
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
