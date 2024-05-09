@@ -51,6 +51,25 @@ void main() {
           expect(labelFinderLast, findsOneWidget);
         },
       );
+
+      testWidgets(
+        '[PlayerList Widget] onSelected prints the selected value.',
+        (WidgetTester tester) async {
+          // final playerList = AppDataFake.fakePlayerList3;
+
+          await tester.pumpWidget(wrappedWidget);
+          final widgetFinderDropdownMenuEntry = find.byType(DropdownMenu<int>);
+          expect(widgetFinderDropdownMenuEntry, findsOneWidget);
+
+          // onSelected: (int? value) {
+          //   log('Selected: ${value ?? 'null'}');
+          // },
+          await tester.tap(find.byType(DropdownMenu<int>));
+          await tester.pumpAndSettle();
+        },
+        // @TODO: Testing this will be done with a mocked Bloc.
+        skip: true,
+      );
     });
   });
 }

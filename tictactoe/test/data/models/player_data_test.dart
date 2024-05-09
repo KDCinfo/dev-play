@@ -59,6 +59,17 @@ void main() {
       expect(updatedPlayer.playerName, equals('Jane'));
       expect(updatedPlayer.playerType, isA<PlayerTypeHuman>());
       expect(updatedPlayer.userSymbol, isA<UserSymbolX>());
+
+      final updatedPlayer2 = updatedPlayer.copyWith(
+        playerNum: 3,
+      );
+
+      expect(updatedPlayer2.playerNum, equals(3));
+      // Nothing else changes from first copyWith
+      expect(updatedPlayer2.playerId, equals(456));
+      expect(updatedPlayer2.playerName, equals('Jane'));
+      expect(updatedPlayer2.playerType, isA<PlayerTypeHuman>());
+      expect(updatedPlayer2.userSymbol, isA<UserSymbolX>());
     });
 
     group('Equatable:', () {

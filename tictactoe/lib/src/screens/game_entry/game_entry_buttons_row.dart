@@ -19,6 +19,7 @@ class GameEntryButtonsRow extends StatelessWidget {
       runSpacing: 10,
       children: [
         ElevatedButton(
+          // @TODO: Testing this will be done with a Bloc.
           onPressed: () {
             Navigator.pushNamed(context, '/play');
           },
@@ -32,6 +33,7 @@ class GameEntryButtonsRow extends StatelessWidget {
           ),
         ),
         TextButton(
+          // @TODO: Testing this will be done with a Bloc.
           onPressed: () {},
           child: const Text(
             buttonReset,

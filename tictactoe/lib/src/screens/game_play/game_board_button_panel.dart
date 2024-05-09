@@ -30,6 +30,7 @@ class GameBoardButtonPanel extends StatelessWidget {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 7),
             ),
+            // @TODO: Testing this will be done with a Bloc.
             onPressed: () {
               Navigator.pop(context);
             },

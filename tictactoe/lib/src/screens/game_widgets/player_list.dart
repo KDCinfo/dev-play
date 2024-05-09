@@ -44,6 +44,7 @@ class PlayerList extends StatelessWidget {
                 );
               }),
             ],
+            // @TODO: Testing this will be done with a Bloc.
             onSelected: (int? value) {
               log('Selected: ${value ?? 'null'}');
             },

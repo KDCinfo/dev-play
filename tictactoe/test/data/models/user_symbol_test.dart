@@ -10,10 +10,13 @@ void main() {
         const userSymbol = UserSymbolEmpty();
         expect(userSymbol.markerKey, '?');
       });
-
       test('markerIcon should be the default question mark icon', () {
         const userSymbol = UserSymbolEmpty();
         expect(userSymbol.markerIcon.icon, Icons.list);
+      });
+      test('UserSymbol [props] should return the correct list of properties', () {
+        const userSymbol = UserSymbolEmpty();
+        expect(userSymbol.props, equals(['?']));
       });
     });
 
@@ -22,10 +25,13 @@ void main() {
         const userSymbol = UserSymbolX();
         expect(userSymbol.markerKey, 'x');
       });
-
       test('markerIcon should be the default close icon', () {
         const userSymbol = UserSymbolX();
         expect(userSymbol.markerIcon.icon, Icons.close);
+      });
+      test('UserSymbolX [props] should return the correct list of properties', () {
+        const userSymbol = UserSymbolX();
+        expect(userSymbol.props, equals(['x']));
       });
     });
 
@@ -34,10 +40,13 @@ void main() {
         const userSymbol = UserSymbolO();
         expect(userSymbol.markerKey, 'o');
       });
-
       test('markerIcon should be the default mood icon', () {
         const userSymbol = UserSymbolO();
         expect(userSymbol.markerIcon.icon, Icons.mood);
+      });
+      test('UserSymbolO [props] should return the correct list of properties', () {
+        const userSymbol = UserSymbolO();
+        expect(userSymbol.props, equals(['o']));
       });
     });
 
@@ -46,10 +55,13 @@ void main() {
         const userSymbol = UserSymbolPlus();
         expect(userSymbol.markerKey, '+');
       });
-
       test('markerIcon should be the default favorite icon', () {
         const userSymbol = UserSymbolPlus();
         expect(userSymbol.markerIcon.icon, Icons.favorite);
+      });
+      test('UserSymbolPlus [props] should return the correct list of properties', () {
+        const userSymbol = UserSymbolPlus();
+        expect(userSymbol.props, equals(['+']));
       });
     });
 
@@ -58,10 +70,13 @@ void main() {
         const userSymbol = UserSymbolStar();
         expect(userSymbol.markerKey, '*');
       });
-
       test('markerIcon should be the default star border icon', () {
         const userSymbol = UserSymbolStar();
         expect(userSymbol.markerIcon.icon, Icons.star_border);
+      });
+      test('UserSymbolStar [props] should return the correct list of properties', () {
+        const userSymbol = UserSymbolStar();
+        expect(userSymbol.props, equals(['*']));
       });
     });
   });

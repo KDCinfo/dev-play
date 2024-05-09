@@ -28,6 +28,7 @@ class MarkerMenu extends StatelessWidget {
             return ConstrainedBox(
               constraints: const BoxConstraints.tightFor(height: AppConstants.markerSize * 1.5),
               child: MenuItemButton(
+                // @TODO: Testing this will be done with a Bloc.
                 onPressed: () {
                   log(entry.key);
                   _menuController.close();

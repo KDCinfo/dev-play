@@ -45,6 +45,7 @@ class GameEntryBoardSizeRow extends StatelessWidget {
             value: 1,
             min: 1,
             max: boardSizes.length.toDouble(),
+            // @TODO: Testing this will be done with a Bloc.
             onChanged: (value) {},
             divisions: boardSizes.length - 1,
           ),

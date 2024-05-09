@@ -31,6 +31,34 @@ void main() {
 
         expect(gameData, isA<GameData>());
       });
+
+      test('GameData [props] should return the correct list of properties', () {
+        final dateTime = DateTime(2024, 5, 8);
+        gameData = GameData(
+          gameId: 0,
+          dateCreated: dateTime,
+          players: const [],
+          dateLastPlayed: dateTime,
+          plays: const [],
+          gameBoard: const [],
+          endGameScore: const {},
+          gameStatus: const GameStatusInProgress(),
+        );
+
+        expect(
+          gameData.props,
+          equals([
+            0,
+            dateTime,
+            <PlayerListByIdDef>[],
+            dateTime,
+            <PlayerTurn>[],
+            <List<int>>[],
+            <int, int>{},
+            const GameStatusInProgress(),
+          ]),
+        );
+      });
     });
 
     group('[GameData] copyWith:', () {
@@ -90,7 +118,7 @@ void main() {
           ],
         );
 
-        final updatedGameData2 = gameData.copyWith(
+        final updatedGameData2 = updatedGameData1.copyWith(
           dateLastPlayed: dateTime3,
           plays: List.of(updatedGameData1.plays)
             ..add(playerTurn2), // plays: [...gameData.plays, playerTurn2]
@@ -98,10 +126,14 @@ void main() {
             [5],
             [7]
           ],
+        );
+
+        final updatedGameData3 = updatedGameData2.copyWith(
           endGameScore: {1: 0},
           gameStatus: const GameStatusComplete(),
         );
 
+        /// 1
         expect(updatedGameData1.gameId, 1);
         expect(updatedGameData1.dateCreated, dateTime1);
         expect(updatedGameData1.players, const [
@@ -113,7 +145,10 @@ void main() {
         expect(updatedGameData1.gameBoard, [
           [5]
         ]);
+        expect(updatedGameData1.endGameScore, {0: 0});
+        expect(updatedGameData1.gameStatus, isA<GameStatusInProgress>());
 
+        /// 2
         expect(updatedGameData2.gameId, 1);
         expect(updatedGameData2.dateCreated, dateTime1);
         expect(updatedGameData2.players, const [
@@ -126,8 +161,24 @@ void main() {
           [5],
           [7]
         ]);
-        expect(updatedGameData2.endGameScore, {1: 0});
-        expect(updatedGameData2.gameStatus, isA<GameStatusComplete>());
+        expect(updatedGameData2.endGameScore, {0: 0});
+        expect(updatedGameData2.gameStatus, isA<GameStatusInProgress>());
+
+        /// 3
+        expect(updatedGameData3.gameId, 1);
+        expect(updatedGameData3.dateCreated, dateTime1);
+        expect(updatedGameData3.players, const [
+          {0: playerData1},
+          {1: playerData2}
+        ]);
+        expect(updatedGameData3.dateLastPlayed, dateTime3);
+        expect(updatedGameData3.plays, [playerTurn1, playerTurn2]);
+        expect(updatedGameData3.gameBoard, [
+          [5],
+          [7]
+        ]);
+        expect(updatedGameData3.endGameScore, {1: 0});
+        expect(updatedGameData3.gameStatus, isA<GameStatusComplete>());
       });
     });
   });
