@@ -29,6 +29,15 @@ class PlayerTurn extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'playerTurnId': playerTurnId,
+      'playerId': playerId,
+      'duration': duration.inSeconds,
+      'occupiedBy': occupiedBy.toJson(),
+    };
+  }
+
   @override
   List<Object?> get props => [
         playerTurnId,

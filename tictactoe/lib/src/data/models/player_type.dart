@@ -4,6 +4,8 @@ abstract class PlayerType extends Equatable {
   const PlayerType(this.playerType);
 
   final PlayerTypeEnum playerType;
+
+  Map<String, dynamic> toJson() => {'playerType': playerType.toString()};
 }
 
 class PlayerTypeHuman extends PlayerType {

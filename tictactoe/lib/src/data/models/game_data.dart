@@ -76,6 +76,16 @@ class GameData extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+        'gameId': gameId,
+        'dateCreated': dateCreated?.toIso8601String(),
+        'players': players,
+        'dateLastPlayed': dateLastPlayed?.toIso8601String(),
+        'gameBoardData': gameBoardData,
+        'endGameScore': endGameScore,
+        'gameStatus': gameStatus,
+      };
+
   @override
   List<Object?> get props => [
         gameId,

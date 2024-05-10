@@ -41,6 +41,17 @@ class PlayerData extends Equatable {
     );
   }
 
+  // toJson
+  Map<String, dynamic> toJson() {
+    return {
+      'playerNum': playerNum,
+      'playerId': playerId,
+      'playerName': playerName,
+      'playerType': playerType.toJson(),
+      'userSymbol': userSymbol.toJson(),
+    };
+  }
+
   @override
   List<Object?> get props => [
         playerNum,

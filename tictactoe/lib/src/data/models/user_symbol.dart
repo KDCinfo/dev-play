@@ -13,6 +13,8 @@ abstract class UserSymbol extends Equatable {
   final String markerKey;
 
   Icon get markerIcon;
+
+  Map<String, dynamic> toJson() => {'markerKey': markerKey, 'markerIcon': markerIcon.icon};
 }
 
 class UserSymbolEmpty extends UserSymbol {
