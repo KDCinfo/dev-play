@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:equatable/equatable.dart';
@@ -26,8 +27,6 @@ import 'package:equatable/equatable.dart';
 ///   }
 ///   + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
 
-typedef PlayerListByIdDef = List<Map<int, PlayerData>>;
-
 class GameData extends Equatable {
   const GameData({
     required this.gameId,
@@ -43,7 +42,7 @@ class GameData extends Equatable {
   /// Initial game properties.
   final int gameId;
   final DateTime dateCreated;
-  final PlayerListByIdDef players;
+  final PlayerListMapsByIdDef players;
 
   /// Properties updated during a game.
   final DateTime dateLastPlayed;
@@ -57,7 +56,6 @@ class GameData extends Equatable {
   GameData copyWith({
     int? gameId,
     DateTime? dateCreated,
-    PlayerListByIdDef? players,
     DateTime? dateLastPlayed,
     List<PlayerTurn>? plays,
     List<List<int>>? gameBoard,
@@ -67,7 +65,6 @@ class GameData extends Equatable {
     return GameData(
       gameId: gameId ?? this.gameId,
       dateCreated: dateCreated ?? this.dateCreated,
-      players: players ?? this.players,
       dateLastPlayed: dateLastPlayed ?? this.dateLastPlayed,
       plays: plays ?? this.plays,
       gameBoard: gameBoard ?? this.gameBoard,
