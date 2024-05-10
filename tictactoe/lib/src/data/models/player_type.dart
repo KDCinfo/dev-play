@@ -21,8 +21,3 @@ class PlayerTypeBot extends PlayerType {
   @override
   List<Object?> get props => [playerType];
 }
-
-enum PlayerTypeEnum {
-  human,
-  bot,
-}

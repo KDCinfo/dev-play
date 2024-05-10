@@ -1,5 +1,4 @@
-import 'package:dev_play_tictactoe/src/data/models/models.dart';
-
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class GameStatus extends Equatable {
@@ -13,7 +12,7 @@ class GameStatusInProgress extends GameStatus {
   const GameStatusInProgress() : super();
 
   @override
-  String get statusMessage => GameStatusConstants.inProgress;
+  String get statusMessage => GameStatusEnum.inProgress.statusStr;
 
   @override
   List<Object?> get props => [statusMessage];
@@ -23,7 +22,7 @@ class GameStatusComplete extends GameStatus {
   const GameStatusComplete() : super();
 
   @override
-  String get statusMessage => GameStatusConstants.complete;
+  String get statusMessage => GameStatusEnum.complete.statusStr;
 
   @override
   List<Object?> get props => [statusMessage];

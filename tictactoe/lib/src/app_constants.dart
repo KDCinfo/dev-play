@@ -43,3 +43,24 @@ abstract class AppConstants {
   static const buttonReturnHomeKey = 'ReturnToHomeKey';
   static const buttonReturnHomeMsg = '(game is saved)';
 }
+
+enum GameStatusEnum implements Comparable<GameStatusEnum> {
+  inProgress(statusStr: 'In Progress'),
+  complete(statusStr: 'Complete');
+
+  // final String inProgress: 'In Progress';
+  // final String complete: 'Complete';
+  const GameStatusEnum({
+    required this.statusStr,
+  });
+
+  final String statusStr;
+
+  @override
+  int compareTo(GameStatusEnum other) => statusStr.length - other.statusStr.length;
+}
+
+enum PlayerTypeEnum {
+  human,
+  bot,
+}

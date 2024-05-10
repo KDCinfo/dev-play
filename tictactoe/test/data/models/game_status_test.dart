@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -7,7 +8,7 @@ void main() {
     group('[GameStatusInProgress]', () {
       test('statusMessage should be "In Progress"', () {
         const gameStatus = GameStatusInProgress();
-        expect(gameStatus.statusMessage, GameStatusConstants.inProgress);
+        expect(gameStatus.statusMessage, GameStatusEnum.inProgress.statusStr);
       });
 
       test('props should contain statusMessage', () {
@@ -19,7 +20,7 @@ void main() {
     group('[GameStatusComplete]', () {
       test('statusMessage should be "Complete"', () {
         const gameStatus = GameStatusComplete();
-        expect(gameStatus.statusMessage, GameStatusConstants.complete);
+        expect(gameStatus.statusMessage, GameStatusEnum.complete.statusStr);
       });
 
       test('props should contain statusMessage', () {
