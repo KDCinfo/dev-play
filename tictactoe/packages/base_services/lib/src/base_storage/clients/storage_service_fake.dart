@@ -71,10 +71,14 @@ class FakeStorageService implements StorageServiceApi {
   @override
   Future<void> secureClearAll() async {
     // Implement secureClearAll
+    throw UnimplementedError();
   }
 
   @override
-  Future<void> deleteAllSecureExcept({required List<String> exceptionList}) async {}
+  Future<void> deleteAllSecureExcept({required List<String> exceptionList}) async {
+    // Implement deleteAllSecureExcept
+    throw UnimplementedError();
+  }
 
   @override
   Set<String> storedKeys() {
@@ -85,6 +89,15 @@ class FakeStorageService implements StorageServiceApi {
   @override
   Future<Map<String, String>> secureStoredKeys() {
     // Implement storedKeys
+    throw UnimplementedError();
+  }
+
+  ///
+  /// App-Specific
+  ///
+  @override
+  Future<void> gameDataToStorage(String newGameData) async {
+    // Implement gameDataToStorage
     throw UnimplementedError();
   }
 

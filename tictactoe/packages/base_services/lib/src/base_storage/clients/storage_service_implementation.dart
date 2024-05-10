@@ -215,6 +215,18 @@ class StorageServiceImpl implements StorageServiceApi {
     }
   }
 
+  ///
+  /// App-Specific
+  ///
+  @override
+  Future<void> gameDataToStorage(String newGameData) async {
+    try {
+      await prefsSetString(key: 'gameData', value: newGameData);
+    } catch (err) {
+      _catchErrors('storage_service: gameDataToStorage', err.toString());
+    }
+  }
+
   /// Additional examples:
   ///
   // static const sharedPrefExchangeRateKey = 'exchange_rate_key';
