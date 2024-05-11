@@ -107,6 +107,40 @@ void main() {
       });
     });
 
+    group('PlayerData [JSON]:', () {
+      test('toJson', () {
+        const playerData = PlayerData(
+          playerNum: 1,
+          playerId: 123,
+          playerName: 'John',
+          playerType: PlayerTypeHuman(),
+          userSymbol: UserSymbolEmpty(),
+        );
+        expect(
+          playerData.toJson(),
+          equals({
+            'playerNum': 1,
+            'playerId': 123,
+            'playerName': 'John',
+            'playerType': {'playerType': 'PlayerTypeEnum.human'},
+            'userSymbol': {'markerKey': '?'},
+          }),
+        );
+      });
+      test('fromJson', () {
+        const playerData = PlayerData(
+          playerNum: 1,
+          playerId: 123,
+          playerName: 'John',
+          playerType: PlayerTypeHuman(),
+          userSymbol: UserSymbolEmpty(),
+        );
+        final playerDataJson = playerData.toJson();
+        final playerDataFromJson = PlayerData.fromJson(playerDataJson);
+        expect(playerData, equals(playerDataFromJson));
+      });
+    });
+
     group('Equality:', () {
       test('PlayerData [==] should return true if two PlayerDatas are equal', () {
         const playerData1 = PlayerData(

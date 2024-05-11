@@ -13,6 +13,34 @@ class PlayerData extends Equatable {
     UserSymbol? userSymbol,
   }) : userSymbol = userSymbol ?? const UserSymbolEmpty();
 
+  /// Instantiate from JSON.
+  factory PlayerData.fromJson(Map<String, dynamic> json) {
+    final playerNum = json['playerNum'] as int;
+    final playerId = json['playerId'] as int?;
+    final playerName = json['playerName'] as String;
+    final playerType = PlayerType.fromJson(json['playerType'] as Map<String, dynamic>);
+    final userSymbol = UserSymbol.fromJson(json['userSymbol'] as Map<String, dynamic>);
+
+    return PlayerData(
+      playerNum: playerNum,
+      playerId: playerId,
+      playerName: playerName,
+      playerType: playerType,
+      userSymbol: userSymbol,
+    );
+  }
+
+  /// Convert to JSON.
+  Map<String, dynamic> toJson() {
+    return {
+      'playerNum': playerNum,
+      'playerId': playerId,
+      'playerName': playerName,
+      'playerType': playerType.toJson(),
+      'userSymbol': userSymbol.toJson(),
+    };
+  }
+
   // Persistent: once set, should never change once played.
   final int? playerId;
   final String playerName;
@@ -39,17 +67,6 @@ class PlayerData extends Equatable {
       playerType: playerType ?? this.playerType,
       userSymbol: userSymbol ?? this.userSymbol,
     );
-  }
-
-  // toJson
-  Map<String, dynamic> toJson() {
-    return {
-      'playerNum': playerNum,
-      'playerId': playerId,
-      'playerName': playerName,
-      'playerType': playerType.toJson(),
-      'userSymbol': userSymbol.toJson(),
-    };
   }
 
   @override
