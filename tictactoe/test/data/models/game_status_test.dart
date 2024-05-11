@@ -28,5 +28,32 @@ void main() {
         expect(gameStatus.props, [gameStatus.statusMessage]);
       });
     });
+
+    group('GameStatus [JSON]:', () {
+      group('GameStatusInProgress:', () {
+        test('toJson', () {
+          const gameStatus = GameStatusInProgress();
+          expect(gameStatus.toJson(), equals({'statusMessage': 'In Progress'}));
+        });
+        test('fromJson', () {
+          const gameStatus = GameStatusInProgress();
+          final gameStatusJson = gameStatus.toJson();
+          final gameStatusFromJson = GameStatus.fromJson(gameStatusJson);
+          expect(gameStatus, equals(gameStatusFromJson));
+        });
+      });
+      group('GameStatusComplete:', () {
+        test('toJson', () {
+          const gameStatus = GameStatusComplete();
+          expect(gameStatus.toJson(), equals({'statusMessage': 'Complete'}));
+        });
+        test('fromJson', () {
+          const gameStatus = GameStatusComplete();
+          final gameStatusJson = gameStatus.toJson();
+          final gameStatusFromJson = GameStatus.fromJson(gameStatusJson);
+          expect(gameStatus, equals(gameStatusFromJson));
+        });
+      });
+    });
   });
 }
