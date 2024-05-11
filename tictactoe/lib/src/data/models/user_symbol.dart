@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// UserSymbol => A user's symbol can change per game.
 ///
-abstract class UserSymbol extends Equatable {
+sealed class UserSymbol extends Equatable {
   const UserSymbol({required this.markerKey});
 
   /// Marker Keys for marker symbols:
@@ -14,11 +14,39 @@ abstract class UserSymbol extends Equatable {
 
   Icon get markerIcon;
 
-  Map<String, dynamic> toJson() => {'markerKey': markerKey, 'markerIcon': markerIcon.icon};
+  /// Convert to JSON.
+  Map<String, dynamic> toJson() {
+    return {
+      'markerKey': markerKey,
+      // The `markerKey` is unique, so the `markerIcon` is not needed.
+      // 'markerIcon': markerIcon.icon,
+    };
+  }
+
+  /// Instantiate from JSON.
+  static UserSymbol fromJson(Map<String, dynamic> json) {
+    final markerKey = json['markerKey'] as String;
+
+    switch (markerKey) {
+      case '?':
+        return const UserSymbolEmpty();
+      case 'x':
+        return const UserSymbolX();
+      case 'o':
+        return const UserSymbolO();
+      case '+':
+        return const UserSymbolPlus();
+      case '*':
+        return const UserSymbolStar();
+      default:
+        throw Exception('Unknown UserSymbol: $markerKey');
+    }
+  }
 }
 
 class UserSymbolEmpty extends UserSymbol {
   const UserSymbolEmpty() : super(markerKey: '?');
+
   @override
   Icon get markerIcon => AppConstants.markerList[markerKey] ?? const Icon(Icons.list);
   @override

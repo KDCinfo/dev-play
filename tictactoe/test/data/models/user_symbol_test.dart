@@ -18,6 +18,23 @@ void main() {
         const userSymbol = UserSymbolEmpty();
         expect(userSymbol.props, equals(['?']));
       });
+      group('UserSymbolEmpty JSON:', () {
+        test('toJson: UserSymbolEmpty', () {
+          const userSymbol = UserSymbolEmpty();
+          expect(
+            userSymbol.toJson(),
+            equals({'markerKey': '?'}),
+            // The `markerKey` is unique, so the `markerIcon` is not needed.
+            // equals({'markerKey': '?', 'markerIcon': Icons.list}),
+          );
+        });
+        test('fromJson: UserSymbolEmpty', () {
+          const userSymbol = UserSymbolEmpty();
+          final userSymbolJson = userSymbol.toJson();
+          final userSymbolFromJson = UserSymbol.fromJson(userSymbolJson);
+          expect(userSymbol, equals(userSymbolFromJson));
+        });
+      });
     });
 
     group('UserSymbolX', () {
@@ -32,6 +49,21 @@ void main() {
       test('UserSymbolX [props] should return the correct list of properties', () {
         const userSymbol = UserSymbolX();
         expect(userSymbol.props, equals(['x']));
+      });
+      group('UserSymbolX JSON:', () {
+        test('toJson: UserSymbolX', () {
+          const userSymbol = UserSymbolX();
+          expect(
+            userSymbol.toJson(),
+            equals({'markerKey': 'x'}), // , 'markerIcon': Icons.close}),
+          );
+        });
+        test('fromJson: UserSymbolX', () {
+          const userSymbol = UserSymbolX();
+          final userSymbolJson = userSymbol.toJson();
+          final userSymbolFromJson = UserSymbol.fromJson(userSymbolJson);
+          expect(userSymbol, equals(userSymbolFromJson));
+        });
       });
     });
 
@@ -48,6 +80,21 @@ void main() {
         const userSymbol = UserSymbolO();
         expect(userSymbol.props, equals(['o']));
       });
+      group('UserSymbolO JSON:', () {
+        test('toJson: UserSymbolO', () {
+          const userSymbol = UserSymbolO();
+          expect(
+            userSymbol.toJson(),
+            equals({'markerKey': 'o'}), // , 'markerIcon': Icons.mood}),
+          );
+        });
+        test('fromJson: UserSymbolO', () {
+          const userSymbol = UserSymbolO();
+          final userSymbolJson = userSymbol.toJson();
+          final userSymbolFromJson = UserSymbol.fromJson(userSymbolJson);
+          expect(userSymbol, equals(userSymbolFromJson));
+        });
+      });
     });
 
     group('UserSymbolPlus', () {
@@ -63,6 +110,21 @@ void main() {
         const userSymbol = UserSymbolPlus();
         expect(userSymbol.props, equals(['+']));
       });
+      group('UserSymbolPlus JSON:', () {
+        test('toJson: UserSymbolPlus', () {
+          const userSymbol = UserSymbolPlus();
+          expect(
+            userSymbol.toJson(),
+            equals({'markerKey': '+'}), // , 'markerIcon': Icons.favorite}),
+          );
+        });
+        test('fromJson: UserSymbolPlus', () {
+          const userSymbol = UserSymbolPlus();
+          final userSymbolJson = userSymbol.toJson();
+          final userSymbolFromJson = UserSymbol.fromJson(userSymbolJson);
+          expect(userSymbol, equals(userSymbolFromJson));
+        });
+      });
     });
 
     group('UserSymbolStar', () {
@@ -77,6 +139,21 @@ void main() {
       test('UserSymbolStar [props] should return the correct list of properties', () {
         const userSymbol = UserSymbolStar();
         expect(userSymbol.props, equals(['*']));
+      });
+      group('UserSymbolStar JSON:', () {
+        test('toJson: UserSymbolStar', () {
+          const userSymbol = UserSymbolStar();
+          expect(
+            userSymbol.toJson(),
+            equals({'markerKey': '*'}), // , 'markerIcon': Icons.star_border}),
+          );
+        });
+        test('fromJson: UserSymbolStar', () {
+          const userSymbol = UserSymbolStar();
+          final userSymbolJson = userSymbol.toJson();
+          final userSymbolFromJson = UserSymbol.fromJson(userSymbolJson);
+          expect(userSymbol, equals(userSymbolFromJson));
+        });
       });
     });
   });

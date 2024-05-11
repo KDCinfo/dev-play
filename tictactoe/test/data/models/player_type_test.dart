@@ -1,30 +1,61 @@
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('PlayerType tests:', () {
-    test('PlayerTypeHuman should have [correct playerType]', () {
-      const playerType = PlayerTypeHuman();
-      expect(playerType.playerType, PlayerTypeEnum.human);
-    });
-    test('PlayerTypeBot should have [correct playerType]', () {
-      const playerType = PlayerTypeBot();
-      expect(playerType.playerType, PlayerTypeEnum.bot);
-    });
-
-    // toString
-    test('PlayerTypeHuman [toString] should return the correct string', () {
-      const playerType = PlayerTypeHuman();
-      expect(playerType.toString(), equals('PlayerTypeHuman(PlayerTypeEnum.human)'));
-    });
-    test('PlayerTypeBot [toString] should return the correct string', () {
-      const playerType = PlayerTypeBot();
-      expect(playerType.toString(), equals('PlayerTypeBot(PlayerTypeEnum.bot)'));
+    group('PlayerType [type]:', () {
+      test('PlayerTypeHuman should have [correct playerType]', () {
+        const playerType = PlayerTypeHuman();
+        expect(playerType.playerType, PlayerTypeEnum.human);
+      });
+      test('PlayerTypeBot should have [correct playerType]', () {
+        const playerType = PlayerTypeBot();
+        expect(playerType.playerType, PlayerTypeEnum.bot);
+      });
     });
 
-    group('Equatable:', () {
-      // Equatable
+    group('PlayerType [toString]:', () {
+      test('PlayerTypeHuman [toString] should return the correct string', () {
+        const playerType = PlayerTypeHuman();
+        expect(playerType.toString(), equals('PlayerTypeHuman(PlayerTypeEnum.human)'));
+      });
+      test('PlayerTypeBot [toString] should return the correct string', () {
+        const playerType = PlayerTypeBot();
+        expect(playerType.toString(), equals('PlayerTypeBot(PlayerTypeEnum.bot)'));
+      });
+    });
+
+    group('PlayerType [JSON]:', () {
+      group('PlayerTypeHuman:', () {
+        test('toJson', () {
+          const playerType = PlayerTypeHuman();
+          expect(playerType.toJson(), equals({'playerType': 'PlayerTypeEnum.human'}));
+        });
+        test('fromJson', () {
+          const playerType = PlayerTypeHuman();
+          final playerTypeJson = playerType.toJson();
+          final playerTypeFromJson = PlayerType.fromJson(playerTypeJson);
+          expect(playerType, equals(playerTypeFromJson));
+        });
+      });
+      group('PlayerTypeBot:', () {
+        test('toJson', () {
+          const playerType = PlayerTypeBot();
+          expect(playerType.toJson(), equals({'playerType': 'PlayerTypeEnum.bot'}));
+        });
+        test('fromJson', () {
+          const playerType = PlayerTypeBot();
+          final playerTypeJson = playerType.toJson();
+          final playerTypeFromJson = PlayerType.fromJson(playerTypeJson);
+          expect(playerType, equals(playerTypeFromJson));
+        });
+      });
+    });
+
+    group('PlayerType [Equatable]:', () {
+      /// Types
       test('PlayerTypeHuman should be an [Equatable]', () {
         const playerType = PlayerTypeHuman();
         expect(playerType, isA<PlayerType>());
@@ -34,7 +65,7 @@ void main() {
         expect(playerType, isA<PlayerType>());
       });
 
-      // props
+      /// Props
       test('PlayerTypeHuman [props] should return the correct list of properties', () {
         const playerType = PlayerTypeHuman();
         expect(playerType.props, equals([PlayerTypeEnum.human]));
@@ -45,7 +76,7 @@ void main() {
       });
     });
 
-    group('Equality:', () {
+    group('PlayerType [Equality]:', () {
       // == Equal
       test('PlayerTypeHuman [==] should return true if two PlayerTypes are equal', () {
         const playerType1 = PlayerTypeHuman();

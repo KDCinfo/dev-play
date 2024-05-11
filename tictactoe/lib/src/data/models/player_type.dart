@@ -1,11 +1,35 @@
+import 'package:dev_play_tictactoe/src/app_constants.dart';
+
 import 'package:equatable/equatable.dart';
 
-abstract class PlayerType extends Equatable {
+sealed class PlayerType extends Equatable {
   const PlayerType(this.playerType);
 
   final PlayerTypeEnum playerType;
 
-  Map<String, dynamic> toJson() => {'playerType': playerType.toString()};
+  /// Convert to JSON.
+  Map<String, dynamic> toJson() {
+    return {
+      'playerType': playerType.toString(),
+    };
+  }
+
+  /// Instantiate from JSON.
+  static PlayerType fromJson(Map<String, dynamic> json) {
+    final playerType = json['playerType'] as String;
+
+    switch (playerType) {
+      case 'PlayerTypeEnum.human':
+        return const PlayerTypeHuman();
+      case 'PlayerTypeEnum.bot':
+        return const PlayerTypeBot();
+      default:
+        throw Exception('Unknown PlayerType: $playerType');
+    }
+  }
+
+  @override
+  List<Object?> get props => [playerType];
 }
 
 class PlayerTypeHuman extends PlayerType {
