@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('[PlayerTurn] Testing:', () {
     const playerTurnId = 0;
-    const playerId = 0;
     // const duration = Duration(seconds: 1);
     const occupiedBy = PlayerData(
       playerNum: 1,
@@ -20,14 +19,12 @@ void main() {
       const originalPlayerTurn = PlayerTurn(
         playerTurnId: playerTurnId,
         tileIndex: 2,
-        playerId: playerId,
         // duration: duration,
         occupiedBy: occupiedBy,
       );
 
       final updatedPlayerTurn = originalPlayerTurn.copyWith(
         playerTurnId: 1,
-        playerId: 5,
         duration: const Duration(seconds: 5),
         occupiedBy: const PlayerData(
           playerNum: 2,
@@ -45,13 +42,11 @@ void main() {
 
       /// Test for `copyWith` nullables #2.
       final updatedPlayerTurn3 = updatedPlayerTurn2.copyWith(
-        playerId: 7,
         tileIndex: 3,
       );
 
       expect(updatedPlayerTurn.playerTurnId, 1);
       expect(updatedPlayerTurn.tileIndex, 2);
-      expect(updatedPlayerTurn.playerId, 5);
       expect(updatedPlayerTurn.duration, const Duration(seconds: 5));
       expect(updatedPlayerTurn.occupiedBy.playerNum, 2);
       expect(updatedPlayerTurn.occupiedBy.playerId, 5);
@@ -62,7 +57,6 @@ void main() {
       expect(updatedPlayerTurn2.playerTurnId, 2);
       expect(updatedPlayerTurn2.tileIndex, 5);
       // Props not changed.
-      expect(updatedPlayerTurn2.playerId, 5);
       expect(updatedPlayerTurn2.duration, const Duration(seconds: 5));
       expect(updatedPlayerTurn2.occupiedBy.playerNum, 2);
       expect(updatedPlayerTurn2.occupiedBy.playerId, 5);
@@ -70,7 +64,6 @@ void main() {
       expect(updatedPlayerTurn2.occupiedBy.userSymbol, const UserSymbolO());
 
       /// Test for `copyWith` nullables #2.
-      expect(updatedPlayerTurn3.playerId, 7);
       expect(updatedPlayerTurn3.tileIndex, 3);
       // Props not changed.
       expect(updatedPlayerTurn3.playerTurnId, 2);
@@ -81,7 +74,6 @@ void main() {
         const playerTurn = PlayerTurn(
           playerTurnId: playerTurnId,
           tileIndex: 2,
-          playerId: playerId,
           duration: Duration(seconds: 5),
           occupiedBy: occupiedBy,
         );
@@ -110,7 +102,6 @@ void main() {
         const playerTurn = PlayerTurn(
           playerTurnId: playerTurnId,
           tileIndex: 2,
-          playerId: playerId,
           duration: Duration(seconds: 5),
           occupiedBy: occupiedBy,
         );
@@ -124,7 +115,6 @@ void main() {
       const playerTurn = PlayerTurn(
         playerTurnId: 0,
         tileIndex: 2,
-        playerId: 0,
         // duration: Duration(seconds: 1),
         occupiedBy: occupiedBy,
       );
