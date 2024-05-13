@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -108,8 +106,9 @@ void main() {
       final gameBoardData = GameBoardData(edgeSize: edgeSize3);
       final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-      final result = gameBoardCopy.checkDiags(gameBoardCopy.edgeSize);
-      expect(result, true);
+      final result = gameBoardCopy.checkDiags;
+      // ( Group index: 0, playerId: 0 (player 1) )
+      expect(result, (0, 0));
     });
 
     test(
@@ -118,32 +117,32 @@ void main() {
         final play3P1index0 = PlayerTurn(
           tileIndex: 0,
           playerTurnId: 0,
-          occupiedBy: player1,
+          occupiedBy: player2,
         );
         final play3P2index3 = PlayerTurn(
           tileIndex: 3,
           playerTurnId: 1,
-          occupiedBy: player2,
+          occupiedBy: player1,
         );
         final play3P1index1 = PlayerTurn(
           tileIndex: 1,
           playerTurnId: 3,
-          occupiedBy: player1,
+          occupiedBy: player2,
         );
         final play3P2index4 = PlayerTurn(
           tileIndex: 4,
           playerTurnId: 4,
-          occupiedBy: player2,
+          occupiedBy: player1,
         );
         final play3P1index2 = PlayerTurn(
           tileIndex: 2,
           playerTurnId: 5,
-          occupiedBy: player1,
+          occupiedBy: player2,
         );
         final play3P2index5 = PlayerTurn(
           tileIndex: 5,
           playerTurnId: 6,
-          occupiedBy: player2,
+          occupiedBy: player1,
         );
 
         final plays = [
@@ -159,8 +158,8 @@ void main() {
         final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
         final result = gameBoardCopy.checkAllRows;
-        // expect(result, [0, 1, 2]);
-        log(result.toString());
+        // ( Group index: 0, playerId: 1 (player 2) )
+        expect(result, (0, 1));
       },
     );
 
@@ -190,23 +189,52 @@ void main() {
     test(
       '[diagFilled] should return a list of indices that are filled with the same player turn in a diagonal',
       () {
+        final play3P1index0 = PlayerTurn(
+          tileIndex: 0,
+          playerTurnId: 0,
+          occupiedBy: player1,
+        );
+        final play3P2index2 = PlayerTurn(
+          tileIndex: 2,
+          playerTurnId: 1,
+          occupiedBy: player2,
+        );
+        final play3P1index1 = PlayerTurn(
+          tileIndex: 1,
+          playerTurnId: 2,
+          occupiedBy: player1,
+        );
+        final play3P2index4 = PlayerTurn(
+          tileIndex: 4,
+          playerTurnId: 3,
+          occupiedBy: player2,
+        );
+        final play3P1index5 = PlayerTurn(
+          tileIndex: 5,
+          playerTurnId: 4,
+          occupiedBy: player1,
+        );
+        final play3P2index6 = PlayerTurn(
+          tileIndex: 6,
+          playerTurnId: 5,
+          occupiedBy: player2,
+        );
+
         final plays = [
-          play3index0,
-          play3index1,
-          play3index2,
-          play3index3,
-          play3index4,
-          play3index5,
-          play3index6,
-          play3index7,
-          play3index8,
+          play3P1index0,
+          play3P2index2,
+          play3P1index1,
+          play3P2index4,
+          play3P1index5,
+          play3P2index6,
         ];
 
         final gameBoardData = GameBoardData(edgeSize: edgeSize3);
         final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-        final result = gameBoardCopy.diagFilled;
-        expect(result, [0, 1]);
+        final result = gameBoardCopy.checkAllDiags;
+        // ( Group index: 1, playerId: 1 (player 2) )
+        expect(result, (1, 1));
       },
     );
 

@@ -109,20 +109,71 @@ class GameBoardData extends Equatable {
     return mapOfColGroups;
   }
 
-  bool checkDiags(int boardSize) {
-    final diag1 = <PlayerTurn>[];
-    final diag2 = <PlayerTurn>[];
-    for (var i = 0; i < boardSize; i += edgeSize + 1) {
-      diag1.add(plays[i]);
+  /// [[COMPLETE]]
+  ///
+  (int, int)? get checkDiags {
+    /// Initialize `mapOfGroups` with [1st] and [2nd] diag groups.
+    final mapOfGroups = <int, List<int>>{
+      0: <int>[], // 1st diag group
+      1: <int>[], // 2nd diag group
+    };
+
+    /// Record all the indexes that make up the [1st] diag group.
+    for (var tileIndex = 0; tileIndex < boardSize; tileIndex += edgeSize + 1) {
+      // [0] += 3 + 1 == 4
+      // [4] += 3 + 1 == 8
+      // [8] += 3 + 1 == 12 (> boardSize)
+      if (mapOfGroups[0] != null) {
+        mapOfGroups[0]!.add(tileIndex);
+      }
     }
-    for (var i = edgeSize - 1; i < boardSize - 1; i += edgeSize - 1) {
-      diag2.add(plays[i]);
+
+    /// Record all the indexes that make up the [2nd] diag group.
+    for (var tileIndex = edgeSize - 1; tileIndex < boardSize - 1; tileIndex += edgeSize - 1) {
+      // 3 - 1 == [2] | 2 += 3 - 1 == [4]
+      //          [4] | 4 += 3 - 1 == [6]
+      //          [6] | 6 += 3 - 1 == [8] (! < boardSize - 1)
+      // diag2.add(plays[i]);
+      if (mapOfGroups[1] != null) {
+        mapOfGroups[1]!.add(tileIndex);
+      }
     }
-    if (diag1.every((play) => play.tileIndex == diag1.first.tileIndex) ||
-        diag2.every((play) => play.tileIndex == diag2.first.tileIndex)) {
-      return true;
+
+    final diag1Tiles = mapOfGroups[0]!; // Tile indexes: [0, 4, 8], [0, 6, 12, 18, 24]
+    final diag2Tiles = mapOfGroups[1]!; // Tile indexes: [2, 4, 6], [4, 8, 12, 16, 20]
+
+    /// Store each played `playerId` that matches a
+    /// stored group index for either `diag1` or `diag2`.
+    final diag1Players = <int>[];
+    final diag2Players = <int>[];
+
+    for (final play in plays) {
+      if (diag1Tiles.contains(play.tileIndex)) {
+        diag1Players.add(play.occupiedBy.playerId!);
+      }
+      if (diag2Tiles.contains(play.tileIndex)) {
+        diag2Players.add(play.occupiedBy.playerId!);
+      }
     }
-    return false;
+
+    /// Check if either group is full,
+    /// and all matching the first `playerId` in the list.
+    if (diag1Players.isNotEmpty) {
+      final diag1FirstPlayerId = diag1Players.first;
+      if (diag1Players.length == edgeSize &&
+          diag1Players.every((playerId) => playerId == diag1FirstPlayerId)) {
+        return (0, diag1FirstPlayerId);
+      }
+    }
+    if (diag2Players.isNotEmpty) {
+      final diag2FirstPlayerId = diag2Players.first;
+      if (diag2Players.length == edgeSize &&
+          diag2Players.every((playerId) => playerId == diag2FirstPlayerId)) {
+        return (1, diag2FirstPlayerId);
+      }
+    }
+
+    return null;
   }
 
   /// Used with `checkAllRows` and `checkAllCols`.
@@ -150,6 +201,7 @@ class GameBoardData extends Equatable {
     return null;
   }
 
+  /// Record: ( groupId, playerId )
   (int, int)? get checkAllRows {
     final mapOfGroups = mapPlaysToRowGroups(); // { 0: [ playerId ], 1: [], 2: [] }
     return checkFilled(mapOfGroups);
@@ -160,22 +212,9 @@ class GameBoardData extends Equatable {
     return checkFilled(mapOfGroups);
   }
 
-  List<int> get diagFilled {
-    final diag1 = <PlayerTurn>[];
-    final diag2 = <PlayerTurn>[];
-    for (var i = 0; i < boardSize; i += edgeSize + 1) {
-      diag1.add(plays[i]);
-    }
-    for (var i = edgeSize - 1; i < boardSize - 1; i += edgeSize - 1) {
-      diag2.add(plays[i]);
-    }
-    if (diag1.every((play) => play.tileIndex == diag1.first.tileIndex) ||
-        diag2.every((play) => play.tileIndex == diag2.first.tileIndex)) {
-      return diag1.every((play) => play.tileIndex == diag1.first.tileIndex)
-          ? List.generate(edgeSize, (index) => index * (edgeSize + 1))
-          : List.generate(edgeSize, (index) => (index + 1) * (edgeSize - 1));
-    }
-    return [];
+  // Record: ( groupIndex: playerId -> winner )
+  (int, int)? get checkAllDiags {
+    return checkDiags;
   }
 
   List<int> get usedTileIndexes {
