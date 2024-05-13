@@ -1,4 +1,5 @@
 export 'app_data_fake.dart';
+export 'game_board_data.dart';
 export 'game_data.dart';
 export 'game_status.dart';
 export 'orientation_screen_widget.dart';

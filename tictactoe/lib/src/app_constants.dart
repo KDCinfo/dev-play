@@ -6,6 +6,9 @@ typedef AppReturnObjDef = Map<String, List<dynamic>>;
 typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
 
 abstract class AppConstants {
+  /// Standard App Config Values
+  static const defaultEdgeSize = 3;
+
   /// App Title
   static const appTitle = 'Tic Tac Tuple';
   static const appTitleKey = 'ticTacTupleKey';
