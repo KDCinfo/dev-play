@@ -3,7 +3,7 @@ import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const edgeSizeConstant = 3;
+  const edgeSizeConstant = 4;
 
   late int edgeSize;
   late int edgeSize2;
@@ -76,7 +76,7 @@ void main() {
       });
     });
 
-    group('with an edgeSize of [3]:', () {
+    group('with an edgeSize of [4]:', () {
       setUp(() {
         edgeSize = edgeSizeConstant;
       });
@@ -86,7 +86,7 @@ void main() {
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
           expect(
             gameBoardData.boardSize,
-            equals(9),
+            equals(edgeSize * edgeSize),
           );
         });
       });
@@ -134,7 +134,7 @@ void main() {
           expect(
             gameBoardData.props,
             equals([
-              3,
+              edgeSize,
               <PlayerTurn>[],
             ]),
           );
@@ -143,9 +143,9 @@ void main() {
 
       group('GameBoardData [JSON]:', () {
         test('toJson', () {
-          const gameBoardData = GameBoardData(
-            // edgeSize: 3,
-            plays: [
+          final gameBoardData = GameBoardData(
+            edgeSize: edgeSize,
+            plays: const [
               PlayerTurn(
                 playerTurnId: 0,
                 tileIndex: 2,
@@ -182,9 +182,9 @@ void main() {
         });
 
         test('fromJson', () {
-          const gameBoardData = GameBoardData(
-            // edgeSize: 3,
-            plays: [
+          final gameBoardData = GameBoardData(
+            edgeSize: edgeSize,
+            plays: const [
               PlayerTurn(
                 playerTurnId: 0,
                 tileIndex: 2,
@@ -213,11 +213,18 @@ void main() {
           playPlayer1(playerTurnId: 4, tileIndex: 4),
           playPlayer2(playerTurnId: 5, tileIndex: 5),
           playPlayer3(playerTurnId: 6, tileIndex: 6),
-          playPlayer4(playerTurnId: 7, tileIndex: 8),
-          playPlayer1(playerTurnId: 8, tileIndex: 7),
+          playPlayer4(playerTurnId: 7, tileIndex: 7),
+          playPlayer1(playerTurnId: 8, tileIndex: 8),
+          playPlayer2(playerTurnId: 9, tileIndex: 9),
+          playPlayer3(playerTurnId: 10, tileIndex: 10),
+          playPlayer4(playerTurnId: 11, tileIndex: 11),
+          playPlayer1(playerTurnId: 12, tileIndex: 15), // Reversed to
+          playPlayer2(playerTurnId: 13, tileIndex: 14), // prevent a
+          playPlayer3(playerTurnId: 14, tileIndex: 13), // player 1
+          playPlayer4(playerTurnId: 15, tileIndex: 12), // column 1 win.
         ];
 
-        /// Initialize a new game board with an edge size of 3.
+        /// Initialize a new game board with an edge size of `edgeSizeConstant`.
         final gameBoardData = GameBoardData(edgeSize: edgeSize);
 
         /// Simulate plays by adding a list of predefined plays.
@@ -232,19 +239,16 @@ void main() {
         test('the first row is filled with the same player turn', () {
           final plays = [
             playPlayer1(playerTurnId: 0, tileIndex: 0), // 0
-            playPlayer2(playerTurnId: 1, tileIndex: 3),
+            playPlayer2(playerTurnId: 1, tileIndex: 4),
             playPlayer1(playerTurnId: 2, tileIndex: 1), // 1
-            playPlayer2(playerTurnId: 3, tileIndex: 4),
+            playPlayer2(playerTurnId: 3, tileIndex: 5),
             playPlayer1(playerTurnId: 4, tileIndex: 2), // 2
+            playPlayer2(playerTurnId: 5, tileIndex: 6),
+            playPlayer1(playerTurnId: 6, tileIndex: 3), // 3
           ];
 
-          /// Initialize a new game board with an edge size of 3.
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
-
-          /// Simulate plays by adding a list of predefined plays.
           final gameBoardCopy = gameBoardData.copyWith(plays: plays);
-
-          /// Check that the method satisfies the condition.
           final result = gameBoardCopy.checkAllRows;
 
           // ( Group index: 0, playerId: 0 (player 1) )
@@ -253,20 +257,17 @@ void main() {
         test('the second row is filled with the same player turn', () {
           final plays = [
             playPlayer1(playerTurnId: 0, tileIndex: 0),
-            playPlayer2(playerTurnId: 1, tileIndex: 3), // 3
+            playPlayer2(playerTurnId: 1, tileIndex: 4), // 4
             playPlayer1(playerTurnId: 2, tileIndex: 1),
-            playPlayer2(playerTurnId: 3, tileIndex: 4), // 4
-            playPlayer1(playerTurnId: 4, tileIndex: 8),
-            playPlayer2(playerTurnId: 5, tileIndex: 5), // 5
+            playPlayer2(playerTurnId: 3, tileIndex: 5), // 5
+            playPlayer1(playerTurnId: 4, tileIndex: 2),
+            playPlayer2(playerTurnId: 5, tileIndex: 6), // 6
+            playPlayer1(playerTurnId: 6, tileIndex: 8),
+            playPlayer2(playerTurnId: 7, tileIndex: 7), // 7
           ];
 
-          /// Initialize a new game board with an edge size of 3.
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
-
-          /// Simulate plays by adding a list of predefined plays.
           final gameBoardCopy = gameBoardData.copyWith(plays: plays);
-
-          /// Check that the method satisfies the condition.
           final result = gameBoardCopy.checkAllRows;
 
           // ( Group index: 1, playerId: 1 (player 2) )
@@ -274,24 +275,40 @@ void main() {
         });
         test('the third row is filled with the same player turn', () {
           final plays = [
-            playPlayer1(playerTurnId: 0, tileIndex: 6), // 6
-            playPlayer2(playerTurnId: 1, tileIndex: 0),
-            playPlayer1(playerTurnId: 2, tileIndex: 7), // 7
-            playPlayer2(playerTurnId: 3, tileIndex: 1),
-            playPlayer1(playerTurnId: 4, tileIndex: 8), // 8
+            playPlayer1(playerTurnId: 0, tileIndex: 0),
+            playPlayer2(playerTurnId: 1, tileIndex: 8), // 8
+            playPlayer1(playerTurnId: 2, tileIndex: 1),
+            playPlayer2(playerTurnId: 3, tileIndex: 9), // 9
+            playPlayer1(playerTurnId: 4, tileIndex: 2),
+            playPlayer2(playerTurnId: 5, tileIndex: 10), // 10
+            playPlayer1(playerTurnId: 6, tileIndex: 4),
+            playPlayer2(playerTurnId: 7, tileIndex: 11), // 11
           ];
 
-          /// Initialize a new game board with an edge size of 3.
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
-
-          /// Simulate plays by adding a list of predefined plays.
           final gameBoardCopy = gameBoardData.copyWith(plays: plays);
-
-          /// Check that the method satisfies the condition.
           final result = gameBoardCopy.checkAllRows;
 
-          // ( Group index: 2, playerId: 0 (player 1) )
-          expect(result, (2, 0));
+          // ( Group index: 2, playerId: 1 (player 2) )
+          expect(result, (2, 1));
+        });
+        test('the fourth row is filled with the same player turn', () {
+          final plays = [
+            playPlayer1(playerTurnId: 0, tileIndex: 12), // 12
+            playPlayer2(playerTurnId: 1, tileIndex: 4),
+            playPlayer1(playerTurnId: 2, tileIndex: 13), // 13
+            playPlayer2(playerTurnId: 3, tileIndex: 5),
+            playPlayer1(playerTurnId: 4, tileIndex: 14), // 14
+            playPlayer2(playerTurnId: 5, tileIndex: 6),
+            playPlayer1(playerTurnId: 6, tileIndex: 15), // 15
+          ];
+
+          final gameBoardData = GameBoardData(edgeSize: edgeSize);
+          final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+          final result = gameBoardCopy.checkAllRows;
+
+          // ( Group index: 3, playerId: 0 (player 1) )
+          expect(result, (3, 0));
         });
       });
 
@@ -300,9 +317,11 @@ void main() {
           final plays = [
             playPlayer1(playerTurnId: 0, tileIndex: 0), // 0
             playPlayer2(playerTurnId: 1, tileIndex: 1),
-            playPlayer1(playerTurnId: 2, tileIndex: 3), // 3
-            playPlayer2(playerTurnId: 3, tileIndex: 4),
-            playPlayer1(playerTurnId: 4, tileIndex: 6), // 6
+            playPlayer1(playerTurnId: 2, tileIndex: 4), // 4
+            playPlayer2(playerTurnId: 3, tileIndex: 5),
+            playPlayer1(playerTurnId: 4, tileIndex: 8), // 8
+            playPlayer2(playerTurnId: 5, tileIndex: 9),
+            playPlayer1(playerTurnId: 6, tileIndex: 12), // 12
           ];
 
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
@@ -317,10 +336,12 @@ void main() {
           final plays = [
             playPlayer1(playerTurnId: 0, tileIndex: 0),
             playPlayer2(playerTurnId: 1, tileIndex: 1), // 1
-            playPlayer1(playerTurnId: 2, tileIndex: 2),
-            playPlayer2(playerTurnId: 3, tileIndex: 4), // 4
-            playPlayer1(playerTurnId: 4, tileIndex: 3),
-            playPlayer2(playerTurnId: 5, tileIndex: 7), // 7
+            playPlayer1(playerTurnId: 2, tileIndex: 4),
+            playPlayer2(playerTurnId: 3, tileIndex: 5), // 5
+            playPlayer1(playerTurnId: 4, tileIndex: 8),
+            playPlayer2(playerTurnId: 5, tileIndex: 9), // 9
+            playPlayer1(playerTurnId: 6, tileIndex: 2),
+            playPlayer2(playerTurnId: 7, tileIndex: 13), // 13
           ];
 
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
@@ -333,11 +354,14 @@ void main() {
         });
         test('the third column is filled with the same player turn', () {
           final plays = [
-            playPlayer1(playerTurnId: 0, tileIndex: 2), // 2
-            playPlayer2(playerTurnId: 1, tileIndex: 0),
-            playPlayer1(playerTurnId: 2, tileIndex: 5), // 5
-            playPlayer2(playerTurnId: 3, tileIndex: 1),
-            playPlayer1(playerTurnId: 4, tileIndex: 8), // 8
+            playPlayer1(playerTurnId: 0, tileIndex: 0),
+            playPlayer2(playerTurnId: 1, tileIndex: 2), // 2
+            playPlayer1(playerTurnId: 2, tileIndex: 4),
+            playPlayer2(playerTurnId: 3, tileIndex: 6), // 6
+            playPlayer1(playerTurnId: 4, tileIndex: 8),
+            playPlayer2(playerTurnId: 5, tileIndex: 10), // 10
+            playPlayer1(playerTurnId: 6, tileIndex: 9),
+            playPlayer2(playerTurnId: 7, tileIndex: 14), // 14
           ];
 
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
@@ -345,8 +369,27 @@ void main() {
 
           final result = gameBoardCopy.checkAllCols;
 
-          // ( Group index: 2, playerId: 0 (player 1) )
-          expect(result, (2, 0));
+          // ( Group index: 2, playerId: 1 (player 2) )
+          expect(result, (2, 1));
+        });
+        test('the fourth column is filled with the same player turn', () {
+          final plays = [
+            playPlayer1(playerTurnId: 0, tileIndex: 3), // 3
+            playPlayer2(playerTurnId: 1, tileIndex: 0),
+            playPlayer1(playerTurnId: 2, tileIndex: 7), // 7
+            playPlayer2(playerTurnId: 3, tileIndex: 4),
+            playPlayer1(playerTurnId: 4, tileIndex: 11), // 11
+            playPlayer2(playerTurnId: 5, tileIndex: 8),
+            playPlayer1(playerTurnId: 6, tileIndex: 15), // 15
+          ];
+
+          final gameBoardData = GameBoardData(edgeSize: edgeSize);
+          final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+
+          final result = gameBoardCopy.checkAllCols;
+
+          // ( Group index: 3, playerId: 0 (player 1) )
+          expect(result, (3, 0));
         });
       });
 
@@ -354,13 +397,14 @@ void main() {
         test(
           'the first diagonal is filled with the same player turn',
           () {
-            // Player 2 wins with the reverse (2nd) diag.
             final plays = [
               playPlayer1(playerTurnId: 0, tileIndex: 0), // 0
               playPlayer2(playerTurnId: 1, tileIndex: 1),
-              playPlayer1(playerTurnId: 2, tileIndex: 4), // 4
-              playPlayer2(playerTurnId: 3, tileIndex: 2),
-              playPlayer1(playerTurnId: 4, tileIndex: 8), // 8
+              playPlayer1(playerTurnId: 2, tileIndex: 5), // 5
+              playPlayer2(playerTurnId: 3, tileIndex: 6),
+              playPlayer1(playerTurnId: 4, tileIndex: 10), // 10
+              playPlayer2(playerTurnId: 5, tileIndex: 8),
+              playPlayer1(playerTurnId: 6, tileIndex: 15), // 15
             ];
 
             final gameBoardData = GameBoardData(edgeSize: edgeSize);
@@ -374,14 +418,15 @@ void main() {
         test(
           'the second diagonal is filled with the same player turn',
           () {
-            // Player 2 wins with the reverse (2nd) diag.
             final plays = [
               playPlayer1(playerTurnId: 0, tileIndex: 0),
-              playPlayer2(playerTurnId: 1, tileIndex: 2), // 2
+              playPlayer2(playerTurnId: 1, tileIndex: 3), // 3
               playPlayer1(playerTurnId: 2, tileIndex: 1),
-              playPlayer2(playerTurnId: 3, tileIndex: 4), // 4
-              playPlayer1(playerTurnId: 4, tileIndex: 5),
-              playPlayer2(playerTurnId: 5, tileIndex: 6), // 6
+              playPlayer2(playerTurnId: 3, tileIndex: 6), // 6
+              playPlayer1(playerTurnId: 4, tileIndex: 2),
+              playPlayer2(playerTurnId: 5, tileIndex: 9), // 9
+              playPlayer1(playerTurnId: 6, tileIndex: 4),
+              playPlayer2(playerTurnId: 7, tileIndex: 12), // 12
             ];
 
             final gameBoardData = GameBoardData(edgeSize: edgeSize);
@@ -403,8 +448,9 @@ void main() {
             playPlayer2(playerTurnId: 1, tileIndex: 2),
             playPlayer1(playerTurnId: 2, tileIndex: 1),
             playPlayer2(playerTurnId: 3, tileIndex: 4),
-            playPlayer1(playerTurnId: 4, tileIndex: 5),
-            playPlayer2(playerTurnId: 5, tileIndex: 6),
+            playPlayer1(playerTurnId: 4, tileIndex: 12),
+            playPlayer2(playerTurnId: 5, tileIndex: 9),
+            playPlayer1(playerTurnId: 6, tileIndex: 7),
           ];
 
           final gameBoardData = GameBoardData(edgeSize: edgeSize);
@@ -414,7 +460,7 @@ void main() {
           // Note: it will not be in the played tile index order;
           //       notice `tileIndex` [2, 1] becomes [1, 2].
           final result = gameBoardCopy.usedTileIndexes;
-          expect(result, [0, 1, 2, 4, 5, 6]);
+          expect(result, [0, 1, 2, 4, 7, 9, 12]);
         });
 
         test(
@@ -426,15 +472,16 @@ void main() {
               playPlayer2(playerTurnId: 1, tileIndex: 2),
               playPlayer1(playerTurnId: 2, tileIndex: 1),
               playPlayer2(playerTurnId: 3, tileIndex: 4),
-              playPlayer1(playerTurnId: 4, tileIndex: 5),
-              playPlayer2(playerTurnId: 5, tileIndex: 6),
+              playPlayer1(playerTurnId: 4, tileIndex: 12),
+              playPlayer2(playerTurnId: 5, tileIndex: 9),
+              playPlayer1(playerTurnId: 6, tileIndex: 7),
             ];
 
             final gameBoardData = GameBoardData(edgeSize: edgeSize);
             final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
             final result = gameBoardCopy.availableTileIndexes;
-            expect(result, <int>[3, 7, 8]);
+            expect(result, <int>[3, 5, 6, 8, 10, 11, 13, 14, 15]);
           },
         );
       });
