@@ -42,6 +42,15 @@ class GameBoardData extends Equatable {
 
   int get boardSize => edgeSize * edgeSize;
 
+  GameBoardData copyWith({
+    required List<PlayerTurn> plays,
+  }) {
+    return GameBoardData(
+      edgeSize: edgeSize,
+      plays: plays,
+    );
+  }
+
   /// This is used when a game is started, when transitioning
   /// from `GameEntry` to `GamePlay` initialization.
   GameBoardData changeEdgeSize({
@@ -53,7 +62,7 @@ class GameBoardData extends Equatable {
     );
   }
 
-  Map<int, List<int>> initializeCheckMap() {
+  Map<int, List<int>> _initializeCheckMap() {
     final checkMap = <int, List<int>>{};
     for (var j = 0; j < boardSize; j += edgeSize) {
       checkMap.putIfAbsent(
@@ -64,14 +73,14 @@ class GameBoardData extends Equatable {
     return checkMap;
   }
 
-  Map<int, List<int>> mapPlaysToRowGroups() {
+  Map<int, List<int>> _mapPlaysToRowGroups() {
     ///
     /// Prepopulate the Map with an empty List for each group.
     ///   <int, List<int>>{ groupIndex: [ playerId ], }
     ///   <int, List<int>>{      0    : [ 1, 1, 1  ], 1: [], 2: [] }
     ///                     First Row :   ^ Win ^ --> PlayerID: 1
     ///
-    final mapOfRowGroups = initializeCheckMap();
+    final mapOfRowGroups = _initializeCheckMap();
 
     /// Add a `playerId` to
     for (final play in plays) {
@@ -91,8 +100,8 @@ class GameBoardData extends Equatable {
 
   /// Same as `mapPlaysToRowGroups` but uses a modulo (`%`) to set up the groups.
   ///
-  Map<int, List<int>> mapPlaysToColGroups() {
-    final mapOfColGroups = initializeCheckMap();
+  Map<int, List<int>> _mapPlaysToColGroups() {
+    final mapOfColGroups = _initializeCheckMap();
 
     for (final play in plays) {
       ///
@@ -109,9 +118,32 @@ class GameBoardData extends Equatable {
     return mapOfColGroups;
   }
 
-  /// [[COMPLETE]]
+  /// Used with `checkAllRows` and `checkAllCols`.
+  /// Return: ( groupIndex, playerId )
   ///
-  (int, int)? get checkDiags {
+  (int, int)? _checkFilled(Map<int, List<int>> mapOfGroups) {
+    var groupIndex = 0;
+    for (final playerIdList in mapOfGroups.values) {
+      if (playerIdList.isNotEmpty) {
+        // Establish a baseline playerId to check against.
+        final firstPlayerId = playerIdList.first;
+
+        // Check for a full list of the same player.
+        if (playerIdList.length == edgeSize &&
+            playerIdList.every(
+              (playerId) => playerId == firstPlayerId,
+            )) {
+          return (groupIndex, firstPlayerId);
+        }
+      }
+
+      // Let's check the next group.
+      groupIndex++;
+    }
+    return null;
+  }
+
+  (int, int)? _checkDiags() {
     /// Initialize `mapOfGroups` with [1st] and [2nd] diag groups.
     final mapOfGroups = <int, List<int>>{
       0: <int>[], // 1st diag group
@@ -176,46 +208,29 @@ class GameBoardData extends Equatable {
     return null;
   }
 
-  /// Used with `checkAllRows` and `checkAllCols`.
-  /// Return: ( groupIndex, playerId )
   ///
-  (int, int)? checkFilled(Map<int, List<int>> mapOfGroups) {
-    var groupIndex = 0;
-    for (final playerIdList in mapOfGroups.values) {
-      if (playerIdList.isNotEmpty) {
-        // Establish a baseline playerId to check against.
-        final firstPlayerId = playerIdList.first;
+  /// Entry methods
+  ///
+  /// Record: ( groupIndex, playerId -> winner )
+  ///
 
-        // Check for a full list of the same player.
-        if (playerIdList.length == edgeSize &&
-            playerIdList.every(
-              (playerId) => playerId == firstPlayerId,
-            )) {
-          return (groupIndex, firstPlayerId);
-        }
-      }
-
-      // Let's check the next group.
-      groupIndex++;
-    }
-    return null;
-  }
-
-  /// Record: ( groupId, playerId )
   (int, int)? get checkAllRows {
-    final mapOfGroups = mapPlaysToRowGroups(); // { 0: [ playerId ], 1: [], 2: [] }
-    return checkFilled(mapOfGroups);
+    final mapOfGroups = _mapPlaysToRowGroups(); // { 0: [ playerId ], 1: [], 2: [] }
+    return _checkFilled(mapOfGroups);
   }
 
   (int, int)? get checkAllCols {
-    final mapOfGroups = mapPlaysToColGroups(); // { 0: [ playerId ], 1: [], 2: [] }
-    return checkFilled(mapOfGroups);
+    final mapOfGroups = _mapPlaysToColGroups(); // { 0: [ playerId ], 1: [], 2: [] }
+    return _checkFilled(mapOfGroups);
   }
 
-  // Record: ( groupIndex: playerId -> winner )
   (int, int)? get checkAllDiags {
-    return checkDiags;
+    return _checkDiags();
   }
+
+  ///
+  /// Utility methods
+  ///
 
   List<int> get usedTileIndexes {
     final usedTiles = <int>[];
@@ -235,15 +250,6 @@ class GameBoardData extends Equatable {
       }
     }
     return availableTiles..sort();
-  }
-
-  GameBoardData copyWith({
-    required List<PlayerTurn> plays,
-  }) {
-    return GameBoardData(
-      edgeSize: edgeSize,
-      plays: plays,
-    );
   }
 
   @override

@@ -3,22 +3,19 @@ import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late int edgeSize3;
+
+  // Initialize players.
   late PlayerData player1;
   late PlayerData player2;
   late PlayerData player3;
   late PlayerData player4;
 
-  late PlayerTurn play3index0;
-  late PlayerTurn play3index1;
-  late PlayerTurn play3index2;
-  late PlayerTurn play3index3;
-  late PlayerTurn play3index4;
-  late PlayerTurn play3index5;
-  late PlayerTurn play3index6;
-  late PlayerTurn play3index7;
-  late PlayerTurn play3index8;
-
-  late int edgeSize3;
+  // Initialize function variables at the same scope as players.
+  late PlayerTurn Function({required int tileIndex, required int playerTurnId}) playPlayer1;
+  late PlayerTurn Function({required int tileIndex, required int playerTurnId}) playPlayer2;
+  late PlayerTurn Function({required int tileIndex, required int playerTurnId}) playPlayer3;
+  late PlayerTurn Function({required int tileIndex, required int playerTurnId}) playPlayer4;
 
   group('[GameBoardData] Testing:', () {
     setUp(() {
@@ -27,272 +24,191 @@ void main() {
       player3 = const PlayerData(playerNum: 3, playerId: 2, playerName: 'Player 3');
       player4 = const PlayerData(playerNum: 4, playerId: 3, playerName: 'Player 4');
 
-      edgeSize3 = 3;
-
-      play3index0 = PlayerTurn(
-        tileIndex: 0,
-        playerTurnId: 0,
-        occupiedBy: player1,
-      );
-      play3index1 = PlayerTurn(
-        tileIndex: 1,
-        playerTurnId: 1,
-        occupiedBy: player2,
-      );
-      play3index2 = PlayerTurn(
-        tileIndex: 2,
-        playerTurnId: 2,
-        occupiedBy: player3,
-      );
-      play3index3 = PlayerTurn(
-        tileIndex: 3,
-        playerTurnId: 3,
-        occupiedBy: player4,
-      );
-      play3index4 = PlayerTurn(
-        tileIndex: 4,
-        playerTurnId: 4,
-        occupiedBy: player1,
-      );
-      play3index5 = PlayerTurn(
-        tileIndex: 5,
-        playerTurnId: 5,
-        occupiedBy: player2,
-      );
-      play3index6 = PlayerTurn(
-        tileIndex: 6,
-        playerTurnId: 6,
-        occupiedBy: player3,
-      );
-      play3index7 = PlayerTurn(
-        tileIndex: 7,
-        playerTurnId: 7,
-        occupiedBy: player4,
-      );
-      play3index8 = PlayerTurn(
-        tileIndex: 8,
-        playerTurnId: 8,
-        occupiedBy: player1,
-      );
+      playPlayer1 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
+            tileIndex: tileIndex,
+            playerTurnId: playerTurnId,
+            occupiedBy: player1,
+          );
+      playPlayer2 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
+            tileIndex: tileIndex,
+            playerTurnId: playerTurnId,
+            occupiedBy: player2,
+          );
+      playPlayer3 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
+            tileIndex: tileIndex,
+            playerTurnId: playerTurnId,
+            occupiedBy: player3,
+          );
+      playPlayer4 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
+            tileIndex: tileIndex,
+            playerTurnId: playerTurnId,
+            occupiedBy: player4,
+          );
     });
 
-    test('[checkRows] should return true when a row is filled with the same player turn', () {
-      final plays = [play3index0, play3index1, play3index2];
+    group('[constructor] works.:', () {});
 
-      /// Initialize a new game board with an edge size of 3.
-      final gameBoardData = GameBoardData(edgeSize: edgeSize3);
+    group('[props] are correct:', () {});
 
-      /// Simulate plays by adding a list of predefined plays.
-      final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+    group('[changeEdgeSize] works:', () {});
 
-      /// Check that the method satisfies the condition.
-      final result = gameBoardCopy.checkAllRows;
-      expect(result, null);
-    });
+    group('[boardSize] is correct:', () {});
 
-    test('[checkCols] should return true when a column is filled with the same player turn', () {
-      final plays = [play3index0, play3index3, play3index6];
+    group('with an edgeSize of [3]:', () {
+      setUp(() {
+        edgeSize3 = 3;
+      });
 
-      final gameBoardData = GameBoardData(edgeSize: edgeSize3);
-      final gameBoardCopy = gameBoardData.copyWith(plays: plays);
-
-      final result = gameBoardCopy.checkAllCols;
-      expect(result, null);
-    });
-
-    test('[checkDiags] should return true when a diagonal is filled with the same player turn', () {
-      final plays = [play3index0, play3index4, play3index8];
-
-      final gameBoardData = GameBoardData(edgeSize: edgeSize3);
-      final gameBoardCopy = gameBoardData.copyWith(plays: plays);
-
-      final result = gameBoardCopy.checkDiags;
-      // ( Group index: 0, playerId: 0 (player 1) )
-      expect(result, (0, 0));
-    });
-
-    test(
-      '[checkAllRows] should return a list of row indices that are filled with the same player turn',
-      () {
-        final play3P1index0 = PlayerTurn(
-          tileIndex: 0,
-          playerTurnId: 0,
-          occupiedBy: player2,
-        );
-        final play3P2index3 = PlayerTurn(
-          tileIndex: 3,
-          playerTurnId: 1,
-          occupiedBy: player1,
-        );
-        final play3P1index1 = PlayerTurn(
-          tileIndex: 1,
-          playerTurnId: 3,
-          occupiedBy: player2,
-        );
-        final play3P2index4 = PlayerTurn(
-          tileIndex: 4,
-          playerTurnId: 4,
-          occupiedBy: player1,
-        );
-        final play3P1index2 = PlayerTurn(
-          tileIndex: 2,
-          playerTurnId: 5,
-          occupiedBy: player2,
-        );
-        final play3P2index5 = PlayerTurn(
-          tileIndex: 5,
-          playerTurnId: 6,
-          occupiedBy: player1,
-        );
-
+      test('all tiles played with no winner should return [null].', () {
         final plays = [
-          play3P1index0, // Player 1
-          play3P2index3, // Player 2
-          play3P1index1, // Player 1
-          play3P2index4, // Player 2
-          play3P1index2, // Player 1
-          play3P2index5, // Player 2
+          playPlayer1(playerTurnId: 0, tileIndex: 0),
+          playPlayer2(playerTurnId: 1, tileIndex: 1),
+          playPlayer3(playerTurnId: 2, tileIndex: 2),
+          playPlayer4(playerTurnId: 3, tileIndex: 3),
+          playPlayer1(playerTurnId: 4, tileIndex: 4),
+          playPlayer2(playerTurnId: 5, tileIndex: 5),
+          playPlayer3(playerTurnId: 6, tileIndex: 6),
+          playPlayer4(playerTurnId: 7, tileIndex: 8),
+          playPlayer1(playerTurnId: 8, tileIndex: 7),
         ];
 
+        /// Initialize a new game board with an edge size of 3.
         final gameBoardData = GameBoardData(edgeSize: edgeSize3);
+
+        /// Simulate plays by adding a list of predefined plays.
         final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
+        /// Check that the method satisfies the condition.
         final result = gameBoardCopy.checkAllRows;
-        // ( Group index: 0, playerId: 1 (player 2) )
-        expect(result, (0, 1));
-      },
-    );
+        expect(result, null);
+      });
 
-    test(
-      '[checkAllCols] should return a list of column indices that are filled with the same player turn',
-      () {
+      test(
+          '[checkAllRows] should return a record when '
+          'the first row is filled with the same player turn', () {
         final plays = [
-          play3index0,
-          play3index3,
-          play3index6,
-          play3index1,
-          play3index4,
-          play3index7,
-          play3index2,
-          play3index5,
-          play3index8,
+          playPlayer1(playerTurnId: 0, tileIndex: 0),
+          playPlayer2(playerTurnId: 1, tileIndex: 3),
+          playPlayer1(playerTurnId: 2, tileIndex: 1),
+          playPlayer2(playerTurnId: 3, tileIndex: 4),
+          playPlayer1(playerTurnId: 4, tileIndex: 2),
+        ];
+
+        /// Initialize a new game board with an edge size of 3.
+        final gameBoardData = GameBoardData(edgeSize: edgeSize3);
+
+        /// Simulate plays by adding a list of predefined plays.
+        final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+
+        /// Check that the method satisfies the condition.
+        final result = gameBoardCopy.checkAllRows;
+
+        // ( Group index: 0, playerId: 0 (player 1) )
+        expect(result, (0, 0));
+      });
+
+      test(
+          '[checkAllCols] should return a record when '
+          'the first column is filled with the same player turn', () {
+        final plays = [
+          playPlayer1(playerTurnId: 0, tileIndex: 0),
+          playPlayer2(playerTurnId: 1, tileIndex: 1),
+          playPlayer1(playerTurnId: 2, tileIndex: 3),
+          playPlayer2(playerTurnId: 3, tileIndex: 4),
+          playPlayer1(playerTurnId: 4, tileIndex: 6),
         ];
 
         final gameBoardData = GameBoardData(edgeSize: edgeSize3);
         final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
         final result = gameBoardCopy.checkAllCols;
-        expect(result, [0, 1, 2]);
-      },
-    );
 
-    test(
-      '[diagFilled] should return a list of indices that are filled with the same player turn in a diagonal',
-      () {
-        final play3P1index0 = PlayerTurn(
-          tileIndex: 0,
-          playerTurnId: 0,
-          occupiedBy: player1,
-        );
-        final play3P2index2 = PlayerTurn(
-          tileIndex: 2,
-          playerTurnId: 1,
-          occupiedBy: player2,
-        );
-        final play3P1index1 = PlayerTurn(
-          tileIndex: 1,
-          playerTurnId: 2,
-          occupiedBy: player1,
-        );
-        final play3P2index4 = PlayerTurn(
-          tileIndex: 4,
-          playerTurnId: 3,
-          occupiedBy: player2,
-        );
-        final play3P1index5 = PlayerTurn(
-          tileIndex: 5,
-          playerTurnId: 4,
-          occupiedBy: player1,
-        );
-        final play3P2index6 = PlayerTurn(
-          tileIndex: 6,
-          playerTurnId: 5,
-          occupiedBy: player2,
-        );
+        // ( Group index: 0, playerId: 0 (player 1) )
+        expect(result, (0, 0));
+      });
 
+      test(
+        '[diagFilled] should return a list of indices that are filled with the same player turn in a diagonal',
+        () {
+          // Player 2 wins with the reverse (2nd) diag.
+          final plays = [
+            playPlayer1(playerTurnId: 0, tileIndex: 0),
+            playPlayer2(playerTurnId: 1, tileIndex: 2),
+            playPlayer1(playerTurnId: 2, tileIndex: 1),
+            playPlayer2(playerTurnId: 3, tileIndex: 4),
+            playPlayer1(playerTurnId: 4, tileIndex: 5),
+            playPlayer2(playerTurnId: 5, tileIndex: 6),
+          ];
+
+          final gameBoardData = GameBoardData(edgeSize: edgeSize3);
+          final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+
+          final result = gameBoardCopy.checkAllDiags;
+          // ( Group index: 1, playerId: 1 (player 2) )
+          expect(result, (1, 1));
+        },
+      );
+
+      test('[usedTiles] should return a list of indices that have been used by a player turn', () {
         final plays = [
-          play3P1index0,
-          play3P2index2,
-          play3P1index1,
-          play3P2index4,
-          play3P1index5,
-          play3P2index6,
+          playPlayer1(playerTurnId: 0, tileIndex: 0),
+          playPlayer2(playerTurnId: 1, tileIndex: 2),
+          playPlayer1(playerTurnId: 2, tileIndex: 1),
+          playPlayer2(playerTurnId: 3, tileIndex: 4),
+          playPlayer1(playerTurnId: 4, tileIndex: 5),
+          playPlayer2(playerTurnId: 5, tileIndex: 6),
         ];
 
         final gameBoardData = GameBoardData(edgeSize: edgeSize3);
         final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-        final result = gameBoardCopy.checkAllDiags;
-        // ( Group index: 1, playerId: 1 (player 2) )
-        expect(result, (1, 1));
-      },
-    );
+        // This returns a simple incremental list with all used indexes.
+        // Note: it will not be in the played tile index order;
+        //       notice `tileIndex` [2, 1] becomes [1, 2].
+        final result = gameBoardCopy.usedTileIndexes;
+        expect(result, [0, 1, 2, 4, 5, 6]);
+      });
 
-    test('[usedTiles] should return a list of indices that have been used by a player turn', () {
-      final plays = [
-        play3index0,
-        play3index1,
-        play3index2,
-        play3index3,
-        play3index4,
-        play3index5,
-        play3index6,
-        play3index7,
-        play3index8,
-      ];
+      test(
+        '[availableTiles] should return a list of indices that have not been used by any player turn',
+        () {
+          final plays = [
+            playPlayer1(playerTurnId: 0, tileIndex: 0),
+            playPlayer2(playerTurnId: 1, tileIndex: 2),
+            playPlayer1(playerTurnId: 2, tileIndex: 1),
+            playPlayer2(playerTurnId: 3, tileIndex: 4),
+            playPlayer1(playerTurnId: 4, tileIndex: 5),
+            playPlayer2(playerTurnId: 5, tileIndex: 6),
+          ];
 
-      final gameBoardData = GameBoardData(edgeSize: edgeSize3);
-      final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+          final gameBoardData = GameBoardData(edgeSize: edgeSize3);
+          final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-      final result = gameBoardCopy.usedTileIndexes;
-      expect(result, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+          final result = gameBoardCopy.availableTileIndexes;
+          expect(result, <int>[3, 7, 8]);
+        },
+      );
+
+      test(
+        '[copyWith] should return a new [GameBoard] instance with updated properties',
+        () {
+          final plays = [
+            playPlayer1(playerTurnId: 0, tileIndex: 0),
+            playPlayer2(playerTurnId: 1, tileIndex: 2),
+            playPlayer1(playerTurnId: 2, tileIndex: 1),
+          ];
+
+          final gameBoardData = GameBoardData(edgeSize: edgeSize3);
+          final newPlays = List.of(plays)
+            ..add(
+              playPlayer2(playerTurnId: 3, tileIndex: 4),
+            );
+
+          final result = gameBoardData.copyWith(plays: newPlays);
+          expect(result.plays, newPlays);
+        },
+      );
     });
-
-    test(
-      '[availableTiles] should return a list of indices that have not been used by any player turn',
-      () {
-        final plays = [
-          play3index0,
-          play3index1,
-          play3index2,
-          play3index3,
-          play3index4,
-          play3index5,
-          play3index6,
-          play3index7,
-          play3index8,
-        ];
-
-        final gameBoardData = GameBoardData(edgeSize: edgeSize3);
-        final gameBoardCopy = gameBoardData.copyWith(plays: plays);
-
-        final result = gameBoardCopy.availableTileIndexes;
-        expect(result, <int>[]);
-      },
-    );
-
-    test(
-      '[copyWith] should return a new [GameBoard] instance with updated properties',
-      () {
-        final plays = [play3index0, play3index1, play3index2];
-
-        final gameBoardData = GameBoardData(edgeSize: edgeSize3);
-        final newPlays = List.of(plays)..add(play3index4);
-
-        final result = gameBoardData.copyWith(plays: newPlays);
-        expect(result.plays, newPlays);
-      },
-    );
 
     group('GameBoardData [JSON]:', () {
       test('toJson', () {
@@ -320,7 +236,6 @@ void main() {
               {
                 'playerTurnId': 0,
                 'tileIndex': 2,
-                'playerId': 0,
                 'duration': 5,
                 'occupiedBy': {
                   'playerNum': 1,
