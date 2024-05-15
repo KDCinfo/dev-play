@@ -1,48 +1,124 @@
 // ignore_for_file: require_trailing_commas
-
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late GameBoardData gameBoardData;
   late GameData gameData;
   late DateTime dateTime1;
-  late DateTime dateTime2;
-  late DateTime dateTime3;
+
+  // Initialize players.
+  late PlayerData player1;
+  late PlayerData player2;
+
+  // Initialize function variables at the same scope as players.
+  late PlayerTurn Function({required int tileIndex, required int playerTurnId}) playPlayer1;
+  late PlayerTurn Function({required int tileIndex, required int playerTurnId}) playPlayer2;
 
   group('[GameData]', () {
-    group('[GameData] can be instantiated:', () {
-      test('GameData should be a [GameData]', () {
+    setUp(() {
+      player1 = const PlayerData(
+        playerNum: 1,
+        playerId: 0,
+        playerName: 'Player 1',
+        userSymbol: UserSymbolX(),
+      );
+      player2 = const PlayerData(
+        playerNum: 2,
+        playerId: 1,
+        playerName: 'Player 2',
+        userSymbol: UserSymbolO(),
+      );
+
+      playPlayer1 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
+            tileIndex: tileIndex,
+            playerTurnId: playerTurnId,
+            occupiedBy: player1,
+          );
+      playPlayer2 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
+            tileIndex: tileIndex,
+            playerTurnId: playerTurnId,
+            occupiedBy: player2,
+          );
+    });
+
+    group('can be instantiated', () {
+      test('when empty and should be a [GameData].', () {
+        gameBoardData = const GameBoardData();
+        gameData = const GameData();
+
+        expect(gameData, isNotNull);
+        expect(gameData, isA<GameData>());
+        expect(gameData.gameId, -1);
+        expect(gameData.players, isEmpty);
+        expect(gameData.gameBoardData, gameBoardData);
+        expect(gameData.endGameScore, isEmpty);
+        expect(gameData.gameStatus, isA<GameStatusInProgress>());
+      });
+
+      test('when populated and should be a [GameData].', () {
+        final testDate = DateTime(2024, 5, 15);
+        gameBoardData = const GameBoardData();
         gameData = GameData(
           /// Initial properties.
           gameId: 0,
-          dateCreated: DateTime(2024, 5, 8),
-          players: const [],
+          dateCreated: testDate,
+          // players: const [],
 
           /// Properties updated during the game.
-          dateLastPlayed: DateTime(2024, 5, 8),
-          plays: const [],
-          gameBoard: const [],
+          dateLastPlayed: testDate,
+          gameBoardData: gameBoardData,
 
           /// Properties stored at the end of the game.
-          endGameScore: const {},
-          gameStatus: const GameStatusInProgress(),
+          endGameScore: const {0: 1},
+          gameStatus: const GameStatusComplete(),
         );
 
+        expect(gameData, isNotNull);
         expect(gameData, isA<GameData>());
+        expect(gameData.gameId, 0);
+        expect(gameData.dateCreated, testDate);
+        expect(gameData.players, isEmpty);
+        expect(gameData.dateLastPlayed, testDate);
+        expect(gameData.gameBoardData, gameBoardData);
+        expect(gameData.endGameScore, {0: 1}); // playerId: score
+        expect(gameData.gameStatus, isA<GameStatusComplete>());
       });
 
-      test('GameData [props] should return the correct list of properties', () {
+      test('with correct [props] when empty.', () {
+        //
+        gameBoardData = const GameBoardData();
+
+        gameData = const GameData();
+
+        expect(
+          gameData.props,
+          equals([
+            -1,
+            null,
+            <PlayerTurn>[],
+            null,
+            gameBoardData,
+            <int, int>{},
+            const GameStatusInProgress(),
+          ]),
+        );
+      });
+
+      test('with correct [props] when populated.', () {
+        //
         final dateTime = DateTime(2024, 5, 8);
+        gameBoardData = const GameBoardData();
+
         gameData = GameData(
           gameId: 0,
           dateCreated: dateTime,
-          players: const [],
+          // players: const [],
           dateLastPlayed: dateTime,
-          plays: const [],
-          gameBoard: const [],
-          endGameScore: const {},
-          gameStatus: const GameStatusInProgress(),
+          gameBoardData: gameBoardData,
+          endGameScore: const {0: 1},
+          gameStatus: const GameStatusComplete(),
         );
 
         expect(
@@ -50,134 +126,159 @@ void main() {
           equals([
             0,
             dateTime,
-            <PlayerListByIdDef>[],
-            dateTime,
             <PlayerTurn>[],
-            <List<int>>[],
-            <int, int>{},
-            const GameStatusInProgress(),
+            dateTime,
+            gameBoardData,
+            <int, int>{0: 1},
+            const GameStatusComplete(),
           ]),
         );
       });
     });
 
-    group('[GameData] copyWith:', () {
+    group('[copyWith]:', () {
       setUp(() {
         dateTime1 = DateTime(2024, 5, 8);
-        dateTime2 = DateTime(2024, 5, 9);
-        dateTime3 = DateTime(2024, 5, 10);
+        gameBoardData = const GameBoardData();
       });
 
-      test('copyWith method should return a new GameData object with updated values', () {
-        const playerData1 = PlayerData(
-          playerNum: 1,
-          playerId: 0,
-          playerName: 'Player 1',
-          userSymbol: UserSymbolX(),
-        );
+      test('should copy available properties correctly.', () {
+        const gameDataEmpty = GameData();
 
-        const playerData2 = PlayerData(
-          playerNum: 2,
-          playerId: 1,
-          playerName: 'Player 2',
-          userSymbol: UserSymbolO(),
-        );
-
-        const playerTurn1 = PlayerTurn(
-          playerTurnId: 0,
-          playerId: 0,
-          duration: Duration(seconds: 1),
-          occupiedBy: playerData1,
-        );
-        const playerTurn2 = PlayerTurn(
-          playerTurnId: 1,
-          playerId: 1,
-          duration: Duration(seconds: 3),
-          occupiedBy: playerData2,
-        );
-
-        final gameData = GameData(
-          gameId: 1,
-          dateCreated: dateTime1,
-          players: const [
-            {0: playerData1},
-            {1: playerData2},
-          ],
+        final gameDataWithData = gameDataEmpty.copyWith(
           dateLastPlayed: dateTime1,
-          plays: const [],
-          gameBoard: const [[]],
-          endGameScore: const {0: 0},
-          gameStatus: const GameStatusInProgress(),
-        );
-
-        final updatedGameData1 = gameData.copyWith(
-          dateLastPlayed: dateTime2,
-          plays: [playerTurn1],
-          gameBoard: [
-            [5]
-          ],
-        );
-
-        final updatedGameData2 = updatedGameData1.copyWith(
-          dateLastPlayed: dateTime3,
-          plays: List.of(updatedGameData1.plays)
-            ..add(playerTurn2), // plays: [...gameData.plays, playerTurn2]
-          gameBoard: [
-            [5],
-            [7]
-          ],
-        );
-
-        final updatedGameData3 = updatedGameData2.copyWith(
-          endGameScore: {1: 0},
+          gameBoardData: gameBoardData,
+          endGameScore: const {1: 0},
           gameStatus: const GameStatusComplete(),
         );
 
-        /// 1
+        expect(gameDataWithData, isA<GameData>());
+
+        // Initial properties that can't be copied using `copyWith`.
+        expect(gameDataWithData.gameId, -1);
+        expect(gameDataWithData.dateCreated, null);
+        expect(gameDataWithData.players, isEmpty);
+
+        // Properties that can be copied using `copyWith`.
+        expect(gameDataWithData.dateLastPlayed, dateTime1);
+        expect(gameDataWithData.gameBoardData, gameBoardData);
+        expect(gameDataWithData.endGameScore, {1: 0});
+        expect(gameDataWithData.gameStatus, isA<GameStatusComplete>());
+      });
+    });
+
+    group('flows through', () {
+      setUp(() {
+        // The dateTime is set in the `startGame` method.
+        dateTime1 = DateTime.now();
+        gameBoardData = const GameBoardData();
+      });
+
+      test('[startGame], [playTurn], and [endGAme].', () {
+        // This is just to initialize the game data when the app is started.
+        // const gameData = GameData();
+
+        ///
+        /// Start the Game (when `GameEntry` is submitted)
+        ///
+        final updatedGameData0 = GameData.startGame(
+          gameId: 1,
+          players: [
+            {0: player1},
+            {1: player2},
+          ],
+          gameBoardData: gameBoardData,
+        );
+
+        ///
+        /// Play #1
+        ///
+        final plays1 = List.of(updatedGameData0.gameBoardData.plays)
+          ..add(playPlayer1(
+            playerTurnId: 0,
+            tileIndex: 0,
+          ));
+        final updatedGameData1 = updatedGameData0.playTurn(
+          gameBoardData: gameBoardData.copyWith(plays: plays1),
+        );
+
+        ///
+        /// Play #2
+        ///
+        final plays2 = List.of(updatedGameData1.gameBoardData.plays)
+          ..add(playPlayer2(
+            playerTurnId: 1,
+            tileIndex: 2,
+          ));
+        final updatedGameData2 = updatedGameData1.playTurn(
+          gameBoardData: gameBoardData.copyWith(plays: plays2),
+        );
+
+        ///
+        /// End Game
+        ///
+        final updatedGameData3 = updatedGameData2.endGame(
+          // Player 2 wins.
+          endGameScore: {1: 1}, // playerId: score, // +1 for each game won
+        );
+
+        /// Game ID should never change.
         expect(updatedGameData1.gameId, 1);
-        expect(updatedGameData1.dateCreated, dateTime1);
-        expect(updatedGameData1.players, const [
-          {0: playerData1},
-          {1: playerData2}
+        expect(updatedGameData2.gameId, 1);
+        expect(updatedGameData3.gameId, 1);
+
+        // The `dateCreated` should never change.
+        expect(updatedGameData1.dateCreated, isA<DateTime>());
+        expect(updatedGameData2.dateCreated, isA<DateTime>());
+        expect(updatedGameData3.dateCreated, isA<DateTime>());
+        expect(DateTime.now().difference(updatedGameData1.dateCreated!).inSeconds <= 2, isTrue);
+        expect(DateTime.now().difference(updatedGameData2.dateCreated!).inSeconds <= 2, isTrue);
+        expect(DateTime.now().difference(updatedGameData3.dateCreated!).inSeconds <= 2, isTrue);
+
+        // Playing a turn updates `dateLastPlayed` to `DateTime.now()`.
+        // We should expect a DateTime.now() within 2 seconds.
+        expect(updatedGameData1.dateLastPlayed, isA<DateTime>());
+        expect(updatedGameData2.dateLastPlayed, isA<DateTime>());
+        expect(updatedGameData3.dateLastPlayed, isA<DateTime>());
+        expect(DateTime.now().difference(updatedGameData1.dateLastPlayed!).inSeconds <= 2, isTrue);
+        expect(DateTime.now().difference(updatedGameData2.dateLastPlayed!).inSeconds <= 2, isTrue);
+        expect(DateTime.now().difference(updatedGameData3.dateLastPlayed!).inSeconds <= 2, isTrue);
+
+        // Players never change.
+        expect(updatedGameData1.players, [
+          {0: player1},
+          {1: player2},
         ]);
-        expect(updatedGameData1.dateLastPlayed, dateTime2);
-        expect(updatedGameData1.plays, [playerTurn1]);
-        expect(updatedGameData1.gameBoard, [
-          [5]
+        expect(updatedGameData2.players, [
+          {0: player1},
+          {1: player2},
         ]);
-        expect(updatedGameData1.endGameScore, {0: 0});
+        expect(updatedGameData3.players, [
+          {0: player1},
+          {1: player2},
+        ]);
+
+        // Game board data should be updated with each play.
+        expect(updatedGameData1.gameBoardData.plays, [playPlayer1(playerTurnId: 0, tileIndex: 0)]);
+        expect(updatedGameData1.gameBoardData, gameBoardData.copyWith(plays: plays1));
+        expect(updatedGameData1.endGameScore, <int, int>{});
         expect(updatedGameData1.gameStatus, isA<GameStatusInProgress>());
 
-        /// 2
-        expect(updatedGameData2.gameId, 1);
-        expect(updatedGameData2.dateCreated, dateTime1);
-        expect(updatedGameData2.players, const [
-          {0: playerData1},
-          {1: playerData2}
+        expect(updatedGameData2.gameBoardData.plays, [
+          playPlayer1(playerTurnId: 0, tileIndex: 0),
+          playPlayer2(playerTurnId: 1, tileIndex: 2)
         ]);
-        expect(updatedGameData2.dateLastPlayed, dateTime3);
-        expect(updatedGameData2.plays, [playerTurn1, playerTurn2]);
-        expect(updatedGameData2.gameBoard, [
-          [5],
-          [7]
-        ]);
-        expect(updatedGameData2.endGameScore, {0: 0});
+        expect(updatedGameData2.gameBoardData, gameBoardData.copyWith(plays: plays2));
+        expect(updatedGameData2.endGameScore, <int, int>{});
         expect(updatedGameData2.gameStatus, isA<GameStatusInProgress>());
 
-        /// 3
-        expect(updatedGameData3.gameId, 1);
-        expect(updatedGameData3.dateCreated, dateTime1);
-        expect(updatedGameData3.players, const [
-          {0: playerData1},
-          {1: playerData2}
+        /// `endGameScore` should be updated when the game is over.
+        expect(updatedGameData3.gameBoardData.plays, [
+          playPlayer1(playerTurnId: 0, tileIndex: 0),
+          playPlayer2(playerTurnId: 1, tileIndex: 2)
         ]);
-        expect(updatedGameData3.dateLastPlayed, dateTime3);
-        expect(updatedGameData3.plays, [playerTurn1, playerTurn2]);
-        expect(updatedGameData3.gameBoard, [
-          [5],
-          [7]
-        ]);
-        expect(updatedGameData3.endGameScore, {1: 0});
+        expect(updatedGameData3.gameBoardData, gameBoardData.copyWith(plays: plays2));
+        expect(updatedGameData3.endGameScore, {1: 1});
         expect(updatedGameData3.gameStatus, isA<GameStatusComplete>());
       });
     });

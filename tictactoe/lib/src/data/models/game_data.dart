@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 
 /// Initial Data Design
 ///
-/// ## Persisted Data
 /// [GameData](int gameId, <GamePlayer>[] players, gameBoard)
 ///
 /// | Initial properties.
@@ -29,50 +28,83 @@ import 'package:equatable/equatable.dart';
 
 class GameData extends Equatable {
   const GameData({
-    required this.gameId,
-    required this.dateCreated,
-    required this.players,
-    required this.dateLastPlayed,
-    required this.plays,
-    required this.gameBoard,
-    required this.endGameScore,
-    required this.gameStatus,
+    this.dateCreated, // This is set when a game is started.
+    this.gameId = -1, // For initialization purposes only.
+    this.players = const [],
+    this.gameBoardData = const GameBoardData(),
+    this.dateLastPlayed,
+    this.endGameScore = const <int, int>{},
+    this.gameStatus = const GameStatusInProgress(),
   });
 
+  factory GameData.startGame({
+    required int gameId,
+    required PlayerListMapsByIdDef players,
+    required GameBoardData gameBoardData,
+  }) {
+    return GameData(
+      dateCreated: DateTime.now(),
+      gameId: gameId,
+      players: players,
+      gameBoardData: gameBoardData,
+      // gameBoardData: List<List<int>> | List.generate(3, (_) => List.generate(3, (_) => 0)),
+    );
+  }
+
+  GameData playTurn({
+    required GameBoardData gameBoardData,
+  }) {
+    return copyWith(
+      dateLastPlayed: DateTime.now(),
+      gameBoardData: gameBoardData,
+    );
+  }
+
+  GameData endGame({
+    required Map<int, int> endGameScore,
+  }) {
+    return copyWith(
+      endGameScore: endGameScore,
+      gameStatus: const GameStatusComplete(),
+    );
+  }
+
   /// Initial game properties.
+  ///
   final int gameId;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final PlayerListMapsByIdDef players;
 
   /// Properties updated during a game.
-  final DateTime dateLastPlayed;
-  final List<PlayerTurn> plays;
-  final List<List<int>> gameBoard;
+  ///
+  final DateTime? dateLastPlayed;
+  final GameBoardData gameBoardData;
 
   /// Properties stored at the end of a game.
+  ///
   final Map<int, int> endGameScore;
   final GameStatus gameStatus;
 
   GameData copyWith({
-    int? gameId,
-    DateTime? dateCreated,
+    // Used with `playTurn` method.
     DateTime? dateLastPlayed,
-    List<PlayerTurn>? plays,
-    List<List<int>>? gameBoard,
+    GameBoardData? gameBoardData,
+    // Used with `endGame` method.
     Map<int, int>? endGameScore,
     GameStatus? gameStatus,
   }) {
     return GameData(
-      gameId: gameId ?? this.gameId,
-      dateCreated: dateCreated ?? this.dateCreated,
+      gameId: gameId,
+      dateCreated: dateCreated,
+      players: players,
       dateLastPlayed: dateLastPlayed ?? this.dateLastPlayed,
-      plays: plays ?? this.plays,
-      gameBoard: gameBoard ?? this.gameBoard,
+      gameBoardData: gameBoardData ?? this.gameBoardData,
       endGameScore: endGameScore ?? this.endGameScore,
       gameStatus: gameStatus ?? this.gameStatus,
     );
   }
 
+  // toJson
   Map<String, dynamic> toJson() => {
         'gameId': gameId,
         'dateCreated': dateCreated?.toIso8601String(),
@@ -83,14 +115,27 @@ class GameData extends Equatable {
         'gameStatus': gameStatus,
       };
 
+  // fromJson
+  // ignore: sort_constructors_first
+  factory GameData.fromJson(Map<String, dynamic> json) {
+    return GameData(
+      gameId: json['gameId'] as int,
+      dateCreated: DateTime.parse(json['dateCreated'] as String),
+      players: json['players'] as PlayerListMapsByIdDef,
+      dateLastPlayed: DateTime.parse(json['dateLastPlayed'] as String),
+      gameBoardData: json['gameBoardData'] as GameBoardData,
+      endGameScore: json['endGameScore'] as Map<int, int>,
+      gameStatus: json['gameStatus'] as GameStatus,
+    );
+  }
+
   @override
   List<Object?> get props => [
         gameId,
         dateCreated,
         players,
         dateLastPlayed,
-        plays,
-        gameBoard,
+        gameBoardData,
         endGameScore,
         gameStatus,
       ];
