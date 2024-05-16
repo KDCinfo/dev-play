@@ -36,11 +36,6 @@ abstract interface class StorageServiceApi {
   Future<String?> secureStoreRead(String key);
   Future<void> secureStoreDelete(String key);
 
-  ///
-  /// App-Specific
-  ///
-  Future<void> gameDataToStorage(String newGameData);
-
   /// Additional examples:
   ///
   // Future cacheExchangeRateData(List<Rate> data);

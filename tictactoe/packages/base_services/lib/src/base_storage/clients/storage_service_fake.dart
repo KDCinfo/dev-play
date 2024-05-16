@@ -92,15 +92,6 @@ class FakeStorageService implements StorageServiceApi {
     throw UnimplementedError();
   }
 
-  ///
-  /// App-Specific
-  ///
-  @override
-  Future<void> gameDataToStorage(String newGameData) async {
-    // Implement gameDataToStorage
-    throw UnimplementedError();
-  }
-
 /*
   /// Additional examples:
 
