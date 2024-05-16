@@ -971,7 +971,7 @@ CG4:
     The grid is inside of a `Row` where it shares with another widget where both widgets
     are wrapped with an `Expanded` widget so they share the same space and to avoid pixel
     overflows. The issue is because the `GridView` is inside of an `Expanded` widget, and
-    for some reason it won't respect either a `SizedBox` or a `ConstrainedBox` max width
+    for some reason it will not respect either a `SizedBox` or a `ConstrainedBox` max width
     within that `Expanded` widget, and so the Grid expands the full half width of the screen,
     which results in cropping the bottom layer and a half of tiles.
 
@@ -1074,5 +1074,273 @@ CG4:
 
   - Created model: `GameBoard`
   - Adding a `GameData.initial` factory
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/10/2024 12:04:43 AM
+- Dev Play: Tic Tac Toe
+
+	Finished `GameBoardData` and setup tests.
+
+@5/10/2024 3:12:59 AM
+- Dev Play: Tic Tac Toe | 3 commits
+
+	- Lot of work between `GameData` and `GameBoardData`.
+	- Also now adding in all the to/from JSON methods (got the `to`s done).
+
+@5/10/2024 11:33:16 AM
+- Dev Play: Tic Tac Toe
+
+	> Implementing `fromJson`
+
+	- UserSymbolX
+	- UserSymbolO
+	- UserSymbolPlus
+	- UserSymbolStar
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/11/2024 12:15:45 AM
+- Dev Play: Tic Tac Toe
+
+	> The `markerKey` is unique, so the `markerIcon` is not needed.
+
+@5/11/2024 12:45:59 AM
+- Dev Play: Tic Tac Toe | 1 commit
+
+	> Added `fromJson` & tests: PlayerType & UserSymbol
+
+@5/11/2024 1:27:45 AM
+- Dev Play: Tic Tac Toe | 1 commit
+
+	> PlayerData and PlayerTurn: `to/fromJson` and tests
+
+@5/11/2024 4:13:29 AM
+- Dev Play: Tic Tac Toe | 1 commit (3 commits today)
+
+	> GameStatus: `to/fromJson` and tests
+
+	- `GameData` and `GameBoardData` are the biggest efforts right now.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/12/2024 3:29:16 AM
+- Dev Play: Tic Tac Toe
+
+	- Still working on fixing the `checkRows` and `checkCols`.
+	- Got the `checkRows` and trying to refactor to accommodate both.
+
+@5/12/2024 4:04:54 AM
+- Dev Play: Tic Tac Toe
+
+  - Random clipboard contents
+
+			previousValue
+			dart sublist - Google Search.html
+			mapOfRows[tileInSet]
+			  print(map1);
+			// { 0: [], 1: [], 2: [] }
+
+@5/12/2024 10:09:46 PM
+- Dev Play: Tic Tac Toe
+
+	- I think `mod()` should work to get Column groups.
+
+@5/13/2024 12:07:11 AM
+- Dev Play: Tic Tac Toe
+
+	- Got model setup for row and col checking.
+	- Started on tests. First one failed.
+
+@5/13/2024 1:50:44 AM
+- Dev Play: Tic Tac Toe | 2 commits (only 1 was for today)
+
+	> Removed `playerId` from `PlayerTurn`.
+	> Initial commit for `GameBoardData` and tests (WIP)
+
+@5/13/2024 6:09:32 AM
+- Dev Play: Tic Tac Toe
+
+	- Got diag checks working.
+	- Ran through a handful of tests.
+    So far, so good.
+
+		`// ( Group index: 0, playerId: 1 (player 2) )`
+
+	- @TODO:
+		- Go over rest of tests
+		- Check for anything not used in `GameBoardData`.
+
+@5/13/2024 6:16:49 AM
+- Dev Play: Tic Tac Toe | 1 commit (2 today)
+
+	> Fixed `checkAllDiags` from `checkDiags` getter.
+	> And ran through a handful of tests.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/13/2024 7:26:17 PM
+- Dev Play: Tic Tac Toe
+
+	- Reordered and pseudo-grouped all the methods in `GameBoardData`.
+
+@5/14/2024 2:44:08 AM
+- Dev Play: Tic Tac Toe
+
+			// ( Group index: 0, playerId: 1 (player 2) )
+			expect(result, (0, 1));
+
+@5/14/2024 3:24:24 AM
+- Dev Play: Tic Tac Toe
+
+	> Got `GameBoardData` & tests much better organized.
+	> All tests passing thus far, but have more tests to add.
+
+@5/14/2024 5:36:02 AM
+- Dev Play: Tic Tac Toe
+
+	- Finished with all the tests for an edgeSize of 3.
+	- Now working on the [edgeSize: 4] for which I created a new file.
+
+@5/14/2024 5:45:15 AM
+- Dev Play: Tic Tac Toe
+
+	So far, so good on the 'edgeSize: 4' tests.
+		Means my functions are all working properly so far.
+
+@5/14/2024 6:44:27 AM
+- Dev Play: Tic Tac Toe
+
+	- Finished with all the tests for an edgeSize of 4.
+
+@5/14/2024 7:45:21 AM
+- Dev Play: Tic Tac Toe | 1 commit
+
+	- Finished with all the tests for an edgeSize of 5.
+
+	> Finished `GameBoardData` tests for 4x4 & 5x5 grids
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/14/2024 7:51:30 PM
+- Dev Play: Tic Tac Toe
+
+	Trying to get my head into the repository.
+		Got some stuff cleaned up a bit.
+		Need to think it through.
+
+@5/14/2024 9:48:31 PM
+- Dev Play: Tic Tac Toe
+
+	> Created data model and tests for `ScorebookData`.
+		123456789 123456789 123456789 123456789 12345678 |
+
+@5/15/2024 4:05:47 AM
+- Dev Play: Tic Tac Toe
+
+	- Was working on `ScorebookData`
+		until I realized/remembered it needs to be a bloc.
+	- Created a `Scorebook` bloc
+		in a new `data\blocs` folder.
+	- Gotta make sure `GameData` is good though.
+		- `GameData` looks good.
+		- Tests are half done.
+	- `GameData` drives the `Stream` in the `GamePlayRepository`
+		which drives the `Scorebook` bloc.
+
+@5/15/2024 5:47:50 AM
+- Dev Play: Tic Tac Toe | 1 commit
+
+	> Finished model and tests for `GameData`.
+	> 123456789 123456789 123456789 123456789 12345678 |
+
+	> Created data model and tests for `ScorebookData`.
+
+@5/15/2024 7:20:41 AM
+- Dev Play: Tic Tac Toe | Oops!
+
+	**__Just discovered I got the `GamePlay` and `Scorebook` reversed.__**
+
+	- `Scorebook` should be the repository and `GamePlay` should be a bloc.
+	- `Scorebook` has methods for `initGame` and `updateGame`.
+
+@5/15/2024 7:35:32 AM
+@5/15/2024 7:55:20 AM
+- Dev Play: Tic Tac Toe
+
+	> Updated drawio diagram: `Scorebook` is repository.
+	> 123456789 123456789 123456789 123456789 12345678 |
+
+@5/15/2024 8:47:54 AM
+- Dev Play: Tic Tac Toe
+
+	- Got the `GamePlay` and `Scorebook` files reversed.
+	- Began integrating `ScorebookData`.
+
+@5/15/2024 9:54:24 AM
+- Dev Play: Tic Tac Toe
+
+	- Working through `ScorebookData`.
+	- Converting `allPlayers` from `Map` to `List`.
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+@5/16/2024 12:36:03 AM
+- Dev Play: Tic Tac Toe
+
+	- Global State -> Scorebook Repository -> ScorebookData
+
+@5/16/2024 12:53:46 AM
+- Dev Play:
+
+	- Restarted VS Code; the problems tab was showing issues in previously deleted files.
+
+@5/16/2024 1:40:02 AM
+- Dev Play: Tic Tac Toe
+
+	> Moved app-specific storage method into repository.
+	> 123456789 123456789 123456789 123456789 12345678 |
+
+@5/16/2024 2:00:41 AM
+- Dev Play: Tic Tac Toe
+
+	- Got both `ScorebookRepository` and `ScorebookData` cleaned up and ready for tests.
+
+@5/16/2024 2:26:21 AM
+- Copilot created tests for `ScorebookRepository`.
+- Cleaned up all the tests and ran the first one (passed).
+
+@5/16/2024 2:27:49 AM
+- Holy moly they all passed.
+
+@5/16/2024 2:29:38 AM
+
+	> Added scorebook `RepositoryProvider` w StorageApi.
+	> The `StorageAPI` includes methods for both `Shared Preferences` and `Flutter Secure Storage`.
+
+	> Created repository & tests: `ScorebookRepository`
+	> 123456789 123456789 123456789 123456789 12345678 |
+
+@5/16/2024 2:53:53 AM
+- Dev Play: Tic Tac Toe
+
+	> Created model and tests: `ScorebookData`
+
+@5/16/2024 3:02:16 AM
+- Dev Play: Tic Tac Toe
+
+	- I believe all the data models and the repository are complete.
+	- The repository needs some more methods,
+		but will be done as the blocs need them.
+	- On to the blocs...
+		Already started earlier with the `GamePlay` bloc.
+
+	- Then ... BlocProviders, BlocBuilders, and BlocListeners (if needed).
+	- Then ... that should be it??
+
+@5/16/2024 3:55:58 AM
+- Dev Play: Tic Tac Toe
+
+	> Updated [readme_history.md]
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
