@@ -184,8 +184,8 @@ void main() {
         final updatedGameData0 = GameData.startGame(
           gameId: 1,
           players: [
-            {0: player1},
-            {1: player2},
+            player1,
+            player2,
           ],
           gameBoardData: gameBoardData,
         );
@@ -246,16 +246,16 @@ void main() {
 
         // Players never change.
         expect(updatedGameData1.players, [
-          {0: player1},
-          {1: player2},
+          player1,
+          player2,
         ]);
         expect(updatedGameData2.players, [
-          {0: player1},
-          {1: player2},
+          player1,
+          player2,
         ]);
         expect(updatedGameData3.players, [
-          {0: player1},
-          {1: player2},
+          player1,
+          player2,
         ]);
 
         // Game board data should be updated with each play.

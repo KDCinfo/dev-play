@@ -1,7 +1,12 @@
-import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:equatable/equatable.dart';
+
+/// `GameData` houses the gaming data for any
+/// in progress games, and all completed games.
+///
+/// It's the nuts and bolts for every game and is fed to the
+/// `GamePlay` bloc via a stream in the `Scorebook` repository.
 
 /// Initial Data Design
 ///
@@ -30,7 +35,7 @@ class GameData extends Equatable {
   const GameData({
     this.dateCreated, // This is set when a game is started.
     this.gameId = -1, // For initialization purposes only.
-    this.players = const [],
+    this.players = const <PlayerData>[],
     this.gameBoardData = const GameBoardData(),
     this.dateLastPlayed,
     this.endGameScore = const <int, int>{},
@@ -39,7 +44,7 @@ class GameData extends Equatable {
 
   factory GameData.startGame({
     required int gameId,
-    required PlayerListMapsByIdDef players,
+    required List<PlayerData> players,
     required GameBoardData gameBoardData,
   }) {
     return GameData(
@@ -73,7 +78,7 @@ class GameData extends Equatable {
   ///
   final int gameId;
   final DateTime? dateCreated;
-  final PlayerListMapsByIdDef players;
+  final List<PlayerData> players;
 
   /// Properties updated during a game.
   ///
@@ -108,7 +113,7 @@ class GameData extends Equatable {
   Map<String, dynamic> toJson() => {
         'gameId': gameId,
         'dateCreated': dateCreated?.toIso8601String(),
-        'players': players,
+        'players': players.map((player) => player.toJson()).toList(),
         'dateLastPlayed': dateLastPlayed?.toIso8601String(),
         'gameBoardData': gameBoardData,
         'endGameScore': endGameScore,
@@ -121,7 +126,9 @@ class GameData extends Equatable {
     return GameData(
       gameId: json['gameId'] as int,
       dateCreated: DateTime.parse(json['dateCreated'] as String),
-      players: json['players'] as PlayerListMapsByIdDef,
+      players: (json['players'] as List<dynamic>)
+          .map((player) => PlayerData.fromJson(player as Map<String, dynamic>))
+          .toList(),
       dateLastPlayed: DateTime.parse(json['dateLastPlayed'] as String),
       gameBoardData: json['gameBoardData'] as GameBoardData,
       endGameScore: json['endGameScore'] as Map<int, int>,
