@@ -82,7 +82,6 @@ void main() {
           equals({
             'playerTurnId': 0,
             'tileIndex': 2,
-            'playerId': 0,
             'duration': 5,
             'occupiedBy': {
               'playerNum': 1,
@@ -124,7 +123,6 @@ void main() {
         equals([
           0,
           2,
-          0,
           const Duration(seconds: 1),
           occupiedBy,
         ]),
