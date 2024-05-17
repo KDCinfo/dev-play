@@ -1,14 +1,12 @@
 import 'dart:convert';
 
-import 'package:base_services/base_services.dart';
-
 import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockStorageAPI extends Mock implements StorageServiceApi {}
+import '../../helpers/helpers.dart';
 
 void main() {
   group('[ScorebookRepository] Testing:', () {
