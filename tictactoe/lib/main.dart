@@ -2,11 +2,9 @@ import 'dart:developer';
 
 import 'package:base_services/base_services.dart';
 
-import 'package:dev_play_tictactoe/src/app.dart';
-import 'package:dev_play_tictactoe/src/data/data.dart';
+import 'package:dev_play_tictactoe/src/src.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   /// Logging will be enabled when not in production.
@@ -41,8 +39,8 @@ Future<void> main() async {
   );
 
   runApp(
-    RepositoryProvider.value(
-      value: scorebookRepository,
+    AppProviderWrapper(
+      scorebookRepository: scorebookRepository,
       child: const MyApp(),
     ),
   );
