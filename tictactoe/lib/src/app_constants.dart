@@ -35,6 +35,8 @@ abstract class AppConstants {
   static const boardSizeLabelKey = 'BoardSizeKey';
   static const boardSizeSliderKey = 'BoardSizeSliderKey';
   static const boardSizes = ['3x3', '4x4', '5x5'];
+  // Offset: 3x3 => [3] is the base edgeSize ==> [0] is the min slider value: [3] - Offset = [0]
+  static const boardSizesOffset = 3;
   static String sliderLabelKey(int labelIndex) => 'SliderLabelKey$labelIndex';
 
   /// Buttons

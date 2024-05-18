@@ -14,6 +14,8 @@ class GameEntryBoardSizeRow extends StatelessWidget {
     const boardSizes = AppConstants.boardSizes;
     const boardSizeSliderKey = Key(AppConstants.boardSizeSliderKey);
 
+    const boardSizesOffset = AppConstants.boardSizesOffset;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
