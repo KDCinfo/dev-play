@@ -7,13 +7,13 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: '>=3.4.0-247.0.dev <4.0.0'
+  sdk: '>=3.4.0-282.3.beta <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_secure_storage: ^9.0.0
-  shared_preferences: ^2.0.17
+  flutter_secure_storage: ^8.1.0
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   very_good_analysis: ^5.1.0
