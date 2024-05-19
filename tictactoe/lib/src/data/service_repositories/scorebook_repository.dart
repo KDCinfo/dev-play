@@ -11,7 +11,7 @@ import 'package:rxdart/subjects.dart';
 /// The `ScorebookRepository` provides a streamed state
 /// to blocs containing the current and all saved games.
 ///
-class ScorebookRepository {
+class ScorebookRepository extends AppBaseRepository {
   ScorebookRepository({
     required StorageServiceApi storageService,
   }) : _storageService = storageService {
@@ -38,6 +38,7 @@ class ScorebookRepository {
     _scorebookDataStreamController.close();
   }
 
+  @override
   void initRepository() {
     ///
     /// Get stored data.

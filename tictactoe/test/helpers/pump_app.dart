@@ -1,4 +1,10 @@
+import 'package:dev_play_tictactoe/src/app_provider_wrapper_bloc.dart';
+import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'mocks.dart';
 
 abstract class PumpApp {
   static Widget materialApp(Widget child) => MaterialApp(
@@ -14,6 +20,41 @@ abstract class PumpApp {
           body: child,
         ),
       );
+
+  /// Passing in the `scorebookRepository` allows tests
+  /// to maintain a handle on any mocked dependencies.
+  static Future<Widget> providerWrappedMaterialApp(
+    Widget child,
+    MockScorebookRepository scorebookRepository,
+  ) async {
+    final repositories = [
+      RepositoryTypeWrapper<ScorebookRepository>(
+        repository: scorebookRepository,
+      ),
+    ];
+
+    return MultiRepositoryProvider(
+      providers: [
+        for (final repositoryWrapper in repositories)
+          RepositoryProvider(
+            create: (context) => repositoryWrapper.repository,
+          ),
+      ],
+      child: Builder(
+        builder: (context) {
+          return AppProviderWrapperBloc(
+            child: materialApp(
+              Builder(
+                builder: (context) {
+                  return child;
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
 
 /*
