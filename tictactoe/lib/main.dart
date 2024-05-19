@@ -38,10 +38,22 @@ Future<void> main() async {
     storageService: storageApi,
   );
 
+  final repositories = [
+    RepositoryTypeWrapper<ScorebookRepository>(
+      repository: scorebookRepository,
+    ),
+  ];
+
   runApp(
-    AppProviderWrapper(
-      scorebookRepository: scorebookRepository,
-      child: const MyApp(),
+    AppProviderWrapperRepository(
+      repositories: repositories,
+      child: Builder(
+        builder: (context) {
+          return const AppProviderWrapperBloc<AppBaseRepository>(
+            child: MyApp(),
+          );
+        },
+      ),
     ),
   );
 }
