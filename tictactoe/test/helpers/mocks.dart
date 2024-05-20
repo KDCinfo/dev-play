@@ -1,5 +1,7 @@
 import 'package:base_services/base_services.dart';
 
+import 'package:bloc_test/bloc_test.dart';
+
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:flutter/material.dart';
@@ -8,6 +10,10 @@ import 'package:mocktail/mocktail.dart';
 class MockStorageAPI extends Mock implements StorageServiceApi {}
 
 class MockScorebookRepository extends Mock implements ScorebookRepository {}
+
+class MockGameEntryBloc extends MockBloc<GameEntryEvent, GameEntryState> implements GameEntryBloc {}
+
+class MockGameEntryState extends Mock implements GameEntryState {}
 
 /// Navigation Mocks
 
