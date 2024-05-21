@@ -1,8 +1,11 @@
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
+import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
 
@@ -10,17 +13,28 @@ void main() {
   group('[GameOrientationLayout] Testing:', () {
     late Widget widgetToTest;
     late Widget wrappedWidget;
+    late ScorebookRepository mockScorebookRepository;
+    late GameEntryBloc mockGameEntryBloc;
 
     ///
     /// [ GameOrientationLayout: GameEntry Screen ]
     ///
 
     group('[GameEntry Layout] Screen', () {
-      setUp(() {
+      setUp(() async {
+        mockScorebookRepository = MockScorebookRepository();
+        mockGameEntryBloc = MockGameEntryBloc();
+
         widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameEntry(),
         );
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          scorebookRepository: mockScorebookRepository,
+          gameEntryBloc: mockGameEntryBloc,
+          child: widgetToTest,
+        );
+
+        when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
       });
 
       testWidgets('[GameOrientationLayout] renders.', (WidgetTester tester) async {

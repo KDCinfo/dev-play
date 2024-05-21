@@ -56,6 +56,35 @@ abstract class PumpApp {
       ),
     );
   }
+
+  static Future<Widget> providerWrappedWithNoMaterialApp({
+    required Widget child,
+    required ScorebookRepository scorebookRepository,
+    GameEntryBloc? gameEntryBloc,
+  }) async {
+    final repositories = [
+      RepositoryTypeWrapper<ScorebookRepository>(
+        repository: scorebookRepository,
+      ),
+    ];
+
+    return MultiRepositoryProvider(
+      providers: [
+        for (final repositoryWrapper in repositories)
+          RepositoryProvider.value(
+            value: repositoryWrapper.repository,
+          ),
+      ],
+      child: Builder(
+        builder: (context) {
+          return AppProviderWrapperBloc(
+            gameEntryBloc: gameEntryBloc,
+            child: child,
+          );
+        },
+      ),
+    );
+  }
 }
 
 /*

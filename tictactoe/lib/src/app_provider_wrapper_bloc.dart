@@ -11,17 +11,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppProviderWrapperBloc<T extends AppBaseRepository> extends StatelessWidget {
   const AppProviderWrapperBloc({
     required this.child,
+    this.gameEntryBloc,
     super.key,
   });
 
   final Widget child;
+  final GameEntryBloc? gameEntryBloc;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameEntryBloc(
-        scorebookRepository: context.read<ScorebookRepository>(),
-      ),
+      create: (context) =>
+          gameEntryBloc ??
+          GameEntryBloc(
+            scorebookRepository: context.read<ScorebookRepository>(),
+          ),
       child: Builder(
         builder: (context) {
           return child;
