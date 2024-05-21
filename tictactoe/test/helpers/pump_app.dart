@@ -1,10 +1,9 @@
 import 'package:dev_play_tictactoe/src/app_provider_wrapper_bloc.dart';
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'mocks.dart';
 
 abstract class PumpApp {
   static Widget materialApp(Widget child) => MaterialApp(
@@ -25,8 +24,8 @@ abstract class PumpApp {
   /// to maintain a handle on any mocked dependencies.
   static Future<Widget> providerWrappedMaterialApp({
     required Widget child,
-    required MockScorebookRepository scorebookRepository,
-    MockGameEntryBloc? mockGameEntryBloc,
+    required ScorebookRepository scorebookRepository,
+    GameEntryBloc? gameEntryBloc,
   }) async {
     final repositories = [
       RepositoryTypeWrapper<ScorebookRepository>(
@@ -37,14 +36,14 @@ abstract class PumpApp {
     return MultiRepositoryProvider(
       providers: [
         for (final repositoryWrapper in repositories)
-          RepositoryProvider(
-            create: (context) => repositoryWrapper.repository,
+          RepositoryProvider.value(
+            value: repositoryWrapper.repository,
           ),
       ],
       child: Builder(
         builder: (context) {
           return AppProviderWrapperBloc(
-            mockGameEntryBloc: mockGameEntryBloc,
+            gameEntryBloc: gameEntryBloc,
             child: materialApp(
               Builder(
                 builder: (context) {

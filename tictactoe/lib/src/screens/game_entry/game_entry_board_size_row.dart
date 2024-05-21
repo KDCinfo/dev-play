@@ -1,6 +1,8 @@
 import 'package:dev_play_tictactoe/src/app_constants.dart';
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameEntryBoardSizeRow extends StatelessWidget {
   const GameEntryBoardSizeRow({super.key});
@@ -42,14 +44,20 @@ class GameEntryBoardSizeRow extends StatelessWidget {
               ],
             ),
           ),
-          Slider(
-            key: boardSizeSliderKey,
-            value: 1,
-            min: 1,
-            max: boardSizes.length.toDouble(),
-            // @TODO: Testing this will be done with a Bloc.
-            onChanged: (value) {},
-            divisions: boardSizes.length - 1,
+          BlocBuilder<GameEntryBloc, GameEntryState>(
+            builder: (context, state) {
+              return Slider(
+                key: boardSizeSliderKey,
+                value: state.edgeSize.toDouble() - boardSizesOffset,
+                max: boardSizes.length.toDouble() - 1,
+                onChanged: (value) {},
+                onChangeEnd: (value) {
+                  final edgeSize = value.toInt() + boardSizesOffset;
+                  context.read<GameEntryBloc>().add(GameEntryEdgeSizeEvent(edgeSize: edgeSize));
+                },
+                divisions: boardSizes.length - 1,
+              );
+            },
           ),
         ],
       ),
