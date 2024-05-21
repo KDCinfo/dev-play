@@ -23,20 +23,24 @@ class MockRoute extends Mock implements Route<void> {}
 
 class FakeRoute extends Fake implements Route<void> {}
 
-final playerList = [
+final playerListSingle = [
   const PlayerData(
     playerId: 0,
     playerNum: 1,
     playerName: 'Player 1',
     userSymbol: UserSymbolX(),
   ),
-  const PlayerData(
-    playerId: 1,
-    playerNum: 2,
-    playerName: 'Player 2',
-    userSymbol: UserSymbolO(),
-  ),
 ];
+
+final playerList = List.of(playerListSingle)
+  ..add(
+    const PlayerData(
+      playerId: 1,
+      playerNum: 2,
+      playerName: 'Player 2',
+      userSymbol: UserSymbolO(),
+    ),
+  );
 
 final playerListAddOne = List.of(playerList)
   ..add(
