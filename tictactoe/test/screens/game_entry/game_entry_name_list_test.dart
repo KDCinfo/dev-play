@@ -64,13 +64,6 @@ void main() {
         );
         expect(widgetFinderNameListRow, findsOneWidget);
 
-        // 1 TextFormField per GameEntryNameListRow
-        final widgetFinderNameListLabel = find.descendant(
-          of: widgetFinderNameList,
-          matching: find.byType(TextFormField),
-        );
-        expect(widgetFinderNameListLabel, findsOneWidget);
-
         // testWidgets('[GameEntry Name List] has an InputName.', (WidgetTester tester) async {});
         final widgetFinderNameListInputName = find.descendant(
           of: widgetFinderNameList,
@@ -81,7 +74,7 @@ void main() {
         // testWidgets('[GameEntry Name List] has a PlayerNameList.', (WidgetTester tester) async {});
         final widgetFinderNameListPlayerNameList = find.descendant(
           of: widgetFinderNameList,
-          matching: find.byType(GameEntryNameListRowInputName),
+          matching: find.byType(PlayerList),
         );
         expect(widgetFinderNameListPlayerNameList, findsOneWidget);
       });
@@ -109,13 +102,6 @@ void main() {
         );
         expect(widgetFinderNameListRow, findsNWidgets(2));
 
-        // TextFormField
-        final widgetFinderNameListLabel = find.descendant(
-          of: widgetFinderNameList,
-          matching: find.byType(TextFormField),
-        );
-        expect(widgetFinderNameListLabel, findsNWidgets(2));
-
         // Input Name
         final widgetFinderNameListInputName = find.descendant(
           of: widgetFinderNameList,
@@ -126,7 +112,7 @@ void main() {
         // Player Name List
         final widgetFinderNameListPlayerNameList = find.descendant(
           of: widgetFinderNameList,
-          matching: find.byType(GameEntryNameListRowInputName),
+          matching: find.byType(PlayerList),
         );
         expect(widgetFinderNameListPlayerNameList, findsNWidgets(2));
       });
@@ -154,13 +140,6 @@ void main() {
         );
         expect(widgetFinderNameListRow, findsNWidgets(3));
 
-        // TextFormField
-        final widgetFinderNameListLabel = find.descendant(
-          of: widgetFinderNameList,
-          matching: find.byType(TextFormField),
-        );
-        expect(widgetFinderNameListLabel, findsNWidgets(3));
-
         // Input Name
         final widgetFinderNameListInputName = find.descendant(
           of: widgetFinderNameList,
@@ -171,7 +150,7 @@ void main() {
         // Player Name List
         final widgetFinderNameListPlayerNameList = find.descendant(
           of: widgetFinderNameList,
-          matching: find.byType(GameEntryNameListRowInputName),
+          matching: find.byType(PlayerList),
         );
         expect(widgetFinderNameListPlayerNameList, findsNWidgets(3));
       });
@@ -199,13 +178,6 @@ void main() {
         );
         expect(widgetFinderNameListRow, findsNWidgets(4));
 
-        // TextFormField
-        final widgetFinderNameListLabel = find.descendant(
-          of: widgetFinderNameList,
-          matching: find.byType(TextFormField),
-        );
-        expect(widgetFinderNameListLabel, findsNWidgets(4));
-
         // Input Name
         final widgetFinderNameListInputName = find.descendant(
           of: widgetFinderNameList,
@@ -216,7 +188,7 @@ void main() {
         // Player Name List
         final widgetFinderNameListPlayerNameList = find.descendant(
           of: widgetFinderNameList,
-          matching: find.byType(GameEntryNameListRowInputName),
+          matching: find.byType(PlayerList),
         );
         expect(widgetFinderNameListPlayerNameList, findsNWidgets(4));
       });
