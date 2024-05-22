@@ -72,6 +72,36 @@ void main() {
       });
     });
 
+    group('[GameEntrySymbolSelectedEvent]', () {
+      test('supports value [equality]', () {
+        expect(
+          GameEntrySymbolSelectedEvent(
+            playerNum: 1,
+            selectedSymbolKey: '*',
+          ),
+          equals(
+            GameEntrySymbolSelectedEvent(
+              playerNum: 1,
+              selectedSymbolKey: '*',
+            ),
+          ),
+        );
+      });
+
+      test('[props] are correct', () {
+        expect(
+          GameEntrySymbolSelectedEvent(
+            playerNum: 1,
+            selectedSymbolKey: '*',
+          ).props,
+          equals(<Object?>[
+            1,
+            '*',
+          ]),
+        );
+      });
+    });
+
     group('[GameEntryPlayerListEvent]', () {
       test('supports value [equality]', () {
         expect(

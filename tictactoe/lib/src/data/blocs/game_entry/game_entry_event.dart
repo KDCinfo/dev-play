@@ -46,6 +46,22 @@ class GameEntryNameSelectedEvent extends GameEntryEvent {
       ];
 }
 
+class GameEntrySymbolSelectedEvent extends GameEntryEvent {
+  const GameEntrySymbolSelectedEvent({
+    required this.playerNum,
+    required this.selectedSymbolKey,
+  });
+
+  final int playerNum;
+  final String selectedSymbolKey;
+
+  @override
+  List<Object> get props => [
+        playerNum,
+        selectedSymbolKey,
+      ];
+}
+
 class GameEntryPlayerListEvent extends GameEntryEvent {
   const GameEntryPlayerListEvent({
     required this.playerList,
