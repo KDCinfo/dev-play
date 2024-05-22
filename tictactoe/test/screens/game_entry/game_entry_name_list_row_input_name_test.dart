@@ -21,7 +21,7 @@ void main() {
 
     group('GameEntryNameListRowInputName Widget', () {
       setUp(() {
-        availableSymbols = AppConstants.markerList;
+        availableSymbols = UserSymbol.markerList;
         player = const PlayerData(
           playerNum: 1,
         );

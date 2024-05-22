@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';

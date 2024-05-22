@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:dev_play_tictactoe/src/app_constants.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
 
@@ -32,7 +32,7 @@ class MarkerMenu extends StatelessWidget {
               .where((entry) => entry.key != '?')
               .map((MapEntry<String, Icon> entry) {
             return ConstrainedBox(
-              constraints: const BoxConstraints.tightFor(height: AppConstants.markerSize * 1.5),
+              constraints: const BoxConstraints.tightFor(height: UserSymbol.markerSize * 1.5),
               child: MenuItemButton(
                 onPressed: () {
                   log('MarkerMenu key: ${entry.key}');
@@ -53,7 +53,7 @@ class MarkerMenu extends StatelessWidget {
                       entry.key, // Marker
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: AppConstants.markerFontSize,
+                        fontSize: UserSymbol.markerFontSize,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

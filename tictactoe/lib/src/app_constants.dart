@@ -1,10 +1,7 @@
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
-import 'package:flutter/material.dart';
-
 typedef AppReturnObjDef = Map<String, List<dynamic>>;
 typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
-typedef MarkerListDef = Map<String, Icon>;
 
 abstract class AppConstants {
   /// Standard App Config Values
@@ -20,15 +17,6 @@ abstract class AppConstants {
   static const playerNameHintText = 'Enter name';
   static const playerListHintText = 'Previous';
   static const playerBotName = 'TicTacBot';
-  static const markerFontSize = 24.0;
-  static const markerSize = 32.0;
-  static MarkerListDef markerList = {
-    '?': const Icon(Icons.list),
-    'x': const Icon(Icons.close),
-    'o': const Icon(Icons.mood),
-    '+': const Icon(Icons.favorite),
-    '*': const Icon(Icons.star_border),
-  };
   static const nameListFontSize = 24.0;
   static const nameListSize = 32.0;
   // - The `GameEntryBloc` state needs 2 initial `PlayerData` players; 1 human, 1 bot.
