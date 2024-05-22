@@ -73,6 +73,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
         ) {
     //
     on<GameEntryNameSelectedEvent>(_nameSelected);
+    on<GameEntrySymbolSelectedEvent>(_symbolSelected);
     on<GameEntryPlayerListEvent>(_updateBlocPlayerList);
     on<GameEntryEdgeSizeEvent>(_updateBlocEdgeSize);
     on<GameEntryStartGameEvent>(_updateBlocStartGame);
@@ -163,6 +164,28 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       newPlayerList = List.of(state.players)
         ..replaceRange(playerNum - 1, playerNum, [updatedPlayer]);
     }
+
+    emit(
+      state.copyWith(players: newPlayerList),
+    );
+  }
+
+  void _symbolSelected(
+    GameEntrySymbolSelectedEvent event,
+    Emitter<GameEntryState> emit,
+  ) {
+    final playerNum = event.playerNum;
+    final selectedSymbolKey = event.selectedSymbolKey;
+
+    final playerToUpdate = state.players.firstWhere(
+      (player) => player.playerNum == playerNum,
+    );
+    final updatedPlayer = playerToUpdate.copyWith(
+      userSymbol: UserSymbol.markerListTypes[selectedSymbolKey],
+    );
+
+    final newPlayerList = List.of(state.players)
+      ..replaceRange(playerNum - 1, playerNum, [updatedPlayer]);
 
     emit(
       state.copyWith(players: newPlayerList),

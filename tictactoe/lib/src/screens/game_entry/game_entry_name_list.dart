@@ -1,5 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
@@ -14,12 +17,17 @@ class GameEntryNameList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameEntryBloc, GameEntryState>(
       builder: (context, state) {
-        // AppConstants.markerList
-        final usedSymbolList = state.players
-            .map((player) => MapEntry(player.userSymbol, player.playerNum)) as MarkerListDef;
-        final unusedSymbolList = AppConstants.markerList.keys.where(
-          (symbol) => !usedSymbolList.containsKey(symbol),
-        ) as MarkerListDef;
+        final usedSymbolList = Map<String, Icon>.fromEntries(
+          state.players.map(
+            (player) => MapEntry(player.userSymbol.markerKey, player.userSymbol.markerIcon),
+          ),
+        );
+
+        final unusedSymbolList = Map<String, Icon>.fromEntries(
+          UserSymbol.markerList.entries
+              .where((symbol) => !usedSymbolList.containsKey(symbol.key))
+              .map((symbol) => MapEntry(symbol.key, symbol.value)),
+        );
 
         /// The `SingleChildScrollView` is needed for scrolling
         /// in landscape mode or on small screens.
@@ -35,10 +43,9 @@ class GameEntryNameList extends StatelessWidget {
                       : state.allSavedPlayerNames,
                   availableSymbols: unusedSymbolList
                     ..addAll(
-                      MapEntry(
-                        player.userSymbol.markerKey,
-                        player.userSymbol.markerIcon,
-                      ) as MarkerListDef,
+                      Map<String, Icon>.fromEntries(
+                        {player.userSymbol.markerKey: player.userSymbol.markerIcon}.entries,
+                      ),
                     ),
                 ),
             ],

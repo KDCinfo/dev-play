@@ -24,6 +24,14 @@ sealed class UserSymbol extends Equatable {
     '+': const Icon(Icons.favorite),
     '*': const Icon(Icons.star_border),
   };
+  static MarkerListTypeDef markerListTypes = {
+    '?': const UserSymbolEmpty(),
+    'x': const UserSymbolX(),
+    'o': const UserSymbolO(),
+    '+': const UserSymbolPlus(),
+    '*': const UserSymbolStar(),
+  };
+
   /// Convert to JSON.
   Map<String, dynamic> toJson() {
     return {

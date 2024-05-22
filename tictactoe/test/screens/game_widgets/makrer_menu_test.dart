@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
@@ -16,7 +17,11 @@ void main() {
 
     group('GameWidget Marker Menu', () {
       setUp(() {
-        widgetToTest = MarkerMenu();
+        widgetToTest = MarkerMenu(
+          availableSymbols: UserSymbol.markerList,
+          onPressed: print,
+          markerIcon: const UserSymbolX().markerIcon,
+        );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
 

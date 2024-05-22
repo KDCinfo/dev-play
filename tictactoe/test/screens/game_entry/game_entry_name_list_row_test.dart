@@ -17,9 +17,10 @@ void main() {
 
     group('GameEntryNameListRow Widget', () {
       setUp(() {
-        widgetToTest = const GameEntryNameListRow(
-          playerData: PlayerData(playerNum: 1, playerName: 'Player 1'),
-          playerList: ['Player 1', 'Player 2'],
+        widgetToTest = GameEntryNameListRow(
+          playerData: const PlayerData(playerNum: 1, playerName: 'Player 1'),
+          playerList: const ['Player 1', 'Player 2'],
+          availableSymbols: UserSymbol.markerList,
         );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
