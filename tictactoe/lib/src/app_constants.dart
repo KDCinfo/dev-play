@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/data/models/player_data.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
 
@@ -29,6 +29,24 @@ abstract class AppConstants {
   };
   static const nameListFontSize = 24.0;
   static const nameListSize = 32.0;
+  // - The `GameEntryBloc` state needs 2 initial `PlayerData` players; 1 human, 1 bot.
+  // 	When text is added to the bot name, a 3rd player can be added to the playerList.
+  static const List<PlayerData> playerListDefault = [
+    PlayerData(
+      playerNum: 1,
+      // playerName: 'Player 1',
+      // playerName: 'Anonymous',
+      playerName: 'TicTacPlayer',
+      // playerName: 'Tap to Enter Name',
+      userSymbol: UserSymbolX(),
+      playerType: PlayerTypeHuman(),
+    ),
+    PlayerData(
+      playerNum: 2,
+      playerName: 'TicTacBot',
+      userSymbol: UserSymbolO(),
+    ),
+  ];
 
   /// Board Size
   static const boardSizeLabel = 'Board Size';

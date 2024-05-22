@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
+import 'package:dev_play_tictactoe/src/src.dart';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +47,30 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
   GameEntryBloc({
     required ScorebookRepository scorebookRepository,
   })  : _scorebookRepository = scorebookRepository,
-        super(const GameEntryState()) {
+
+        /// The `GameEntryBloc` state needs 2 initial players; 1 human, 1 bot.
+        ///
+        /// - When text is added to the 2nd (bot) name, it becomes human,
+        ///     and a 3rd empty human player is added to the playerList.
+        /// - When text is added to the 3rd name, a 4th player will be added.
+        ///
+        /// - Only populated name fields will be used
+        ///     (although the game can't be started without the first player entered).
+        /// - The 2nd slot can be reset to a bot
+        ///     by selecting 'TicTacBot' from the saved player list
+        ///     (which is only available to the 2nd row).
+        ///     Doing so will clear and remove the 3rd and 4th player fields.
+        /// -   The 3rd or 4th players won't be used if left empty.
+        /// - If fields 2-4 are left empty,
+        ///     player 2 will become a bot when the game is started.
+        ///
+        /// When text is added to the 3rd name, a 4th player name is added
+        ///   (the input field will persist even if field is cleared).
+        /// The 4th player won't be used if left empty,
+        ///   and will become the 3rd player if the 3rd field is left empty.
+        super(
+          const GameEntryState(players: AppConstants.playerListDefault),
+        ) {
     //
     on<GameEntryPlayerListEvent>(_updateBlocPlayerList);
     on<GameEntryEdgeSizeEvent>(_updateBlocEdgeSize);

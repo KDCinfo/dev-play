@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
@@ -42,13 +43,14 @@ void main() {
     ///
 
     group('GameEntry Player Name List', () {
-      testWidgets('should show 1 GameEntryNameListRow when state.players.length == 0.',
-          (WidgetTester tester) async {
+      testWidgets(
+          'should show [2 GameEntryNameListRow] when state.players.length == 2 '
+          'and 2nd player is a bot.', (WidgetTester tester) async {
         //
         // const playerList = <PlayerData>[];
         //
         when(() => mockGameEntryBloc.state).thenReturn(
-          const GameEntryState(), // players: playerList | Default: []
+          const GameEntryState(players: AppConstants.playerListDefault),
         );
 
         await tester.pumpWidget(wrappedWidget);
@@ -57,43 +59,13 @@ void main() {
         final widgetFinderNameList = find.byType(GameEntryNameList);
         expect(widgetFinderNameList, findsOneWidget);
 
-        // [1-4]: GameEntryNameListRow
-        final widgetFinderNameListRow = find.descendant(
-          of: widgetFinderNameList,
-          matching: find.byType(GameEntryNameListRow),
+        // [2-4] => 2 players in the list = 2 rows (with 3 elements each).
+
+        // Expect 2nd player in `GameState` 'players:' list to be a bot.
+        expect(
+          mockGameEntryBloc.state.players[1].playerType,
+          isA<PlayerTypeBot>(),
         );
-        expect(widgetFinderNameListRow, findsOneWidget);
-
-        // testWidgets('[GameEntry Name List] has an InputName.', (WidgetTester tester) async {});
-        final widgetFinderNameListInputName = find.descendant(
-          of: widgetFinderNameList,
-          matching: find.byType(GameEntryNameListRowInputName),
-        );
-        expect(widgetFinderNameListInputName, findsOneWidget);
-
-        // testWidgets('[GameEntry Name List] has a PlayerNameList.', (WidgetTester tester) async {});
-        final widgetFinderNameListPlayerNameList = find.descendant(
-          of: widgetFinderNameList,
-          matching: find.byType(PlayerList),
-        );
-        expect(widgetFinderNameListPlayerNameList, findsOneWidget);
-      });
-
-      testWidgets('should show 2 GameEntryNameListRow when state.players.length = 1.',
-          (WidgetTester tester) async {
-        final playerList = playerListSingle;
-
-        when(() => mockGameEntryBloc.state).thenReturn(
-          GameEntryState(players: playerList),
-        );
-
-        await tester.pumpWidget(wrappedWidget);
-
-        // Root
-        final widgetFinderNameList = find.byType(GameEntryNameList);
-        expect(widgetFinderNameList, findsOneWidget);
-
-        // [1-4] => 1 player in the list = 2 rows (with 3 elements each).
 
         // GameEntryNameListRow
         final widgetFinderNameListRow = find.descendant(
@@ -102,14 +74,14 @@ void main() {
         );
         expect(widgetFinderNameListRow, findsNWidgets(2));
 
-        // Input Name
+        // [GameEntry Name List] has an InputName
         final widgetFinderNameListInputName = find.descendant(
           of: widgetFinderNameList,
           matching: find.byType(GameEntryNameListRowInputName),
         );
         expect(widgetFinderNameListInputName, findsNWidgets(2));
 
-        // Player Name List
+        // [GameEntry Name List] has a PlayerNameList
         final widgetFinderNameListPlayerNameList = find.descendant(
           of: widgetFinderNameList,
           matching: find.byType(PlayerList),
@@ -117,12 +89,13 @@ void main() {
         expect(widgetFinderNameListPlayerNameList, findsNWidgets(2));
       });
 
-      testWidgets('should show 3 [GameEntryNameListRow] when state.players.length = 2.',
-          (WidgetTester tester) async {
-        final twoPlayerList = playerList;
+      testWidgets(
+          'should show [3 GameEntryNameListRow] when state.players.length = 3 '
+          'which happens after 2nd field is dirty.', (WidgetTester tester) async {
+        final threePlayerList = playerListAddOne;
 
         when(() => mockGameEntryBloc.state).thenReturn(
-          GameEntryState(players: twoPlayerList),
+          GameEntryState(players: threePlayerList),
         );
 
         await tester.pumpWidget(wrappedWidget);
@@ -132,6 +105,12 @@ void main() {
         expect(widgetFinderNameList, findsOneWidget);
 
         // [1-4] => 2 players in the list = 3 rows (with 3 elements each).
+
+        // Expect 2nd player in `GameState` 'players:' list to be a human.
+        expect(
+          mockGameEntryBloc.state.players[1].playerType,
+          isA<PlayerTypeHuman>(),
+        );
 
         // GameEntryNameListRow
         final widgetFinderNameListRow = find.descendant(
@@ -155,12 +134,13 @@ void main() {
         expect(widgetFinderNameListPlayerNameList, findsNWidgets(3));
       });
 
-      testWidgets('should show 4 [GameEntryNameListRow] when state.players.length = 3.',
-          (WidgetTester tester) async {
-        final threePlayerList = playerListAddOne;
+      testWidgets(
+          'should show [4 GameEntryNameListRow] when state.players.length = 4 '
+          'which happens after 3rd field is dirty.', (WidgetTester tester) async {
+        final fourPlayerList = playerListAddFourth;
 
         when(() => mockGameEntryBloc.state).thenReturn(
-          GameEntryState(players: threePlayerList),
+          GameEntryState(players: fourPlayerList),
         );
 
         await tester.pumpWidget(wrappedWidget);
