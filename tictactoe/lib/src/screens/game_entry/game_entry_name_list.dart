@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
@@ -18,7 +19,14 @@ class GameEntryNameList extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              for (final player in state.players) GameEntryNameListRow(playerData: player),
+              for (final player in state.players)
+                GameEntryNameListRow(
+                  playerData: player,
+                  playerList: player.playerNum == 2
+                      // Insert `playerBotName` at beginning of list.
+                      ? [AppConstants.playerBotName, ...state.allSavedPlayerNames]
+                      : state.allSavedPlayerNames,
+                ),
             ],
           ),
         );
