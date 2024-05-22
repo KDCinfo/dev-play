@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 typedef AppReturnObjDef = Map<String, List<dynamic>>;
 typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
+typedef MarkerListDef = Map<String, Icon>;
 
 abstract class AppConstants {
   /// Standard App Config Values
@@ -21,7 +22,7 @@ abstract class AppConstants {
   static const playerBotName = 'TicTacBot';
   static const markerFontSize = 24.0;
   static const markerSize = 32.0;
-  static Map<String, Icon> markerList = {
+  static MarkerListDef markerList = {
     '?': const Icon(Icons.list),
     'x': const Icon(Icons.close),
     'o': const Icon(Icons.mood),

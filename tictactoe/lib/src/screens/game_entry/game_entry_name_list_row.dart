@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
@@ -11,16 +12,17 @@ class GameEntryNameListRow extends StatelessWidget {
   const GameEntryNameListRow({
     required this.playerData,
     required this.playerList,
+    required this.availableSymbols,
     super.key,
   });
 
   final PlayerData playerData;
   final List<String> playerList;
+  // Filtered map of unused symbols.
+  final MarkerListDef availableSymbols;
 
   @override
   Widget build(BuildContext context) {
-    final inputName = GameEntryNameListRowInputName(player: playerData);
-
     return SingleChildScrollView(
       child: Wrap(
         // Adds spacing horizontally between wrapped children.
@@ -30,7 +32,10 @@ class GameEntryNameListRow extends StatelessWidget {
         children: [
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 150),
-            child: inputName,
+            child: GameEntryNameListRowInputName(
+              player: playerData,
+              availableSymbols: availableSymbols,
+            ),
           ),
           ConstrainedBox(
             // Set a maxWidth to match the TextField.

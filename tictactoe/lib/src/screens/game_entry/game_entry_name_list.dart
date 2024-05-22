@@ -12,10 +12,17 @@ class GameEntryNameList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// The `SingleChildScrollView` is needed for scrolling
-    /// in landscape mode or on small screens.
     return BlocBuilder<GameEntryBloc, GameEntryState>(
       builder: (context, state) {
+        // AppConstants.markerList
+        final usedSymbolList = state.players
+            .map((player) => MapEntry(player.userSymbol, player.playerNum)) as MarkerListDef;
+        final unusedSymbolList = AppConstants.markerList.keys.where(
+          (symbol) => !usedSymbolList.containsKey(symbol),
+        ) as MarkerListDef;
+
+        /// The `SingleChildScrollView` is needed for scrolling
+        /// in landscape mode or on small screens.
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -26,6 +33,13 @@ class GameEntryNameList extends StatelessWidget {
                       // Insert `playerBotName` at beginning of list.
                       ? [AppConstants.playerBotName, ...state.allSavedPlayerNames]
                       : state.allSavedPlayerNames,
+                  availableSymbols: unusedSymbolList
+                    ..addAll(
+                      MapEntry(
+                        player.userSymbol.markerKey,
+                        player.userSymbol.markerIcon,
+                      ) as MarkerListDef,
+                    ),
                 ),
             ],
           ),

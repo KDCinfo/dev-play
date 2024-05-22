@@ -6,12 +6,16 @@ import 'package:flutter/material.dart';
 
 class MarkerMenu extends StatelessWidget {
   MarkerMenu({
-    super.key,
+    required this.availableSymbols,
+    required this.onPressed,
     this.markerIcon = const Icon(Icons.list),
+    super.key,
   });
 
   final Icon? markerIcon;
   final _menuController = MenuController();
+  final MarkerListDef availableSymbols;
+  final void Function(String) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +28,16 @@ class MarkerMenu extends StatelessWidget {
         consumeOutsideTap: true,
         menuChildren: [
           // Skip the first entry because it is used for empty slots.
-          ...AppConstants.markerList.entries.skip(1).map((MapEntry<String, Icon> entry) {
+          ...availableSymbols.entries
+              .where((entry) => entry.key != '?')
+              .map((MapEntry<String, Icon> entry) {
             return ConstrainedBox(
               constraints: const BoxConstraints.tightFor(height: AppConstants.markerSize * 1.5),
               child: MenuItemButton(
-                // @TODO: Testing this will be done with a Bloc.
                 onPressed: () {
-                  log(entry.key);
+                  log('MarkerMenu key: ${entry.key}');
                   _menuController.close();
+                  onPressed(entry.key);
                 },
                 child: DecoratedBox(
                   decoration: const BoxDecoration(

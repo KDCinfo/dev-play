@@ -13,6 +13,7 @@ void main() {
     late Widget wrappedWidget;
 
     late PlayerData player;
+    late MarkerListDef availableSymbols;
 
     ///
     /// [ GameEntryNameListRowInputName Widget ]
@@ -20,11 +21,15 @@ void main() {
 
     group('GameEntryNameListRowInputName Widget', () {
       setUp(() {
+        availableSymbols = AppConstants.markerList;
         player = const PlayerData(
           playerNum: 1,
         );
 
-        widgetToTest = GameEntryNameListRowInputName(player: player);
+        widgetToTest = GameEntryNameListRowInputName(
+          player: player,
+          availableSymbols: availableSymbols,
+        );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
 
