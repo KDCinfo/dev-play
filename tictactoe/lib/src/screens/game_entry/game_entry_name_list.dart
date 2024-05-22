@@ -24,9 +24,13 @@ class GameEntryNameList extends StatelessWidget {
         );
 
         final unusedSymbolList = Map<String, Icon>.fromEntries(
-          UserSymbol.markerList.entries
-              .where((symbol) => !usedSymbolList.containsKey(symbol.key))
-              .map((symbol) => MapEntry(symbol.key, symbol.value)),
+          UserSymbol.markerList.entries.where((symbol) {
+            final keyUsed = usedSymbolList.containsKey(symbol.key);
+            return !keyUsed;
+          }).map((symbol) {
+            final mapEntry = MapEntry(symbol.key, symbol.value);
+            return mapEntry;
+          }),
         );
 
         /// The `SingleChildScrollView` is needed for scrolling
@@ -41,11 +45,12 @@ class GameEntryNameList extends StatelessWidget {
                       // Insert `playerBotName` at beginning of list.
                       ? [AppConstants.playerBotName, ...state.allSavedPlayerNames]
                       : state.allSavedPlayerNames,
-                  availableSymbols: unusedSymbolList
-                    ..addAll(
-                      Map<String, Icon>.fromEntries(
-                        {player.userSymbol.markerKey: player.userSymbol.markerIcon}.entries,
-                      ),
+                  // Add `UserSymbol` from current player.
+                  availableSymbols: Map<String, Icon>.fromEntries(
+                    unusedSymbolList.entries,
+                  )..putIfAbsent(
+                      player.userSymbol.markerKey,
+                      () => player.userSymbol.markerIcon,
                     ),
                 ),
             ],
