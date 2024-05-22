@@ -1,4 +1,6 @@
-import 'package:dev_play_tictactoe/src/data/models/app_data_fake.dart';
+import 'dart:developer';
+
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
@@ -15,9 +17,19 @@ void main() {
     /// [ PlayerList Widget ]
     ///
 
+    final fakePlayerList = [
+      'Player 1',
+      AppConstants.playerBotName,
+    ];
+
     group('PlayerList Widget', () {
       setUp(() {
-        widgetToTest = const PlayerList();
+        widgetToTest = PlayerList(
+          playerList: fakePlayerList,
+          onSelected: (int? value) {
+            log('Selected: ${value ?? 'null'}');
+          },
+        );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
 
@@ -31,22 +43,19 @@ void main() {
         '[PlayerList Widget] has [DropdownMenu] '
         'and correct [DropdownMenuEntry] labels.',
         (WidgetTester tester) async {
-          /// @TODO: This will change to be a `when` stub when bloc is implemented.
-          final playerList = AppDataFake.fakePlayerList3;
-
           await tester.pumpWidget(wrappedWidget);
           final widgetFinderDropdownMenuEntry = find.byType(DropdownMenu<int>);
           expect(widgetFinderDropdownMenuEntry, findsOneWidget);
 
           final labelFinderFirst = find.descendant(
             of: widgetFinderDropdownMenuEntry,
-            matching: find.text(playerList.firstOrNull?.playerName ?? 'Oops'),
+            matching: find.text(fakePlayerList.firstOrNull ?? 'Oops'),
           );
           expect(labelFinderFirst, findsOneWidget);
 
           final labelFinderLast = find.descendant(
             of: widgetFinderDropdownMenuEntry,
-            matching: find.text(playerList.lastOrNull?.playerName ?? 'Oops'),
+            matching: find.text(fakePlayerList.lastOrNull ?? 'Oops'),
           );
           expect(labelFinderLast, findsOneWidget);
         },
@@ -55,19 +64,13 @@ void main() {
       testWidgets(
         '[PlayerList Widget] onSelected prints the selected value.',
         (WidgetTester tester) async {
-          // final playerList = AppDataFake.fakePlayerList3;
-
           await tester.pumpWidget(wrappedWidget);
           final widgetFinderDropdownMenuEntry = find.byType(DropdownMenu<int>);
           expect(widgetFinderDropdownMenuEntry, findsOneWidget);
 
-          // onSelected: (int? value) {
-          //   log('Selected: ${value ?? 'null'}');
-          // },
           await tester.tap(find.byType(DropdownMenu<int>));
           await tester.pumpAndSettle();
         },
-        // @TODO: Testing this will be done with a mocked Bloc.
         skip: true,
       );
     });

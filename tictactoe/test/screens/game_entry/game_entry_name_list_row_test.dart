@@ -1,5 +1,5 @@
-import 'package:dev_play_tictactoe/src/screens/game_entry/game_entry.dart';
-import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
+import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +17,10 @@ void main() {
 
     group('GameEntryNameListRow Widget', () {
       setUp(() {
-        widgetToTest = const GameEntryNameListRow(playerNum: 1);
+        widgetToTest = const GameEntryNameListRow(
+          playerData: PlayerData(playerNum: 1, playerName: 'Player 1'),
+          playerList: ['Player 1', 'Player 2'],
+        );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
 

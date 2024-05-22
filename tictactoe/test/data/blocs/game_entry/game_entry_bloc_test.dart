@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
@@ -131,7 +132,11 @@ void main() {
         test('has correct initial state', () {
           expect(
             gameEntryBloc.state,
-            equals(const GameEntryState()),
+            equals(
+              const GameEntryState(
+                players: AppConstants.playerListDefault,
+              ),
+            ),
           );
         });
       });

@@ -1,24 +1,25 @@
-import 'dart:developer';
-
 import 'package:dev_play_tictactoe/src/app_constants.dart';
-import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
 
-/// This list is meant to merely prepulate the TextFormField input;
-///   the playerNum will depended on the slot selected, and the symbol
-///   will still need to be selected for the current game.
+/// This list is meant to merely prepulate its sibling `TextFormField` input.
 class PlayerList extends StatelessWidget {
-  const PlayerList({super.key});
+  const PlayerList({
+    required this.playerList,
+    required this.onSelected,
+    super.key,
+  });
+
+  final List<String> playerList;
+
+  /// Callback function returning the index (`playerList[index]`) of the selected player.
+  final void Function(int?) onSelected;
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
         //
-        // @TODO: To be replaced by a BlocBuilder.
-        final playerList = AppDataFake.fakePlayerList3;
-
         return ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 150),
           child: DropdownMenu<int>(
@@ -35,19 +36,15 @@ class PlayerList extends StatelessWidget {
               contentPadding: const EdgeInsets.only(left: 10),
             ),
             dropdownMenuEntries: [
-              /// 'Select from previous names:'
-              ...playerList.map((PlayerData entry) {
+              /// 'Select from previously used names:'
+              ...playerList.map((String entry) {
                 return DropdownMenuEntry(
-                  // A player can't be stored without a 'playerId'.
-                  value: entry.playerId!,
-                  label: entry.playerName,
+                  value: playerList.indexOf(entry),
+                  label: entry,
                 );
               }),
             ],
-            // @TODO: Testing this will be done with a Bloc.
-            onSelected: (int? value) {
-              log('Selected: ${value ?? 'null'}');
-            },
+            onSelected: onSelected,
           ),
         );
       },
