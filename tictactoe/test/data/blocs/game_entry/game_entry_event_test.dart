@@ -42,6 +42,36 @@ void main() {
       });
     });
 
+    group('[GameEntryNameSelectedEvent]', () {
+      test('supports value [equality]', () {
+        expect(
+          GameEntryNameSelectedEvent(
+            playerNum: 1,
+            selectedPlayerName: 'Player 1',
+          ),
+          equals(
+            GameEntryNameSelectedEvent(
+              playerNum: 1,
+              selectedPlayerName: 'Player 1',
+            ),
+          ),
+        );
+      });
+
+      test('[props] are correct', () {
+        expect(
+          GameEntryNameSelectedEvent(
+            playerNum: 1,
+            selectedPlayerName: 'Player 1',
+          ).props,
+          equals(<Object?>[
+            1,
+            'Player 1',
+          ]),
+        );
+      });
+    });
+
     group('[GameEntryPlayerListEvent]', () {
       test('supports value [equality]', () {
         expect(

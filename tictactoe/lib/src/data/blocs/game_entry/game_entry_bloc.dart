@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
-import 'package:dev_play_tictactoe/src/src.dart';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,6 +72,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
           const GameEntryState(players: AppConstants.playerListDefault),
         ) {
     //
+    on<GameEntryNameSelectedEvent>(_nameSelected);
     on<GameEntryPlayerListEvent>(_updateBlocPlayerList);
     on<GameEntryEdgeSizeEvent>(_updateBlocEdgeSize);
     on<GameEntryStartGameEvent>(_updateBlocStartGame);
@@ -130,6 +131,42 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     final newScorebookData = _scorebookRepository.currentScorebookData.startGame(gameData);
 
     _scorebookRepository.updateScorebookDataStream(newScorebookData);
+  }
+
+  void _nameSelected(
+    GameEntryNameSelectedEvent event,
+    Emitter<GameEntryState> emit,
+  ) {
+    /// By selecting 'TicTacBot' from the saved player list (available from the 2nd row),
+    /// the 3rd and 4th player fields will be removed from the list,
+    /// and the 2nd player will be set back to a bot.
+    /// Otherwise, the list will be updated with the selected player name.
+
+    late final List<PlayerData> newPlayerList;
+
+    final playerNum = event.playerNum;
+    final selectedPlayerName = event.selectedPlayerName;
+
+    if (playerNum == 2 && selectedPlayerName == AppConstants.playerBotName) {
+      newPlayerList = List.of(state.players)
+        ..take(1)
+        ..toList()
+        ..add(AppConstants.playerBot);
+    } else {
+      final playerToUpdate = state.players.firstWhere(
+        (player) => player.playerNum == playerNum,
+      );
+      final updatedPlayer = playerToUpdate.copyWith(
+        playerName: selectedPlayerName,
+        playerType: const PlayerTypeHuman(),
+      );
+      newPlayerList = List.of(state.players)
+        ..replaceRange(playerNum - 1, playerNum, [updatedPlayer]);
+    }
+
+    emit(
+      state.copyWith(players: newPlayerList),
+    );
   }
 
   void _updateBlocPlayerList(

@@ -18,6 +18,7 @@ abstract class AppConstants {
   static String playerLabel(int playerNum) => 'Player $playerNum Name:';
   static const playerNameHintText = 'Enter name';
   static const playerListHintText = 'Previous';
+  static const playerBotName = 'TicTacBot';
   static const markerFontSize = 24.0;
   static const markerSize = 32.0;
   static Map<String, Icon> markerList = {
@@ -31,21 +32,19 @@ abstract class AppConstants {
   static const nameListSize = 32.0;
   // - The `GameEntryBloc` state needs 2 initial `PlayerData` players; 1 human, 1 bot.
   // 	When text is added to the bot name, a 3rd player can be added to the playerList.
+  static const playerBot = PlayerData(
+    playerNum: 2,
+    playerName: playerBotName,
+    userSymbol: UserSymbolO(),
+  );
   static const List<PlayerData> playerListDefault = [
     PlayerData(
       playerNum: 1,
-      // playerName: 'Player 1',
-      // playerName: 'Anonymous',
-      playerName: 'TicTacPlayer',
-      // playerName: 'Tap to Enter Name',
+      playerName: 'Player 1',
       userSymbol: UserSymbolX(),
       playerType: PlayerTypeHuman(),
     ),
-    PlayerData(
-      playerNum: 2,
-      playerName: 'TicTacBot',
-      userSymbol: UserSymbolO(),
-    ),
+    playerBot,
   ];
 
   /// Board Size
