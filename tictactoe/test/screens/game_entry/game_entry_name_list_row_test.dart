@@ -19,7 +19,7 @@ void main() {
       setUp(() {
         widgetToTest = GameEntryNameListRow(
           playerData: const PlayerData(playerNum: 1, playerName: 'Player 1'),
-          playerList: const ['Player 1', 'Player 2'],
+          listRowPlayerList: const ['Player 1', 'Player 2'],
           availableSymbols: UserSymbol.markerList,
         );
         wrappedWidget = PumpApp.materialApp(widgetToTest);

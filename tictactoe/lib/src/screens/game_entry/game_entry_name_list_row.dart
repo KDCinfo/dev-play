@@ -10,13 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GameEntryNameListRow extends StatelessWidget {
   const GameEntryNameListRow({
     required this.playerData,
-    required this.playerList,
+    required this.listRowPlayerList,
     required this.availableSymbols,
     super.key,
   });
 
   final PlayerData playerData;
-  final List<String> playerList;
+  final List<String> listRowPlayerList;
   // Filtered map of unused symbols.
   final MarkerListDef availableSymbols;
 
@@ -34,13 +34,14 @@ class GameEntryNameListRow extends StatelessWidget {
             child: GameEntryNameListRowInputName(
               player: playerData,
               availableSymbols: availableSymbols,
+              onChanged: (String newName) => nameFieldUpdated(newName, context),
             ),
           ),
           ConstrainedBox(
             // Set a maxWidth to match the TextField.
             constraints: const BoxConstraints(maxWidth: 150),
             child: PlayerList(
-              playerList: playerList,
+              playerList: listRowPlayerList,
               onSelected: (int? value) => useSavedName(value, context),
             ),
           ),
@@ -49,14 +50,33 @@ class GameEntryNameListRow extends StatelessWidget {
     );
   }
 
+  void nameFieldUpdated(String newName, BuildContext context) {
+    final updatedPlayerList = context
+        .read<GameEntryBloc>()
+        .state
+        .players
+        .map(
+          (player) => (player.playerNum == playerData.playerNum)
+              ? player.copyWith(playerName: newName)
+              : player,
+        )
+        .toList();
+
+    context.read<GameEntryBloc>().add(
+          GameEntryPlayerListEvent(
+            playerList: updatedPlayerList,
+          ),
+        );
+  }
+
   void useSavedName(int? value, BuildContext context) {
     log('Selected Index: ${value ?? 'null'}');
     if (value != null) {
-      log('Selected Name: ${playerList[value]}');
+      log('Selected Name: ${listRowPlayerList[value]}');
       context.read<GameEntryBloc>().add(
             GameEntryNameSelectedEvent(
               playerNum: playerData.playerNum,
-              selectedPlayerName: playerList[value],
+              selectedPlayerName: listRowPlayerList[value],
             ),
           );
     }

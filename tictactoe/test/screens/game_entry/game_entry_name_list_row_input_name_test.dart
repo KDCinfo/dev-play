@@ -15,6 +15,8 @@ void main() {
     late PlayerData player;
     late MarkerListDef availableSymbols;
 
+    var testName = '';
+
     ///
     /// [ GameEntryNameListRowInputName Widget ]
     ///
@@ -29,6 +31,9 @@ void main() {
         widgetToTest = GameEntryNameListRowInputName(
           player: player,
           availableSymbols: availableSymbols,
+          onChanged: (String newName) {
+            testName = newName;
+          },
         );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });
@@ -40,6 +45,26 @@ void main() {
       });
 
       /// Note: Deeper individual widget tests are in their own respective test files.
+
+      testWidgets(
+        '[GameEntryNameListRowInputName Widget] has a TextFormField '
+        'that changes.',
+        (WidgetTester tester) async {
+          await tester.pumpWidget(wrappedWidget);
+          final widgetFinderTextFormField = find.byType(TextFormField);
+          expect(widgetFinderTextFormField, findsOneWidget);
+
+          // Enter text into the TextFormField.
+          await tester.enterText(widgetFinderTextFormField, 'J');
+          expect(testName, 'J');
+          expect(find.text('J'), findsOneWidget);
+
+          // onChanged callback should be called.
+          await tester.enterText(widgetFinderTextFormField, 'John');
+          expect(testName, 'John');
+          expect(find.text('John'), findsOneWidget);
+        },
+      );
 
       testWidgets(
         '[GameEntryNameListRowInputName Widget] has a TextFormField '

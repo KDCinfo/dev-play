@@ -10,17 +10,20 @@ class GameEntryNameListRowInputName extends StatelessWidget {
   const GameEntryNameListRowInputName({
     required this.player,
     required this.availableSymbols,
+    required this.onChanged,
     super.key,
   });
 
   final PlayerData player;
   final MarkerListDef availableSymbols;
+  final void Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
     //
     return TextFormField(
       // initialValue: 'John',
+      onChanged: onChanged,
       decoration: InputDecoration(
         /// The `label` is shown instead of the `hintText` when the field is empty and unfocused.
         /// When focused, the label moves up, and the `hintText` is shown.

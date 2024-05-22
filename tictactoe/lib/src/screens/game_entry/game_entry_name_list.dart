@@ -37,7 +37,7 @@ class GameEntryNameList extends StatelessWidget {
               for (final player in state.players)
                 GameEntryNameListRow(
                   playerData: player,
-                  playerList: player.playerNum == 2
+                  listRowPlayerList: player.playerNum == 2
                       // Insert `playerBotName` at beginning of list.
                       ? [AppConstants.playerBotName, ...state.allSavedPlayerNames]
                       : state.allSavedPlayerNames,
