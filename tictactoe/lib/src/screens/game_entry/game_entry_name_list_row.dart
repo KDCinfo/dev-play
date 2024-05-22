@@ -5,18 +5,15 @@ import 'package:flutter/material.dart';
 
 class GameEntryNameListRow extends StatelessWidget {
   const GameEntryNameListRow({
-    required this.playerNum,
+    required this.playerData,
     super.key,
   });
 
-  final int playerNum;
+  final PlayerData playerData;
 
   @override
   Widget build(BuildContext context) {
-    final player = PlayerData(playerNum: playerNum);
-
-    final inputName = GameEntryNameListRowInputName(player: player);
-    const savedNames = PlayerList();
+    final inputName = GameEntryNameListRowInputName(player: playerData);
 
     return SingleChildScrollView(
       child: Wrap(
@@ -32,7 +29,7 @@ class GameEntryNameListRow extends StatelessWidget {
           ConstrainedBox(
             // Set a maxWidth to match the TextField.
             constraints: const BoxConstraints(maxWidth: 150),
-            child: savedNames,
+            child: const PlayerList(),
           ),
         ],
       ),

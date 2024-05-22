@@ -29,9 +29,13 @@ final playerListSingle = [
     playerNum: 1,
     playerName: 'Player 1',
     userSymbol: UserSymbolX(),
+    playerType: PlayerTypeHuman(),
   ),
 ];
 
+// In `AppConstants.playerListDefault`,
+// which is what the `GameEntryBloc` state
+// is defaulted to, the 2nd player is a bot.
 final playerList = List.of(playerListSingle)
   ..add(
     const PlayerData(
@@ -39,6 +43,7 @@ final playerList = List.of(playerListSingle)
       playerNum: 2,
       playerName: 'Player 2',
       userSymbol: UserSymbolO(),
+      playerType: PlayerTypeHuman(),
     ),
   );
 
@@ -49,6 +54,7 @@ final playerListAddOne = List.of(playerList)
       playerNum: 3,
       playerName: 'Player 3',
       userSymbol: UserSymbolPlus(),
+      playerType: PlayerTypeHuman(),
     ),
   );
 
@@ -59,5 +65,6 @@ final playerListAddFourth = List.of(playerListAddOne)
       playerNum: 4,
       playerName: 'Player 4',
       userSymbol: UserSymbolStar(),
+      playerType: PlayerTypeHuman(),
     ),
   );

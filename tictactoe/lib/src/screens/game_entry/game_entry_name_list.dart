@@ -18,17 +18,7 @@ class GameEntryNameList extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              /// There will only be 1 row to start.
-              /// Additional rows will be added as players are added.
-              const GameEntryNameListRow(playerNum: 1),
-              if (state.players.length == 1) const GameEntryNameListRow(playerNum: 2),
-
-              if (state.players.length == 2) const GameEntryNameListRow(playerNum: 2),
-              if (state.players.length == 2) const GameEntryNameListRow(playerNum: 3),
-
-              if (state.players.length == 3) const GameEntryNameListRow(playerNum: 2),
-              if (state.players.length == 3) const GameEntryNameListRow(playerNum: 3),
-              if (state.players.length == 3) const GameEntryNameListRow(playerNum: 4),
+              for (final player in state.players) GameEntryNameListRow(playerData: player),
             ],
           ),
         );

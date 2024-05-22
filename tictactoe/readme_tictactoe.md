@@ -845,3 +845,35 @@ for (var i = edgeSize - 1; i < boardSize - 1; i += edgeSize - 1) {
         [20] | 20 <             24 | 20 += 5 - 1 == [24] ! < 24
 
 /// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+## Player List
+
+Been analyzing and massaging the `GameEntryNameList` and tests.
+
+Made outline of business logic in `GameEntryBloc`.
+
+3 UI States:
+  - players[2]; bot = 2 rows | default
+  - players[3] = 3 rows | once 2nd field is typed in, 3rd row appears
+  - players[4] = 4 rows | once 3rd field is typed in, 4th row appears
+
+- Thoughts:
+  -> 2nd row should have an option to change back to Bot.
+  -> Or rather maybe just a 'reset' ... but which is already at the bottom.
+  -> Maybe move the 'reset' up to be between the `PlayerList` and `BoardSize`.
+        // [1-4] => 1 player in the list = 2 rows (with 3 elements each).
+  -> [X] Add 'TicTacBot' to list of names, but ONLY for 2nd row.
+  -> [X] Reset to 'TicTacBot' when game is started if names 2-4 are left empty.
+  -> [X] Reset button at bottom will also reset the player list back to the default.
+
+- Label
+- TextFormField
+  - Symbol
+- Saved player list
+
+- Bloc State
+  - edgeSize: 3
+  - players: [PlayerData(Human), PlayerData(Bot)] // Default
+  - allSavedPlayerNames: <String>[] // 'TicTacBot' added to 2nd row
+
+/// ----------  ----------  ----------  ----------  ----------  ----------  ----------  ----------
