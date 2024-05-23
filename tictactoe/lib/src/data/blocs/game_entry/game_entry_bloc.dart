@@ -192,15 +192,114 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     );
   }
 
+  /// Updating the player list happens
+  /// while on the `GameEntry` screen when either:
+  ///
+  /// - The user changes the player name.
+  /// - The user selects a previously saved name from the list
+  ///   (which then populates the player name field).
+  /// - The user selects a different marker from the marker menu.
+  ///
+  /// When the 2nd player name is changed, the player type is changed
+  /// from a bot to a human player, and a new empty player slot is added.
+  ///
+  /// When the 3rd player name is changed, a 4th player slot is added.
+  ///
   void _updateBlocPlayerList(
     GameEntryPlayerListEvent event,
     Emitter<GameEntryState> emit,
   ) {
-    emit(
-      state.copyWith(
-        players: event.playerList,
-      ),
-    );
+    /// The default player list has 2 players, a human and a bot.
+    ///
+    /// This first condition ensures
+    /// - the list indeed has at least 2 players.
+    ///
+    if (state.players.length >= 2 && state.players.length <= AppConstants.playerListMax) {
+      late final List<PlayerData> newPlayerList;
+
+      /// This second condition checks if
+      /// - the 2nd player is a bot.
+      ///
+      if (event.playerNum == 2 && state.players[event.playerNum - 1].playerType is PlayerTypeBot) {
+        ///
+        /// This condition can only ever be met when the player list
+        ///   is in its default state, where the 2nd player is a bot,
+        ///   and so there will only ever be 2 rows at this stage.
+        /// When the 3rd player is added, it will be in the list
+        ///   until the fields are reset (using either the reset button,
+        ///   or selecting the bot name in the 2nd row's saved player list).
+        ///
+        newPlayerList = List.of(state.players)
+          // Update the 2nd player's name and type'.
+          ..replaceRange(
+            event.playerNum - 1,
+            event.playerNum,
+            [
+              state.players[event.playerNum - 1].copyWith(
+                playerName: event.playerName,
+                playerType: const PlayerTypeHuman(),
+              ),
+            ],
+          )
+          // Add a new empty PlayerData.
+          ..add(
+            const PlayerData(
+              playerNum: 3,
+              // The user symbol will need to grab the first available symbol.
+              userSymbol: UserSymbolEmpty(),
+              playerType: PlayerTypeHuman(),
+            ),
+          );
+      } else if (event.playerNum < AppConstants.playerListMax &&
+          event.playerNum == state.players.length) {
+        ///
+        /// Because `playerListMax = 4`, this condition will only ever be met
+        /// when the 3rd player name is changed, and a 4th player slot has
+        /// not yet been added. If the max were ever increased to 5, this
+        /// condition would also be met when the 4th player name is changed.
+        ///
+        newPlayerList = List.of(state.players)
+          // Update the 2nd player's name and type'.
+          ..replaceRange(
+            event.playerNum - 1,
+            event.playerNum,
+            [
+              state.players[event.playerNum - 1].copyWith(
+                playerName: event.playerName,
+              ),
+            ],
+          )
+          // Add a new empty PlayerData.
+          ..add(
+            PlayerData(
+              playerNum: 4,
+              playerName: state.players[2].playerName,
+              // The user symbol will need to grab the first available symbol.
+              userSymbol: const UserSymbolEmpty(),
+              playerType: const PlayerTypeHuman(),
+            ),
+          );
+      } else {
+        /// Otherwise, let's just update the player's name.
+        newPlayerList = List.of(state.players)
+          // Update this [nth] player's name.
+          ..replaceRange(
+            event.playerNum - 1,
+            event.playerNum,
+            [
+              state.players[event.playerNum - 1].copyWith(
+                playerName: event.playerName,
+              ),
+            ],
+          );
+      }
+
+      emit(
+        state.copyWith(
+          players: newPlayerList,
+        ),
+      );
+    }
   }
 
   void _updateBlocEdgeSize(
