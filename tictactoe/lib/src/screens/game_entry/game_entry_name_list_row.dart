@@ -42,7 +42,7 @@ class GameEntryNameListRow extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 150),
             child: PlayerList(
               playerList: listRowPlayerList,
-              onSelected: (int? value) => useSavedName(value, context),
+              onSelected: (int value) => useSavedName(value, context),
             ),
           ),
         ],
@@ -59,16 +59,14 @@ class GameEntryNameListRow extends StatelessWidget {
         );
   }
 
-  void useSavedName(int? value, BuildContext context) {
-    log('Selected Index: ${value ?? 'null'}');
-    if (value != null) {
-      log('Selected Name: ${listRowPlayerList[value]}');
-      context.read<GameEntryBloc>().add(
-            GameEntryNameSelectedEvent(
-              playerNum: playerData.playerNum,
-              selectedPlayerName: listRowPlayerList[value],
-            ),
-          );
-    }
+  void useSavedName(int value, BuildContext context) {
+    log('Selected Index: $value');
+    log('Selected Name: ${listRowPlayerList[value]}');
+    context.read<GameEntryBloc>().add(
+          GameEntryNameSelectedEvent(
+            playerNum: playerData.playerNum,
+            selectedPlayerName: listRowPlayerList[value],
+          ),
+        );
   }
 }

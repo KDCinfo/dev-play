@@ -17,6 +17,7 @@ abstract class AppConstants {
   static const playerNameHintText = 'Enter name';
   static const playerListHintText = 'Previous';
   static const playerBotName = 'TicTacBot';
+  static const playerListResetMsg = 'Resetting...';
   static const nameListFontSize = 24.0;
   static const nameListSize = 32.0;
   // - The `GameEntryBloc` state needs 2 initial `PlayerData` players; 1 human, 1 bot.
