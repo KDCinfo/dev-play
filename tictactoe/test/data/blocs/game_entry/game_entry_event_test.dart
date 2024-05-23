@@ -105,24 +105,19 @@ void main() {
     group('[GameEntryPlayerListEvent]', () {
       test('supports value [equality]', () {
         expect(
-          GameEntryPlayerListEvent(
-            playerList: playerList,
-          ),
+          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'),
           equals(
-            GameEntryPlayerListEvent(
-              playerList: playerList,
-            ),
+            const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'),
           ),
         );
       });
 
       test('[props] are correct', () {
         expect(
-          GameEntryPlayerListEvent(
-            playerList: playerList,
-          ).props,
+          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1').props,
           equals(<Object?>[
-            playerList,
+            1,
+            'Player 1',
           ]),
         );
       });

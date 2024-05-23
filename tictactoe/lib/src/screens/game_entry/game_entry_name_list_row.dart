@@ -51,20 +51,10 @@ class GameEntryNameListRow extends StatelessWidget {
   }
 
   void nameFieldUpdated(String newName, BuildContext context) {
-    final updatedPlayerList = context
-        .read<GameEntryBloc>()
-        .state
-        .players
-        .map(
-          (player) => (player.playerNum == playerData.playerNum)
-              ? player.copyWith(playerName: newName)
-              : player,
-        )
-        .toList();
-
     context.read<GameEntryBloc>().add(
           GameEntryPlayerListEvent(
-            playerList: updatedPlayerList,
+            playerNum: playerData.playerNum,
+            playerName: newName,
           ),
         );
   }

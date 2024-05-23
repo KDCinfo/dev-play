@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dev_play_tictactoe/src/app_constants.dart';
 
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -39,7 +39,7 @@ void main() {
               .thenReturn(const ScorebookData());
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(GameEntryPlayerListEvent(playerList: playerList));
+            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
@@ -54,18 +54,42 @@ void main() {
         setUp: () {
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(GameEntryPlayerListEvent(playerList: playerList));
+            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1b'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(const GameEntryEdgeSizeEvent(edgeSize: 5)),
         expect: () => [
-          GameEntryState(
+          const GameEntryState(
             edgeSize: 4,
-            players: playerList,
+            players: [
+              PlayerData(
+                playerNum: 1,
+                playerName: 'Player 1b',
+                playerType: PlayerTypeHuman(),
+                userSymbol: UserSymbolX(),
+              ),
+              PlayerData(
+                playerNum: 2,
+                playerName: 'TicTacBot',
+                userSymbol: UserSymbolO(),
+              ),
+            ],
           ),
-          GameEntryState(
+          const GameEntryState(
             edgeSize: 5,
-            players: playerList,
+            players: [
+              PlayerData(
+                playerNum: 1,
+                playerName: 'Player 1b',
+                playerType: PlayerTypeHuman(),
+                userSymbol: UserSymbolX(),
+              ),
+              PlayerData(
+                playerNum: 2,
+                playerName: 'TicTacBot',
+                userSymbol: UserSymbolO(),
+              ),
+            ],
           ),
         ],
       );
@@ -75,22 +99,28 @@ void main() {
         setUp: () {
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(GameEntryPlayerListEvent(playerList: playerList));
+            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(
-          GameEntryPlayerListEvent(
-            playerList: playerListAddOne,
-          ),
+          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1b'),
         ),
         expect: () => [
-          GameEntryState(
+          const GameEntryState(
             edgeSize: 4,
-            players: playerList,
-          ),
-          GameEntryState(
-            edgeSize: 4,
-            players: playerListAddOne,
+            players: [
+              PlayerData(
+                playerNum: 1,
+                playerName: 'Player 1b',
+                playerType: PlayerTypeHuman(),
+                userSymbol: UserSymbolX(),
+              ),
+              PlayerData(
+                playerNum: 2,
+                playerName: 'TicTacBot',
+                userSymbol: UserSymbolO(),
+              ),
+            ],
           ),
         ],
       );
@@ -100,22 +130,28 @@ void main() {
         setUp: () {
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))
-            ..add(GameEntryPlayerListEvent(playerList: playerList));
+            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(
-          GameEntryPlayerListEvent(
-            playerList: playerListAddFourth,
-          ),
+          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1b'),
         ),
         expect: () => [
-          GameEntryState(
+          const GameEntryState(
             edgeSize: 5,
-            players: playerList,
-          ),
-          GameEntryState(
-            edgeSize: 5,
-            players: playerListAddFourth,
+            players: [
+              PlayerData(
+                playerNum: 1,
+                playerName: 'Player 1b',
+                playerType: PlayerTypeHuman(),
+                userSymbol: UserSymbolX(),
+              ),
+              PlayerData(
+                playerNum: 2,
+                playerName: 'TicTacBot',
+                userSymbol: UserSymbolO(),
+              ),
+            ],
           ),
         ],
       );
@@ -142,9 +178,30 @@ void main() {
       });
 
       test('update player list.', () {
-        final expectedState = gameEntryBloc.state.copyWith(players: playerList);
+        final localPlayerList = [
+          const PlayerData(
+            playerNum: 1,
+            playerName: 'Player 1b',
+            playerType: PlayerTypeHuman(),
+            userSymbol: UserSymbolX(),
+          ),
+          const PlayerData(
+            playerNum: 2,
+            playerName: 'TicTacBot',
+            userSymbol: UserSymbolO(),
+          ),
+        ];
 
-        gameEntryBloc.add(GameEntryPlayerListEvent(playerList: playerList));
+        final expectedState = gameEntryBloc.state.copyWith(
+          players: localPlayerList,
+        );
+
+        const playerNum = 1;
+        const newPlayerName = 'Player 1b';
+
+        gameEntryBloc.add(
+          const GameEntryPlayerListEvent(playerNum: playerNum, playerName: newPlayerName),
+        );
 
         expectLater(gameEntryBloc.stream, emits(expectedState));
       });
@@ -179,7 +236,7 @@ void main() {
 
         gameEntryBloc
           ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-          ..add(GameEntryPlayerListEvent(playerList: playerList))
+          ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'))
           ..add(const GameEntryStartGameEvent());
 
         verify(
@@ -223,7 +280,7 @@ void main() {
 
         gameEntryBloc
           ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))
-          ..add(GameEntryPlayerListEvent(playerList: playerListAddFourth))
+          ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'))
           ..add(const GameEntryStartGameEvent());
 
         verify(

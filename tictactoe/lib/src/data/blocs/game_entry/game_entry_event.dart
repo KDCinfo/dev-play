@@ -4,7 +4,7 @@ abstract class GameEntryEvent extends Equatable {
   const GameEntryEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 /// There is no event handler for this event.
@@ -64,14 +64,17 @@ class GameEntrySymbolSelectedEvent extends GameEntryEvent {
 
 class GameEntryPlayerListEvent extends GameEntryEvent {
   const GameEntryPlayerListEvent({
-    required this.playerList,
+    required this.playerNum,
+    required this.playerName,
   });
 
-  final List<PlayerData> playerList;
+  final int playerNum;
+  final String playerName;
 
   @override
-  List<Object> get props => [
-        playerList,
+  List<Object?> get props => [
+        playerNum,
+        playerName,
       ];
 }
 
