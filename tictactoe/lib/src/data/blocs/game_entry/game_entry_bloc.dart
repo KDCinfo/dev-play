@@ -149,10 +149,8 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     final selectedPlayerName = event.selectedPlayerName;
 
     if (playerNum == 2 && selectedPlayerName == AppConstants.playerBotName) {
-      newPlayerList = List.of(state.players)
-        ..take(1)
-        ..toList()
-        ..add(AppConstants.playerBot);
+      final playerListCopy = List.of(state.players).take(1).toList();
+      newPlayerList = playerListCopy..add(AppConstants.playerBot);
     } else {
       final playerToUpdate = state.players.firstWhere(
         (player) => player.playerNum == playerNum,
