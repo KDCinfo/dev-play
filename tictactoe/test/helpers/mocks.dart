@@ -5,6 +5,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockStorageAPI extends Mock implements StorageServiceApi {}
@@ -22,6 +23,20 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 class MockRoute extends Mock implements Route<void> {}
 
 class FakeRoute extends Fake implements Route<void> {}
+
+/// Bloc Mocks
+
+class FakeBloc extends Fake implements Bloc<Object, Object> {}
+
+class FakeEvent extends Fake implements Object {}
+
+class FakeStackTrace extends Fake implements StackTrace {}
+
+class FakeChange extends Fake implements Change<Object> {}
+
+class FakeTransition extends Fake implements Transition<Object, Object> {}
+
+/// Fake Data
 
 final playerListSingle = [
   const PlayerData(

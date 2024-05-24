@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'dart:developer';
 
@@ -6,12 +8,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppLoadBlocObserver extends BlocObserver {
   @override
+  void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
+    super.onEvent(bloc, event);
+    print('[base_bloc_observer.dart] onEvent(${bloc.runtimeType}, $event)');
+  }
+
+  @override
   void onChange(
     BlocBase<dynamic> bloc,
     Change<dynamic> change,
   ) {
     super.onChange(bloc, change);
-    log('[base_bloc_observer.dart] onChange(${bloc.runtimeType}, $change)');
+    print('[base_bloc_observer.dart] onChange(${bloc.runtimeType}, $change)');
   }
 
   @override
@@ -20,7 +28,8 @@ class AppLoadBlocObserver extends BlocObserver {
     Transition<dynamic, dynamic> transition,
   ) {
     super.onTransition(bloc, transition);
-    log('[base_bloc_observer.dart] onTransition(${bloc.runtimeType}, $onTransition)');
+    print('[base_bloc_observer.dart] onTransition');
+    print(transition);
   }
 
   @override
@@ -30,7 +39,9 @@ class AppLoadBlocObserver extends BlocObserver {
     StackTrace stackTrace,
   ) {
     super.onError(bloc, error, stackTrace);
-    log('[base_bloc_observer.dart] onError(${bloc.runtimeType}, $error, $stackTrace)');
+    print('[base_bloc_observer.dart] onError');
+    print(error);
+    print(stackTrace);
   }
 }
 
