@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:base_services/base_services.dart';
-
-import 'package:dev_play_tictactoe/src/src.dart';
+import 'package:dev_play_tictactoe/src/app_load_bootstrap.dart';
 
 import 'package:flutter/material.dart';
 
@@ -21,39 +19,9 @@ Future<void> main() async {
     log('App initialized: ${now.hour}:${now.minute}:${now.second}.${now.millisecond}');
   }
 
-  /// APIs
-  ///
-  final sharedPrefsApi = await SharedPrefsApi.init();
-  final secureStorageApi = FlutterSecureStorageApi();
-
-  /// Services and Repositories
-  ///
-  final storageApi = StorageServiceImpl(
-    localStorageApi: sharedPrefsApi,
-    localSecureStorageApi: secureStorageApi,
-    canPrint: !isProd,
-  );
-
-  final scorebookRepository = ScorebookRepository(
-    storageService: storageApi,
-  );
-
-  final repositories = [
-    RepositoryTypeWrapper<ScorebookRepository>(
-      repository: scorebookRepository,
-    ),
-  ];
-
-  runApp(
-    AppProviderWrapperRepository(
-      repositories: repositories,
-      child: Builder(
-        builder: (context) {
-          return const AppProviderWrapperBloc<AppBaseRepository>(
-            child: MyApp(),
-          );
-        },
-      ),
-    ),
-  );
+  await const BootstrapLoader(
+    BootParameters(
+        // isProd: isProd,
+        ),
+  ).start();
 }
