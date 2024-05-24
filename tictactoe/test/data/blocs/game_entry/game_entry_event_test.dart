@@ -42,36 +42,6 @@ void main() {
       });
     });
 
-    group('[GameEntryNameSelectedEvent]', () {
-      test('supports value [equality]', () {
-        expect(
-          GameEntryNameSelectedEvent(
-            playerNum: 1,
-            selectedPlayerName: 'Player 1',
-          ),
-          equals(
-            GameEntryNameSelectedEvent(
-              playerNum: 1,
-              selectedPlayerName: 'Player 1',
-            ),
-          ),
-        );
-      });
-
-      test('[props] are correct', () {
-        expect(
-          GameEntryNameSelectedEvent(
-            playerNum: 1,
-            selectedPlayerName: 'Player 1',
-          ).props,
-          equals(<Object?>[
-            1,
-            'Player 1',
-          ]),
-        );
-      });
-    });
-
     group('[GameEntrySymbolSelectedEvent]', () {
       test('supports value [equality]', () {
         expect(
@@ -102,19 +72,19 @@ void main() {
       });
     });
 
-    group('[GameEntryPlayerListEvent]', () {
+    group('[GameEntryChangeNameEvent]', () {
       test('supports value [equality]', () {
         expect(
-          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'),
+          const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'),
           equals(
-            const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'),
+            const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'),
           ),
         );
       });
 
       test('[props] are correct', () {
         expect(
-          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1').props,
+          const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1').props,
           equals(<Object?>[
             1,
             'Player 1',
