@@ -50,6 +50,18 @@ class GameEntryNameListRow extends StatelessWidget {
     );
   }
 
+  /// Updating the player list occurs when the user:
+  /// - changes the name.
+  /// - selects a previously saved name from the list
+  ///   (which then populates the player name field and calls this method).
+  /// - selects a different marker from the marker menu.
+  ///
+  /// 2nd slot name change: 3rd slot added; player type changed to human.
+  /// 3rd slot name change: 4th slot added.
+  ///
+  /// [GameEntryChangeNameEvent] | [GameEntry PlayerList Event]
+  ///
+  /// Input | onChanged: (String newName) => nameFieldUpdated(newName, context),
   void nameFieldUpdated(String newName, BuildContext context) {
     context.read<GameEntryBloc>().add(
             playerNum: playerData.playerNum,
@@ -59,14 +71,22 @@ class GameEntryNameListRow extends StatelessWidget {
         );
   }
 
+  /// This method will assign the new input value to the controller, then,
+  /// because programmatic updates to a `TextFormField` don't trigger the
+  /// `onChanged` event, an imperative call to `nameFieldUpdated` is made.
+  ///
+  /// PlayerList | onSelected: (int value) => useSavedName(value, context),
   void useSavedName(int value, BuildContext context) {
-    log('Selected Index: $value');
-    log('Selected Name: ${listRowPlayerList[value]}');
-    context.read<GameEntryBloc>().add(
-          GameEntryNameSelectedEvent(
-            playerNum: playerData.playerNum,
-            selectedPlayerName: listRowPlayerList[value],
-          ),
-        );
+    final newName = widget.listRowPlayerList[value];
+
+    // Don't fire if the selected name is the same as the player's current name.
+    if (newName.toLowerCase() != widget.playerData.playerName.toLowerCase()) {
+      // log('Selected Index: $value');
+      // log('Selected Name: $newName');
+
+      _textFormFieldController.text = newName;
+
+      nameFieldUpdated(newName, context);
+    }
   }
 }

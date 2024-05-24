@@ -208,11 +208,28 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
           ..add(
             const PlayerData(
               playerNum: 3,
-              // The user symbol will need to grab the first available symbol.
+              // @TODO: The user symbol will need to grab the first available symbol.
               userSymbol: UserSymbolEmpty(),
               playerType: PlayerTypeHuman(),
             ),
           );
+      } else if (event.playerNum == 2 &&
+          state.players[event.playerNum - 1].playerType is! PlayerTypeBot &&
+          event.playerName == AppConstants.playerBotName) {
+        ///
+        /// When selecting the default bot name ('TicTacBot') from the
+        /// saved player list (available from the 2nd row), or when
+        /// entering the name directly in the 2nd row's name field,
+        /// the 3rd and 4th player fields will be removed from the
+        /// list, and the 2nd player will be set back to a bot.
+        ///
+        /// This condition is met when the 2nd player is being
+        /// reset back to a bot by matching the default bot name.
+        ///
+        final playerListCopy = List.of(state.players).take(1).toList();
+        newPlayerList = playerListCopy..add(AppConstants.playerBot);
+
+        //
       } else if (event.playerNum < AppConstants.playerListMax &&
           event.playerNum == state.players.length) {
         ///
@@ -237,13 +254,13 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
             PlayerData(
               playerNum: 4,
               playerName: state.players[2].playerName,
-              // The user symbol will need to grab the first available symbol.
+              // @TODO: The user symbol will need to grab the first available symbol.
               userSymbol: const UserSymbolEmpty(),
               playerType: const PlayerTypeHuman(),
             ),
           );
       } else {
-        /// Otherwise, let's just update the player's name.
+        /// Otherwise, let's just update the list with the player's name.
         newPlayerList = List.of(state.players)
           // Update this [nth] player's name.
           ..replaceRange(
