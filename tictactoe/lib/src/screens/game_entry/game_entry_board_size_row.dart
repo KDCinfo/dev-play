@@ -4,19 +4,50 @@ import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GameEntryBoardSizeRow extends StatelessWidget {
+class GameEntryBoardSizeRow extends StatefulWidget {
   const GameEntryBoardSizeRow({super.key});
+
+  @override
+  State<GameEntryBoardSizeRow> createState() => _GameEntryBoardSizeRowState();
+}
+
+class _GameEntryBoardSizeRowState extends State<GameEntryBoardSizeRow> {
+  //
+  late double currentBoardSize;
+
+  final boardSizeLabel = AppConstants.boardSizeLabel;
+  final boardSizeLabelKey = const Key(AppConstants.boardSizeLabelKey);
+  final boardSizes = AppConstants.boardSizes;
+  final boardSizeSliderKey = const Key(AppConstants.boardSizeSliderKey);
+  final boardSizesOffset = AppConstants.boardSizesOffset;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    currentBoardSize = context.read<GameEntryBloc>().state.edgeSize.toDouble() - boardSizesOffset;
+  }
+
+  /// Update the board size, then persist the change to the bloc.
+  void inputChangeCompleted(double value) {
+    inputChanged(value);
+
+    context.read<GameEntryBloc>().add(
+          GameEntryEdgeSizeEvent(
+            edgeSize: value.toInt() + boardSizesOffset,
+          ),
+        );
+  }
+
+  /// Update the current board size so the slider will reflect the change.
+  void inputChanged(double value) {
+    setState(() {
+      currentBoardSize = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
-    const boardSizeLabel = AppConstants.boardSizeLabel;
-    const boardSizeLabelKey = Key(AppConstants.boardSizeLabelKey);
-    const boardSizes = AppConstants.boardSizes;
-    const boardSizeSliderKey = Key(AppConstants.boardSizeSliderKey);
-
-    const boardSizesOffset = AppConstants.boardSizesOffset;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -48,13 +79,10 @@ class GameEntryBoardSizeRow extends StatelessWidget {
             builder: (context, state) {
               return Slider(
                 key: boardSizeSliderKey,
-                value: state.edgeSize.toDouble() - boardSizesOffset,
+                value: currentBoardSize,
                 max: boardSizes.length.toDouble() - 1,
-                onChanged: (value) {},
-                onChangeEnd: (value) {
-                  final edgeSize = value.toInt() + boardSizesOffset;
-                  context.read<GameEntryBloc>().add(GameEntryEdgeSizeEvent(edgeSize: edgeSize));
-                },
+                onChanged: inputChanged,
+                onChangeEnd: inputChangeCompleted,
                 divisions: boardSizes.length - 1,
               );
             },
