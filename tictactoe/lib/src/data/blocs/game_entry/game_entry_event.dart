@@ -46,8 +46,8 @@ class GameEntrySymbolSelectedEvent extends GameEntryEvent {
       ];
 }
 
-class GameEntryPlayerListEvent extends GameEntryEvent {
-  const GameEntryPlayerListEvent({
+class GameEntryChangeNameEvent extends GameEntryEvent {
+  const GameEntryChangeNameEvent({
     required this.playerNum,
     required this.playerName,
   });

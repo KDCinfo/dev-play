@@ -52,8 +52,8 @@ class GameEntryNameListRow extends StatelessWidget {
 
   void nameFieldUpdated(String newName, BuildContext context) {
     context.read<GameEntryBloc>().add(
-          GameEntryPlayerListEvent(
             playerNum: playerData.playerNum,
+          GameEntryChangeNameEvent(
             playerName: newName,
           ),
         );

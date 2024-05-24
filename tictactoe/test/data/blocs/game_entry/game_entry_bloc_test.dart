@@ -39,7 +39,7 @@ void main() {
               .thenReturn(const ScorebookData());
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'));
+            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
@@ -54,7 +54,7 @@ void main() {
         setUp: () {
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1b'));
+            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(const GameEntryEdgeSizeEvent(edgeSize: 5)),
@@ -99,11 +99,11 @@ void main() {
         setUp: () {
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'));
+            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(
-          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1b'),
+          const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'),
         ),
         expect: () => [
           const GameEntryState(
@@ -130,11 +130,11 @@ void main() {
         setUp: () {
           gameEntryBloc
             ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))
-            ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'));
+            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'));
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(
-          const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1b'),
+          const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'),
         ),
         expect: () => [
           const GameEntryState(
@@ -200,7 +200,7 @@ void main() {
         const newPlayerName = 'Player 1b';
 
         gameEntryBloc.add(
-          const GameEntryPlayerListEvent(playerNum: playerNum, playerName: newPlayerName),
+          const GameEntryChangeNameEvent(playerNum: playerNum, playerName: newPlayerName),
         );
 
         expectLater(gameEntryBloc.stream, emits(expectedState));
@@ -236,7 +236,7 @@ void main() {
 
         gameEntryBloc
           ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-          ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'))
+          ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'))
           ..add(const GameEntryStartGameEvent());
 
         verify(
@@ -280,7 +280,7 @@ void main() {
 
         gameEntryBloc
           ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))
-          ..add(const GameEntryPlayerListEvent(playerNum: 1, playerName: 'Player 1'))
+          ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'))
           ..add(const GameEntryStartGameEvent());
 
         verify(

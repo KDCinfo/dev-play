@@ -73,7 +73,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
         ) {
     //
     on<GameEntrySymbolSelectedEvent>(_symbolSelected);
-    on<GameEntryPlayerListEvent>(_updateBlocPlayerList);
+    on<GameEntryChangeNameEvent>(_updateBlocPlayerList);
     on<GameEntryEdgeSizeEvent>(_updateBlocEdgeSize);
     on<GameEntryStartGameEvent>(_updateBlocStartGame);
 
@@ -169,7 +169,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
   /// When the 3rd player name is changed, a 4th player slot is added.
   ///
   void _updateBlocPlayerList(
-    GameEntryPlayerListEvent event,
+    GameEntryChangeNameEvent event,
     Emitter<GameEntryState> emit,
   ) {
     /// The default player list has 2 players, a human and a bot.
