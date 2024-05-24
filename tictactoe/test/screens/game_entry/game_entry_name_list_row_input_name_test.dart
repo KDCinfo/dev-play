@@ -28,12 +28,14 @@ void main() {
           playerNum: 1,
         );
 
+        final textFormFieldController = TextEditingController();
         widgetToTest = GameEntryNameListRowInputName(
           player: player,
           availableSymbols: availableSymbols,
           onChanged: (String newName) {
             testName = newName;
           },
+          textFormFieldController: textFormFieldController,
         );
         wrappedWidget = PumpApp.materialApp(widgetToTest);
       });

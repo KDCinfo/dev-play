@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
@@ -7,7 +5,7 @@ import 'package:dev_play_tictactoe/src/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GameEntryNameListRow extends StatelessWidget {
+class GameEntryNameListRow extends StatefulWidget {
   const GameEntryNameListRow({
     required this.playerData,
     required this.listRowPlayerList,
@@ -21,6 +19,27 @@ class GameEntryNameListRow extends StatelessWidget {
   final MarkerListDef availableSymbols;
 
   @override
+  State<GameEntryNameListRow> createState() => _GameEntryNameListRowState();
+}
+
+class _GameEntryNameListRowState extends State<GameEntryNameListRow> {
+  late TextEditingController _textFormFieldController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textFormFieldController = TextEditingController(
+      text: widget.playerData.playerName,
+    );
+  }
+
+  @override
+  void dispose() {
+    _textFormFieldController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Wrap(
@@ -32,16 +51,17 @@ class GameEntryNameListRow extends StatelessWidget {
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 150),
             child: GameEntryNameListRowInputName(
-              player: playerData,
-              availableSymbols: availableSymbols,
+              player: widget.playerData,
+              availableSymbols: widget.availableSymbols,
               onChanged: (String newName) => nameFieldUpdated(newName, context),
+              textFormFieldController: _textFormFieldController,
             ),
           ),
           ConstrainedBox(
             // Set a maxWidth to match the TextField.
             constraints: const BoxConstraints(maxWidth: 150),
             child: PlayerList(
-              playerList: listRowPlayerList,
+              playerList: widget.listRowPlayerList,
               onSelected: (int value) => useSavedName(value, context),
             ),
           ),
@@ -64,8 +84,8 @@ class GameEntryNameListRow extends StatelessWidget {
   /// Input | onChanged: (String newName) => nameFieldUpdated(newName, context),
   void nameFieldUpdated(String newName, BuildContext context) {
     context.read<GameEntryBloc>().add(
-            playerNum: playerData.playerNum,
           GameEntryChangeNameEvent(
+            playerNum: widget.playerData.playerNum,
             playerName: newName,
           ),
         );
