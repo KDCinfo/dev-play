@@ -1,6 +1,8 @@
 import 'package:dev_play_tictactoe/src/app_constants.dart';
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameEntryButtonsRow extends StatelessWidget {
   const GameEntryButtonsRow({super.key});
@@ -19,10 +21,7 @@ class GameEntryButtonsRow extends StatelessWidget {
       runSpacing: 10,
       children: [
         ElevatedButton(
-          // @TODO: Testing this will be done with a Bloc.
-          onPressed: () {
-            Navigator.pushNamed(context, '/play');
-          },
+          onPressed: () => startNewGame(context),
           child: const Text(
             buttonPlayText,
             key: buttonPlayKey,
@@ -33,7 +32,6 @@ class GameEntryButtonsRow extends StatelessWidget {
           ),
         ),
         TextButton(
-          // @TODO: Testing this will be done with a Bloc.
           onPressed: () => resetGame(context),
           child: const Text(
             buttonReset,
@@ -42,6 +40,10 @@ class GameEntryButtonsRow extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void startNewGame(BuildContext context) {
+    context.read<GameEntryBloc>().add(const GameEntryStartGameEvent());
   }
 
   void resetGame(BuildContext context) {

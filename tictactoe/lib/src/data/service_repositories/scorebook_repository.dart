@@ -30,6 +30,11 @@ class ScorebookRepository extends AppBaseRepository {
 
   ScorebookData get currentScorebookData => _scorebookDataStreamController.value;
 
+  void processNewGame(ScorebookData newScorebookData) {
+    scorebookDataVarsToStorage(newScorebookData);
+    updateScorebookDataStream(newScorebookData);
+  }
+
   void updateScorebookDataStream(ScorebookData newScorebookData) {
     _scorebookDataStreamController.add(newScorebookData);
   }
