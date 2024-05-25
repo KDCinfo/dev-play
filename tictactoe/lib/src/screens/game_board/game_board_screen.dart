@@ -1,5 +1,5 @@
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
-import 'package:dev_play_tictactoe/src/screens/game_play/game_play.dart';
+import 'package:dev_play_tictactoe/src/screens/game_board/game_board.dart';
 import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
