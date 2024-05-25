@@ -69,10 +69,15 @@ class ScorebookData extends Equatable {
     };
   }
 
-  // + allPlayers: List<PlayerData>[PlayerData].putIfAbsent(newGamePlayers)
+  /// This is a list of all played players, but only the
+  /// names are extracted for use in the `PlayerList` popup menu.
+  ///
+  /// + allPlayers: List<PlayerData>[PlayerData].putIfAbsent(newGamePlayers)
   final List<PlayerData> allPlayers;
 
-  // + allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
+  /// This gets updated when a game is completed.
+  ///
+  /// + allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
   final Map<int, GameData> allGames;
 
   /// Current Game
@@ -81,9 +86,14 @@ class ScorebookData extends Equatable {
   /// Initialize the Scorebook with a new game
   /// with data provided by the `GameEntry` screen.
   ScorebookData startGame(GameData gameData) {
+    // Isolate new players for storing in the `allPlayers` list.
+    final newPlayers = gameData.players.where((player) {
+      return !allPlayers.any((existingPlayer) => existingPlayer.playerId == player.playerId);
+    }).toList();
+
     return copyWith(
       currentGame: gameData,
-      allPlayers: gameData.players,
+      allPlayers: List.of(allPlayers)..addAll(newPlayers),
     );
   }
 
