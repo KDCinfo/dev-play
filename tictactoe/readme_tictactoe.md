@@ -667,8 +667,8 @@ Thinking through the flows, and what should update what.
   + dateLastPlayed => DateTime,
   + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
   + plays => <PlayerTurn>[].add(PlayerTurn)
-  + players => <Map<int, PlayerData>>[
-    { playerId1, playerData1 }, { playerId2, playerData2 },
+  + players => <PlayerData>[
+    playerData1, playerData2,
   ]
   + gameBoard
   + endGameScore => {

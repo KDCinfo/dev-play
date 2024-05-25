@@ -34,7 +34,7 @@ class GameEntryButtonsRow extends StatelessWidget {
         ),
         TextButton(
           // @TODO: Testing this will be done with a Bloc.
-          onPressed: () {},
+          onPressed: () => resetGame(context),
           child: const Text(
             buttonReset,
             key: buttonResetKey,
@@ -42,5 +42,9 @@ class GameEntryButtonsRow extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void resetGame(BuildContext context) {
+    context.read<GameEntryBloc>().add(const GameEntryResetGameEvent());
   }
 }

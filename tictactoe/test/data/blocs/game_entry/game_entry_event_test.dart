@@ -136,5 +136,23 @@ void main() {
         );
       });
     });
+
+    group('[GameEntryResetGameEvent]', () {
+      test('supports value [equality]', () {
+        expect(
+          GameEntryResetGameEvent(),
+          equals(
+            GameEntryResetGameEvent(),
+          ),
+        );
+      });
+
+      test('[props] are correct', () {
+        expect(
+          GameEntryResetGameEvent().props,
+          equals(<Object?>[]),
+        );
+      });
+    });
   });
 }

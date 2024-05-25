@@ -77,6 +77,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     on<GameEntryChangeNameEvent>(_updateBlocPlayerList);
     on<GameEntryEdgeSizeEvent>(_updateBlocEdgeSize);
     on<GameEntryStartGameEvent>(_updateBlocStartGame);
+    on<GameEntryResetGameEvent>(_updateBlocResetGame);
 
     /// This will update the `allSavedPlayerNames` list in the UI.
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
@@ -139,11 +140,27 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     );
   }
 
+  void _updateBlocResetGame(
+    GameEntryResetGameEvent event,
+    Emitter<GameEntryState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        edgeSize: AppConstants.defaultEdgeSize,
+        players: AppConstants.playerListDefault,
+        allSavedPlayerNames: state.allSavedPlayerNames,
+      ),
+    );
+  }
+
   void _updateBlocStartGame(
     GameEntryStartGameEvent event,
     Emitter<GameEntryState> emit,
   ) {
     // If `players` has only 1 player, add a `bot` to the player list.
+    //
+    // @Note: This should no longer be necessary as the default
+    //        player list now has 2 players, a human and a bot.
     if (state.players.length == 1) {
       state.players.add(
         const PlayerData(
@@ -156,6 +173,9 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       );
     }
 
+    /// We'll prep the game by creating a new `GameData` object
+    /// using the `startGame` method which will prepopulate the
+    /// gameData with things like the game creation date.
     final gameData = GameData.startGame(
       gameId: _scorebookRepository.currentScorebookData.allGames.isNotEmpty
           ? _scorebookRepository.currentScorebookData.allGames.keys.last + 1
@@ -164,9 +184,15 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       gameBoardData: GameBoardData(edgeSize: state.edgeSize),
     );
 
+    /// We'll then populate the `currentGame` property in `ScorebookData`
+    /// using the new gameData. When this change hits the stream, it will
+    /// be what triggers the UI to navigate to the `GamePlay` screen.
     final newScorebookData = _scorebookRepository.currentScorebookData.startGame(gameData);
 
-    _scorebookRepository.updateScorebookDataStream(newScorebookData);
+    /// The new scorebook data will be stored in local storage,
+    /// then the stream will be updated with the new data,
+    /// triggering the actual start of the new game.
+    _scorebookRepository.processNewGame(newScorebookData);
   }
 
   void _symbolSelected(
