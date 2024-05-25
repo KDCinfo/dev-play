@@ -72,6 +72,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
           const GameEntryState(players: AppConstants.playerListDefault),
         ) {
     //
+    on<GameEntryUpdateEvent>(_gameEntryUpdateEvent);
     on<GameEntrySymbolSelectedEvent>(_symbolSelected);
     on<GameEntryChangeNameEvent>(_updateBlocPlayerList);
     on<GameEntryEdgeSizeEvent>(_updateBlocEdgeSize);
@@ -79,7 +80,9 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
 
     /// This will update the `allSavedPlayerNames` list in the UI.
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
-      (ScorebookData scorebookData) => _updateBlocFromStream,
+      _updateBlocFromStream,
+      onError: (Object err, StackTrace stacktrace) => _print(error: err, stacktrace: stacktrace),
+      onDone: () => _print(message: 'Stream done ***** ***** *****'),
     );
   }
 
@@ -93,12 +96,45 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     return super.close();
   }
 
+  void _print({
+    String? message,
+    Object? error,
+    StackTrace? stacktrace,
+  }) {
+    // @TODO: Add prod check.
+    if (message != null) {
+      // ignore: avoid_print
+      print('message: $message');
+    }
+    if (error != null) {
+      // ignore: avoid_print
+      print('error: $error');
+    }
+    if (stacktrace != null) {
+      // ignore: avoid_print
+      print('stacktrace: $stacktrace');
+    }
+  }
+
   void _updateBlocFromStream(ScorebookData scorebookData) {
     add(
       GameEntryUpdateEvent(
         edgeSize: state.edgeSize,
         players: state.players,
         allSavedPlayerNames: scorebookData.allPlayers.map((player) => player.playerName).toList(),
+      ),
+    );
+  }
+
+  void _gameEntryUpdateEvent(
+    GameEntryUpdateEvent event,
+    Emitter<GameEntryState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        edgeSize: event.edgeSize,
+        players: event.players,
+        allSavedPlayerNames: event.allSavedPlayerNames,
       ),
     );
   }

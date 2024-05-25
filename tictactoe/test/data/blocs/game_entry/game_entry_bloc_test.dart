@@ -206,7 +206,7 @@ void main() {
         expectLater(gameEntryBloc.stream, emits(expectedState));
       });
 
-      test('update edge size.', () {
+      test('updates the edge size.', () {
         const edgeSize = 4;
         final expectedState = gameEntryBloc.state.copyWith(edgeSize: edgeSize);
 
@@ -215,7 +215,7 @@ void main() {
         expectLater(gameEntryBloc.stream, emits(expectedState));
       });
 
-      test('start game with one player.', () async {
+      test('starts the game with one player.', () async {
         final playerList = [
           const PlayerData(
             playerId: 1,
@@ -267,7 +267,7 @@ void main() {
       });
 
       // Can use: `playerListAddFourth`
-      test('start game with four players.', () async {
+      test('starts the game with four players.', () async {
         final scorebookData = ScorebookData(
           allPlayers: playerListAddFourth,
         );
