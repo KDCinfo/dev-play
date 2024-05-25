@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
@@ -24,6 +26,7 @@ class GameEntryNameListRow extends StatefulWidget {
 
 class _GameEntryNameListRowState extends State<GameEntryNameListRow> {
   late TextEditingController _textFormFieldController;
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -35,6 +38,7 @@ class _GameEntryNameListRowState extends State<GameEntryNameListRow> {
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _textFormFieldController.dispose();
     super.dispose();
   }
@@ -60,9 +64,12 @@ class _GameEntryNameListRowState extends State<GameEntryNameListRow> {
           ConstrainedBox(
             // Set a maxWidth to match the TextField.
             constraints: const BoxConstraints(maxWidth: 150),
-            child: PlayerList(
-              playerList: widget.listRowPlayerList,
-              onSelected: (int value) => useSavedName(value, context),
+            child: SizedBox(
+              height: 60,
+              child: PlayerList(
+                playerList: widget.listRowPlayerList,
+                onSelected: (int value) => useSavedName(value, context),
+              ),
             ),
           ),
         ],
@@ -83,12 +90,15 @@ class _GameEntryNameListRowState extends State<GameEntryNameListRow> {
   ///
   /// Input | onChanged: (String newName) => nameFieldUpdated(newName, context),
   void nameFieldUpdated(String newName, BuildContext context) {
-    context.read<GameEntryBloc>().add(
-          GameEntryChangeNameEvent(
-            playerNum: widget.playerData.playerNum,
-            playerName: newName,
-          ),
-        );
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      context.read<GameEntryBloc>().add(
+            GameEntryChangeNameEvent(
+              playerNum: widget.playerData.playerNum,
+              playerName: newName,
+            ),
+          );
+    });
   }
 
   /// This method will assign the new input value to the controller, then,
