@@ -82,8 +82,14 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     /// This will update the `allSavedPlayerNames` list in the UI.
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
       _updateBlocFromStream,
-      onError: (Object err, StackTrace stacktrace) => _print(error: err, stacktrace: stacktrace),
-      onDone: () => _print(message: 'Stream done ***** ***** *****'),
+      onError: (Object err, StackTrace stacktrace) => AppConstants.appPrint(
+        message: '[game_entry_bloc] Stream error ***** ***** *****',
+        error: err,
+        stacktrace: stacktrace,
+      ),
+      onDone: () => AppConstants.appPrint(
+        message: '[game_entry_bloc] Stream done ***** ***** *****',
+      ),
     );
   }
 
@@ -95,26 +101,6 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
   Future<void> close() {
     _scorebookStreamListener.cancel();
     return super.close();
-  }
-
-  void _print({
-    String? message,
-    Object? error,
-    StackTrace? stacktrace,
-  }) {
-    // @TODO: Add prod check.
-    if (message != null) {
-      // ignore: avoid_print
-      print('message: $message');
-    }
-    if (error != null) {
-      // ignore: avoid_print
-      print('error: $error');
-    }
-    if (stacktrace != null) {
-      // ignore: avoid_print
-      print('stacktrace: $stacktrace');
-    }
   }
 
   void _updateBlocFromStream(ScorebookData scorebookData) {

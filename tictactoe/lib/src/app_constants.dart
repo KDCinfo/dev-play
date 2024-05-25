@@ -57,6 +57,26 @@ abstract class AppConstants {
 
   /// Storage Keys
   static const storageKeyScorebook = 'scorebookData';
+
+  static void appPrint({
+    String? message,
+    Object? error,
+    StackTrace? stacktrace,
+  }) {
+    // @TODO: Add prod check.
+    if (message != null) {
+      // ignore: avoid_print
+      print('message: $message');
+    }
+    if (error != null) {
+      // ignore: avoid_print
+      print('error: $error');
+    }
+    if (stacktrace != null) {
+      // ignore: avoid_print
+      print('stacktrace: $stacktrace');
+    }
+  }
 }
 
 enum GameStatusEnum implements Comparable<GameStatusEnum> {
