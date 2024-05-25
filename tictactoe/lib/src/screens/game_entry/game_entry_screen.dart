@@ -33,7 +33,7 @@ class GameEntryLayoutPortrait extends StatelessWidget {
       child: Column(
         children: [
           GameTitleRow(),
-          SizedBox(height: 10),
+          SizedBox(height: 35),
           GameEntryNameList(),
           SizedBox(height: 20),
           GameEntryBoardSizeRow(),

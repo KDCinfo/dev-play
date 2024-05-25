@@ -39,33 +39,31 @@ class _PlayerListState extends State<PlayerList> {
     return Builder(
       builder: (context) {
         //
-        return ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 150),
-          child: DropdownMenu<int>(
-            controller: _dropdownController,
-            // initialSelection: 0,
-            // width: 125,
-            // Hintext should be a label less than 10 characters
-            hintText: AppConstants.playerListHintText,
-            inputDecorationTheme: InputDecorationTheme(
-              labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-              isDense: true,
-              border: UnderlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              contentPadding: const EdgeInsets.only(left: 10),
+        return DropdownMenu<int>(
+          // initialSelection: 0,
+          controller: _dropdownController,
+          // Give each dropdown a consistent width.
+          width: 150,
+          // Hintext should be a label less than 10 characters
+          hintText: AppConstants.playerListHintText,
+          inputDecorationTheme: InputDecorationTheme(
+            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            isDense: true,
+            border: UnderlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            dropdownMenuEntries: [
-              /// 'Select from previously used names:'
-              ...widget.playerList.map((String entry) {
-                return DropdownMenuEntry(
-                  value: widget.playerList.indexOf(entry),
-                  label: entry,
-                );
-              }),
-            ],
-            onSelected: processOnSelected,
+            contentPadding: const EdgeInsets.only(left: 10),
           ),
+          dropdownMenuEntries: [
+            /// 'Select from previously used names:'
+            ...widget.playerList.map((String entry) {
+              return DropdownMenuEntry(
+                value: widget.playerList.indexOf(entry),
+                label: entry,
+              );
+            }),
+          ],
+          onSelected: processOnSelected,
         );
       },
     );
