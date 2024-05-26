@@ -45,7 +45,8 @@ void main() {
         act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
         verify: (_) async {
           verify(() => mockScorebookRepository.scorebookDataStream).called(1);
-          verify(() => mockScorebookRepository.updateScorebookDataStream(any())).called(1);
+          verify(() => mockScorebookRepository.currentScorebookData).called(2);
+          verify(() => mockScorebookRepository.processNewGame(any())).called(1);
         },
       );
 
@@ -177,33 +178,53 @@ void main() {
         });
       });
 
-      test('update player list.', () {
-        final localPlayerList = [
-          const PlayerData(
-            playerNum: 1,
-            playerName: 'Player 1b',
-            playerType: PlayerTypeHuman(),
-            userSymbol: UserSymbolX(),
-          ),
+      test('updates the player list.', () async {
+        const player1Change = PlayerData(
+          playerNum: 1,
+          playerName: 'Player 1b',
+          playerType: PlayerTypeHuman(),
+          userSymbol: UserSymbolX(),
+        );
+        final localPlayerListFirstChange = [
+          player1Change,
           const PlayerData(
             playerNum: 2,
             playerName: 'TicTacBot',
             userSymbol: UserSymbolO(),
           ),
         ];
+        final localPlayerListSecondChange = [
+          player1Change,
+          const PlayerData(
+            playerNum: 2,
+            playerName: 'TicTacBot',
+            userSymbol: UserSymbolStar(),
+          ),
+        ];
 
-        final expectedState = gameEntryBloc.state.copyWith(
-          players: localPlayerList,
+        final expectedStateFirst = gameEntryBloc.state.copyWith(
+          players: localPlayerListFirstChange,
+        );
+        final expectedStateSecond = gameEntryBloc.state.copyWith(
+          players: localPlayerListSecondChange,
         );
 
-        const playerNum = 1;
-        const newPlayerName = 'Player 1b';
-
-        gameEntryBloc.add(
-          const GameEntryChangeNameEvent(playerNum: playerNum, playerName: newPlayerName),
+        expect(
+          gameEntryBloc.state,
+          equals(const GameEntryState(players: AppConstants.playerListDefault)),
         );
 
-        expectLater(gameEntryBloc.stream, emits(expectedState));
+        gameEntryBloc
+          ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'))
+          ..add(const GameEntrySymbolSelectedEvent(playerNum: 2, selectedSymbolKey: '*'));
+
+        await expectLater(
+          gameEntryBloc.stream,
+          emitsInOrder([
+            expectedStateFirst,
+            expectedStateSecond,
+          ]),
+        );
       });
 
       test('updates the edge size.', () {
@@ -215,58 +236,28 @@ void main() {
         expectLater(gameEntryBloc.stream, emits(expectedState));
       });
 
-      test('starts the game with one player.', () async {
-        final playerList = [
-          const PlayerData(
-            playerId: 1,
-            playerNum: 1,
-            playerName: 'Player 1',
-            userSymbol: UserSymbolX(),
-          ),
-        ];
-        final scorebookData = ScorebookData(
-          allPlayers: playerList,
-        );
-
-        when(() => mockScorebookRepository.scorebookDataStream)
-            .thenAnswer((_) => Stream.value(scorebookData));
-        when(() => mockScorebookRepository.currentScorebookData).thenReturn(scorebookData);
-        when(() => mockScorebookRepository.updateScorebookDataStream(any()))
-            .thenAnswer((_) async {});
-
+      test('adds a 3rd player when 2nd player bot name is changed.', () async {
         gameEntryBloc
           ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-          ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'))
-          ..add(const GameEntryStartGameEvent());
+          ..add(const GameEntryChangeNameEvent(playerNum: 2, playerName: 'Player 2b'));
 
-        verify(
-          () => mockScorebookRepository.scorebookDataStream,
-        ).called(1);
+        expect(gameEntryBloc.stream, emits(isA<GameEntryState>()));
 
-        // Wait for bloc to process events
-        // await gameEntryBloc.stream.isEmpty;
+        // Check state is changed to 3 players.
+        expect(
+          gameEntryBloc.stream,
+          emitsInOrder([
+            isA<GameEntryState>().having((state) => state.players.length, 'players.length', 2),
+            isA<GameEntryState>().having((state) => state.players.length, 'players.length', 3),
+          ]),
+        );
+
+        // Wait for bloc to process events.
         await Future<void>.delayed(Duration.zero);
 
-        // This fails when not delayed with the `Future` above.
-        //
-        verify(
-          () async => mockScorebookRepository.updateScorebookDataStream(any()),
-        ).called(1);
-
-        // This also fails when not delayed.
-        //
-        // Note: This test is commented because only one `verify` can be verified at a time.
-        //
-        // If you need to check specifics, capture the argument.
-        // final captured = verify(() => mockScorebookRepository.updateScorebookDataStream(captureAny()))
-        //     .captured
-        //     .single as ScorebookData;
-        //
-        // You can inspect the `captured` data to ensure it has the properties you expect.
-        // await expectLater(captured.allPlayers.length, 2); // 'Player 1' and 'Botuple'
+        verify(() => mockScorebookRepository.scorebookDataStream).called(1);
       });
 
-      // Can use: `playerListAddFourth`
       test('starts the game with four players.', () async {
         final scorebookData = ScorebookData(
           allPlayers: playerListAddFourth,
@@ -280,19 +271,15 @@ void main() {
 
         gameEntryBloc
           ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))
-          ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'))
+          ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'))
           ..add(const GameEntryStartGameEvent());
 
-        verify(
-          () => mockScorebookRepository.scorebookDataStream,
-        ).called(1);
-
-        // Wait for bloc to process events
+        // Wait for bloc to process events.
         await Future<void>.delayed(Duration.zero);
 
-        verify(
-          () async => mockScorebookRepository.updateScorebookDataStream(any()),
-        ).called(1);
+        verify(() => mockScorebookRepository.scorebookDataStream).called(1);
+        verify(() => mockScorebookRepository.currentScorebookData).called(2);
+        verify(() => mockScorebookRepository.processNewGame(any())).called(1);
       });
     });
   });

@@ -4,28 +4,46 @@ import 'package:dev_play_tictactoe/src/data/service_repositories/service_reposit
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// The `AppProviderWrapperBloc` class allows repositories
-/// to be injected into blocs after the repositories have been
-/// provided to the app via the `AppProviderWrapperRepository` widget.
+/// For the app's normal flow, blocs are created below, using the
+/// repositories provided by the `AppProviderWrapperRepository` widget.
+///
+/// For testing purposes, this widget allows for blocs to
+/// be injected, allowing for the use of mocked repositories.
 ///
 class AppProviderWrapperBloc<T extends AppBaseRepository> extends StatelessWidget {
   const AppProviderWrapperBloc({
     required this.child,
     this.gameEntryBloc,
+    this.gamePlayBloc,
     super.key,
   });
 
   final Widget child;
+
+  /// For testing purposes, these blocs are injected via the `PumpApp` helper,
+  /// allowing for the use of mocked repositories.
   final GameEntryBloc? gameEntryBloc;
+  final GamePlayBloc? gamePlayBloc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          gameEntryBloc ??
-          GameEntryBloc(
-            scorebookRepository: context.read<ScorebookRepository>(),
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              gameEntryBloc ??
+              GameEntryBloc(
+                scorebookRepository: context.read<ScorebookRepository>(),
+              ),
+        ),
+        BlocProvider(
+          create: (context) =>
+              gamePlayBloc ??
+              GamePlayBloc(
+                scorebookRepository: context.read<ScorebookRepository>(),
+              ),
+        ),
+      ],
       child: Builder(
         builder: (context) {
           return child;

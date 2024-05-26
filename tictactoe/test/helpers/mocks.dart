@@ -14,6 +14,8 @@ class MockScorebookRepository extends Mock implements ScorebookRepository {}
 
 class MockGameEntryBloc extends MockBloc<GameEntryEvent, GameEntryState> implements GameEntryBloc {}
 
+class MockGamePlayBloc extends MockBloc<GamePlayEvent, GamePlayState> implements GamePlayBloc {}
+
 class MockGameEntryState extends Mock implements GameEntryState {}
 
 /// Navigation Mocks

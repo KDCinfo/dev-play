@@ -26,6 +26,7 @@ abstract class PumpApp {
     required Widget child,
     required ScorebookRepository scorebookRepository,
     GameEntryBloc? gameEntryBloc,
+    GamePlayBloc? gamePlayBloc,
   }) async {
     final repositories = [
       RepositoryTypeWrapper<ScorebookRepository>(
@@ -44,6 +45,7 @@ abstract class PumpApp {
         builder: (context) {
           return AppProviderWrapperBloc(
             gameEntryBloc: gameEntryBloc,
+            gamePlayBloc: gamePlayBloc,
             child: materialApp(
               Builder(
                 builder: (context) {
@@ -61,6 +63,7 @@ abstract class PumpApp {
     required Widget child,
     required ScorebookRepository scorebookRepository,
     GameEntryBloc? gameEntryBloc,
+    GamePlayBloc? gamePlayBloc,
   }) async {
     final repositories = [
       RepositoryTypeWrapper<ScorebookRepository>(
@@ -79,6 +82,7 @@ abstract class PumpApp {
         builder: (context) {
           return AppProviderWrapperBloc(
             gameEntryBloc: gameEntryBloc,
+            gamePlayBloc: gamePlayBloc,
             child: child,
           );
         },
