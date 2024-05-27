@@ -123,6 +123,9 @@ void main() {
           ],
         );
       });
+    });
+
+    group('[game start]', () {
       blocTest<GameEntryBloc, GameEntryState>(
         'emits state when new game is started.',
         setUp: () {
@@ -136,116 +139,25 @@ void main() {
         act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
         verify: (_) async {
           verify(() => mockScorebookRepository.scorebookDataStream).called(1);
-          verify(() => mockScorebookRepository.currentScorebookData).called(2);
+          verify(() => mockScorebookRepository.currentScorebookData).called(3);
           verify(() => mockScorebookRepository.processNewGame(any())).called(1);
         },
       );
 
       blocTest<GameEntryBloc, GameEntryState>(
-        'emits state with updated edgeSize.',
+        'emits no state when new game is started with players with the same name.',
         setUp: () {
+          when(() => mockScorebookRepository.currentScorebookData)
+              .thenReturn(const ScorebookData());
           gameEntryBloc
-            ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'));
+            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'))
+            ..add(const GameEntryChangeNameEvent(playerNum: 2, playerName: 'Player 1'));
         },
         build: () => gameEntryBloc,
-        act: (bloc) => bloc.add(const GameEntryEdgeSizeEvent(edgeSize: 5)),
-        expect: () => [
-          const GameEntryState(
-            edgeSize: 4,
-            players: [
-              PlayerData(
-                playerNum: 1,
-                playerName: 'Player 1b',
-                playerType: PlayerTypeHuman(),
-                userSymbol: UserSymbolX(),
-              ),
-              PlayerData(
-                playerNum: 2,
-                playerName: 'TicTacBot',
-                userSymbol: UserSymbolO(),
-              ),
-            ],
-          ),
-          const GameEntryState(
-            edgeSize: 5,
-            players: [
-              PlayerData(
-                playerNum: 1,
-                playerName: 'Player 1b',
-                playerType: PlayerTypeHuman(),
-                userSymbol: UserSymbolX(),
-              ),
-              PlayerData(
-                playerNum: 2,
-                playerName: 'TicTacBot',
-                userSymbol: UserSymbolO(),
-              ),
-            ],
-          ),
-        ],
-      );
-
-      blocTest<GameEntryBloc, GameEntryState>(
-        'emits state with updated players.',
-        setUp: () {
-          gameEntryBloc
-            ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
-            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'));
+        act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
+        verify: (_) async {
+          verify(() => mockScorebookRepository.scorebookDataStream).called(1);
         },
-        build: () => gameEntryBloc,
-        act: (bloc) => bloc.add(
-          const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'),
-        ),
-        expect: () => [
-          const GameEntryState(
-            edgeSize: 4,
-            players: [
-              PlayerData(
-                playerNum: 1,
-                playerName: 'Player 1b',
-                playerType: PlayerTypeHuman(),
-                userSymbol: UserSymbolX(),
-              ),
-              PlayerData(
-                playerNum: 2,
-                playerName: 'TicTacBot',
-                userSymbol: UserSymbolO(),
-              ),
-            ],
-          ),
-        ],
-      );
-
-      blocTest<GameEntryBloc, GameEntryState>(
-        'emits state with four players.',
-        setUp: () {
-          gameEntryBloc
-            ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))
-            ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1'));
-        },
-        build: () => gameEntryBloc,
-        act: (bloc) => bloc.add(
-          const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'),
-        ),
-        expect: () => [
-          const GameEntryState(
-            edgeSize: 5,
-            players: [
-              PlayerData(
-                playerNum: 1,
-                playerName: 'Player 1b',
-                playerType: PlayerTypeHuman(),
-                userSymbol: UserSymbolX(),
-              ),
-              PlayerData(
-                playerNum: 2,
-                playerName: 'TicTacBot',
-                userSymbol: UserSymbolO(),
-              ),
-            ],
-          ),
-        ],
       );
     });
 
@@ -369,7 +281,7 @@ void main() {
         await Future<void>.delayed(Duration.zero);
 
         verify(() => mockScorebookRepository.scorebookDataStream).called(1);
-        verify(() => mockScorebookRepository.currentScorebookData).called(2);
+        verify(() => mockScorebookRepository.currentScorebookData).called(4);
         verify(() => mockScorebookRepository.processNewGame(any())).called(1);
       });
     });
