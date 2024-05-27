@@ -1,6 +1,9 @@
 import 'package:dev_play_tictactoe/src/app_constants.dart';
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameBoardButtonPanel extends StatelessWidget {
   const GameBoardButtonPanel({super.key});
@@ -30,9 +33,9 @@ class GameBoardButtonPanel extends StatelessWidget {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 7),
             ),
-            // @TODO: Testing this will be done with a Bloc.
             onPressed: () {
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              endGame(context);
             },
             child: const Text(
               buttonReturn,
@@ -54,5 +57,15 @@ class GameBoardButtonPanel extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void endGame(BuildContext context) {
+    final currentGameData = context.read<GamePlayBloc>().state.currentGame;
+    final resetGameData = GameData.resetGame(currentGameData);
+    context.read<GamePlayBloc>().add(
+          GamePlayEndGameEvent(
+            gameData: resetGameData,
+          ),
+        );
   }
 }
