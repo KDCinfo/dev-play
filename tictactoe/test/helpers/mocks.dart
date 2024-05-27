@@ -1,6 +1,7 @@
 import 'package:base_services/base_services.dart';
 
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
@@ -85,3 +86,49 @@ final playerListAddFourth = List.of(playerListAddOne)
       playerType: PlayerTypeHuman(),
     ),
   );
+
+// Added for bloc testing (e.g. `game_entry_bloc_test.dart`)
+
+final defaultPlayerList = List<PlayerData>.of(AppConstants.playerListDefault);
+
+final playerListPlayer1a = List<PlayerData>.of(defaultPlayerList)
+  ..replaceRange(0, 1, [
+    const PlayerData(
+      playerNum: 1,
+      playerName: 'Player 1a',
+      playerType: PlayerTypeHuman(),
+      userSymbol: UserSymbolX(),
+    ),
+  ]);
+final playerListPlayer1b = List<PlayerData>.of(defaultPlayerList)
+  ..replaceRange(0, 1, [
+    const PlayerData(
+      playerNum: 1,
+      playerName: 'Player 1b',
+      playerType: PlayerTypeHuman(),
+      userSymbol: UserSymbolX(),
+    ),
+  ]);
+
+const playerData1 = PlayerData(
+  playerNum: 1,
+  playerName: 'Player 1',
+  playerType: PlayerTypeHuman(),
+  userSymbol: UserSymbolX(),
+);
+const playerData2 = PlayerData(
+  playerNum: 2,
+  playerName: 'Player 2',
+  playerType: PlayerTypeHuman(),
+  userSymbol: UserSymbolO(),
+);
+const playerData3 = PlayerData(
+  playerNum: 3,
+  playerType: PlayerTypeHuman(),
+  userSymbol: UserSymbolEmpty(),
+);
+const playerData4 = PlayerData(
+  playerNum: 4,
+  playerType: PlayerTypeHuman(),
+  userSymbol: UserSymbolEmpty(),
+);

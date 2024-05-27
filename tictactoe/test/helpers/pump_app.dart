@@ -1,12 +1,40 @@
 import 'package:dev_play_tictactoe/src/app_provider_wrapper_bloc.dart';
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
+import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class PumpApp {
-  static Widget materialApp(Widget child) => MaterialApp(
+  static Widget materialAppScreenTest(
+    Widget child,
+    NavigatorObserver? mockObserver,
+  ) =>
+      MaterialApp(
+        themeMode: ThemeMode.light,
+        theme: ThemeData(
+          colorSchemeSeed: const Color(0xFF800000),
+        ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          colorSchemeSeed: const Color(0xFF800000),
+        ),
+        // home: Scaffold(
+        //   body: child,
+        // ),
+        navigatorObservers: mockObserver != null ? [mockObserver] : [],
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Scaffold(body: child),
+          '/play': (context) => const GameBoardScreen(),
+        },
+      );
+
+  static Widget materialApp(
+    Widget child,
+  ) =>
+      MaterialApp(
         themeMode: ThemeMode.light,
         theme: ThemeData(
           colorSchemeSeed: const Color(0xFF800000),
@@ -27,6 +55,7 @@ abstract class PumpApp {
     required ScorebookRepository scorebookRepository,
     GameEntryBloc? gameEntryBloc,
     GamePlayBloc? gamePlayBloc,
+    NavigatorObserver? mockObserver,
   }) async {
     final repositories = [
       RepositoryTypeWrapper<ScorebookRepository>(
@@ -46,13 +75,22 @@ abstract class PumpApp {
           return AppProviderWrapperBloc(
             gameEntryBloc: gameEntryBloc,
             gamePlayBloc: gamePlayBloc,
-            child: materialApp(
-              Builder(
-                builder: (context) {
-                  return child;
-                },
-              ),
-            ),
+            child: mockObserver != null
+                ? materialAppScreenTest(
+                    Builder(
+                      builder: (context) {
+                        return child;
+                      },
+                    ),
+                    mockObserver,
+                  )
+                : materialApp(
+                    Builder(
+                      builder: (context) {
+                        return child;
+                      },
+                    ),
+                  ),
           );
         },
       ),

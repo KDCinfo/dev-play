@@ -18,14 +18,18 @@ void main() {
     });
 
     test('should initialize repository', () {
-      // The `init` function is called when the repository is instantiated.
-      // Calling it here would result in two calls.
-      // appBaseRepository.initRepository();
-
       expect(appBaseRepository, isA<AppBaseRepository>());
       expect(appBaseRepository, isA<ScorebookRepository>());
 
       verify(() => mockStorageAPI.prefsGetString(any())).called(1);
+    });
+
+    test('should initialize repository', () {
+      // The `init` function is called when the repository is instantiated.
+      // Calling it explicitly results in two `prefsGetString` calls.
+      appBaseRepository.initRepository();
+
+      verify(() => mockStorageAPI.prefsGetString(any())).called(2);
     });
   });
 }
