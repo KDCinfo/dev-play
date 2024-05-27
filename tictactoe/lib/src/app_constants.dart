@@ -6,12 +6,15 @@ typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
 abstract class AppConstants {
   /// Standard App Config Values
   static const defaultEdgeSize = 3;
+  static const defaultEdgeSizeMin = 3;
+  static const defaultEdgeSizeMax = 5;
 
   /// App Title
   static const appTitle = 'Tic Tac Tuple';
   static const appTitleKey = 'ticTacTupleKey';
 
   /// Player Names List
+  static const playerListMin = 2;
   static const playerListMax = 4;
   static String playerLabel(int playerNum) => 'Player $playerNum Name:';
   static const playerNameHintText = 'Enter name';
