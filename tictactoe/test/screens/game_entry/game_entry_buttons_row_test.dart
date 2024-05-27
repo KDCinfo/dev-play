@@ -1,8 +1,12 @@
 import 'package:dev_play_tictactoe/src/app_constants.dart';
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
+import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
 
@@ -11,14 +15,32 @@ void main() {
     late Widget widgetToTest;
     late Widget wrappedWidget;
 
+    late ScorebookRepository mockScorebookRepository;
+    late GameEntryBloc mockGameEntryBloc;
+    late GamePlayBloc mockGamePlayBloc;
+
     ///
     /// [ GameEntry Buttons ]
     ///
 
     group('GameEntry Buttons', () {
-      setUp(() {
+      setUp(() async {
+        mockScorebookRepository = MockScorebookRepository();
+        mockGameEntryBloc = MockGameEntryBloc();
+        mockGamePlayBloc = MockGamePlayBloc();
+
         widgetToTest = const GameEntryButtonsRow();
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          scorebookRepository: mockScorebookRepository,
+          gameEntryBloc: mockGameEntryBloc,
+          gamePlayBloc: mockGamePlayBloc,
+          child: widgetToTest,
+        );
+
+        when(() => mockScorebookRepository.scorebookDataStream)
+            .thenAnswer((_) => Stream.value(const ScorebookData()));
+        when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
+        when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
       });
 
       testWidgets('[GameEntry Buttons] renders properly.', (WidgetTester tester) async {
@@ -45,6 +67,28 @@ void main() {
         );
       });
 
+      testWidgets(
+        '[GameEntry Buttons] play button onPressed calls StartGameEvent.',
+        (WidgetTester tester) async {
+          when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
+
+          await tester.pumpWidget(wrappedWidget);
+
+          final widgetFinderButtonTextKey = find.byKey(const ValueKey(AppConstants.buttonPlayKey));
+          final textParentButtonFinder = find.ancestor(
+            of: widgetFinderButtonTextKey,
+            matching: find.byType(ElevatedButton),
+          );
+          expect(textParentButtonFinder, findsOneWidget);
+          final buttonWidget = tester.widget(textParentButtonFinder) as ElevatedButton;
+
+          await tester.tap(find.byWidget(buttonWidget));
+
+          verify(() => mockGameEntryBloc.add(const GameEntryStartGameEvent())).called(1);
+          verifyNever(() => mockGameEntryBloc.add(const GameEntryResetGameEvent()));
+        },
+      );
+
       testWidgets('[GameEntry Buttons] has a reset button.', (WidgetTester tester) async {
         await tester.pumpWidget(wrappedWidget);
 
@@ -61,6 +105,28 @@ void main() {
           ),
         );
       });
+
+      testWidgets(
+        '[GameEntry Buttons] reset button onPressed calls ResetGameEvent.',
+        (WidgetTester tester) async {
+          when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
+
+          await tester.pumpWidget(wrappedWidget);
+
+          final widgetFinderButtonTextKey = find.byKey(const ValueKey(AppConstants.buttonResetKey));
+          final textParentButtonFinder = find.ancestor(
+            of: widgetFinderButtonTextKey,
+            matching: find.byType(TextButton),
+          );
+          expect(textParentButtonFinder, findsOneWidget);
+          final buttonWidget = tester.widget(textParentButtonFinder) as TextButton;
+
+          await tester.tap(find.byWidget(buttonWidget));
+
+          verifyNever(() => mockGameEntryBloc.add(const GameEntryStartGameEvent()));
+          verify(() => mockGameEntryBloc.add(const GameEntryResetGameEvent())).called(1);
+        },
+      );
     });
   });
 }
