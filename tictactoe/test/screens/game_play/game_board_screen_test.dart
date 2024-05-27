@@ -1,7 +1,10 @@
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
+import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
 
@@ -9,15 +12,22 @@ void main() {
   group('GamePlay GameBoard Screen Testing:', () {
     late Widget widgetToTest;
     late Widget wrappedWidget;
+    late ScorebookRepository mockScorebookRepository;
 
     ///
     /// [ GameBoard Screen ]
     ///
 
     group('GameBoard Screen', () {
-      setUp(() {
+      setUp(() async {
+        mockScorebookRepository = MockScorebookRepository();
         widgetToTest = const GameBoardScreen();
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          child: widgetToTest,
+          scorebookRepository: mockScorebookRepository,
+        );
+        when(() => mockScorebookRepository.scorebookDataStream)
+            .thenAnswer((_) => Stream.value(const ScorebookData()));
       });
 
       group('rendering', () {

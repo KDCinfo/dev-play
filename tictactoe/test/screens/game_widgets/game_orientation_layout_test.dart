@@ -84,11 +84,20 @@ void main() {
     ///
 
     group('[GameBoard Layout] Screen', () {
-      setUp(() {
+      setUp(() async {
+        mockScorebookRepository = MockScorebookRepository();
+        mockGameEntryBloc = MockGameEntryBloc();
+
         widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameBoard(),
         );
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          child: widgetToTest,
+          scorebookRepository: mockScorebookRepository,
+        );
+
+        when(() => mockScorebookRepository.scorebookDataStream)
+            .thenAnswer((_) => Stream.value(const ScorebookData()));
       });
 
       testWidgets('[GameOrientationLayout] renders.', (WidgetTester tester) async {

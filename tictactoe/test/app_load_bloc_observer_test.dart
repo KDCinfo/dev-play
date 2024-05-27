@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:async';
-
 import 'package:dev_play_tictactoe/src/app_load_bloc_observer.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -12,10 +10,6 @@ import 'helpers/helpers.dart';
 /// Flutter Bloc library `flutter_firebase_login` example.
 ///
 void main() {
-  List<String> getLog(String method, Object? event) {
-    return ['[base_bloc_observer.dart] $method(FakeBloc, $event)'];
-  }
-
   group('AppLoadBlocObserver', () {
     setUp(logs.clear);
 
@@ -73,15 +67,4 @@ void main() {
       }),
     );
   });
-}
-
-final logs = <String>[];
-
-void Function() overridePrint(void Function() testFn) {
-  return () {
-    final spec = ZoneSpecification(
-      print: (_, __, ___, String msg) => logs.add(msg),
-    );
-    return Zone.current.fork(specification: spec).run<void>(testFn);
-  };
 }
