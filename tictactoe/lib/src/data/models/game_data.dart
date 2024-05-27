@@ -138,12 +138,15 @@ class GameData extends Equatable {
   factory GameData.fromJson(Map<String, dynamic> json) {
     return GameData(
       gameId: json['gameId'] as int,
-      dateCreated: DateTime.parse(json['dateCreated'] as String),
+      dateCreated:
+          json['dateCreated'] != null ? DateTime.tryParse(json['dateCreated'] as String) : null,
       players: (json['players'] as List<dynamic>)
           .map((player) => PlayerData.fromJson(player as Map<String, dynamic>))
           .toList(),
-      dateLastPlayed: DateTime.parse(json['dateLastPlayed'] as String),
-      gameBoardData: json['gameBoardData'] as GameBoardData,
+      dateLastPlayed: json['dateLastPlayed'] != null
+          ? DateTime.tryParse(json['dateLastPlayed'] as String)
+          : null,
+      gameBoardData: GameBoardData.fromJson(json['gameBoardData'] as Map<String, dynamic>),
       endGameScore: json['endGameScore'] as Map<int, int>,
       gameStatus: json['gameStatus'] as GameStatus,
     );

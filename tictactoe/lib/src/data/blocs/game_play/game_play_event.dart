@@ -19,14 +19,14 @@ class GamePlayEndGameEvent extends GamePlayEvent {
 
 class GamePlayMoveEvent extends GamePlayEvent {
   const GamePlayMoveEvent({
-    required this.gameData,
+    required this.tileIndex,
   });
 
-  final GameData gameData;
+  final int tileIndex;
 
   @override
   List<Object> get props => [
-        gameData,
+        tileIndex,
       ];
 }
 

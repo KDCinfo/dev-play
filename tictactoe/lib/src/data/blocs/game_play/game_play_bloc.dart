@@ -69,6 +69,8 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     GamePlayMoveEvent event,
     Emitter<GamePlayState> emit,
   ) {
+    // ignore: avoid_print
+    print(event.tileIndex);
     // Send to repository.
     // Update game in the repository (scorebookData.currentGame)
     // Store scorebookData in local storage

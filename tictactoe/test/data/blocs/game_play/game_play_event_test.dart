@@ -37,11 +37,11 @@ void main() {
       test('supports value [equality]', () {
         expect(
           GamePlayMoveEvent(
-            gameData: GameData(),
+            tileIndex: 3,
           ),
           equals(
             GamePlayMoveEvent(
-              gameData: GameData(),
+              tileIndex: 3,
             ),
           ),
         );
@@ -50,10 +50,10 @@ void main() {
       test('[props] are correct', () {
         expect(
           GamePlayMoveEvent(
-            gameData: GameData(),
+            tileIndex: 3,
           ).props,
           equals(<Object?>[
-            GameData(),
+            3,
           ]),
         );
       });

@@ -47,14 +47,19 @@ class ScorebookData extends Equatable {
   // JSON
   /// Instantiate from JSON.
   factory ScorebookData.fromJson(Map<String, dynamic> json) {
+    final tempAllPlayers = (json['allPlayers'] as List<dynamic>)
+        .map((e) => PlayerData.fromJson(e as Map<String, dynamic>))
+        .toList();
+    final tempAllGames = (json['allGames'] as Map<String, dynamic>).map(
+      (key, value) => MapEntry(int.parse(key), GameData.fromJson(value as Map<String, dynamic>)),
+    );
+    final tempCurrentGame = GameData.fromJson(
+      json['currentGame'] as Map<String, dynamic>,
+    );
     return ScorebookData(
-      allPlayers: (json['allPlayers'] as List<dynamic>)
-          .map((e) => PlayerData.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      allGames: (json['allGames'] as Map<String, dynamic>).map(
-        (key, value) => MapEntry(int.parse(key), GameData.fromJson(value as Map<String, dynamic>)),
-      ),
-      currentGame: GameData.fromJson(json['currentGame'] as Map<String, dynamic>),
+      allPlayers: tempAllPlayers,
+      allGames: tempAllGames,
+      currentGame: tempCurrentGame,
     );
   }
 
