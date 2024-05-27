@@ -1,8 +1,10 @@
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/pre_pop_scope.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// The `OrientationScreenGameBoard()` class
 /// that is provided as the `orientationScreen` parameter
@@ -40,16 +42,25 @@ class GameBoardLayoutPortrait extends StatelessWidget {
     ///
     /// log('GameBoardLayoutPortrait: constraints: $constraints');
     /// [log] GameBoardLayoutPortrait: constraints: BoxConstraints(0.0<=w<=399.4, 0.0<=h<=806.3)
-    return const Column(
+    return Column(
       children: [
-        GameTitleRow(),
-        SizedBox(height: 10),
-        Expanded(flex: 2, child: GameBoardPanel()), // edgeSize: 5
-        SizedBox(height: 20),
-        GameBoardPlayerPanel(),
-        SizedBox(height: 20),
-        GameBoardButtonPanel(),
-        Spacer(),
+        const GameTitleRow(),
+        const SizedBox(height: 10),
+        Expanded(
+          flex: 2,
+          child: BlocBuilder<GamePlayBloc, GamePlayState>(
+            builder: (context, state) {
+              return GameBoardPanel(
+                edgeSize: state.currentGame.gameBoardData.edgeSize,
+              );
+            },
+          ),
+        ), // edgeSize: 5
+        const SizedBox(height: 20),
+        const GameBoardPlayerPanel(),
+        const SizedBox(height: 20),
+        const GameBoardButtonPanel(),
+        const Spacer(),
       ],
     );
   }
@@ -60,16 +71,23 @@ class GameBoardLayoutLandscape extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: GameBoardPanel(), // edgeSize: 5
+            child: BlocBuilder<GamePlayBloc, GamePlayState>(
+              builder: (context, state) {
+                return GameBoardPanel(
+                  edgeSize: state.currentGame.gameBoardData.edgeSize,
+                );
+              },
+            ),
+            // edgeSize: 5
           ),
-          Expanded(
+          const Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
