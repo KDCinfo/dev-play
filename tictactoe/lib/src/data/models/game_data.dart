@@ -56,6 +56,19 @@ class GameData extends Equatable {
     );
   }
 
+  /// Reset game by setting gameId to -1.
+  factory GameData.resetGame(GameData currentGameData) {
+    return GameData(
+      // gameId: -1,
+      dateCreated: currentGameData.dateCreated,
+      players: currentGameData.players,
+      gameBoardData: currentGameData.gameBoardData,
+      dateLastPlayed: currentGameData.dateLastPlayed,
+      endGameScore: currentGameData.endGameScore,
+      gameStatus: currentGameData.gameStatus,
+    );
+  }
+
   GameData playTurn({
     required GameBoardData gameBoardData,
   }) {
