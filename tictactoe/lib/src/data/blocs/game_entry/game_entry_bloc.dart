@@ -179,6 +179,19 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       );
     }
 
+    final lastPlayerId = _scorebookRepository.currentScorebookData.allPlayers.isNotEmpty
+        ? _scorebookRepository.currentScorebookData.allPlayers
+                .map((player) => player.playerId)
+                .reduce((a, b) => a != null && b != null && b > a ? b : a) ??
+            0
+        : 0;
+    var nextPlayerId = lastPlayerId + 1;
+    final playersWithIds = workingList.map((player) {
+      final newPlayer = player.copyWith(playerId: nextPlayerId);
+      nextPlayerId++;
+      return newPlayer;
+    }).toList();
+
     /// We'll prep the game by creating a new `GameData` object
     /// using the `startGame` method which will prepopulate the
     /// gameData with things like the game creation date.
@@ -186,7 +199,10 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       gameId: _scorebookRepository.currentScorebookData.allGames.isNotEmpty
           ? _scorebookRepository.currentScorebookData.allGames.keys.last + 1
           : 1,
-      players: state.players,
+      // players: state.players,
+      // Give each player a playerId that is +1 from the
+      // highest playerId in the `allPlayers` list.
+      players: playersWithIds,
       gameBoardData: GameBoardData(edgeSize: state.edgeSize),
     );
 
