@@ -143,6 +143,12 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     GameEntryStartGameEvent event,
     Emitter<GameEntryState> emit,
   ) {
+    /// First let's remove the last player if the name is empty.
+    final workingList = List<PlayerData>.of(state.players)
+      ..removeWhere(
+        (player) => player.playerNum == state.players.length && player.playerName.isEmpty,
+      );
+
     // If `players` has only 1 player, add a `bot` to the player list.
     //
     // @Note: This should no longer be necessary as the default
