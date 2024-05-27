@@ -32,5 +32,69 @@ void main() {
         );
       });
     });
+
+    group('[GamePlayMoveEvent]', () {
+      test('supports value [equality]', () {
+        expect(
+          GamePlayMoveEvent(
+            gameData: GameData(),
+          ),
+          equals(
+            GamePlayMoveEvent(
+              gameData: GameData(),
+            ),
+          ),
+        );
+      });
+
+      test('[props] are correct', () {
+        expect(
+          GamePlayMoveEvent(
+            gameData: GameData(),
+          ).props,
+          equals(<Object?>[
+            GameData(),
+          ]),
+        );
+      });
+    });
+
+    group('[GamePlayEndGameEvent]', () {
+      test('supports value [equality]', () {
+        expect(
+          GamePlayEndGameEvent(
+            gameData: GameData(
+              endGameScore: const <int, int>{0: 1},
+              gameStatus: const GameStatusComplete(),
+            ),
+          ),
+          equals(
+            GamePlayEndGameEvent(
+              gameData: GameData(
+                endGameScore: const <int, int>{0: 1},
+                gameStatus: const GameStatusComplete(),
+              ),
+            ),
+          ),
+        );
+      });
+
+      test('[props] are correct', () {
+        expect(
+          GamePlayEndGameEvent(
+            gameData: GameData(
+              endGameScore: const <int, int>{0: 1},
+              gameStatus: const GameStatusComplete(),
+            ),
+          ).props,
+          equals(<Object?>[
+            GameData(
+              endGameScore: const <int, int>{0: 1},
+              gameStatus: const GameStatusComplete(),
+            ),
+          ]),
+        );
+      });
+    });
   });
 }

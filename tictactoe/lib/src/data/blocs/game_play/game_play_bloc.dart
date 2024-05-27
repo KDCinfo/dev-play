@@ -15,7 +15,9 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     required ScorebookRepository scorebookRepository,
   })  : _scorebookRepository = scorebookRepository,
         super(const GamePlayState()) {
+    on<GamePlayMoveEvent>(_makeMove);
     on<GamePlayUpdatedEvent>(_updateGameData);
+    on<GamePlayEndGameEvent>(_endGameData);
 
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
       _updateBlocFromStream,
@@ -49,10 +51,26 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     );
   }
 
+  void _endGameData(
+    GamePlayEndGameEvent event,
+    Emitter<GamePlayState> emit,
+  ) {
+    emit(state.copyWith(currentGame: event.gameData));
+  }
+
   void _updateGameData(
     GamePlayUpdatedEvent event,
     Emitter<GamePlayState> emit,
   ) {
     emit(state.copyWith(currentGame: event.gameData));
+  }
+
+  void _makeMove(
+    GamePlayMoveEvent event,
+    Emitter<GamePlayState> emit,
+  ) {
+    // Send to repository.
+    // Update game in the repository (scorebookData.currentGame)
+    // Store scorebookData in local storage
   }
 }

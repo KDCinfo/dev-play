@@ -14,6 +14,7 @@ void main() {
     late Widget wrappedWidget;
     late ScorebookRepository mockScorebookRepository;
     late GameEntryBloc mockGameEntryBloc;
+    late GamePlayBloc mockGamePlayBloc;
 
     ///
     /// [ GameEntry Screen ]
@@ -23,15 +24,18 @@ void main() {
       setUp(() async {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
+        mockGamePlayBloc = MockGamePlayBloc();
 
         widgetToTest = const GameEntryScreen();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
           scorebookRepository: mockScorebookRepository,
           gameEntryBloc: mockGameEntryBloc,
+          gamePlayBloc: mockGamePlayBloc,
           child: widgetToTest,
         );
 
         when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
+        when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
       });
 
       group('rendering', () {
