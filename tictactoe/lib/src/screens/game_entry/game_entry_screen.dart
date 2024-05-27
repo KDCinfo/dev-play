@@ -1,8 +1,10 @@
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/game_entry/game_entry.dart';
 import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// The `OrientationScreenGameEntry()` class
 /// that is provided as the `orientationScreen` parameter
@@ -13,10 +15,22 @@ class GameEntryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        body: GameOrientationLayout(
-          orientationScreen: OrientationScreenGameEntry(),
+        // @TODO: Test this.
+        body: BlocListener<GamePlayBloc, GamePlayState>(
+          listenWhen: (previous, current) =>
+              previous.currentGame.gameId != current.currentGame.gameId,
+          listener: (context, state) {
+            if (state.currentGame.gameId > -1) {
+              Navigator.pushNamed(context, '/play');
+            } else {
+              Navigator.pop(context);
+            }
+          },
+          child: const GameOrientationLayout(
+            orientationScreen: OrientationScreenGameEntry(),
+          ),
         ),
       ),
     );
