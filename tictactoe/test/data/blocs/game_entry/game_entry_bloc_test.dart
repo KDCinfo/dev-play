@@ -32,6 +32,97 @@ void main() {
 
     // Group: General bloc tests
     group('[blocTest] Testing:', () {
+      group('[edgeSize]', () {
+        blocTest<GameEntryBloc, GameEntryState>(
+          'emits state with a properly updated edgeSize.',
+          setUp: () {
+            gameEntryBloc
+              ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
+              ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'));
+          },
+          build: () => gameEntryBloc,
+          act: (bloc) => bloc.add(const GameEntryEdgeSizeEvent(edgeSize: 5)),
+          expect: () => [
+            GameEntryState(edgeSize: 4, players: playerListPlayer1b),
+            GameEntryState(edgeSize: 5, players: playerListPlayer1b),
+          ],
+        );
+
+        blocTest<GameEntryBloc, GameEntryState>(
+          'emits nothing when edgeSize is under the minimum allowed',
+          build: () => gameEntryBloc,
+          act: (bloc) => bloc.add(
+            const GameEntryEdgeSizeEvent(edgeSize: AppConstants.defaultEdgeSizeMin - 1),
+          ),
+          expect: () => <GameEntryState>[],
+        );
+
+        blocTest<GameEntryBloc, GameEntryState>(
+          'emits nothing when edgeSize is over the max allowed',
+          build: () => gameEntryBloc,
+          act: (bloc) => bloc.add(
+            const GameEntryEdgeSizeEvent(edgeSize: AppConstants.defaultEdgeSizeMax + 1),
+          ),
+          expect: () => <GameEntryState>[],
+        );
+      });
+
+      group('[players]', () {
+        blocTest<GameEntryBloc, GameEntryState>(
+          'emits state with properly updated players.',
+          setUp: () {
+            gameEntryBloc
+              ..add(const GameEntryEdgeSizeEvent(edgeSize: 4))
+              ..add(const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1a'));
+          },
+          build: () => gameEntryBloc,
+          act: (bloc) => bloc.add(
+            const GameEntryChangeNameEvent(playerNum: 1, playerName: 'Player 1b'),
+          ),
+          expect: () => [
+            GameEntryState(edgeSize: 4, players: playerListPlayer1a),
+            GameEntryState(edgeSize: 4, players: playerListPlayer1b),
+          ],
+        );
+
+        blocTest<GameEntryBloc, GameEntryState>(
+          'emits state with four players.',
+          setUp: () {
+            gameEntryBloc
+              ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))
+              ..add(const GameEntryChangeNameEvent(playerNum: 2, playerName: 'Player 2'))
+              ..add(const GameEntryChangeNameEvent(playerNum: 3, playerName: 'Player 3'));
+          },
+          build: () => gameEntryBloc,
+          act: (bloc) => bloc.add(
+            const GameEntryChangeNameEvent(playerNum: 4, playerName: 'Player 4'),
+          ),
+          expect: () => [
+            const GameEntryState(
+              edgeSize: 5,
+              players: [playerData1, playerData2, playerData3],
+            ),
+            GameEntryState(
+              edgeSize: 5,
+              players: [
+                playerData1,
+                playerData2,
+                playerData3.copyWith(playerName: 'Player 3'),
+                playerData4,
+              ],
+            ),
+            GameEntryState(
+              edgeSize: 5,
+              players: [
+                playerData1,
+                playerData2,
+                playerData3.copyWith(playerName: 'Player 3'),
+                playerData4.copyWith(playerName: 'Player 4'),
+              ],
+            ),
+          ],
+        );
+      });
       blocTest<GameEntryBloc, GameEntryState>(
         'emits state when new game is started.',
         setUp: () {
