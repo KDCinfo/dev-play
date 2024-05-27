@@ -1,6 +1,6 @@
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
-import 'package:dev_play_tictactoe/src/screens/game_board/game_board.dart';
-import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
+import 'package:dev_play_tictactoe/src/pre_pop_scope.dart';
+import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,11 +13,18 @@ class GameBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(
-        body: GameOrientationLayout(
-          orientationScreen: OrientationScreenGameBoard(),
-        ),
+    return PrePopScope(
+      currentRoutePath: '/play',
+      child: Builder(
+        builder: (context) {
+          return const SafeArea(
+            child: Scaffold(
+              body: GameOrientationLayout(
+                orientationScreen: OrientationScreenGameBoard(),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

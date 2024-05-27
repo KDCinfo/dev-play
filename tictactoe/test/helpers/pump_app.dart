@@ -7,6 +7,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class PumpApp {
+  static Widget materialAppPopScopeTest(
+    Widget child,
+    NavigatorObserver? mockObserver,
+    GamePlayBloc? gamePlayBloc,
+  ) =>
+      AppProviderWrapperBloc(
+        gamePlayBloc: gamePlayBloc,
+        child: MaterialApp(
+          themeMode: ThemeMode.light,
+          theme: ThemeData(
+            colorSchemeSeed: const Color(0xFF800000),
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            colorSchemeSeed: const Color(0xFF800000),
+          ),
+          navigatorObservers: mockObserver != null ? [mockObserver] : [],
+          initialRoute: '/',
+          routes: {
+            '/': (context) => child,
+            '/play': (context) => const GameBoardScreen(),
+          },
+        ),
+      );
+
   static Widget materialAppScreenTest(
     Widget child,
     NavigatorObserver? mockObserver,

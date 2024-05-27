@@ -1,7 +1,7 @@
 import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactoe/src/data/models/models.dart';
-import 'package:dev_play_tictactoe/src/screens/game_entry/game_entry.dart';
-import 'package:dev_play_tictactoe/src/screens/game_widgets/game_widgets.dart';
+import 'package:dev_play_tictactoe/src/pre_pop_scope.dart';
+import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,23 +15,29 @@ class GameEntryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        // @TODO: Test this.
-        body: BlocListener<GamePlayBloc, GamePlayState>(
-          listenWhen: (previous, current) =>
-              previous.currentGame.gameId != current.currentGame.gameId,
-          listener: (context, state) {
-            if (state.currentGame.gameId > -1) {
-              Navigator.pushNamed(context, '/play');
-            } else {
-              Navigator.pop(context);
-            }
-          },
-          child: const GameOrientationLayout(
-            orientationScreen: OrientationScreenGameEntry(),
-          ),
-        ),
+    return PrePopScope(
+      currentRoutePath: '/',
+      child: Builder(
+        builder: (context) {
+          return SafeArea(
+            child: Scaffold(
+              body: BlocListener<GamePlayBloc, GamePlayState>(
+                listenWhen: (previous, current) =>
+                    previous.currentGame.gameId != current.currentGame.gameId,
+                listener: (context, state) {
+                  if (state.currentGame.gameId > -1) {
+                    Navigator.pushNamed(context, '/play');
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: const GameOrientationLayout(
+                  orientationScreen: OrientationScreenGameEntry(),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
