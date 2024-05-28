@@ -1,23 +1,55 @@
+import 'package:dev_play_tictactoe/src/app_constants.dart';
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/game_board/game_board.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
 
 void main() {
   group('GameBoardPlayerPanel', () {
+    late MockScorebookRepository mockScorebookRepository;
+    late GamePlayBloc mockGamePlayBloc;
+
     late Widget widgetToTest;
     late Widget wrappedWidget;
+
+    setUpAll(() {
+      registerFallbackValue(
+        const ScorebookData(),
+      );
+    });
+
+    setUp(() {
+      mockScorebookRepository = MockScorebookRepository();
+      mockGamePlayBloc = MockGamePlayBloc();
+      when(() => mockScorebookRepository.scorebookDataStream)
+          .thenAnswer((_) => Stream.value(const ScorebookData()));
+      when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
+    });
 
     ///
     /// [ GameBoard Player Panel ]
     ///
 
     group('GameBoard Player Panel', () {
-      setUp(() {
+      setUp(() async {
         widgetToTest = const GameBoardPlayerPanel();
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          child: widgetToTest,
+          scorebookRepository: mockScorebookRepository,
+          gamePlayBloc: mockGamePlayBloc,
+        );
+        when(() => mockGamePlayBloc.state).thenReturn(
+          const GamePlayState(
+            currentGame: GameData(
+              players: AppConstants.playerListDefault,
+            ),
+          ),
+        );
       });
 
       testWidgets('[GameBoard Player Panel] renders.', (WidgetTester tester) async {
@@ -46,7 +78,10 @@ void main() {
       testWidgets('[GameBoard Player Panel] should display the correct player names', (
         WidgetTester tester,
       ) async {
-        const players = <String>['John', 'Jane'];
+        final players = <String>[
+          AppConstants.playerListDefault[0].playerName,
+          AppConstants.playerListDefault[1].playerName,
+        ];
 
         await tester.pumpWidget(wrappedWidget);
 
@@ -57,10 +92,11 @@ void main() {
       testWidgets('[GameBoard Player Panel] should highlight the current player', (
         WidgetTester tester,
       ) async {
-        /// Current player (player 0) should be bold.
-        /// @TODO: This is currently hard coded in the `GameBoardPlayerPanelNames` widget.
         const currentPlayer = 0;
-        const players = <String>['John', 'Jane'];
+        final players = <String>[
+          AppConstants.playerListDefault[0].playerName,
+          AppConstants.playerListDefault[1].playerName,
+        ];
 
         await tester.pumpWidget(wrappedWidget);
 

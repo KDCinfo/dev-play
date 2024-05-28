@@ -1,23 +1,47 @@
+import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
+import 'package:dev_play_tictactoe/src/data/models/models.dart';
 import 'package:dev_play_tictactoe/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
 
 void main() {
   group('GamePlay GameBoard Panel Testing:', () {
+    late MockScorebookRepository mockScorebookRepository;
+    late GamePlayBloc mockGamePlayBloc;
+
     late Widget widgetToTest;
     late Widget wrappedWidget;
+
+    setUpAll(() {
+      registerFallbackValue(
+        const ScorebookData(),
+      );
+    });
+
+    setUp(() {
+      mockScorebookRepository = MockScorebookRepository();
+      mockGamePlayBloc = MockGamePlayBloc();
+      when(() => mockScorebookRepository.scorebookDataStream)
+          .thenAnswer((_) => Stream.value(const ScorebookData()));
+      when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
+    });
 
     ///
     /// [ GamePlay GameBoard Panel ]
     ///
 
     group('GamePlay GameBoard Panel', () {
-      setUp(() {
+      setUp(() async {
         widgetToTest = const GameBoardPanel();
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          child: widgetToTest,
+          scorebookRepository: mockScorebookRepository,
+          gamePlayBloc: mockGamePlayBloc,
+        );
       });
 
       testWidgets('[GamePlay GameBoard Panel] renders properly.', (WidgetTester tester) async {
@@ -34,9 +58,13 @@ void main() {
       const edgeSize = 3;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() {
+      setUp(() async {
         widgetToTest = const GameBoardPanel(); // Default is 3.
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          child: widgetToTest,
+          scorebookRepository: mockScorebookRepository,
+          gamePlayBloc: mockGamePlayBloc,
+        );
       });
 
       testWidgets('[GamePlay GameBoard Panel] has a 3x3 GridView.', (
@@ -64,9 +92,13 @@ void main() {
       const edgeSize = 4;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() {
+      setUp(() async {
         widgetToTest = const GameBoardPanel(edgeSize: edgeSize);
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          child: widgetToTest,
+          scorebookRepository: mockScorebookRepository,
+          gamePlayBloc: mockGamePlayBloc,
+        );
       });
 
       testWidgets('[GamePlay GameBoard Panel] has a 4x4 GridView.', (
@@ -94,9 +126,13 @@ void main() {
       const edgeSize = 5;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() {
+      setUp(() async {
         widgetToTest = const GameBoardPanel(edgeSize: edgeSize);
-        wrappedWidget = PumpApp.materialApp(widgetToTest);
+        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+          child: widgetToTest,
+          scorebookRepository: mockScorebookRepository,
+          gamePlayBloc: mockGamePlayBloc,
+        );
       });
 
       testWidgets('[GamePlay GameBoard Panel] has a 5x5 GridView.', (

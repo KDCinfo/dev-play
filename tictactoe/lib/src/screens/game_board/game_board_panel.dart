@@ -50,12 +50,12 @@ class GameBoardPanel extends StatelessWidget {
                         child: Stack(
                           children: [
                             GameBoardPanelTile(index),
-                            ColoredBox(
-                              color: clickableTile(index) ? Colors.transparent : Colors.black12,
-                              child: const Positioned(
-                                left: 0,
-                                top: 0,
-                                child: Center(child: SizedBox()),
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              child: ColoredBox(
+                                color: clickableTile(index) ? Colors.transparent : Colors.black12,
+                                child: const Center(child: SizedBox()),
                               ),
                             ),
                           ],
