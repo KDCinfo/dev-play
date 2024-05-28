@@ -1,7 +1,7 @@
-import 'package:dev_play_tictactoe/src/app_constants.dart';
-import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
-import 'package:dev_play_tictactoe/src/data/models/models.dart';
-import 'package:dev_play_tictactoe/src/screens/screens.dart';
+import 'package:dev_play_tictactuple/src/app_constants.dart';
+import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
+import 'package:dev_play_tictactuple/src/data/models/models.dart';
+import 'package:dev_play_tictactuple/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

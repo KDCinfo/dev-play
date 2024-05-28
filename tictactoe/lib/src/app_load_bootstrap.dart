@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:base_services/base_services.dart';
 
-import 'package:dev_play_tictactoe/src/src.dart';
+import 'package:dev_play_tictactuple/src/src.dart';
 
 class BootParameters {
   const BootParameters({

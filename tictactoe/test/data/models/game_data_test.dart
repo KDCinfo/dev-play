@@ -1,5 +1,5 @@
 // ignore_for_file: require_trailing_commas
-import 'package:dev_play_tictactoe/src/data/data.dart';
+import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 

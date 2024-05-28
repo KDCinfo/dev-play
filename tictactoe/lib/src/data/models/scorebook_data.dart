@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/data/data.dart';
+import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:equatable/equatable.dart';
 

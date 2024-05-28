@@ -1,5 +1,5 @@
-import 'package:dev_play_tictactoe/src/data/blocs/blocs.dart';
-import 'package:dev_play_tictactoe/src/data/models/models.dart';
+import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
+import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

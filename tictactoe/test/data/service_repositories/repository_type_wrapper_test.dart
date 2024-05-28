@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
+import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 

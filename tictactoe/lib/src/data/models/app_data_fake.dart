@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/data/models/models.dart';
+import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 abstract class AppDataFake {
   /// Only fully populated players can be in the list,

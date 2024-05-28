@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:dev_play_tictactoe/src/data/models/models.dart';
+import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
 

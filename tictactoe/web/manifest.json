@@ -1,11 +1,11 @@
 {
-    "name": "dev_play_tictactoe",
-    "short_name": "dev_play_tictactoe",
+    "name": "dev_play_tictactuple",
+    "short_name": "dev_play_tictactuple",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Dev Play: Tic Tac Toe",
+    "description": "Dev Play: Tic Tac Tuple",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

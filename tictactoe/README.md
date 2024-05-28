@@ -1,8 +1,8 @@
-# dev-play-tictactoe
+# dev-play-tictactuple
 
-> Dev Play: Tic Tac Toe
+> Dev Play: Tic Tac Tuple
 
-See the [TicTacToe Readme](readme_tictactoe.md) file for design notes and thought process log.
+See the [TicTacTuple Readme](readme_tictactoe.md) file for design notes and thought process log.
 
 -----
 

@@ -1,5 +1,5 @@
-import 'package:dev_play_tictactoe/src/app_provider_wrapper_repository.dart';
-import 'package:dev_play_tictactoe/src/data/service_repositories/service_repositories.dart';
+import 'package:dev_play_tictactuple/src/app_provider_wrapper_repository.dart';
+import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

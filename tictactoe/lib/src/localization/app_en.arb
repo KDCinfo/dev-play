@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "appTitle": "dev_play_tictactoe",
+  "appTitle": "dev_play_tictactuple",
   "@appTitle": {
-    "description": "The title of the application"
+    "description": "Tic Tac Tuple"
   }
 }

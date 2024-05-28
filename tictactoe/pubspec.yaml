@@ -1,5 +1,5 @@
-name: dev_play_tictactoe
-description: "Dev Play: Tic Tac Toe"
+name: dev_play_tictactuple
+description: "Dev Play: Tic Tac Tuple"
 
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'

@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactoe/src/screens/screens.dart';
+import 'package:dev_play_tictactuple/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

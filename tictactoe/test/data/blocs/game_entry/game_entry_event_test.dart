@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:dev_play_tictactoe/src/data/blocs/game_entry/game_entry_bloc.dart';
+import 'package:dev_play_tictactuple/src/data/blocs/game_entry/game_entry_bloc.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
