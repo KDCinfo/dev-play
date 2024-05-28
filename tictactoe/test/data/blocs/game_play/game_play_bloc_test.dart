@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 
+import 'package:dev_play_tictactoe/src/app_constants.dart';
 import 'package:dev_play_tictactoe/src/data/data.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -45,6 +46,119 @@ void main() {
         expect: () => const <GamePlayState>[
           GamePlayState(currentGame: GameData(gameStatus: GameStatusComplete())),
         ],
+      );
+
+      blocTest<GamePlayBloc, GamePlayState>(
+        'emits expected state when a move is made.',
+        setUp: () {
+          when(() => mockScorebookRepository.currentScorebookData).thenReturn(
+            const ScorebookData(),
+          );
+          gamePlayBloc.add(
+            GamePlayUpdatedEvent(
+              gameData: GameData(
+                players: AppConstants.playerListDefault
+                    .map(
+                      (e) => e.copyWith(playerId: e.playerNum),
+                    )
+                    .toList(),
+              ),
+            ),
+          );
+        },
+        build: () => gamePlayBloc,
+        act: (bloc) => bloc.add(
+          const GamePlayMoveEvent(tileIndex: 1),
+        ),
+        expect: () => const <GamePlayState>[
+          // No state is emitted when a move is made
+          // until the repository updates its stream,
+          // then the stream listener will update the bloc state.
+        ],
+      );
+
+      blocTest<GamePlayBloc, GamePlayState>(
+        'makes expected calls when initial move is made.',
+        setUp: () {
+          when(() => mockScorebookRepository.currentScorebookData).thenReturn(
+            const ScorebookData(),
+          );
+          gamePlayBloc.add(
+            GamePlayUpdatedEvent(
+              gameData: GameData(
+                players: AppConstants.playerListDefault
+                    .map(
+                      (e) => e.copyWith(playerId: e.playerNum),
+                    )
+                    .toList(),
+              ),
+            ),
+          );
+        },
+        build: () => gamePlayBloc,
+        act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 4)),
+        verify: (_) async {
+          verify(() => mockScorebookRepository.currentScorebookData).called(1);
+          verify(() => mockScorebookRepository.updateGame(any())).called(1);
+        },
+      );
+
+      blocTest<GamePlayBloc, GamePlayState>(
+        'makes expected calls when a move is made.',
+        setUp: () {
+          when(() => mockScorebookRepository.currentScorebookData)
+              .thenReturn(const ScorebookData());
+          gamePlayBloc.add(
+            GamePlayUpdatedEvent(
+              gameData: GameData(
+                players: AppConstants.playerListDefault
+                    .map((e) => e.copyWith(playerId: e.playerNum))
+                    .toList(),
+                gameBoardData: const GameBoardData(
+                  plays: [
+                    PlayerTurn(tileIndex: 0, playerTurnId: 0, occupiedById: 0),
+                    PlayerTurn(tileIndex: 1, playerTurnId: 1, occupiedById: 1),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        build: () => gamePlayBloc,
+        act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 4)),
+        verify: (_) async {
+          verify(() => mockScorebookRepository.currentScorebookData).called(1);
+          verify(() => mockScorebookRepository.updateGame(any())).called(1);
+        },
+      );
+
+      blocTest<GamePlayBloc, GamePlayState>(
+        'makes no calls when a tile is already played.',
+        setUp: () {
+          when(() => mockScorebookRepository.currentScorebookData)
+              .thenReturn(const ScorebookData());
+          gamePlayBloc.add(
+            GamePlayUpdatedEvent(
+              gameData: GameData(
+                players: AppConstants.playerListDefault
+                    .map((e) => e.copyWith(playerId: e.playerNum))
+                    .toList(),
+                gameBoardData: const GameBoardData(
+                  plays: [
+                    PlayerTurn(tileIndex: 0, playerTurnId: 0, occupiedById: 0),
+                    PlayerTurn(tileIndex: 3, playerTurnId: 1, occupiedById: 1),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        build: () => gamePlayBloc,
+        act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 3)),
+        verify: (_) async {
+          verifyNever(() => mockScorebookRepository.currentScorebookData);
+          verifyNever(() => mockScorebookRepository.updateGame(any()));
+        },
       );
     });
 

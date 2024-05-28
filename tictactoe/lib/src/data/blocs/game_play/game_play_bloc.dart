@@ -65,14 +65,52 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     emit(state.copyWith(currentGame: event.gameData));
   }
 
+  /// Update `GameBoarddata`, `GameData`, and `ScorebookData`.
+  ///
   void _makeMove(
     GamePlayMoveEvent event,
     Emitter<GamePlayState> emit,
   ) {
     // ignore: avoid_print
     print(event.tileIndex);
-    // Send to repository.
-    // Update game in the repository (scorebookData.currentGame)
-    // Store scorebookData in local storage
+
+    /// Don't make any moves if tileIndex is already played or outside the range.
+    if (state.currentGame.gameBoardData.plays.any((play) => play.tileIndex == event.tileIndex) ||
+        event.tileIndex < 0 ||
+        event.tileIndex >= state.currentGame.gameBoardData.boardSize) {
+      return;
+    }
+
+    /// Get the current player turn.
+    final playerTurnId = state.currentGame.gameBoardData.plays.length;
+
+    /// Get the current player.
+    final currentPlayerIndex =
+        state.currentGame.gameBoardData.plays.length % state.currentGame.players.length;
+    final currentPlayerId = state.currentGame.players[currentPlayerIndex].playerId!;
+
+    /// Calculate the duration of the play.
+    final lastPlayDate =
+        state.currentGame.dateLastPlayed ?? state.currentGame.dateCreated ?? DateTime.now();
+    final duration = DateTime.now().difference(lastPlayDate);
+
+    final newGameBoardData = state.currentGame.gameBoardData.addPlay(
+      play: PlayerTurn(
+        tileIndex: event.tileIndex,
+        playerTurnId: playerTurnId,
+        occupiedById: currentPlayerId,
+        duration: duration,
+      ),
+    );
+
+    // Update `GameData` => `PlayerTurn`.
+    final newGameData = state.currentGame.playTurn(gameBoardData: newGameBoardData);
+
+    // Update `ScorebookData`
+    final newScorebookData = _scorebookRepository.currentScorebookData.updateGame(newGameData);
+
+    // Store scorebookData in stream.
+    // Store scorebookData in local storage.
+    _scorebookRepository.updateGame(newScorebookData);
   }
 }
