@@ -35,6 +35,36 @@ class ScorebookRepository extends AppBaseRepository {
     updateScorebookDataStream(newScorebookData);
   }
 
+  void processEndGame(ScorebookData finalScorebookData) {
+    scorebookDataVarsToStorage(finalScorebookData);
+    updateScorebookDataStream(finalScorebookData);
+  }
+
+  void updateGame(ScorebookData newScorebookData) {
+    // Check for wins => (int, int)? => (row/col/diag, playerNum)
+    final checkRows = newScorebookData.currentGame.gameBoardData.checkAllRows;
+    final checkCols = newScorebookData.currentGame.gameBoardData.checkAllCols;
+    final checkDiags = newScorebookData.currentGame.gameBoardData.checkAllDiags;
+    final noMorePlays = newScorebookData.currentGame.gameBoardData.availableTileIndexes.isEmpty;
+    late final ScorebookData newScorebookDataTmp;
+
+    // Check for win or no more plays.
+    if (checkRows != null || checkCols != null || checkDiags != null || noMorePlays) {
+      final newGameData = newScorebookData.currentGame.copyWith(
+        endGameScore: {},
+        gameStatus: const GameStatusComplete(),
+      );
+      newScorebookDataTmp = newScorebookData.endGame(newGameData);
+      // processNewGame(newScorebookDataTmp);
+      // endGame(newScorebookDataTmp);
+    } else {
+      newScorebookDataTmp = newScorebookData;
+    }
+
+    scorebookDataVarsToStorage(newScorebookDataTmp);
+    updateScorebookDataStream(newScorebookDataTmp);
+  }
+
   void updateScorebookDataStream(ScorebookData newScorebookData) {
     _scorebookDataStreamController.add(newScorebookData);
   }
