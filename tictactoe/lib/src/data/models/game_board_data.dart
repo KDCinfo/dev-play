@@ -51,6 +51,16 @@ class GameBoardData extends Equatable {
     );
   }
 
+  /// Add a turn to the `plays` list.
+  GameBoardData addPlay({
+    required PlayerTurn play,
+  }) {
+    return GameBoardData(
+      edgeSize: edgeSize,
+      plays: List.of(plays)..add(play),
+    );
+  }
+
   /// This is used when a game is started, when transitioning
   /// from `GameEntry` to `GamePlay` initialization.
   GameBoardData changeEdgeSize({

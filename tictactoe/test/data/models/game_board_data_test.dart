@@ -76,6 +76,52 @@ void main() {
       });
     });
 
+    group('[addPlay]', () {
+      late PlayerTurn playerTurn;
+      late PlayerTurn playerTurn2;
+      late PlayerData playerData;
+      late PlayerData playerData2;
+      setUp(() {
+        playerData = const PlayerData(
+          playerNum: 1,
+          playerId: 0,
+          playerName: 'Player 1',
+          userSymbol: UserSymbolX(),
+        );
+        playerData2 = const PlayerData(
+          playerNum: 2,
+          playerId: 1,
+          playerName: 'TicTacBot',
+          userSymbol: UserSymbolX(),
+        );
+        playerTurn = PlayerTurn(
+          playerTurnId: 1,
+          tileIndex: 3,
+          occupiedById: playerData.playerId!,
+        );
+        playerTurn2 = PlayerTurn(
+          playerTurnId: 2,
+          tileIndex: 5,
+          occupiedById: playerData2.playerId!,
+        );
+      });
+      test('works.', () {
+        const gameBoardDataBase = GameBoardData();
+        expect(
+          gameBoardDataBase.plays.length,
+          equals(0),
+        );
+        expect(
+          gameBoardDataBase.addPlay(play: playerTurn).plays.length,
+          equals(1),
+        );
+        expect(
+          gameBoardDataBase.addPlay(play: playerTurn).addPlay(play: playerTurn2).plays.length,
+          equals(2),
+        );
+      });
+    });
+
     group('with an edgeSize of [3]:', () {
       setUp(() {
         edgeSize = edgeSizeConstant;
