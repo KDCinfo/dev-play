@@ -90,7 +90,7 @@ class GameBoardData extends Equatable {
       final groupIndexRow = play.tileIndex ~/ edgeSize;
 
       if (mapOfRowGroups[groupIndexRow] != null) {
-        final playerId = play.occupiedBy.playerId!;
+        final playerId = play.occupiedById;
         final newRowList = List.of(mapOfRowGroups[groupIndexRow]!)..add(playerId);
         mapOfRowGroups.update(groupIndexRow, (_) => newRowList);
       }
@@ -110,7 +110,7 @@ class GameBoardData extends Equatable {
       final groupIndexCol = play.tileIndex % edgeSize;
 
       if (mapOfColGroups[groupIndexCol] != null) {
-        final playerId = play.occupiedBy.playerId!;
+        final playerId = play.occupiedById;
         final newColList = List.of(mapOfColGroups[groupIndexCol]!)..add(playerId);
         mapOfColGroups.update(groupIndexCol, (_) => newColList);
       }
@@ -181,10 +181,10 @@ class GameBoardData extends Equatable {
 
     for (final play in plays) {
       if (diag1Tiles.contains(play.tileIndex)) {
-        diag1Players.add(play.occupiedBy.playerId!);
+        diag1Players.add(play.occupiedById);
       }
       if (diag2Tiles.contains(play.tileIndex)) {
-        diag2Players.add(play.occupiedBy.playerId!);
+        diag2Players.add(play.occupiedById);
       }
     }
 

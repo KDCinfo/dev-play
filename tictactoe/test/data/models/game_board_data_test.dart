@@ -30,22 +30,22 @@ void main() {
       playPlayer1 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
             tileIndex: tileIndex,
             playerTurnId: playerTurnId,
-            occupiedBy: player1,
+            occupiedById: player1.playerId!,
           );
       playPlayer2 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
             tileIndex: tileIndex,
             playerTurnId: playerTurnId,
-            occupiedBy: player2,
+            occupiedById: player2.playerId!,
           );
       playPlayer3 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
             tileIndex: tileIndex,
             playerTurnId: playerTurnId,
-            occupiedBy: player3,
+            occupiedById: player3.playerId!,
           );
       playPlayer4 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
             tileIndex: tileIndex,
             playerTurnId: playerTurnId,
-            occupiedBy: player4,
+            occupiedById: player4.playerId!,
           );
     });
 
@@ -150,12 +150,7 @@ void main() {
                 playerTurnId: 0,
                 tileIndex: 2,
                 duration: Duration(seconds: 5),
-                occupiedBy: PlayerData(
-                  playerNum: 1,
-                  playerId: 0,
-                  playerName: 'Player 1',
-                  userSymbol: UserSymbolX(),
-                ),
+                occupiedById: 0,
               ),
             ],
           );
@@ -168,13 +163,7 @@ void main() {
                   'playerTurnId': 0,
                   'tileIndex': 2,
                   'duration': 5,
-                  'occupiedBy': {
-                    'playerNum': 1,
-                    'playerId': 0,
-                    'playerName': 'Player 1',
-                    'playerType': {'playerType': 'PlayerTypeEnum.bot'},
-                    'userSymbol': {'markerKey': 'x'},
-                  },
+                  'occupiedById': 0,
                 },
               ],
             }),
@@ -189,12 +178,7 @@ void main() {
                 playerTurnId: 0,
                 tileIndex: 2,
                 duration: Duration(seconds: 5),
-                occupiedBy: PlayerData(
-                  playerNum: 1,
-                  playerId: 0,
-                  playerName: 'Player 1',
-                  userSymbol: UserSymbolX(),
-                ),
+                occupiedById: 0,
               ),
             ],
           );

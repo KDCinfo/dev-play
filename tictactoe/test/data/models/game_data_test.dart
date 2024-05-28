@@ -34,12 +34,12 @@ void main() {
       playPlayer1 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
             tileIndex: tileIndex,
             playerTurnId: playerTurnId,
-            occupiedBy: player1,
+            occupiedById: player1.playerId!,
           );
       playPlayer2 = ({required int tileIndex, required int playerTurnId}) => PlayerTurn(
             tileIndex: tileIndex,
             playerTurnId: playerTurnId,
-            occupiedBy: player2,
+            occupiedById: player2.playerId!,
           );
     });
 
