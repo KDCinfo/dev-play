@@ -27,6 +27,7 @@ class GameBoardPlayerPanel extends StatelessWidget {
                       const SizedBox(height: 8),
                       GameBoardPlayerPanelNames(
                         players: state.currentGame.players,
+                        currentPlayerIndex: state.currentGame.currentPlayerIndex,
                       ),
                     ],
                   );
@@ -57,16 +58,15 @@ class GameBoardPlayerPanelTitle extends StatelessWidget {
 class GameBoardPlayerPanelNames extends StatelessWidget {
   const GameBoardPlayerPanelNames({
     required this.players,
+    required this.currentPlayerIndex,
     super.key,
   });
 
   final List<PlayerData> players;
+  final int currentPlayerIndex;
 
   @override
   Widget build(BuildContext context) {
-    const currentPlayer = 0;
-
-    // @TODO: Wrap with a `BlocBuilder`.
     return Wrap(
       spacing: 10,
       children: [
@@ -74,7 +74,7 @@ class GameBoardPlayerPanelNames extends StatelessWidget {
           Text(
             '[ ${players.elementAtOrNull(idx)?.playerName ?? 'Missing a name'} ]',
             style: TextStyle(
-              fontWeight: idx == currentPlayer ? FontWeight.bold : FontWeight.normal,
+              fontWeight: idx == currentPlayerIndex ? FontWeight.bold : FontWeight.normal,
             ),
           ),
       ],

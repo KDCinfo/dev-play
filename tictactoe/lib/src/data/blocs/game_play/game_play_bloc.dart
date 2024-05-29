@@ -84,10 +84,8 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     /// Get the current player turn.
     final playerTurnId = state.currentGame.gameBoardData.plays.length;
 
-    /// Get the current player.
-    final currentPlayerIndex =
-        state.currentGame.gameBoardData.plays.length % state.currentGame.players.length;
-    final currentPlayerId = state.currentGame.players[currentPlayerIndex].playerId!;
+    /// Get the current player ID.
+    final currentPlayerId = state.currentGame.currentPlayerId;
 
     /// Calculate the duration of the play.
     final lastPlayDate =
