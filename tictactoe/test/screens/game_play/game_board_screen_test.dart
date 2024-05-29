@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';
@@ -12,7 +13,9 @@ void main() {
   group('GamePlay GameBoard Screen Testing:', () {
     late Widget widgetToTest;
     late Widget wrappedWidget;
+
     late ScorebookRepository mockScorebookRepository;
+    late GamePlayBloc mockGamePlayBloc;
 
     ///
     /// [ GameBoard Screen ]
@@ -21,13 +24,20 @@ void main() {
     group('GameBoard Screen', () {
       setUp(() async {
         mockScorebookRepository = MockScorebookRepository();
+        mockGamePlayBloc = MockGamePlayBloc();
+
         widgetToTest = const GameBoardScreen();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
+          gamePlayBloc: mockGamePlayBloc,
         );
+
         when(() => mockScorebookRepository.scorebookDataStream)
             .thenAnswer((_) => Stream.value(const ScorebookData()));
+        when(() => mockGamePlayBloc.state).thenReturn(
+          GamePlayState(currentGame: GameData(players: [...playerList])),
+        );
       });
 
       group('rendering', () {

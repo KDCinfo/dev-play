@@ -15,6 +15,7 @@ void main() {
     late Widget wrappedWidget;
     late ScorebookRepository mockScorebookRepository;
     late GameEntryBloc mockGameEntryBloc;
+    late GamePlayBloc mockGamePlayBloc;
 
     ///
     /// [ GameOrientationLayout: GameEntry Screen ]
@@ -24,6 +25,7 @@ void main() {
       setUp(() async {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
+        mockGamePlayBloc = MockGamePlayBloc();
 
         widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameEntry(),
@@ -87,6 +89,7 @@ void main() {
       setUp(() async {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
+        mockGamePlayBloc = MockGamePlayBloc();
 
         widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameBoard(),
@@ -94,10 +97,15 @@ void main() {
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
+          gamePlayBloc: mockGamePlayBloc,
         );
 
-        when(() => mockScorebookRepository.scorebookDataStream)
-            .thenAnswer((_) => Stream.value(const ScorebookData()));
+        when(() => mockScorebookRepository.scorebookDataStream).thenAnswer(
+          (_) => Stream.value(const ScorebookData()),
+        );
+        when(() => mockGamePlayBloc.state).thenReturn(
+          GamePlayState(currentGame: GameData(players: [...playerList])),
+        );
       });
 
       testWidgets('[GameOrientationLayout] renders.', (WidgetTester tester) async {

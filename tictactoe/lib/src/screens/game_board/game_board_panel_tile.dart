@@ -27,11 +27,8 @@ class GameBoardPanelTile extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(
-        child: Text(
-          '$index',
-          style: const TextStyle(color: Color(0xFFFFDDDD), fontSize: 20),
-        ),
+      child: const Center(
+        child: SizedBox(),
       ),
     );
   }

@@ -43,19 +43,25 @@ class GameBoardPanel extends StatelessWidget {
                     // childAspectRatio: 1, // Aspect ratio of each tile.
                   ),
                   itemBuilder: (context, index) {
-                    /// @TODO: InkWell ripple doesn't show (even without the Stack).
                     return InkWell(
                       onTap: clickableTile(index) ? () => gridTileCallback(index, context) : null,
                       child: GridTile(
                         child: Stack(
                           children: [
                             GameBoardPanelTile(index),
+                            // @TODO: Maybe try to make the icon pop up when tapped.
                             Positioned(
+                              // Max width and height of the clickable area.
+                              // height: double.infinity,
+                              // width: double.infinity,
                               left: 0,
+                              right: 0,
                               top: 0,
-                              child: ColoredBox(
-                                color: clickableTile(index) ? Colors.transparent : Colors.black12,
-                                child: const Center(child: SizedBox()),
+                              bottom: 0,
+                              child: GameBoardPanelTileOverlay(
+                                index: index,
+                                currentGame: state.currentGame,
+                                isClickableTile: clickableTile(index),
                               ),
                             ),
                           ],

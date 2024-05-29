@@ -27,7 +27,6 @@ void main() {
       mockGamePlayBloc = MockGamePlayBloc();
       when(() => mockScorebookRepository.scorebookDataStream)
           .thenAnswer((_) => Stream.value(const ScorebookData()));
-      when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
     });
 
     ///
@@ -42,6 +41,7 @@ void main() {
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
         );
+        when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
       });
 
       testWidgets('[GamePlay GameBoard Panel] renders properly.', (WidgetTester tester) async {
@@ -65,6 +65,7 @@ void main() {
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
         );
+        when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
       });
 
       testWidgets('[GamePlay GameBoard Panel] has a 3x3 GridView.', (
@@ -93,11 +94,19 @@ void main() {
       const countSize = edgeSize * edgeSize;
 
       setUp(() async {
+        mockGamePlayBloc = MockGamePlayBloc();
+
         widgetToTest = const GameBoardPanel(edgeSize: edgeSize);
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
+        );
+        when(() => mockGamePlayBloc.state).thenReturn(
+          GamePlayState(currentGame: GameData(players: [...playerList])),
+        );
+        when(() => mockScorebookRepository.scorebookDataStream).thenAnswer(
+          (_) => Stream.value(const ScorebookData()),
         );
       });
 
@@ -132,6 +141,9 @@ void main() {
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
+        );
+        when(() => mockGamePlayBloc.state).thenReturn(
+          GamePlayState(currentGame: GameData(players: [...playerList])),
         );
       });
 

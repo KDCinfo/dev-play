@@ -128,7 +128,15 @@ void main() {
             mockGamePlayBloc,
             Stream.fromIterable([
               const GamePlayState(),
-              const GamePlayState(currentGame: GameData(gameId: 1)),
+              GamePlayState(
+                currentGame: GameData(
+                  gameId: 1,
+                  players: playerList,
+                  gameBoardData: const GameBoardData(
+                    plays: [PlayerTurn(playerTurnId: 1, tileIndex: 0, occupiedById: 1)],
+                  ),
+                ),
+              ),
             ]),
           );
           await tester.pumpWidget(wrappedWidget);
