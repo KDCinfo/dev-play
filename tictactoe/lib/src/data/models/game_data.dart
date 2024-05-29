@@ -147,8 +147,9 @@ class GameData extends Equatable {
           ? DateTime.tryParse(json['dateLastPlayed'] as String)
           : null,
       gameBoardData: GameBoardData.fromJson(json['gameBoardData'] as Map<String, dynamic>),
-      endGameScore: json['endGameScore'] as Map<int, int>,
-      gameStatus: json['gameStatus'] as GameStatus,
+      endGameScore: (json['endGameScore'] as Map<String, dynamic>)
+          .map((key, value) => MapEntry(int.parse(key), value as int)),
+      gameStatus: GameStatus.fromJson(json['gameStatus'] as Map<String, dynamic>),
     );
   }
 
