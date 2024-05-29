@@ -78,6 +78,9 @@ class GameData extends Equatable {
     );
   }
 
+  int get currentPlayerIndex => gameBoardData.plays.length % players.length;
+  int get currentPlayerId => players[currentPlayerIndex].playerId!;
+
   GameData endGame({
     required Map<int, int> endGameScore,
   }) {
