@@ -39,7 +39,7 @@ class GameData extends Equatable {
     this.gameBoardData = const GameBoardData(),
     this.dateLastPlayed,
     this.winnerId = -1,
-    this.gameStatus = const GameStatusInProgress(),
+    this.gameStatus = const GameStatusEntryMode(),
   });
 
   factory GameData.startGame({
@@ -53,6 +53,7 @@ class GameData extends Equatable {
       players: players,
       gameBoardData: gameBoardData,
       // gameBoardData: List<List<int>> | List.generate(3, (_) => List.generate(3, (_) => 0)),
+      gameStatus: const GameStatusInProgress(),
     );
   }
 

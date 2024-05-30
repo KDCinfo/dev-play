@@ -5,6 +5,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('[GameStatus] Testing:', () {
+    group('[GameStatusEntryMode]', () {
+      test('statusMessage should be "Entry Mode"', () {
+        const gameStatus = GameStatusEntryMode();
+        expect(gameStatus.statusMessage, GameStatusEnum.entryMode.statusStr);
+      });
+
+      test('props should contain statusMessage', () {
+        const gameStatus = GameStatusEntryMode();
+        expect(gameStatus.props, [gameStatus.statusMessage]);
+      });
+    });
+
     group('[GameStatusInProgress]', () {
       test('statusMessage should be "In Progress"', () {
         const gameStatus = GameStatusInProgress();
@@ -30,6 +42,18 @@ void main() {
     });
 
     group('GameStatus [JSON]:', () {
+      group('GameStatusEntryMode:', () {
+        test('toJson', () {
+          const gameStatus = GameStatusEntryMode();
+          expect(gameStatus.toJson(), equals({'statusMessage': 'Entry Mode'}));
+        });
+        test('fromJson', () {
+          const gameStatus = GameStatusEntryMode();
+          final gameStatusJson = gameStatus.toJson();
+          final gameStatusFromJson = GameStatus.fromJson(gameStatusJson);
+          expect(gameStatus, equals(gameStatusFromJson));
+        });
+      });
       group('GameStatusInProgress:', () {
         test('toJson', () {
           const gameStatus = GameStatusInProgress();

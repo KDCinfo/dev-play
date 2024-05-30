@@ -128,6 +128,10 @@ void main() {
     });
 
     group('[GameStatusEnum]', () {
+      test('entryMode statusStr should be "Entry Mode".', () {
+        expect(GameStatusEnum.entryMode.statusStr, 'Entry Mode');
+      });
+
       test('inProgress statusStr should be "In Progress".', () {
         expect(GameStatusEnum.inProgress.statusStr, 'In Progress');
       });

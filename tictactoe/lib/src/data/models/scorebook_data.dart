@@ -139,8 +139,8 @@ class ScorebookData extends Equatable {
   ScorebookData endGame(GameData gameData) {
     return copyWith(
       allGames: Map.of(allGames)..addAll({gameData.gameId: gameData}),
-      currentGame: GameData(
-        players: gameData.players,
+      currentGame: gameData.copyWith(
+        gameStatus: const GameStatusComplete(),
       ),
       endGameScores: Map<int, int>.of(endGameScores)
         ..update(

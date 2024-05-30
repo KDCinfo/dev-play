@@ -87,9 +87,11 @@ abstract class AppConstants {
 }
 
 enum GameStatusEnum implements Comparable<GameStatusEnum> {
+  entryMode(statusStr: 'Entry Mode'),
   inProgress(statusStr: 'In Progress'),
   complete(statusStr: 'Complete');
 
+  // final String entryMode: 'Entry Mode';
   // final String inProgress: 'In Progress';
   // final String complete: 'Complete';
   const GameStatusEnum({

@@ -54,7 +54,7 @@ void main() {
         expect(gameData.players, isEmpty);
         expect(gameData.gameBoardData, gameBoardData);
         expect(gameData.winnerId, -1);
-        expect(gameData.gameStatus, isA<GameStatusInProgress>());
+        expect(gameData.gameStatus, isA<GameStatusEntryMode>());
       });
 
       test('when populated and should be a [GameData].', () {
@@ -101,7 +101,7 @@ void main() {
             null,
             gameBoardData,
             -1,
-            const GameStatusInProgress(),
+            const GameStatusEntryMode(),
           ]),
         );
       });

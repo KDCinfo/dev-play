@@ -12,6 +12,8 @@ abstract class GameStatus extends Equatable {
     final statusMessage = json['statusMessage'] as String;
 
     switch (statusMessage) {
+      case 'Entry Mode':
+        return const GameStatusEntryMode();
       case 'In Progress':
         return const GameStatusInProgress();
       case 'Complete':
@@ -27,6 +29,16 @@ abstract class GameStatus extends Equatable {
       'statusMessage': statusMessage,
     };
   }
+}
+
+class GameStatusEntryMode extends GameStatus {
+  const GameStatusEntryMode() : super();
+
+  @override
+  String get statusMessage => GameStatusEnum.entryMode.statusStr;
+
+  @override
+  List<Object?> get props => [statusMessage];
 }
 
 class GameStatusInProgress extends GameStatus {
