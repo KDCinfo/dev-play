@@ -1,6 +1,6 @@
 import 'dart:async';
 
-final logs = <String>[];
+final testPrintLogs = <String>[];
 
 List<String> getLog(String method, Object? event) {
   return ['[base_bloc_observer.dart] $method(FakeBloc, $event)'];
@@ -9,7 +9,7 @@ List<String> getLog(String method, Object? event) {
 void Function() overridePrint(void Function() testFn) {
   return () {
     final spec = ZoneSpecification(
-      print: (_, __, ___, String msg) => logs.add(msg),
+      print: (_, __, ___, String msg) => testPrintLogs.add(msg),
     );
     return Zone.current.fork(specification: spec).run<void>(testFn);
   };

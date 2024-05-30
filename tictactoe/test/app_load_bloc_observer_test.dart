@@ -11,7 +11,7 @@ import 'helpers/helpers.dart';
 ///
 void main() {
   group('AppLoadBlocObserver', () {
-    setUp(logs.clear);
+    setUp(testPrintLogs.clear);
 
     test(
       'onEvent prints event',
@@ -19,7 +19,7 @@ void main() {
         final bloc = FakeBloc();
         final event = FakeEvent();
         AppLoadBlocObserver().onEvent(bloc, event);
-        expect(logs, equals(getLog('onEvent', event)));
+        expect(testPrintLogs, equals(getLog('onEvent', event)));
       }),
     );
 
@@ -29,7 +29,7 @@ void main() {
         final bloc = FakeBloc();
         final change = FakeChange();
         AppLoadBlocObserver().onChange(bloc, change);
-        expect(logs, equals(getLog('onChange', change)));
+        expect(testPrintLogs, equals(getLog('onChange', change)));
       }),
     );
 
@@ -40,7 +40,7 @@ void main() {
         final transition = FakeTransition();
         AppLoadBlocObserver().onTransition(bloc, transition);
         expect(
-          logs,
+          testPrintLogs,
           equals([
             '[base_bloc_observer.dart] onTransition',
             '$transition',
@@ -57,7 +57,7 @@ void main() {
         final stackTrace = FakeStackTrace();
         AppLoadBlocObserver().onError(bloc, error, stackTrace);
         expect(
-          logs,
+          testPrintLogs,
           equals([
             '[base_bloc_observer.dart] onError',
             '$error',
