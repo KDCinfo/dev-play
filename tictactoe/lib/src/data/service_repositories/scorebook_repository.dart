@@ -81,6 +81,17 @@ class ScorebookRepository extends AppBaseRepository {
     scorebookDataStorageToVars();
   }
 
+  void printLocalStorage() {
+    final keyListK = <String, Object?>{};
+
+    for (final key in _storageService.storedKeys()) {
+      keyListK[key] = _storageService.prefsGetString(key);
+    }
+    log('LocalStorage Start: ___________');
+    log('$keyListK');
+    log('LocalStorage End: ___________');
+  }
+
   /// Update current vars from local storage.
   void scorebookDataStorageToVars() {
     try {
