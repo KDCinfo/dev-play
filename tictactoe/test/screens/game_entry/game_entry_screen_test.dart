@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
@@ -208,21 +209,31 @@ void main() {
             ]),
           );
           await tester.pumpWidget(wrappedWidget);
+
+          // Wait for the first push to '/play'.
           await tester.pumpAndSettle();
 
-          // Verify and capture routes
+          // Dismiss the 'Great Game!' dialog.
+          await tester.tap(find.text(AppConstants.buttonStartNewGame));
+
+          // Verify and capture popped routes.
+          // - This filters `MaterialPageRoute` for the actual popped route.
           final capturedPop = verify(() => mockObserver.didPop(captureAny(), any())).captured;
           final routeNamesPopped = capturedPop
+              .whereType<MaterialPageRoute<void>>()
               .map<String>(
-                (route) =>
-                    (route as MaterialPageRoute).settings.name == null ? '' : route.settings.name!,
+                (route) => route.settings.name == null ? '' : route.settings.name!,
               )
               .toList();
 
-          // Print routes for debugging
-          // routeNamesPopped.forEach(print);
+          // Print routes for debugging.
+          // capturedPop.forEach(print);
+          // - DialogRoute<void>(RouteSettings(none, null), animation: ...
+          // - MaterialPageRoute<dynamic>(RouteSettings("/play", null), animation: ...
+          expect(capturedPop, hasLength(2));
 
           // Assert specific navigation did not occur.
+          // routeNamesPopped.forEach(print);
           expect(routeNamesPopped, contains('/play'));
         });
       });

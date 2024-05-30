@@ -49,13 +49,13 @@ class ScorebookRepository extends AppBaseRepository {
     (int, int)? checkDiags;
 
     final checkRows = newScorebookData.currentGame.gameBoardData.checkAllRows;
-    if (checkRows != null) {
+    if (checkRows == null) {
       // There's no need to check columns if a win was made in a row.
       checkCols = newScorebookData.currentGame.gameBoardData.checkAllCols;
-      if (checkCols != null) {
+      if (checkCols == null) {
         // There's no need to check diagonals if a win was made in a column.
         checkDiags = newScorebookData.currentGame.gameBoardData.checkAllDiags;
-        if (checkDiags != null) {
+        if (checkDiags == null) {
           // There's no need to check for no more plays if a win was made from a diagonal.
           noMorePlays = newScorebookData.currentGame.gameBoardData.availableTileIndexes.isEmpty;
         }

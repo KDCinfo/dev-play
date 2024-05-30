@@ -60,6 +60,7 @@ abstract class AppConstants {
   static const buttonReturnHome = 'Return to Home';
   static const buttonReturnHomeKey = 'ReturnToHomeKey';
   static const buttonReturnHomeMsg = '(game is saved)';
+  static const buttonStartNewGame = 'Start a New Game';
 
   /// Storage Keys
   static const storageKeyScorebook = 'scorebookData';
@@ -107,4 +108,10 @@ enum GameStatusEnum implements Comparable<GameStatusEnum> {
 enum PlayerTypeEnum {
   human,
   bot,
+}
+
+enum MatchTupleEnum {
+  row,
+  column,
+  diagonal,
 }

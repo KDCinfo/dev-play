@@ -122,6 +122,10 @@ void main() {
         expect(AppConstants.buttonReturnHomeMsg, '(game is saved)');
       });
 
+      test('buttonStartNewGame should be "Start a New Game".', () {
+        expect(AppConstants.buttonStartNewGame, 'Start a New Game');
+      });
+
       test('storageKeyScorebook should be "scorebookData".', () {
         expect(AppConstants.storageKeyScorebook, 'scorebookData');
       });
@@ -148,6 +152,20 @@ void main() {
 
       test('bot should be an instance of PlayerTypeEnum.', () {
         expect(PlayerTypeEnum.bot, isA<PlayerTypeEnum>());
+      });
+    });
+
+    group('[MatchTupleEnum]', () {
+      test('row should be an instance of MatchTupleEnum.', () {
+        expect(MatchTupleEnum.row, isA<MatchTupleEnum>());
+      });
+
+      test('column should be an instance of MatchTupleEnum.', () {
+        expect(MatchTupleEnum.column, isA<MatchTupleEnum>());
+      });
+
+      test('diagonal should be an instance of MatchTupleEnum.', () {
+        expect(MatchTupleEnum.diagonal, isA<MatchTupleEnum>());
       });
     });
   });

@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/pre_pop_scope.dart';
@@ -21,16 +22,51 @@ class GameEntryScreen extends StatelessWidget {
         builder: (context) {
           return SafeArea(
             child: Scaffold(
-              body: BlocListener<GamePlayBloc, GamePlayState>(
-                listenWhen: (previous, current) =>
-                    previous.currentGame.gameId != current.currentGame.gameId,
-                listener: (context, state) {
-                  if (state.currentGame.gameId > -1) {
-                    Navigator.pushNamed(context, '/play');
-                  } else {
-                    Navigator.pop(context);
-                  }
-                },
+              body: MultiBlocListener(
+                listeners: [
+                  BlocListener<GamePlayBloc, GamePlayState>(
+                    listenWhen: (previous, current) =>
+                        previous.currentGame.gameStatus != current.currentGame.gameStatus,
+                    listener: (context, state) async {
+                      //
+                      // @TODO: Play a 'great game' popup animation.
+                      //        For now, we'll just show a dialog screen with a message.
+
+                      // @TODO: Show filled rows, columns, or diagonals.
+                      await showDialog<void>(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Great Game!'),
+                            content: const Text('Well played!!'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(AppConstants.buttonStartNewGame),
+                              ),
+                            ],
+                          );
+                        },
+                      ).then<void>((_) {
+                        context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
+                      });
+                    },
+                  ),
+                  BlocListener<GamePlayBloc, GamePlayState>(
+                    listenWhen: (previous, current) =>
+                        previous.currentGame.gameId != current.currentGame.gameId,
+                    listener: (context, state) async {
+                      if (state.currentGame.gameId > -1) {
+                        await Navigator.pushNamed(context, '/play');
+                      } else {
+                        // Pop to root.
+                        Navigator.popUntil(context, (route) => route.isFirst);
+                      }
+                    },
+                  ),
+                ],
                 child: const GameOrientationLayout(
                   orientationScreen: OrientationScreenGameEntry(),
                 ),
