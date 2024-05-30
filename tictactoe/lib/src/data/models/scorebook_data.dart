@@ -151,6 +151,22 @@ class ScorebookData extends Equatable {
     );
   }
 
+  /// Reset the current game which sets `gameId: -1`
+  /// which triggers a `BlocListener` in `GameEntry`.
+  ScorebookData resetGame(GameData gameData) {
+    return copyWith(
+      currentGame: GameData(
+        players: gameData.players,
+      ),
+    );
+  }
+
+  ScorebookData clearGame() {
+    return copyWith(
+      currentGame: const GameData(),
+    );
+  }
+
   ScorebookData copyWith({
     List<PlayerData>? allPlayers,
     Map<int, GameData>? allGames,

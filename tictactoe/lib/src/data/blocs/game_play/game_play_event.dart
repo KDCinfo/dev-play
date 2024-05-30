@@ -17,6 +17,13 @@ class GamePlayEndGameEvent extends GamePlayEvent {
       ];
 }
 
+class GamePlayResetGameEvent extends GamePlayEvent {
+  const GamePlayResetGameEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class GamePlayMoveEvent extends GamePlayEvent {
   const GamePlayMoveEvent({
     required this.tileIndex,

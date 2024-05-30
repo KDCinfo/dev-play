@@ -18,6 +18,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     on<GamePlayMoveEvent>(_makeMove);
     on<GamePlayUpdatedEvent>(_updateGameData);
     on<GamePlayEndGameEvent>(_endGameData);
+    on<GamePlayResetGameEvent>(_resetGameData);
 
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
       _updateBlocFromStream,
@@ -63,6 +64,19 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     Emitter<GamePlayState> emit,
   ) {
     emit(state.copyWith(currentGame: event.gameData));
+  }
+
+  void _resetGameData(
+    GamePlayResetGameEvent event,
+    Emitter<GamePlayState> emit,
+  ) {
+    // Update `ScorebookData`.
+    final newScorebookData = _scorebookRepository.currentScorebookData.resetGame(
+      state.currentGame,
+    );
+
+    // Store scorebookData in stream and local storage.
+    _scorebookRepository.processScorebookData(newScorebookData);
   }
 
   /// Update `GameBoarddata`, `GameData`, and `ScorebookData`.
