@@ -41,22 +41,59 @@ class ScorebookRepository extends AppBaseRepository {
   }
 
   void updateGame(ScorebookData newScorebookData) {
-    // Check for wins => (int, int)? => (row/col/diag, playerNum)
-    final checkRows = newScorebookData.currentGame.gameBoardData.checkAllRows;
-    final checkCols = newScorebookData.currentGame.gameBoardData.checkAllCols;
-    final checkDiags = newScorebookData.currentGame.gameBoardData.checkAllDiags;
-    final noMorePlays = newScorebookData.currentGame.gameBoardData.availableTileIndexes.isEmpty;
     late final ScorebookData newScorebookDataTmp;
 
-    // Check for win or no more plays.
+    /// If there are no more plays, nobody wins.
+    var noMorePlays = false;
+
+    // Check for full rows, columns, diagonals, or no more plays.
+    // The (int, int) represents which row, column, or diagonal was filled, and the player ID.
+    // > return (groupIndex, firstPlayerId);
+    // @TODO: Update the board to relect the row, column, or diagonal that was filled.
+    (int, int)? checkCols;
+    (int, int)? checkDiags;
+
+    final checkRows = newScorebookData.currentGame.gameBoardData.checkAllRows;
+    if (checkRows != null) {
+      // There's no need to check columns if a win was made in a row.
+      checkCols = newScorebookData.currentGame.gameBoardData.checkAllCols;
+      if (checkCols != null) {
+        // There's no need to check diagonals if a win was made in a column.
+        checkDiags = newScorebookData.currentGame.gameBoardData.checkAllDiags;
+        if (checkDiags != null) {
+          // There's no need to check for no more plays if a win was made from a diagonal.
+          noMorePlays = newScorebookData.currentGame.gameBoardData.availableTileIndexes.isEmpty;
+        }
+      }
+    }
+
+    // Check for a win.
     if (checkRows != null || checkCols != null || checkDiags != null || noMorePlays) {
-      final newGameData = newScorebookData.currentGame.copyWith(
-        endGameScore: {},
-        gameStatus: const GameStatusComplete(),
+      //
+      // Note: The last player to play is represented as
+      //       the length of the `gameBoardData.plays` list minus 1.
+      //
+      //       The list length starts at 0.
+      //       When the first play is made, the new length becomes 1,
+      //         which represents the 2nd player in the `players` list (via a modulus calc).
+      //       Ergo, the last player to play is the length of the list minus 1.
+      //
+      //   int get currentPlayerIndex => players.isEmpty ? -1 : gameBoardData.plays.length % players.length;
+      //   int get currentPlayerId => players[currentPlayerIndex].playerId!;
+      //
+      final newGameData = newScorebookData.currentGame.endGame(
+        winnerId: noMorePlays
+            ? -1
+            : newScorebookData
+                    .currentGame
+                    .players[newScorebookData.currentGame.gameBoardData.plays.length - 1]
+                    .playerId ??
+                -1,
       );
+
+      /// The `gameId` switch to `-1` in the `currentGame.endGame` call
+      /// triggers the `BlocListener` in the `GameEntryScreen`.
       newScorebookDataTmp = newScorebookData.endGame(newGameData);
-      // processNewGame(newScorebookDataTmp);
-      // endGame(newScorebookDataTmp);
     } else {
       newScorebookDataTmp = newScorebookData;
     }

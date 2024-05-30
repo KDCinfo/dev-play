@@ -1,4 +1,3 @@
-import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:equatable/equatable.dart';
@@ -108,7 +107,11 @@ class GameData extends Equatable {
   final GameStatus gameStatus;
   // @TODO: Add this `winnerRowColDiag` property
   //        (to store the winning row, column, or diagonal).
-  // final (int, int, MatchTupleEnum)? winnerRowColDiag;
+  //        - int:            WinnerId
+  //        - MatchTupleEnum: Row/Col/Diag
+  //        - int:            Which row, column, or diagonal
+  //          - Diagonals have 2 counts; #1 is top-left to bottom-right.
+  // final (int, MatchTupleEnum, int)? winnerRowColDiag;
 
   GameData copyWith({
     // Used with `playTurn` method.

@@ -35,6 +35,7 @@ class ScorebookData extends Equatable {
     this.allPlayers = const [],
     this.allGames = const {},
     this.currentGame = const GameData(),
+    this.endGameScores = const {},
   });
 
   factory ScorebookData.initGame(GameData gameData) {
@@ -56,10 +57,16 @@ class ScorebookData extends Equatable {
     final tempCurrentGame = GameData.fromJson(
       json['currentGame'] as Map<String, dynamic>,
     );
+    final tempEndGameScores = Map<int, int>.of(
+      (json['endGameScores'] as Map<String, dynamic>).map(
+        (key, value) => MapEntry(int.parse(key), value as int),
+      ),
+    );
     return ScorebookData(
       allPlayers: tempAllPlayers,
       allGames: tempAllGames,
       currentGame: tempCurrentGame,
+      endGameScores: tempEndGameScores,
     );
   }
 
@@ -71,6 +78,9 @@ class ScorebookData extends Equatable {
         (key, value) => MapEntry(key.toString(), value.toJson()),
       ),
       'currentGame': currentGame.toJson(),
+      'endGameScores': endGameScores.map(
+        (key, value) => MapEntry(key.toString(), value),
+      ),
     };
   }
 
@@ -81,6 +91,7 @@ class ScorebookData extends Equatable {
         '  allPlayers: $allPlayers,\n'
         '  allGames: $allGames,\n'
         '  currentGame: $currentGame\n'
+        '  endGameScores: $endGameScores\n'
         '}';
   }
 
@@ -94,6 +105,11 @@ class ScorebookData extends Equatable {
   ///
   /// + allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
   final Map<int, GameData> allGames;
+
+  /// This is a map of wins mapped by playerId.
+  ///
+  /// { playerId, wins }
+  final Map<int, int> endGameScores;
 
   /// Current Game
   final GameData currentGame;
@@ -123,7 +139,15 @@ class ScorebookData extends Equatable {
   ScorebookData endGame(GameData gameData) {
     return copyWith(
       allGames: Map.of(allGames)..addAll({gameData.gameId: gameData}),
-      currentGame: const GameData(),
+      currentGame: GameData(
+        players: gameData.players,
+      ),
+      endGameScores: Map<int, int>.of(endGameScores)
+        ..update(
+          gameData.winnerId,
+          (value) => value + 1,
+          ifAbsent: () => 1,
+        ),
     );
   }
 
@@ -131,11 +155,13 @@ class ScorebookData extends Equatable {
     List<PlayerData>? allPlayers,
     Map<int, GameData>? allGames,
     GameData? currentGame,
+    Map<int, int>? endGameScores,
   }) {
     return ScorebookData(
       allPlayers: allPlayers ?? this.allPlayers,
       allGames: allGames ?? this.allGames,
       currentGame: currentGame ?? this.currentGame,
+      endGameScores: endGameScores ?? this.endGameScores,
     );
   }
 
@@ -144,5 +170,6 @@ class ScorebookData extends Equatable {
         allPlayers,
         allGames,
         currentGame,
+        endGameScores,
       ];
 }

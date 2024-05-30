@@ -72,6 +72,11 @@ class GameBoardData extends Equatable {
     );
   }
 
+  /// Prepopulate the Map with an empty List for each group.
+  ///   <int, List<int>>{ groupIndex: [`playerId`], }
+  ///   <int, List<int>>{      0    : [ 1, 1, 1  ], 1: [], 2: [] }
+  ///                     First Row :   ^ Win ^ --> PlayerID: 1
+  ///
   Map<int, List<int>> _initializeCheckMap() {
     final checkMap = <int, List<int>>{};
     for (var j = 0; j < boardSize; j += edgeSize) {
@@ -84,11 +89,6 @@ class GameBoardData extends Equatable {
   }
 
   Map<int, List<int>> _mapPlaysToRowGroups() {
-    ///
-    /// Prepopulate the Map with an empty List for each group.
-    ///   <int, List<int>>{ groupIndex: [ playerId ], }
-    ///   <int, List<int>>{      0    : [ 1, 1, 1  ], 1: [], 2: [] }
-    ///                     First Row :   ^ Win ^ --> PlayerID: 1
     ///
     final mapOfRowGroups = _initializeCheckMap();
 

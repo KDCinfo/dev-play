@@ -36,12 +36,13 @@ void main() {
     });
 
     test('[endGame] should record the game in the scorebook.', () {
+      const currentPlayers = [
+        PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
+        PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
+      ];
       const gameData = GameData(
         gameId: 0,
-        players: [
-          PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
-          PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
-        ],
+        players: currentPlayers,
       );
       final scorebookData = const ScorebookData().endGame(gameData);
 
@@ -49,7 +50,16 @@ void main() {
       expect(scorebookData.allGames[gameData.gameId], gameData);
 
       // Assert that the current game is reset to an empty GameData object.
-      expect(scorebookData.currentGame, const GameData());
+      // - Previous player names are restored.
+      expect(
+        scorebookData.currentGame,
+        const GameData(
+          players: currentPlayers,
+        ),
+      );
+
+      // Assert that the `endGameScores` map is updated with the winner's playerId.
+      expect(scorebookData.endGameScores[gameData.winnerId], 1);
     });
 
     test('[copyWith] should return a new ScorebookData object with updated properties.', () {
