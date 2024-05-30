@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:equatable/equatable.dart';
@@ -38,7 +39,7 @@ class GameData extends Equatable {
     this.players = const <PlayerData>[],
     this.gameBoardData = const GameBoardData(),
     this.dateLastPlayed,
-    this.endGameScore = const <int, int>{},
+    this.winnerId = -1,
     this.gameStatus = const GameStatusInProgress(),
   });
 
@@ -64,7 +65,7 @@ class GameData extends Equatable {
       players: currentGameData.players,
       gameBoardData: currentGameData.gameBoardData,
       dateLastPlayed: currentGameData.dateLastPlayed,
-      endGameScore: currentGameData.endGameScore,
+      winnerId: currentGameData.winnerId,
       gameStatus: currentGameData.gameStatus,
     );
   }
@@ -82,10 +83,10 @@ class GameData extends Equatable {
   int get currentPlayerId => players[currentPlayerIndex].playerId!;
 
   GameData endGame({
-    required Map<int, int> endGameScore,
+    required int winnerId,
   }) {
     return copyWith(
-      endGameScore: endGameScore,
+      winnerId: winnerId,
       gameStatus: const GameStatusComplete(),
     );
   }
@@ -103,15 +104,18 @@ class GameData extends Equatable {
 
   /// Properties stored at the end of a game.
   ///
-  final Map<int, int> endGameScore;
+  final int winnerId; // was endGameScore
   final GameStatus gameStatus;
+  // @TODO: Add this `winnerRowColDiag` property
+  //        (to store the winning row, column, or diagonal).
+  // final (int, int, MatchTupleEnum)? winnerRowColDiag;
 
   GameData copyWith({
     // Used with `playTurn` method.
     DateTime? dateLastPlayed,
     GameBoardData? gameBoardData,
     // Used with `endGame` method.
-    Map<int, int>? endGameScore,
+    int? winnerId,
     GameStatus? gameStatus,
   }) {
     return GameData(
@@ -120,7 +124,7 @@ class GameData extends Equatable {
       players: players,
       dateLastPlayed: dateLastPlayed ?? this.dateLastPlayed,
       gameBoardData: gameBoardData ?? this.gameBoardData,
-      endGameScore: endGameScore ?? this.endGameScore,
+      winnerId: winnerId ?? this.winnerId,
       gameStatus: gameStatus ?? this.gameStatus,
     );
   }
@@ -132,7 +136,7 @@ class GameData extends Equatable {
         'players': players.map((player) => player.toJson()).toList(),
         'dateLastPlayed': dateLastPlayed?.toIso8601String(),
         'gameBoardData': gameBoardData,
-        'endGameScore': endGameScore,
+        'winnerId': winnerId,
         'gameStatus': gameStatus,
       };
 
@@ -150,8 +154,7 @@ class GameData extends Equatable {
           ? DateTime.tryParse(json['dateLastPlayed'] as String)
           : null,
       gameBoardData: GameBoardData.fromJson(json['gameBoardData'] as Map<String, dynamic>),
-      endGameScore: (json['endGameScore'] as Map<String, dynamic>)
-          .map((key, value) => MapEntry(int.parse(key), value as int)),
+      winnerId: json['winnerId'] as int,
       gameStatus: GameStatus.fromJson(json['gameStatus'] as Map<String, dynamic>),
     );
   }
@@ -163,7 +166,7 @@ class GameData extends Equatable {
         players,
         dateLastPlayed,
         gameBoardData,
-        endGameScore,
+        winnerId,
         gameStatus,
       ];
 }

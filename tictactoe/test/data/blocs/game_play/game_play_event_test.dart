@@ -64,14 +64,12 @@ void main() {
         expect(
           GamePlayEndGameEvent(
             gameData: GameData(
-              endGameScore: const <int, int>{0: 1},
               gameStatus: const GameStatusComplete(),
             ),
           ),
           equals(
             GamePlayEndGameEvent(
               gameData: GameData(
-                endGameScore: const <int, int>{0: 1},
                 gameStatus: const GameStatusComplete(),
               ),
             ),
@@ -83,13 +81,13 @@ void main() {
         expect(
           GamePlayEndGameEvent(
             gameData: GameData(
-              endGameScore: const <int, int>{0: 1},
+              winnerId: 6,
               gameStatus: const GameStatusComplete(),
             ),
           ).props,
           equals(<Object?>[
             GameData(
-              endGameScore: const <int, int>{0: 1},
+              winnerId: 6,
               gameStatus: const GameStatusComplete(),
             ),
           ]),

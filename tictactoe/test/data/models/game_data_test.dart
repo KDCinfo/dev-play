@@ -53,7 +53,7 @@ void main() {
         expect(gameData.gameId, -1);
         expect(gameData.players, isEmpty);
         expect(gameData.gameBoardData, gameBoardData);
-        expect(gameData.endGameScore, isEmpty);
+        expect(gameData.winnerId, -1);
         expect(gameData.gameStatus, isA<GameStatusInProgress>());
       });
 
@@ -71,7 +71,7 @@ void main() {
           gameBoardData: gameBoardData,
 
           /// Properties stored at the end of the game.
-          endGameScore: const {0: 1},
+          winnerId: 5,
           gameStatus: const GameStatusComplete(),
         );
 
@@ -82,7 +82,7 @@ void main() {
         expect(gameData.players, isEmpty);
         expect(gameData.dateLastPlayed, testDate);
         expect(gameData.gameBoardData, gameBoardData);
-        expect(gameData.endGameScore, {0: 1}); // playerId: score
+        expect(gameData.winnerId, 5); // playerId: score
         expect(gameData.gameStatus, isA<GameStatusComplete>());
       });
 
@@ -100,7 +100,7 @@ void main() {
             <PlayerTurn>[],
             null,
             gameBoardData,
-            <int, int>{},
+            -1,
             const GameStatusInProgress(),
           ]),
         );
@@ -117,7 +117,7 @@ void main() {
           // players: const [],
           dateLastPlayed: dateTime,
           gameBoardData: gameBoardData,
-          endGameScore: const {0: 1},
+          winnerId: 3,
           gameStatus: const GameStatusComplete(),
         );
 
@@ -129,7 +129,7 @@ void main() {
             <PlayerTurn>[],
             dateTime,
             gameBoardData,
-            <int, int>{0: 1},
+            3,
             const GameStatusComplete(),
           ]),
         );
@@ -148,7 +148,7 @@ void main() {
         final gameDataWithData = gameDataEmpty.copyWith(
           dateLastPlayed: dateTime1,
           gameBoardData: gameBoardData,
-          endGameScore: const {1: 0},
+          winnerId: -1,
           gameStatus: const GameStatusComplete(),
         );
 
@@ -162,7 +162,7 @@ void main() {
         // Properties that can be copied using `copyWith`.
         expect(gameDataWithData.dateLastPlayed, dateTime1);
         expect(gameDataWithData.gameBoardData, gameBoardData);
-        expect(gameDataWithData.endGameScore, {1: 0});
+        expect(gameDataWithData.winnerId, -1);
         expect(gameDataWithData.gameStatus, isA<GameStatusComplete>());
       });
     });
@@ -219,7 +219,7 @@ void main() {
         ///
         final updatedGameData3 = updatedGameData2.endGame(
           // Player 2 wins.
-          endGameScore: {1: 1}, // playerId: score, // +1 for each game won
+          winnerId: 4, // playerId: score, // +1 for each game won
         );
 
         /// Game ID should never change.
@@ -261,7 +261,7 @@ void main() {
         // Game board data should be updated with each play.
         expect(updatedGameData1.gameBoardData.plays, [playPlayer1(playerTurnId: 0, tileIndex: 0)]);
         expect(updatedGameData1.gameBoardData, gameBoardData.copyWith(plays: plays1));
-        expect(updatedGameData1.endGameScore, <int, int>{});
+        expect(updatedGameData1.winnerId, -1);
         expect(updatedGameData1.gameStatus, isA<GameStatusInProgress>());
 
         expect(updatedGameData2.gameBoardData.plays, [
@@ -269,7 +269,7 @@ void main() {
           playPlayer2(playerTurnId: 1, tileIndex: 2)
         ]);
         expect(updatedGameData2.gameBoardData, gameBoardData.copyWith(plays: plays2));
-        expect(updatedGameData2.endGameScore, <int, int>{});
+        expect(updatedGameData2.winnerId, -1);
         expect(updatedGameData2.gameStatus, isA<GameStatusInProgress>());
 
         /// `endGameScore` should be updated when the game is over.
@@ -278,7 +278,7 @@ void main() {
           playPlayer2(playerTurnId: 1, tileIndex: 2)
         ]);
         expect(updatedGameData3.gameBoardData, gameBoardData.copyWith(plays: plays2));
-        expect(updatedGameData3.endGameScore, {1: 1});
+        expect(updatedGameData3.winnerId, 4);
         expect(updatedGameData3.gameStatus, isA<GameStatusComplete>());
       });
     });
