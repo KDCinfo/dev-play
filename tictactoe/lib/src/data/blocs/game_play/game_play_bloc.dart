@@ -74,41 +74,54 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     // ignore: avoid_print
     print(event.tileIndex);
 
-    /// Don't make any moves if tileIndex is already played or outside the range.
-    if (state.currentGame.gameBoardData.plays.any((play) => play.tileIndex == event.tileIndex) ||
-        event.tileIndex < 0 ||
-        event.tileIndex >= state.currentGame.gameBoardData.boardSize) {
-      return;
+    try {
+      /// Don't make any moves if tileIndex is already played or outside the range.
+      if (state.currentGame.gameBoardData.plays.any((play) => play.tileIndex == event.tileIndex) ||
+          event.tileIndex < 0 ||
+          event.tileIndex >= state.currentGame.gameBoardData.boardSize) {
+        return;
+      }
+
+      /// Get the current player turn.
+      final playerTurnId = state.currentGame.gameBoardData.plays.length;
+
+      /// Get the current player ID.
+      final currentPlayerId = state.currentGame.currentPlayerId;
+
+      /// Calculate the duration of the play.
+      final lastPlayDate =
+          state.currentGame.dateLastPlayed ?? state.currentGame.dateCreated ?? DateTime.now();
+      final duration = DateTime.now().difference(lastPlayDate);
+
+      final newGameBoardData = state.currentGame.gameBoardData.addPlay(
+        play: PlayerTurn(
+          tileIndex: event.tileIndex,
+          playerTurnId: playerTurnId,
+          occupiedById: currentPlayerId,
+          duration: duration,
+        ),
+      );
+
+      // Update `GameData` => `PlayerTurn`.
+      final newGameData = state.currentGame.playTurn(gameBoardData: newGameBoardData);
+
+      // Update `ScorebookData`
+      final newScorebookData = _scorebookRepository.currentScorebookData.updateGame(newGameData);
+
+      // Store scorebookData in stream.
+      // Store scorebookData in local storage.
+      _scorebookRepository.updateGame(newScorebookData);
+
+      //
+    } catch (err, stacktrace) {
+      //
+      addError(err);
+
+      AppConstants.appPrint(
+        message: '[game_play_bloc] Error ***** ***** *****',
+        error: err,
+        stacktrace: stacktrace,
+      );
     }
-
-    /// Get the current player turn.
-    final playerTurnId = state.currentGame.gameBoardData.plays.length;
-
-    /// Get the current player ID.
-    final currentPlayerId = state.currentGame.currentPlayerId;
-
-    /// Calculate the duration of the play.
-    final lastPlayDate =
-        state.currentGame.dateLastPlayed ?? state.currentGame.dateCreated ?? DateTime.now();
-    final duration = DateTime.now().difference(lastPlayDate);
-
-    final newGameBoardData = state.currentGame.gameBoardData.addPlay(
-      play: PlayerTurn(
-        tileIndex: event.tileIndex,
-        playerTurnId: playerTurnId,
-        occupiedById: currentPlayerId,
-        duration: duration,
-      ),
-    );
-
-    // Update `GameData` => `PlayerTurn`.
-    final newGameData = state.currentGame.playTurn(gameBoardData: newGameBoardData);
-
-    // Update `ScorebookData`
-    final newScorebookData = _scorebookRepository.currentScorebookData.updateGame(newGameData);
-
-    // Store scorebookData in stream.
-    // Store scorebookData in local storage.
-    _scorebookRepository.updateGame(newScorebookData);
   }
 }

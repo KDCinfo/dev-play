@@ -143,78 +143,91 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     GameEntryStartGameEvent event,
     Emitter<GameEntryState> emit,
   ) {
-    /// First let's remove the last player if the name is empty.
-    final workingList = List<PlayerData>.of(state.players)
-      ..removeWhere(
-        (player) => player.playerNum == state.players.length && player.playerName.isEmpty,
+    try {
+      /// First let's remove the last player if the name is empty.
+      final workingList = List<PlayerData>.of(state.players)
+        ..removeWhere(
+          (player) => player.playerNum == state.players.length && player.playerName.isEmpty,
+        );
+
+      /// Then let's ensure we have the proper data to start a game.
+      /// - Edge size must be between 3-5.
+      /// - The game must have between 2-4 players.
+      /// - All players must have a name.
+      /// - No two player names can be the same.
+      if (state.edgeSize < AppConstants.defaultEdgeSizeMin ||
+          state.edgeSize > AppConstants.defaultEdgeSizeMax ||
+          workingList.length < AppConstants.playerListMin ||
+          workingList.length > AppConstants.playerListMax ||
+          workingList.any((player) => player.playerName.isEmpty) ||
+          workingList.map((player) => player.playerName).toSet().length != workingList.length) {
+        return;
+      }
+
+      // If `players` has only 1 player, add a `bot` to the player list.
+      //
+      // @Note: This should no longer be necessary as the default
+      //        player list now has 2 players, a human and a bot.
+      if (workingList.length == 1) {
+        workingList.add(
+          const PlayerData(
+            playerId: -1,
+            playerNum: 2,
+            playerName: 'Botuple',
+            userSymbol: UserSymbolX(),
+            // playerType: const PlayerTypeBot(),
+          ),
+        );
+      }
+
+      final lastPlayerId = _scorebookRepository.currentScorebookData.allPlayers.isNotEmpty
+          ? _scorebookRepository.currentScorebookData.allPlayers
+                  .map((player) => player.playerId)
+                  .reduce((a, b) => a != null && b != null && b > a ? b : a) ??
+              0
+          : 0;
+      var nextPlayerId = lastPlayerId + 1;
+      final playersWithIds = workingList.map((player) {
+        final newPlayer = player.copyWith(playerId: nextPlayerId);
+        nextPlayerId++;
+        return newPlayer;
+      }).toList();
+
+      /// We'll prep the game by creating a new `GameData` object
+      /// using the `startGame` method which will prepopulate the
+      /// gameData with things like the game creation date.
+      final gameData = GameData.startGame(
+        gameId: _scorebookRepository.currentScorebookData.allGames.isNotEmpty
+            ? _scorebookRepository.currentScorebookData.allGames.keys.last + 1
+            : 1,
+        // players: state.players,
+        // Give each player a playerId that is +1 from the
+        // highest playerId in the `allPlayers` list.
+        players: playersWithIds,
+        gameBoardData: GameBoardData(edgeSize: state.edgeSize),
       );
 
-    /// Then let's ensure we have the proper data to start a game.
-    /// - Edge size must be between 3-5.
-    /// - The game must have between 2-4 players.
-    /// - All players must have a name.
-    /// - No two player names can be the same.
-    if (state.edgeSize < AppConstants.defaultEdgeSizeMin ||
-        state.edgeSize > AppConstants.defaultEdgeSizeMax ||
-        workingList.length < AppConstants.playerListMin ||
-        workingList.length > AppConstants.playerListMax ||
-        workingList.any((player) => player.playerName.isEmpty) ||
-        workingList.map((player) => player.playerName).toSet().length != workingList.length) {
-      return;
-    }
+      /// We'll then populate the `currentGame` property in `ScorebookData`
+      /// using the new gameData. When this change hits the stream, it will
+      /// be what triggers the UI to navigate to the `GamePlay` screen.
+      final newScorebookData = _scorebookRepository.currentScorebookData.startGame(gameData);
 
-    // If `players` has only 1 player, add a `bot` to the player list.
-    //
-    // @Note: This should no longer be necessary as the default
-    //        player list now has 2 players, a human and a bot.
-    if (workingList.length == 1) {
-      workingList.add(
-        const PlayerData(
-          playerId: -1,
-          playerNum: 2,
-          playerName: 'Botuple',
-          userSymbol: UserSymbolX(),
-          // playerType: const PlayerTypeBot(),
-        ),
+      /// The new scorebook data will be stored in local storage,
+      /// then the stream will be updated with the new data,
+      /// triggering the actual start of the new game.
+      _scorebookRepository.processNewGame(newScorebookData);
+
+      //
+    } catch (err, stacktrace) {
+      //
+      addError(err);
+
+      AppConstants.appPrint(
+        message: '[game_entry_bloc] _updateBlocStartGame error ***** ***** *****',
+        error: err,
+        stacktrace: stacktrace,
       );
     }
-
-    final lastPlayerId = _scorebookRepository.currentScorebookData.allPlayers.isNotEmpty
-        ? _scorebookRepository.currentScorebookData.allPlayers
-                .map((player) => player.playerId)
-                .reduce((a, b) => a != null && b != null && b > a ? b : a) ??
-            0
-        : 0;
-    var nextPlayerId = lastPlayerId + 1;
-    final playersWithIds = workingList.map((player) {
-      final newPlayer = player.copyWith(playerId: nextPlayerId);
-      nextPlayerId++;
-      return newPlayer;
-    }).toList();
-
-    /// We'll prep the game by creating a new `GameData` object
-    /// using the `startGame` method which will prepopulate the
-    /// gameData with things like the game creation date.
-    final gameData = GameData.startGame(
-      gameId: _scorebookRepository.currentScorebookData.allGames.isNotEmpty
-          ? _scorebookRepository.currentScorebookData.allGames.keys.last + 1
-          : 1,
-      // players: state.players,
-      // Give each player a playerId that is +1 from the
-      // highest playerId in the `allPlayers` list.
-      players: playersWithIds,
-      gameBoardData: GameBoardData(edgeSize: state.edgeSize),
-    );
-
-    /// We'll then populate the `currentGame` property in `ScorebookData`
-    /// using the new gameData. When this change hits the stream, it will
-    /// be what triggers the UI to navigate to the `GamePlay` screen.
-    final newScorebookData = _scorebookRepository.currentScorebookData.startGame(gameData);
-
-    /// The new scorebook data will be stored in local storage,
-    /// then the stream will be updated with the new data,
-    /// triggering the actual start of the new game.
-    _scorebookRepository.processNewGame(newScorebookData);
   }
 
   void _symbolSelected(
