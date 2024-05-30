@@ -4,6 +4,9 @@ typedef AppReturnObjDef = Map<String, List<dynamic>>;
 typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
 
 abstract class AppConstants {
+  /// Do not allow printing or logging when `inProd: true`.
+  static const canPrint = true;
+
   /// Standard App Config Values
   static const defaultEdgeSize = 3;
   static const defaultEdgeSizeMin = 3;
@@ -66,18 +69,19 @@ abstract class AppConstants {
     Object? error,
     StackTrace? stacktrace,
   }) {
-    // @TODO: Add prod check.
-    if (message != null) {
-      // ignore: avoid_print
-      print('message: $message');
-    }
-    if (error != null) {
-      // ignore: avoid_print
-      print('error: $error');
-    }
-    if (stacktrace != null) {
-      // ignore: avoid_print
-      print('stacktrace: $stacktrace');
+    if (!canPrint) {
+      if (message != null) {
+        // ignore: avoid_print
+        print('message: $message');
+      }
+      if (error != null) {
+        // ignore: avoid_print
+        print('error: $error');
+      }
+      if (stacktrace != null) {
+        // ignore: avoid_print
+        print('stacktrace: $stacktrace');
+      }
     }
   }
 }

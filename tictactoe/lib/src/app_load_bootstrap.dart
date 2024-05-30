@@ -5,12 +5,7 @@ import 'package:base_services/base_services.dart';
 import 'package:dev_play_tictactuple/src/src.dart';
 
 class BootParameters {
-  const BootParameters({
-    this.isProd = false,
-  });
-
-  // isProd
-  final bool isProd;
+  const BootParameters();
 }
 
 class BootstrapLoader {
@@ -29,7 +24,7 @@ class BootstrapLoader {
     final storageApi = StorageServiceImpl(
       localStorageApi: sharedPrefsApi,
       localSecureStorageApi: secureStorageApi,
-      canPrint: !params.isProd,
+      canPrint: AppConstants.canPrint,
     );
 
     final scorebookRepository = ScorebookRepository(

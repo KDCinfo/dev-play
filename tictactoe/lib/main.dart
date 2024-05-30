@@ -1,27 +1,24 @@
 import 'dart:developer';
 
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/app_load_bootstrap.dart';
 
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  /// Logging will be enabled when not in production.
-  const isProd = false;
-
   final now = DateTime.now();
-  if (!isProd) {
+  if (AppConstants.canPrint) {
     log('App loaded.....: ${now.hour}:${now.minute}:${now.second}.${now.millisecond}');
   }
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!isProd) {
+  if (AppConstants.canPrint) {
     log('App initialized: ${now.hour}:${now.minute}:${now.second}.${now.millisecond}');
   }
 
   await const BootstrapLoader(
-    BootParameters(
-        // isProd: isProd,
-        ),
+    /// BootParams can be used to add API keys.
+    BootParameters(),
   ).start();
 }
