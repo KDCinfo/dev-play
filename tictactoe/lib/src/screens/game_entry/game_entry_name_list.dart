@@ -33,6 +33,10 @@ class GameEntryNameList extends StatelessWidget {
           }),
         );
 
+        /// A base list without the saved name `TicTacBot`.
+        final allSavedPlayerNames =
+            state.allSavedPlayerNames.where((name) => name != AppConstants.playerBotName).toList();
+
         /// The `SingleChildScrollView` is needed for scrolling
         /// in landscape mode or on small screens.
         return SingleChildScrollView(
@@ -43,8 +47,8 @@ class GameEntryNameList extends StatelessWidget {
                   playerData: player,
                   listRowPlayerList: player.playerNum == 2
                       // Insert `playerBotName` at beginning of list.
-                      ? [AppConstants.playerBotName, ...state.allSavedPlayerNames]
-                      : state.allSavedPlayerNames,
+                      ? [AppConstants.playerBotName, ...allSavedPlayerNames]
+                      : allSavedPlayerNames,
                   // Add `UserSymbol` from current player.
                   availableSymbols: Map<String, Icon>.fromEntries(
                     unusedSymbolList.entries,
