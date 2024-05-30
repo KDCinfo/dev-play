@@ -79,9 +79,7 @@ class ScorebookRepository extends AppBaseRepository {
       final newGameData = newScorebookData.currentGame.endGame(
         winnerId: noMorePlays
             ? -1
-            : newScorebookData
-                    .currentGame
-                    .players[newScorebookData.currentGame.gameBoardData.plays.length - 1]
+            : newScorebookData.currentGame.players[newScorebookData.currentGame.previousPlayerIndex]
                     .playerId ??
                 -1,
       );
