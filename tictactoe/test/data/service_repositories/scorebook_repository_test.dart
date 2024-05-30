@@ -82,7 +82,7 @@ void main() {
         );
 
         const newScorebookData = fakeScorebookData;
-        scorebookRepository.processNewGame(newScorebookData);
+        scorebookRepository.processScorebookData(newScorebookData);
         expect(scorebookRepository.currentScorebookData, equals(newScorebookData));
       });
 
@@ -92,7 +92,7 @@ void main() {
         );
 
         const finalScorebookData = fakeScorebookData;
-        scorebookRepository.processEndGame(finalScorebookData);
+        scorebookRepository.processScorebookData(finalScorebookData);
         expect(scorebookRepository.currentScorebookData, equals(finalScorebookData));
       });
 

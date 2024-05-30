@@ -215,7 +215,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       /// The new scorebook data will be stored in local storage,
       /// then the stream will be updated with the new data,
       /// triggering the actual start of the new game.
-      _scorebookRepository.processNewGame(newScorebookData);
+      _scorebookRepository.processScorebookData(newScorebookData);
 
       //
     } catch (err, stacktrace) {

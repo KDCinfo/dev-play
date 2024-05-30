@@ -140,7 +140,7 @@ void main() {
         verify: (_) async {
           verify(() => mockScorebookRepository.scorebookDataStream).called(1);
           verify(() => mockScorebookRepository.currentScorebookData).called(3);
-          verify(() => mockScorebookRepository.processNewGame(any())).called(1);
+          verify(() => mockScorebookRepository.processScorebookData(any())).called(1);
         },
       );
 
@@ -282,7 +282,7 @@ void main() {
 
         verify(() => mockScorebookRepository.scorebookDataStream).called(1);
         verify(() => mockScorebookRepository.currentScorebookData).called(4);
-        verify(() => mockScorebookRepository.processNewGame(any())).called(1);
+        verify(() => mockScorebookRepository.processScorebookData(any())).called(1);
       });
     });
   });
