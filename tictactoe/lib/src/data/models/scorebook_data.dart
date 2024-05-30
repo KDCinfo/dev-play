@@ -74,6 +74,16 @@ class ScorebookData extends Equatable {
     };
   }
 
+  // toString
+  @override
+  String toString() {
+    return 'ScorebookData{\n'
+        '  allPlayers: $allPlayers,\n'
+        '  allGames: $allGames,\n'
+        '  currentGame: $currentGame\n'
+        '}';
+  }
+
   /// This is a list of all played players, but only the
   /// names are extracted for use in the `PlayerList` popup menu.
   ///

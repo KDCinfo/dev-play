@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/screens/game_board/game_board.dart';
 
@@ -28,6 +31,12 @@ class GameBoardPanel extends StatelessWidget {
           builder: (context, state) {
             bool clickableTile(int index) =>
                 state.currentGame.gameBoardData.availableTileIndexes.contains(index);
+
+            if (AppConstants.canPrint) {
+              log(
+                'availableTileIndexes: ${state.currentGame.gameBoardData.availableTileIndexes}',
+              );
+            }
 
             return Align(
               // alignment: Alignment.center,
