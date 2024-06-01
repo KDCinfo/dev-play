@@ -98,17 +98,14 @@ void main() {
             const GameEntryChangeNameEvent(playerNum: 4, playerName: 'Player 4'),
           ),
           expect: () => [
-            const GameEntryState(
-              edgeSize: 5,
-              players: [playerData1, playerData2, playerData3],
-            ),
             GameEntryState(
               edgeSize: 5,
               players: [
                 playerData1,
                 playerData2,
-                playerData3.copyWith(playerName: 'Player 3'),
-                playerData4,
+                playerData3.copyWith(
+                  userSymbol: const UserSymbolPlus(),
+                ),
               ],
             ),
             GameEntryState(
@@ -116,8 +113,28 @@ void main() {
               players: [
                 playerData1,
                 playerData2,
-                playerData3.copyWith(playerName: 'Player 3'),
-                playerData4.copyWith(playerName: 'Player 4'),
+                playerData3.copyWith(
+                  playerName: 'Player 3',
+                  userSymbol: const UserSymbolPlus(),
+                ),
+                playerData4.copyWith(
+                  userSymbol: const UserSymbolStar(),
+                ),
+              ],
+            ),
+            GameEntryState(
+              edgeSize: 5,
+              players: [
+                playerData1,
+                playerData2,
+                playerData3.copyWith(
+                  playerName: 'Player 3',
+                  userSymbol: const UserSymbolPlus(),
+                ),
+                playerData4.copyWith(
+                  playerName: 'Player 4',
+                  userSymbol: const UserSymbolStar(),
+                ),
               ],
             ),
           ],

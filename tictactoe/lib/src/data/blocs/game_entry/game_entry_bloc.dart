@@ -5,6 +5,7 @@ import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'game_entry_event.dart';
@@ -303,11 +304,11 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
           )
           // Add a new empty PlayerData.
           ..add(
-            const PlayerData(
+            PlayerData(
               playerNum: 3,
-              // @TODO: The user symbol will need to grab the first available symbol.
-              userSymbol: UserSymbolEmpty(),
-              playerType: PlayerTypeHuman(),
+              // Grab the first available symbol.
+              userSymbol: state.unusedSymbolTypesList.entries.first.value,
+              playerType: const PlayerTypeHuman(),
             ),
           );
       } else if (event.playerNum == 2 &&
@@ -351,8 +352,8 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
             PlayerData(
               playerNum: 4,
               playerName: state.players[2].playerName,
-              // @TODO: The user symbol will need to grab the first available symbol.
-              userSymbol: const UserSymbolEmpty(),
+              // Grab the first available symbol.
+              userSymbol: state.unusedSymbolTypesList.entries.first.value,
               playerType: const PlayerTypeHuman(),
             ),
           );

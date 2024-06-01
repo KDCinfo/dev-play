@@ -31,6 +31,33 @@ class GameEntryState extends Equatable {
     );
   }
 
+  Map<String, Icon> get usedSymbolList => Map<String, Icon>.fromEntries(
+        players.map(
+          (player) => MapEntry(player.userSymbol.markerKey, player.userSymbol.markerIcon),
+        ),
+      );
+
+  Map<String, Icon> get unusedSymbolList => Map<String, Icon>.fromEntries(
+        UserSymbol.markerList.entries.where((symbol) {
+          final keyUsed = usedSymbolList.containsKey(symbol.key);
+          return !keyUsed;
+        }).map((symbol) {
+          final mapEntry = MapEntry(symbol.key, symbol.value);
+          return mapEntry;
+        }),
+      );
+
+  Map<String, UserSymbol> get unusedSymbolTypesList => Map<String, UserSymbol>.fromEntries(
+        // `skip(1)` | The first symbol is 'empty' and should not be used.
+        UserSymbol.markerListTypes.entries.skip(1).where((symbol) {
+          final keyUsed = usedSymbolList.containsKey(symbol.key);
+          return !keyUsed;
+        }).map((symbol) {
+          final mapEntry = MapEntry(symbol.key, symbol.value);
+          return mapEntry;
+        }),
+      );
+
   @override
   List<Object> get props => [
         edgeSize,

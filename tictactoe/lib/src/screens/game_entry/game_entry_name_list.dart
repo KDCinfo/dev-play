@@ -2,7 +2,6 @@
 
 import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
-import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
@@ -17,22 +16,6 @@ class GameEntryNameList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameEntryBloc, GameEntryState>(
       builder: (context, state) {
-        final usedSymbolList = Map<String, Icon>.fromEntries(
-          state.players.map(
-            (player) => MapEntry(player.userSymbol.markerKey, player.userSymbol.markerIcon),
-          ),
-        );
-
-        final unusedSymbolList = Map<String, Icon>.fromEntries(
-          UserSymbol.markerList.entries.where((symbol) {
-            final keyUsed = usedSymbolList.containsKey(symbol.key);
-            return !keyUsed;
-          }).map((symbol) {
-            final mapEntry = MapEntry(symbol.key, symbol.value);
-            return mapEntry;
-          }),
-        );
-
         /// A base list without the saved name `TicTacBot`.
         final allSavedPlayerNames =
             state.allSavedPlayerNames.where((name) => name != AppConstants.playerBotName).toList();
@@ -50,9 +33,8 @@ class GameEntryNameList extends StatelessWidget {
                       ? [AppConstants.playerBotName, ...allSavedPlayerNames]
                       : allSavedPlayerNames,
                   // Add `UserSymbol` from current player.
-                  availableSymbols: Map<String, Icon>.fromEntries(
-                    unusedSymbolList.entries,
-                  )..putIfAbsent(
+                  availableSymbols: state.unusedSymbolList
+                    ..putIfAbsent(
                       player.userSymbol.markerKey,
                       () => player.userSymbol.markerIcon,
                     ),
