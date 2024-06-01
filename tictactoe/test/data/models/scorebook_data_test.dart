@@ -54,7 +54,9 @@ void main() {
       expect(
         scorebookData.currentGame,
         const GameData(
+          gameId: 0,
           players: currentPlayers,
+          gameStatus: GameStatusComplete(),
         ),
       );
 

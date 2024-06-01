@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dev_play_tictactuple/src/app_constants.dart';
 
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
@@ -117,11 +117,12 @@ void main() {
 
       group('checking BlocListener', () {
         testWidgets('for GamePlayBloc.', (WidgetTester tester) async {
-          // The `GamePlayBloc` is updated when `GameEntryBloc` starts the game by
-          // sending a `GameData` with a `gameId > -1` to the `ScorebookRepository` stream.
+          // There are two `GamePlayBloc` listeners:
+          // - One listens for the `GameStatus` to change (and shows the 'Great Game!' dialog).
+          // - The other listens for `gameId >= -1`, which pushes and pops the `/play` route.
           await tester.pumpWidget(wrappedWidget);
           final widgetFinderBlocListener = find.byType(BlocListener<GamePlayBloc, GamePlayState>);
-          expect(widgetFinderBlocListener, findsOneWidget);
+          expect(widgetFinderBlocListener, findsNWidgets(2));
         });
 
         testWidgets('calls Navigator.didPush when GamePlayState changes.', (tester) async {
@@ -199,6 +200,38 @@ void main() {
           expect(routeNames, isNot(contains('/play')));
         });
 
+        testWidgets('calls Navigator.didPop when gameStatus is changed.', (tester) async {
+          whenListen(
+            mockGamePlayBloc,
+            Stream.fromIterable([
+              const GamePlayState(
+                currentGame: GameData(
+                  // gameId: 1,
+                  gameStatus: GameStatusComplete(),
+                ),
+              ),
+            ]),
+          );
+          await tester.pumpWidget(wrappedWidget);
+          await tester.pumpAndSettle();
+
+          expect(find.byType(AlertDialog), findsOneWidget);
+          expect(find.text(AppConstants.buttonStartNewGame), findsOneWidget);
+
+          // Dismiss the 'Great Game!' dialog.
+          await tester.tap(find.text(AppConstants.buttonStartNewGame));
+
+          // Verify and capture popped routes.
+          // - This filters `MaterialPageRoute` for the actual popped route.
+          final capturedPop = verify(() => mockObserver.didPop(captureAny(), any())).captured;
+
+          // Print routes for debugging.
+          // capturedPop.forEach(print);
+          // - [X] DialogRoute<void>(RouteSettings(none, null), animation: ...
+          // - [ ] MaterialPageRoute<dynamic>(RouteSettings("/play", null), animation: ...
+          expect(capturedPop, hasLength(1));
+        });
+
         testWidgets('calls Navigator.didPop when gameId is set back to -1.', (tester) async {
           whenListen(
             mockGamePlayBloc,
@@ -213,9 +246,6 @@ void main() {
           // Wait for the first push to '/play'.
           await tester.pumpAndSettle();
 
-          // Dismiss the 'Great Game!' dialog.
-          await tester.tap(find.text(AppConstants.buttonStartNewGame));
-
           // Verify and capture popped routes.
           // - This filters `MaterialPageRoute` for the actual popped route.
           final capturedPop = verify(() => mockObserver.didPop(captureAny(), any())).captured;
@@ -228,9 +258,9 @@ void main() {
 
           // Print routes for debugging.
           // capturedPop.forEach(print);
-          // - DialogRoute<void>(RouteSettings(none, null), animation: ...
-          // - MaterialPageRoute<dynamic>(RouteSettings("/play", null), animation: ...
-          expect(capturedPop, hasLength(2));
+          // - [ ] DialogRoute<void>(RouteSettings(none, null), animation: ...
+          // - [X] MaterialPageRoute<dynamic>(RouteSettings("/play", null), animation: ...
+          expect(capturedPop, hasLength(1));
 
           // Assert specific navigation did not occur.
           // routeNamesPopped.forEach(print);

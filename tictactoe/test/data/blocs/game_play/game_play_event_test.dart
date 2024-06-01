@@ -108,12 +108,7 @@ void main() {
       test('[props] are correct', () {
         expect(
           GamePlayResetGameEvent().props,
-          equals(<Object?>[
-            GameData(
-              winnerId: 6,
-              gameStatus: const GameStatusComplete(),
-            ),
-          ]),
+          equals(<Object?>[]),
         );
       });
     });

@@ -26,7 +26,8 @@ class GameEntryScreen extends StatelessWidget {
                 listeners: [
                   BlocListener<GamePlayBloc, GamePlayState>(
                     listenWhen: (previous, current) =>
-                        previous.currentGame.gameStatus != current.currentGame.gameStatus,
+                        previous.currentGame.gameStatus != current.currentGame.gameStatus &&
+                        current.currentGame.gameStatus == const GameStatusComplete(),
                     listener: (context, state) async {
                       //
                       // @TODO: Play a 'great game' popup animation.
