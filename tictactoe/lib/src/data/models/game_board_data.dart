@@ -92,7 +92,7 @@ class GameBoardData extends Equatable {
     ///
     final mapOfRowGroups = _initializeCheckMap();
 
-    /// Add a `playerId` to
+    /// Add a `playerId` to `mapOfRowGroups`.
     for (final play in plays) {
       ///
       /// Per-row group index: 0, 1, 2, [3, 4]
@@ -153,7 +153,7 @@ class GameBoardData extends Equatable {
     return null;
   }
 
-  (int, int)? _checkDiags() {
+  Map<int, List<int>> _mapPlaysToDiagGroups() {
     /// Initialize `mapOfGroups` with [1st] and [2nd] diag groups.
     final mapOfGroups = <int, List<int>>{
       0: <int>[], // 1st diag group
@@ -181,6 +181,10 @@ class GameBoardData extends Equatable {
       }
     }
 
+    return mapOfGroups;
+  }
+
+  (int, int)? _checkFilledDiags(Map<int, List<int>> mapOfGroups) {
     final diag1Tiles = mapOfGroups[0]!; // Tile indexes: [0, 4, 8], [0, 6, 12, 18, 24]
     final diag2Tiles = mapOfGroups[1]!; // Tile indexes: [2, 4, 6], [4, 8, 12, 16, 20]
 
@@ -214,7 +218,6 @@ class GameBoardData extends Equatable {
         return (1, diag2FirstPlayerId);
       }
     }
-
     return null;
   }
 
@@ -235,7 +238,9 @@ class GameBoardData extends Equatable {
   }
 
   (int, int)? get checkAllDiags {
-    return _checkDiags();
+    final mapOfGroups = _mapPlaysToDiagGroups(); // { 0: [ playerId ], 1: [], 2: [] }
+    return _checkFilledDiags(mapOfGroups);
+  }
   }
 
   ///
