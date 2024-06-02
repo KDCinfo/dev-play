@@ -99,11 +99,15 @@ class GameBoardData extends Equatable {
       ///
       final groupIndexRow = play.tileIndex ~/ edgeSize;
 
+      late final int playerId;
       if (mapOfRowGroups[groupIndexRow] != null) {
-        final playerId = play.occupiedById;
-        final newRowList = List.of(mapOfRowGroups[groupIndexRow]!)..add(playerId);
-        mapOfRowGroups.update(groupIndexRow, (_) => newRowList);
+        playerId = play.occupiedById;
+      } else {
+        // Tile not played, not to be confused with a temporary `playerId: -1`.
+        playerId = -2;
       }
+      final newRowList = List.of(mapOfRowGroups[groupIndexRow]!)..add(playerId);
+      mapOfRowGroups.update(groupIndexRow, (_) => newRowList);
     }
     return mapOfRowGroups;
   }
@@ -119,11 +123,16 @@ class GameBoardData extends Equatable {
       ///
       final groupIndexCol = play.tileIndex % edgeSize;
 
+      late final int playerId;
       if (mapOfColGroups[groupIndexCol] != null) {
-        final playerId = play.occupiedById;
-        final newColList = List.of(mapOfColGroups[groupIndexCol]!)..add(playerId);
-        mapOfColGroups.update(groupIndexCol, (_) => newColList);
+        // final playerId = play.occupiedById;
+        playerId = play.occupiedById;
+      } else {
+        // Tile not played, not to be confused with a temporary `playerId: -1`.
+        playerId = -2;
       }
+      final newColList = List.of(mapOfColGroups[groupIndexCol]!)..add(playerId);
+      mapOfColGroups.update(groupIndexCol, (_) => newColList);
     }
     return mapOfColGroups;
   }
@@ -134,13 +143,15 @@ class GameBoardData extends Equatable {
   (int, int)? _checkFilled(Map<int, List<int>> mapOfGroups) {
     var groupIndex = 0;
     for (final playerIdList in mapOfGroups.values) {
-      if (playerIdList.isNotEmpty) {
+      // A `playerId: -2` indicates a tile that has not been played.
+      final checkPlayerIdList = playerIdList.where((playerId) => playerId != -2);
+      if (checkPlayerIdList.isNotEmpty) {
         // Establish a baseline playerId to check against.
-        final firstPlayerId = playerIdList.first;
+        final firstPlayerId = checkPlayerIdList.first;
 
         // Check for a full list of the same player.
-        if (playerIdList.length == edgeSize &&
-            playerIdList.every(
+        if (checkPlayerIdList.length == edgeSize &&
+            checkPlayerIdList.every(
               (playerId) => playerId == firstPlayerId,
             )) {
           return (groupIndex, firstPlayerId);
@@ -167,6 +178,8 @@ class GameBoardData extends Equatable {
       // [8] += 3 + 1 == 12 (> boardSize)
       if (mapOfGroups[0] != null) {
         mapOfGroups[0]!.add(tileIndex);
+      } else {
+        mapOfGroups[0]!.add(-2);
       }
     }
 
@@ -178,6 +191,8 @@ class GameBoardData extends Equatable {
       // diag2.add(plays[i]);
       if (mapOfGroups[1] != null) {
         mapOfGroups[1]!.add(tileIndex);
+      } else {
+        mapOfGroups[1]!.add(-2);
       }
     }
 
@@ -185,8 +200,11 @@ class GameBoardData extends Equatable {
   }
 
   (int, int)? _checkFilledDiags(Map<int, List<int>> mapOfGroups) {
-    final diag1Tiles = mapOfGroups[0]!; // Tile indexes: [0, 4, 8], [0, 6, 12, 18, 24]
-    final diag2Tiles = mapOfGroups[1]!; // Tile indexes: [2, 4, 6], [4, 8, 12, 16, 20]
+    // Tile indexes: [0, 4, 8], [0, 6, 12, 18, 24]
+    final diag1Tiles = mapOfGroups[0]!.where((playerId) => playerId != -2);
+
+    // Tile indexes: [2, 4, 6], [4, 8, 12, 16, 20]
+    final diag2Tiles = mapOfGroups[1]!.where((playerId) => playerId != -2);
 
     /// Store each played `playerId` that matches a
     /// stored group index for either `diag1` or `diag2`.
