@@ -198,7 +198,7 @@ void main() {
             playerTurnId: 0,
             tileIndex: 0,
           ));
-        final updatedGameData1 = updatedGameData0.playTurn(
+        final updatedGameData1 = updatedGameData0.gameDataPlayTurn(
           gameBoardData: gameBoardData.copyWith(plays: plays1),
         );
 
@@ -210,7 +210,7 @@ void main() {
             playerTurnId: 1,
             tileIndex: 2,
           ));
-        final updatedGameData2 = updatedGameData1.playTurn(
+        final updatedGameData2 = updatedGameData1.gameDataPlayTurn(
           gameBoardData: gameBoardData.copyWith(plays: plays2),
         );
 

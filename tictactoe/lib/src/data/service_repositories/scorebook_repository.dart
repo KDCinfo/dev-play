@@ -111,6 +111,46 @@ class ScorebookRepository extends AppBaseRepository {
     scorebookDataStorageToVars();
   }
 
+  void playTurn({
+    required GameData currentGame,
+    required int tileIndex,
+  }) {
+    if (currentGame.gameBoardData.plays.any((play) => play.tileIndex == tileIndex) ||
+        tileIndex < 0 ||
+        tileIndex >= currentGame.gameBoardData.boardSize) {
+      return;
+    }
+
+    /// Get the current player turn.
+    final playerTurnId = currentGame.gameBoardData.plays.length;
+
+    /// Get the current player ID.
+    final currentPlayerId = currentGame.currentPlayerId;
+
+    /// Calculate the duration of the play.
+    final lastPlayDate = currentGame.dateLastPlayed ?? currentGame.dateCreated ?? DateTime.now();
+    final duration = DateTime.now().difference(lastPlayDate);
+
+    final newGameBoardData = currentGame.gameBoardData.addPlay(
+      play: PlayerTurn(
+        tileIndex: tileIndex,
+        playerTurnId: playerTurnId,
+        occupiedById: currentPlayerId,
+        duration: duration,
+      ),
+    );
+
+    // Update `GameData` => `PlayerTurn`.
+    final newGameData = currentGame.gameDataPlayTurn(gameBoardData: newGameBoardData);
+
+    // Update `ScorebookData`
+    final newScorebookData = currentScorebookData.updateGame(newGameData);
+
+    // Store scorebookData in stream.
+    // Store scorebookData in local storage.
+    updateGame(newScorebookData);
+  }
+
   void printLocalStorage() {
     final keyListK = <String, Object?>{};
 

@@ -70,7 +70,7 @@ class GameData extends Equatable {
     );
   }
 
-  GameData playTurn({
+  GameData gameDataPlayTurn({
     required GameBoardData gameBoardData,
   }) {
     return copyWith(
