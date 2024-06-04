@@ -87,6 +87,8 @@ class ScorebookRepository extends AppBaseRepository {
       /// The `gameId` switch to `-1` in the `currentGame.endGame` call
       /// triggers the `BlocListener` in the `GameEntryScreen`.
       newScorebookDataTmp = newScorebookData.endGame(newGameData);
+
+      //
     } else {
       newScorebookDataTmp = newScorebookData;
     }
@@ -115,6 +117,7 @@ class ScorebookRepository extends AppBaseRepository {
     required GameData currentGame,
     required int tileIndex,
   }) {
+    /// Don't make any moves if tileIndex is already played or outside the range.
     if (currentGame.gameBoardData.plays.any((play) => play.tileIndex == tileIndex) ||
         tileIndex < 0 ||
         tileIndex >= currentGame.gameBoardData.boardSize) {

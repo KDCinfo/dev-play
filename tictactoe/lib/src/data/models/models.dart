@@ -1,4 +1,5 @@
 export 'app_data_fake.dart';
+export 'bot_play.dart';
 export 'bot_play_tile_play_data.dart';
 export 'game_board_data.dart';
 export 'game_data.dart';

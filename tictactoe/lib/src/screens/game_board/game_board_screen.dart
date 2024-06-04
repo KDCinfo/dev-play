@@ -19,10 +19,30 @@ class GameBoardScreen extends StatelessWidget {
       currentRoutePath: '/play',
       child: Builder(
         builder: (context) {
-          return const SafeArea(
+          return SafeArea(
             child: Scaffold(
-              body: GameOrientationLayout(
-                orientationScreen: OrientationScreenGameBoard(),
+              body: BlocListener<GamePlayBloc, GamePlayState>(
+                listenWhen: (previous, current) =>
+                    previous.currentGame.gameBoardData.plays.length !=
+                        current.currentGame.gameBoardData.plays.length &&
+                    current.currentGame.currentPlayerIndex == 1 &&
+                    current.currentGame.players[current.currentGame.currentPlayerIndex]
+                            .playerType ==
+                        const PlayerTypeBot(),
+                listener: (context, state) async {
+                  /// @TODO: Show a . . . waiting . . . widget.
+
+                  /// Let the bot do its thing...
+                  await Future<void>.delayed(
+                    const Duration(milliseconds: 500),
+                    () => context.read<GamePlayBloc>().add(const GamePlayBotMoveRequestedEvent()),
+                  );
+
+                  /// @TODO: Add another listener to stop showing waiting widget.
+                },
+                child: const GameOrientationLayout(
+                  orientationScreen: OrientationScreenGameBoard(),
+                ),
               ),
             ),
           );
