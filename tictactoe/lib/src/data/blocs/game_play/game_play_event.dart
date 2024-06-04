@@ -24,6 +24,13 @@ class GamePlayResetGameEvent extends GamePlayEvent {
   List<Object> get props => [];
 }
 
+class GamePlayBotMoveRequestedEvent extends GamePlayEvent {
+  const GamePlayBotMoveRequestedEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class GamePlayMoveEvent extends GamePlayEvent {
   const GamePlayMoveEvent({
     required this.tileIndex,

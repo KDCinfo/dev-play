@@ -112,5 +112,23 @@ void main() {
         );
       });
     });
+
+    group('[GamePlayBotMoveRequestedEvent]', () {
+      test('supports value [equality]', () {
+        expect(
+          GamePlayBotMoveRequestedEvent(),
+          equals(
+            GamePlayBotMoveRequestedEvent(),
+          ),
+        );
+      });
+
+      test('[props] are correct', () {
+        expect(
+          GamePlayBotMoveRequestedEvent().props,
+          equals(<Object?>[]),
+        );
+      });
+    });
   });
 }
