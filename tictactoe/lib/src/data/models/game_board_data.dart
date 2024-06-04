@@ -259,6 +259,16 @@ class GameBoardData extends Equatable {
     final mapOfGroups = _mapPlaysToDiagGroups(); // { 0: [ playerId ], 1: [], 2: [] }
     return _checkFilledDiags(mapOfGroups);
   }
+
+  Map<MatchTupleEnum, Map<int, List<int>>> get filledAllRows {
+    final filledPlaysMap = <MatchTupleEnum, Map<int, List<int>>>{
+      MatchTupleEnum.row: _mapPlaysToRowGroups(), // { 0: [ playerId ], 1: [-1], 2: [-1] }
+      MatchTupleEnum.column: _mapPlaysToColGroups(), // { 0: [ playerId ], 1: [], 2: [] }
+      MatchTupleEnum.diagonal: _mapPlaysToDiagGroups().map(
+        (key, value) => MapEntry(key, value.values.toList()),
+      ),
+    };
+    return filledPlaysMap;
   }
 
   ///
