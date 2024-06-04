@@ -79,12 +79,14 @@ class GameBoardData extends Equatable {
   ///
   Map<int, List<int>> _initializeCheckMap() {
     final checkMap = <int, List<int>>{};
+
     for (var j = 0; j < boardSize; j += edgeSize) {
       checkMap.putIfAbsent(
         j ~/ edgeSize,
-        () => <int>[],
+        () => List<int>.filled(edgeSize, -2),
       );
     }
+
     return checkMap;
   }
 
@@ -98,16 +100,14 @@ class GameBoardData extends Equatable {
       /// Per-row group index: 0, 1, 2, [3, 4]
       ///
       final groupIndexRow = play.tileIndex ~/ edgeSize;
+      final indexInRowList = play.tileIndex % edgeSize;
 
-      late final int playerId;
       if (mapOfRowGroups[groupIndexRow] != null) {
-        playerId = play.occupiedById;
-      } else {
-        // Tile not played, not to be confused with a temporary `playerId: -1`.
-        playerId = -2;
+        final newRowList = List.of(mapOfRowGroups[groupIndexRow]!)
+          ..replaceRange(indexInRowList, indexInRowList + 1, [play.occupiedById]);
+
+        mapOfRowGroups.update(groupIndexRow, (_) => newRowList);
       }
-      final newRowList = List.of(mapOfRowGroups[groupIndexRow]!)..add(playerId);
-      mapOfRowGroups.update(groupIndexRow, (_) => newRowList);
     }
     return mapOfRowGroups;
   }
@@ -122,17 +122,13 @@ class GameBoardData extends Equatable {
       /// Per-column group index: 0, 1, 2, [3, 4]
       ///
       final groupIndexCol = play.tileIndex % edgeSize;
+      final indexInColList = play.tileIndex ~/ edgeSize;
 
-      late final int playerId;
       if (mapOfColGroups[groupIndexCol] != null) {
-        // final playerId = play.occupiedById;
-        playerId = play.occupiedById;
-      } else {
-        // Tile not played, not to be confused with a temporary `playerId: -1`.
-        playerId = -2;
+        final newColList = List.of(mapOfColGroups[groupIndexCol]!)
+          ..replaceRange(indexInColList, indexInColList + 1, [play.occupiedById]);
+        mapOfColGroups.update(groupIndexCol, (_) => newColList);
       }
-      final newColList = List.of(mapOfColGroups[groupIndexCol]!)..add(playerId);
-      mapOfColGroups.update(groupIndexCol, (_) => newColList);
     }
     return mapOfColGroups;
   }
@@ -164,47 +160,51 @@ class GameBoardData extends Equatable {
     return null;
   }
 
-  Map<int, List<int>> _mapPlaysToDiagGroups() {
+  Map<int, Map<int, int>> _mapPlaysToDiagGroups() {
     /// Initialize `mapOfGroups` with [1st] and [2nd] diag groups.
-    final mapOfGroups = <int, List<int>>{
-      0: <int>[], // 1st diag group
-      1: <int>[], // 2nd diag group
+    /// [1st] => Top left to bottom right.
+    /// [2nd] => Top right to bottom left.
+    /// To be filled in with either a playerId, or a -2 for an empty tile.
+    final mapOfDiagTiles = <int, Map<int, int>>{
+      // <tileId, playerId>
+      0: <int, int>{}, // 1st diag group
+      1: <int, int>{}, // 2nd diag group
     };
 
-    /// Record all the indexes that make up the [1st] diag group.
+    /// [1] Record all the indexes that make up the [1st] diag group.
     for (var tileIndex = 0; tileIndex < boardSize; tileIndex += edgeSize + 1) {
       // [0] += 3 + 1 == 4
       // [4] += 3 + 1 == 8
       // [8] += 3 + 1 == 12 (> boardSize)
-      if (mapOfGroups[0] != null) {
-        mapOfGroups[0]!.add(tileIndex);
-      } else {
-        mapOfGroups[0]!.add(-2);
-      }
+      mapOfDiagTiles[0]!.putIfAbsent(tileIndex, () => -2);
     }
 
-    /// Record all the indexes that make up the [2nd] diag group.
+    /// [2] Record all the indexes that make up the [2nd] diag group.
     for (var tileIndex = edgeSize - 1; tileIndex < boardSize - 1; tileIndex += edgeSize - 1) {
       // 3 - 1 == [2] | 2 += 3 - 1 == [4]
       //          [4] | 4 += 3 - 1 == [6]
       //          [6] | 6 += 3 - 1 == [8] (! < boardSize - 1)
-      // diag2.add(plays[i]);
-      if (mapOfGroups[1] != null) {
-        mapOfGroups[1]!.add(tileIndex);
-      } else {
-        mapOfGroups[1]!.add(-2);
+      mapOfDiagTiles[1]!.putIfAbsent(tileIndex, () => -2);
+    }
+
+    for (final play in plays) {
+      final groupDiagIndexes = [0, 1];
+      for (final groupIndexDiag in groupDiagIndexes) {
+        if (mapOfDiagTiles[groupIndexDiag]!.containsKey(play.tileIndex)) {
+          mapOfDiagTiles[groupIndexDiag]!.update(play.tileIndex, (_) => play.occupiedById);
+        }
       }
     }
 
-    return mapOfGroups;
+    return mapOfDiagTiles;
   }
 
-  (int, int)? _checkFilledDiags(Map<int, List<int>> mapOfGroups) {
+  (int, int)? _checkFilledDiags(Map<int, Map<int, int>> mapOfGroups) {
     // Tile indexes: [0, 4, 8], [0, 6, 12, 18, 24]
-    final diag1Tiles = mapOfGroups[0]!.where((playerId) => playerId != -2);
+    final diag1Tiles = mapOfGroups[0]!.values.where((playerId) => playerId != -2);
 
     // Tile indexes: [2, 4, 6], [4, 8, 12, 16, 20]
-    final diag2Tiles = mapOfGroups[1]!.where((playerId) => playerId != -2);
+    final diag2Tiles = mapOfGroups[1]!.values.where((playerId) => playerId != -2);
 
     /// Store each played `playerId` that matches a
     /// stored group index for either `diag1` or `diag2`.
