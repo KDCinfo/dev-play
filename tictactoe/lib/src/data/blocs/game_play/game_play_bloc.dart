@@ -16,6 +16,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
   })  : _scorebookRepository = scorebookRepository,
         super(const GamePlayState()) {
     on<GamePlayMoveEvent>(_makeMove);
+    on<GamePlayBotMoveRequestedEvent>(_botMove);
     on<GamePlayUpdatedEvent>(_updateGameData);
     on<GamePlayEndGameEvent>(_endGameData);
     on<GamePlayResetGameEvent>(_resetGameData);
@@ -23,12 +24,12 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
       _updateBlocFromStream,
       onError: (Object err, StackTrace stacktrace) => AppConstants.appPrint(
-        message: '[game_play_bloc] Stream error ***** ***** *****',
+        message: '[game_play_bloc] [streamListener] Stream error ***** ***** *****',
         error: err,
         stacktrace: stacktrace,
       ),
       onDone: () => AppConstants.appPrint(
-        message: '[game_play_bloc] Stream done ***** ***** *****',
+        message: '[game_play_bloc] [streamListener] Stream done ***** ***** *****',
       ),
     );
   }
@@ -100,7 +101,37 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
       addError(err);
 
       AppConstants.appPrint(
-        message: '[game_play_bloc] Error ***** ***** *****',
+        message: '[game_play_bloc] [_makeMove] Error ***** ***** *****',
+        error: err,
+        stacktrace: stacktrace,
+      );
+    }
+  }
+
+  /// The bot's play.
+  ///
+  void _botMove(
+    GamePlayBotMoveRequestedEvent event,
+    Emitter<GamePlayState> emit,
+  ) {
+    try {
+      final filledAllRows =
+          _scorebookRepository.currentScorebookData.currentGame.gameBoardData.filledAllRows;
+      final tileIndex = BotPlay.runBotPlay(
+        filledAllRows: filledAllRows,
+      );
+
+      _scorebookRepository.playTurn(
+        currentGame: state.currentGame,
+        tileIndex: tileIndex,
+      );
+      //
+    } catch (err, stacktrace) {
+      //
+      addError(err);
+
+      AppConstants.appPrint(
+        message: '[game_play_bloc] [_botMove] Error ***** ***** *****',
         error: err,
         stacktrace: stacktrace,
       );
