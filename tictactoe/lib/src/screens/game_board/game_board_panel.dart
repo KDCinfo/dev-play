@@ -8,11 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameBoardPanel extends StatelessWidget {
-  const GameBoardPanel({super.key, this.edgeSize = 3});
-
-  // @TODO: This will be derived from the `BlocBuilder` below.
-  // In the meantime, we'll allow the value to be injected for testing.
-  final int edgeSize; // = 3;
+  const GameBoardPanel({super.key});
 
   void gridTileCallback(int index, BuildContext context) {
     context.read<GamePlayBloc>().add(GamePlayMoveEvent(tileIndex: index));
@@ -20,24 +16,20 @@ class GameBoardPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //
-    // @TODO: Add a `BlocBuilder` here for `edgeSize`.
-    //
-    return LayoutBuilder(
-      builder: (context, constraints) {
+    return BlocBuilder<GamePlayBloc, GamePlayState>(
+      builder: (context, state) {
+        final edgeSize = state.currentGame.gameBoardData.edgeSize;
         final tileCount = edgeSize * edgeSize;
 
-        return BlocBuilder<GamePlayBloc, GamePlayState>(
-          builder: (context, state) {
-            bool clickableTile(int index) =>
-                state.currentGame.gameBoardData.availableTileIndexes.contains(index);
+        bool clickableTile(int index) =>
+            state.currentGame.gameBoardData.availableTileIndexes.contains(index);
 
-            if (AppConstants.canPrint) {
-              log(
-                'availableTileIndexes: ${state.currentGame.gameBoardData.availableTileIndexes}',
-              );
-            }
+        if (AppConstants.canPrint) {
+          log('availableTileIndexes: ${state.currentGame.gameBoardData.availableTileIndexes}');
+        }
 
+        return LayoutBuilder(
+          builder: (context, constraints) {
             return Align(
               // alignment: Alignment.center,
               // Although `.center` is the default, the `Align` wrapper is still required

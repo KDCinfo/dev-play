@@ -42,25 +42,19 @@ class GameBoardLayoutPortrait extends StatelessWidget {
     ///
     /// log('GameBoardLayoutPortrait: constraints: $constraints');
     /// [log] GameBoardLayoutPortrait: constraints: BoxConstraints(0.0<=w<=399.4, 0.0<=h<=806.3)
-    return Column(
+    return const Column(
       children: [
-        const GameTitleRow(),
-        const SizedBox(height: 10),
+        GameTitleRow(),
+        SizedBox(height: 10),
         Expanded(
           flex: 2,
-          child: BlocBuilder<GamePlayBloc, GamePlayState>(
-            builder: (context, state) {
-              return GameBoardPanel(
-                edgeSize: state.currentGame.gameBoardData.edgeSize,
-              );
-            },
-          ),
+          child: GameBoardPanel(),
         ), // edgeSize: 5
-        const SizedBox(height: 20),
-        const GameBoardPlayerPanel(),
-        const SizedBox(height: 20),
-        const GameBoardButtonPanel(),
-        const Spacer(),
+        SizedBox(height: 20),
+        GameBoardPlayerPanel(),
+        SizedBox(height: 20),
+        GameBoardButtonPanel(),
+        Spacer(),
       ],
     );
   }
@@ -71,23 +65,17 @@ class GameBoardLayoutLandscape extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: BlocBuilder<GamePlayBloc, GamePlayState>(
-              builder: (context, state) {
-                return GameBoardPanel(
-                  edgeSize: state.currentGame.gameBoardData.edgeSize,
-                );
-              },
-            ),
+            child: GameBoardPanel(),
             // edgeSize: 5
           ),
-          const Expanded(
+          Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
