@@ -9,8 +9,8 @@ class BotPlayTilePlayData extends Equatable {
     required this.matchTupleEnum,
     this.playerId = -1,
     this.tilesPlayedCount = -1,
-    this.groupIndex = -1,
-    this.tileIndexToPlay = -1,
+    this.groupIndex = 0,
+    this.tileIndexToPlay = 0,
   });
 
   final MatchTupleEnum matchTupleEnum;

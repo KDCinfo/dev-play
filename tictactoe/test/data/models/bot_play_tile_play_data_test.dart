@@ -5,6 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('[BotPlayTilePlayData] Testing:', () {
+    test('should construct a new instance with defaults.', () {
+      const originalData = BotPlayTilePlayData(matchTupleEnum: MatchTupleEnum.row);
+
+      expect(originalData.matchTupleEnum, MatchTupleEnum.row);
+      expect(originalData.playerId, -1);
+      expect(originalData.tilesPlayedCount, -1);
+      expect(originalData.groupIndex, 0);
+      expect(originalData.tileIndexToPlay, 0);
+    });
+
     test('[copyWith] method should return a new instance with updated values.', () {
       const originalData = BotPlayTilePlayData(
         matchTupleEnum: MatchTupleEnum.row,
