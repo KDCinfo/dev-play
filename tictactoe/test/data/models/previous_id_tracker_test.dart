@@ -4,7 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('[PreviousIdTracker] Testing:', () {
-    test('[copyWith] method should return a new instance with updated values', () {
+    test('should construct a new instance with defaults.', () {
+      const tracker = PreviousIdTracker();
+
+      expect(tracker.playerId, equals(-1));
+      expect(tracker.currentLongestCount, equals(0));
+      expect(tracker.loopIndex, equals(-1));
+    });
+
+    test('[copyWith] method should return a new instance with updated values.', () {
       const tracker = PreviousIdTracker(
         playerId: 1,
         currentLongestCount: 5,
@@ -22,7 +30,7 @@ void main() {
       expect(updatedTracker.loopIndex, equals(11));
     });
 
-    test('[props] should return the correct list of properties', () {
+    test('[props] should return the correct list of properties.', () {
       const tracker = PreviousIdTracker(
         playerId: 1,
         currentLongestCount: 5,

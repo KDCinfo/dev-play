@@ -4,12 +4,12 @@ import 'package:equatable/equatable.dart';
 ///
 class PreviousIdTracker extends Equatable {
   const PreviousIdTracker({
-    required this.playerId,
-    required this.currentLongestCount,
-    required this.loopIndex,
+    this.playerId = -1,
+    this.currentLongestCount = 0,
+    this.loopIndex = -1,
   });
 
-  ///
+  // -2 = empty, -1 = not set, 0 = player 1, 1 = player 2
   final int playerId;
   final int currentLongestCount;
   final int loopIndex;
