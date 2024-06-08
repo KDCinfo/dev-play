@@ -117,8 +117,15 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     try {
       final filledAllRows =
           _scorebookRepository.currentScorebookData.currentGame.gameBoardData.filledAllRows;
+      final botId = state.currentGame.currentPlayerId;
+      // There are always only 2 players when a bot is in play.
+      // We'll be passing along the non-bot player to the tile checker.
+      final nonBotPlayerId =
+          state.currentGame.players.firstWhere((player) => player.playerId != botId).playerId ??
+              botId;
       final tileIndex = BotPlay.runBotPlay(
         filledAllRows: filledAllRows,
+        nonBotPlayerId: nonBotPlayerId,
       );
 
       _scorebookRepository.playTurn(

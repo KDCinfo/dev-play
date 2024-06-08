@@ -8,6 +8,7 @@ abstract class BotPlay {
     //   required GameData currentGame,
     //   required int tileIndex,
     // }) playTurn,
+    required int nonBotPlayerId,
   }) {
     // Where `tilesMatched` = `edgeSize - 1` (because `== edgeSize` would have been a win, above).
     //
@@ -74,35 +75,15 @@ abstract class BotPlay {
           // key:   int       currentTileIndex
           // value: List<int> checkPlayerId
 
-          var currentRangeLength = 0;
+          // var currentRangeLength = 0;
           var maxRangeLength = 0;
-          var lastEmptyTileIndex = -1;
-          var bestTileIndex = -1;
+          // var lastEmptyTileIndex = -1;
+          final bestTileIndex = findBestTileIndex(
+            groupList,
+            nonBotPlayerId,
+          );
 
           // Scan through the current row of tiles.
-          for (var loopCount = 0; loopCount < groupList.length; loopCount++) {
-            if (groupList[loopCount] == -2) {
-              // Check if the current range length is greater than the max range length found so far.
-              if (currentRangeLength > maxRangeLength) {
-                maxRangeLength = currentRangeLength;
-                bestTileIndex = lastEmptyTileIndex == -1 ? loopCount : lastEmptyTileIndex;
-              }
-              // Update the last empty tile index.
-              lastEmptyTileIndex = loopCount;
-              // Reset the current range length.
-              currentRangeLength = 0;
-            } else {
-              // Increment the current range length.
-              currentRangeLength++;
-            }
-          }
-
-          // Final check at the end of the array.
-          if (currentRangeLength > maxRangeLength) {
-            maxRangeLength = currentRangeLength;
-            // `-1 ? loopCount + 1` is for when the first tiles (`0+`) are played (not empty).
-            bestTileIndex = lastEmptyTileIndex;
-          }
 
           if (maxRangeLength >= tupleDataLists[MatchTupleEnum.row]!.tilesPlayedCount) {
             // return bestTileIndex;
