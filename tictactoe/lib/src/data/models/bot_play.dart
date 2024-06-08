@@ -4,10 +4,6 @@ import 'package:dev_play_tictactuple/src/data/models/models.dart';
 abstract class BotPlay {
   static int runBotPlay({
     required Map<MatchTupleEnum, Map<int, List<int>>> filledAllRows,
-    // required void Function({
-    //   required GameData currentGame,
-    //   required int tileIndex,
-    // }) playTurn,
     required int nonBotPlayerId,
   }) {
     // Where `tilesMatched` = `edgeSize - 1` (because `== edgeSize` would have been a win, above).
@@ -21,25 +17,14 @@ abstract class BotPlay {
     // final countDownRows = fullMap[MatchTupleEnum.row] ?? {}; // Map<int, List<int>>
 
     final countDownRows = filledAllRows[MatchTupleEnum.row] ?? {}; // Map<int, List<int>>
-    //                            // [Group]: [playerId, playerId] // List<int>
-    //                            //     [0]: [ 0,  1,  1,  0,  1] // -2 = empty tile
-    //                            //     [1]: [-2, -2,  1,  0, -2]
-    //                            //     [2]: [ 0,  1, -2,  0,  1]
-    //                            //     [3]: [ 0,  1,  1, -2,  1]
-    //                            //     [4]: [ 0,  1,  1,  0,  1]
-    // final countDownCols = fullMap[MatchTupleEnum.column] ?? {};
-    // final countDownDiags = fullMap[MatchTupleEnum.diagonal] ?? {};
-
-    // final mapOfGroupRows = _mapPlaysToRowGroups(); // { 0: [ playerId ], 1: [], 2: [] }
-    // final mapOfGroupCols = _mapPlaysToColGroups(); // { 0: [ playerId ], 1: [], 2: [] }
-    // final mapOfGroupDiags = _mapPlaysToDiagGroups(); // { 0: [ playerId ], 1: [], 2: [] }
-
-    /// BotPlayTilePlayData
-    ///   - MatchTupleEnum.row, .col, .diag
-    ///   - playerId
-    ///   - maxCount
-    ///   - groupIndex
-    ///   - tileToPlay
+    final countDownCols = filledAllRows[MatchTupleEnum.column] ?? {};
+    // final countDownDiags = filledAllRows[MatchTupleEnum.diagonal] ?? {};
+    //                               [Group]: [playerId, playerId] // List<int>
+    //                                   [0]: [ 0,  1,  1,  0,  1] // -2 = empty tile
+    //                                   [1]: [-2, -2,  1,  0, -2]
+    //                                   [2]: [ 0,  1, -2,  0,  1]
+    //                                   [3]: [ 0,  1,  1, -2,  1]
+    //                                   [4]: [ 0,  1,  1,  0,  1]
 
     final tupleDataLists = <MatchTupleEnum, BotPlayTilePlayData>{
       MatchTupleEnum.row: const BotPlayTilePlayData(matchTupleEnum: MatchTupleEnum.row),
@@ -47,43 +32,58 @@ abstract class BotPlay {
       MatchTupleEnum.diagonal: const BotPlayTilePlayData(matchTupleEnum: MatchTupleEnum.diagonal),
     };
 
-    /// The `edgeSize` is the number of rows or columns.
-    // final edgeSize = countDownRows.values.first.length;
-
-    // countDownRows.entries.map((rowGroup) {
     countDownRows.forEach(
       (rowGroup, groupList) {
-        // Note: A `playerId` of `-2` represents an empty tile.
-        //
-        // rowGroup.key // 0 // `groupIndex`
-        // rowGroup.value // [0, 1, 1, -2, 1]
-
-        // const previousIdTracker = PreviousIdTracker(
-        //     // playerId: -1,
-        //     // currentLongestCount: 0,
-        //     // loopIndex: -1,
-        //     );
-        // var loopCount = 0;
-
-        /// Only check rows with an empty tile.
+        /// Only check rows with an empty tile. If there are no
+        /// empty tiles, there's nowhere to play and nothing to check for.
+        ///
         final rowHasEmptyTile = groupList.any((playerId) => playerId == -2);
         final rowHasAllEmptyTiles = groupList.every((playerId) => playerId == -2);
 
-        /// If there are no empty tiles, there's nowhere to play and nothing to check for.
         if (!rowHasAllEmptyTiles && rowHasEmptyTile) {
-          var maxRangeLength = 0;
-          var bestTileIndex = 0;
-
-          (bestTileIndex, maxRangeLength) = findBestTileIndex(
-            groupList,
-            nonBotPlayerId,
-          );
+          final (bestTileIndex, maxRangeLength) = findBestTileIndex(groupList, nonBotPlayerId);
 
           if (maxRangeLength >= tupleDataLists[MatchTupleEnum.row]!.tilesPlayedCount) {
             tupleDataLists[MatchTupleEnum.row] = tupleDataLists[MatchTupleEnum.row]!.copyWith(
               tilesPlayedCount: maxRangeLength,
               groupIndex: rowGroup,
               tileIndexToPlay: bestTileIndex + (rowGroup * groupList.length),
+            );
+          }
+        }
+      },
+    );
+
+    countDownCols.forEach(
+      (colGroup, groupList) {
+        /// Only check cols with an empty tile.
+        final colHasEmptyTile = groupList.any((playerId) => playerId == -2);
+        final colHasAllEmptyTiles = groupList.every((playerId) => playerId == -2);
+
+        if (!colHasAllEmptyTiles && colHasEmptyTile) {
+          final (bestTileIndex, maxRangeLength) = findBestTileIndex(groupList, nonBotPlayerId);
+
+          final edgeSize = groupList.length;
+          final colIndex = bestTileIndex + (colGroup * edgeSize);
+          // Need to convert the 'col index' to a 'row index' based on
+          // how many tiles there are to transpose (i.e. the board size).
+          //
+          // For a 4-edge column:
+          // 	9 (col count) belongs at 6 (row count)
+          //
+          // 	Find the col cell index to convert (9).
+          // 	Use it and boardSize to find row cell index (6).
+          //
+          // - colIndex: 9 => rowIndex: 6
+          // - colIndex: 5 => rowIndex: 5 (same both ways)
+          //
+          final rowIndex = transposeColumnToRowIndex(colIndex, edgeSize);
+
+          if (maxRangeLength >= tupleDataLists[MatchTupleEnum.column]!.tilesPlayedCount) {
+            tupleDataLists[MatchTupleEnum.column] = tupleDataLists[MatchTupleEnum.column]!.copyWith(
+              tilesPlayedCount: maxRangeLength,
+              groupIndex: colGroup,
+              tileIndexToPlay: rowIndex,
             );
           }
         }
@@ -97,9 +97,12 @@ abstract class BotPlay {
 
     // @TODO: Find a tile to play from the list of 3 tuples.
     //        If max tiles played per group is only 1, see if middle is available.
-    // return newScorebookData.updateGame(newGameData);
-    final tileIndexToPlay = tupleDataLists[MatchTupleEnum.row]!.tileIndexToPlay;
-    return tileIndexToPlay > -1 ? tileIndexToPlay : 0;
+    final tupleRow = tupleDataLists[MatchTupleEnum.row]!;
+    final tupleCol = tupleDataLists[MatchTupleEnum.column]!;
+
+    return tupleRow.tilesPlayedCount > tupleCol.tilesPlayedCount
+        ? tupleRow.tileIndexToPlay
+        : tupleCol.tileIndexToPlay;
   }
 
   // (bestTileIndex, maxRangeLength) = findBestTileIndex(
@@ -169,5 +172,12 @@ abstract class BotPlay {
     // If no adjacent empty tiles are found, return -1
     // (this should not happen given the problem constraints).
     return (-1, 0);
+  }
+
+  static int transposeColumnToRowIndex(int colIndex, int edgeSize) {
+    final row = colIndex % edgeSize;
+    final col = colIndex ~/ edgeSize;
+    final rowIndex = row * edgeSize + col;
+    return rowIndex;
   }
 }
