@@ -71,22 +71,15 @@ abstract class BotPlay {
 
         /// If there are no empty tiles, there's nowhere to play and nothing to check for.
         if (!rowHasAllEmptyTiles && rowHasEmptyTile) {
-          // for (final checkPlayerId in groupList) {
-          // key:   int       currentTileIndex
-          // value: List<int> checkPlayerId
-
-          // var currentRangeLength = 0;
           var maxRangeLength = 0;
-          // var lastEmptyTileIndex = -1;
-          final bestTileIndex = findBestTileIndex(
+          var bestTileIndex = 0;
+
+          (bestTileIndex, maxRangeLength) = findBestTileIndex(
             groupList,
             nonBotPlayerId,
           );
 
-          // Scan through the current row of tiles.
-
           if (maxRangeLength >= tupleDataLists[MatchTupleEnum.row]!.tilesPlayedCount) {
-            // return bestTileIndex;
             tupleDataLists[MatchTupleEnum.row] = tupleDataLists[MatchTupleEnum.row]!.copyWith(
               tilesPlayedCount: maxRangeLength,
               groupIndex: rowGroup,
@@ -94,9 +87,8 @@ abstract class BotPlay {
             );
           }
         }
-        // return rowGroup;
       },
-    ); // End of `.map`
+    );
 
     // GameData newGameData;
     if (tupleDataLists[MatchTupleEnum.row]!.tileIndexToPlay > -1) {
@@ -110,7 +102,9 @@ abstract class BotPlay {
     return tileIndexToPlay > -1 ? tileIndexToPlay : 0;
   }
 
-  static int findBestTileIndex(
+  // (bestTileIndex, maxRangeLength) = findBestTileIndex(
+  //
+  static (int, int) findBestTileIndex(
     List<int> tiles,
     int nonBotPlayerId,
   ) {
@@ -143,10 +137,10 @@ abstract class BotPlay {
 
     // We need to check both sides and choose the first valid one.
     if (leftIndex >= 0 && tiles[leftIndex] == -2) {
-      return leftIndex;
+      return (leftIndex, largestSublist.length);
     }
     if (rightIndex < tiles.length && rightIndex >= 0 && tiles[rightIndex] == -2) {
-      return rightIndex;
+      return (rightIndex, largestSublist.length);
     }
 
     // If no empty tiles are found next to the largest sublist,
@@ -155,12 +149,13 @@ abstract class BotPlay {
       if (tiles[i] == -2) {
         if ((i > 0 && tiles[i - 1] == nonBotPlayerId) ||
             (i < tiles.length - 1 && tiles[i + 1] == nonBotPlayerId)) {
-          return i;
+          return (i, 1);
         }
       }
     }
 
-    // If no adjacent empty tiles are found, return -1 (this should not happen given the problem constraints).
-    return -1;
+    // If no adjacent empty tiles are found, return -1
+    // (this should not happen given the problem constraints).
+    return (-1, 0);
   }
 }
