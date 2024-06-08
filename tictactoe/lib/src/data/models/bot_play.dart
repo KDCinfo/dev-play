@@ -154,6 +154,18 @@ abstract class BotPlay {
       }
     }
 
+    // If there are still no empty tiles found next to the previous
+    // check, just grab the first empty tile (we can't be in this
+    // function unless there is an empty tile in the List).
+    //
+    // For example, if there's only one play to make;
+    // and it's not adjacent to the non-bot player.
+    for (var i = 0; i < tiles.length; i++) {
+      if (tiles[i] == -2) {
+        return (i, 0);
+      }
+    }
+
     // If no adjacent empty tiles are found, return -1
     // (this should not happen given the problem constraints).
     return (-1, 0);

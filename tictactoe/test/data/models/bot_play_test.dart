@@ -61,15 +61,15 @@ void main() {
 
       const chkId = 5;
       test('starting with playerId -2 (empty) with player 1:', () {
-        expect(BotPlay.findBestTileIndex([eId, eId, eId, eId, eId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([eId, eId, eId, eId, eId], chkId), (0, 0));
         expect(BotPlay.findBestTileIndex([eId, eId, eId, eId, playId], chkId), (3, 1));
         expect(BotPlay.findBestTileIndex([eId, eId, eId, playId, playId], chkId), (2, 2));
         expect(BotPlay.findBestTileIndex([eId, eId, eId, playId, botId], chkId), (2, 1));
-        expect(BotPlay.findBestTileIndex([eId, eId, eId, botId, playId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([eId, eId, eId, botId, playId], chkId), (0, 0));
         expect(BotPlay.findBestTileIndex([eId, eId, playId, eId, eId], chkId), (1, 1));
         expect(BotPlay.findBestTileIndex([eId, eId, playId, playId, playId], chkId), (1, 3));
         expect(BotPlay.findBestTileIndex([eId, eId, playId, botId, playId], chkId), (1, 1));
-        expect(BotPlay.findBestTileIndex([eId, eId, botId, playId, playId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([eId, eId, botId, playId, playId], chkId), (0, 0));
         expect(BotPlay.findBestTileIndex([eId, playId, eId, eId, eId], chkId), (0, 1));
         expect(BotPlay.findBestTileIndex([eId, playId, eId, eId, playId], chkId), (3, 1));
         expect(BotPlay.findBestTileIndex([eId, playId, eId, playId, eId], chkId), (2, 1));
@@ -81,17 +81,17 @@ void main() {
         expect(BotPlay.findBestTileIndex([eId, playId, playId, botId, botId], chkId), (0, 2));
         expect(BotPlay.findBestTileIndex([eId, botId, eId, playId, playId], chkId), (2, 2));
         expect(BotPlay.findBestTileIndex([eId, botId, playId, playId, eId], chkId), (4, 2));
-        expect(BotPlay.findBestTileIndex([eId, botId, playId, playId, botId], chkId), (-1, 0));
-        expect(BotPlay.findBestTileIndex([eId, botId, botId, playId, playId], chkId), (-1, 0));
-        expect(BotPlay.findBestTileIndex([eId, botId, botId, botId, botId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([eId, botId, playId, playId, botId], chkId), (0, 0));
+        expect(BotPlay.findBestTileIndex([eId, botId, botId, playId, playId], chkId), (0, 0));
+        expect(BotPlay.findBestTileIndex([eId, botId, botId, botId, botId], chkId), (0, 0));
       });
 
       test('starting with playerId -2 (empty) mixed with players 1 and 2:', () {
         expect(BotPlay.findBestTileIndex([eId, eId, playId, playId, botId], chkId), (1, 2));
         expect(BotPlay.findBestTileIndex([eId, eId, playId, botId, botId], chkId), (1, 1));
-        expect(BotPlay.findBestTileIndex([eId, eId, botId, playId, botId], chkId), (-1, 0));
-        expect(BotPlay.findBestTileIndex([eId, eId, botId, botId, playId], chkId), (-1, 0));
-        expect(BotPlay.findBestTileIndex([eId, eId, botId, botId, botId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([eId, eId, botId, playId, botId], chkId), (0, 0));
+        expect(BotPlay.findBestTileIndex([eId, eId, botId, botId, playId], chkId), (0, 0));
+        expect(BotPlay.findBestTileIndex([eId, eId, botId, botId, botId], chkId), (0, 0));
         expect(BotPlay.findBestTileIndex([eId, playId, eId, playId, botId], chkId), (2, 1));
         expect(BotPlay.findBestTileIndex([eId, playId, eId, botId, playId], chkId), (0, 1));
         expect(BotPlay.findBestTileIndex([eId, playId, eId, botId, botId], chkId), (0, 1));
@@ -104,10 +104,12 @@ void main() {
         expect(BotPlay.findBestTileIndex([eId, playId, botId, botId, playId], chkId), (0, 1));
         expect(BotPlay.findBestTileIndex([eId, playId, botId, botId, botId], chkId), (0, 1));
         expect(BotPlay.findBestTileIndex([eId, botId, eId, playId, botId], chkId), (2, 1));
-        expect(BotPlay.findBestTileIndex([eId, botId, eId, botId, playId], chkId), (-1, 0));
-        expect(BotPlay.findBestTileIndex([eId, botId, eId, botId, botId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([eId, botId, eId, botId, playId], chkId), (0, 0));
+        expect(BotPlay.findBestTileIndex([eId, botId, eId, botId, botId], chkId), (0, 0));
         expect(BotPlay.findBestTileIndex([eId, botId, playId, eId, playId], chkId), (3, 1));
         expect(BotPlay.findBestTileIndex([eId, botId, playId, eId, botId], chkId), (3, 1));
+        // Only one play to make; and it's not adjacent to the non-bot player.
+        expect(BotPlay.findBestTileIndex([eId, botId, playId, playId, playId], chkId), (0, 0));
       });
 
       test('starting with player 1:', () {
@@ -132,7 +134,7 @@ void main() {
       });
 
       test('starting with player 2:', () {
-        expect(BotPlay.findBestTileIndex([botId, eId, eId, eId, eId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([botId, eId, eId, eId, eId], chkId), (1, 0));
         expect(BotPlay.findBestTileIndex([botId, eId, eId, playId, playId], chkId), (2, 2));
         expect(BotPlay.findBestTileIndex([botId, eId, playId, playId, playId], chkId), (1, 3));
         expect(BotPlay.findBestTileIndex([botId, playId, eId, eId, eId], chkId), (2, 1));
@@ -163,7 +165,7 @@ void main() {
 
         // Interspersed empty tiles.
         expect(BotPlay.findBestTileIndex([playId, eId, playId, eId, playId], chkId), (3, 1));
-        expect(BotPlay.findBestTileIndex([botId, eId, botId, eId, botId], chkId), (-1, 0));
+        expect(BotPlay.findBestTileIndex([botId, eId, botId, eId, botId], chkId), (1, 0));
       });
     });
   });
