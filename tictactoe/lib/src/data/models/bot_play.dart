@@ -81,24 +81,84 @@ abstract class BotPlay {
       },
     );
 
-    // GameData newGameData;
-    if (tupleDataLists[MatchTupleEnum.row]!.tileIndexToPlay > -1) {
-      //
-    }
+    countDownDiags.forEach(
+      (diagGroup, groupList) {
+        /// Only check diags with an empty tile.
+        final diagHasEmptyTile = groupList.any((playerId) => playerId == -2);
+        final diagHasAllEmptyTiles = groupList.every((playerId) => playerId == -2);
 
-    // @TODO: Find a tile to play from the list of 3 tuples.
-    //        If max tiles played per group is only 1, see if middle is available.
+        if (!diagHasAllEmptyTiles && diagHasEmptyTile) {
+          final (bestTileIndex, maxRangeLength) = findBestTileIndex(groupList, nonBotPlayerId);
+
+          final edgeSize = groupList.length;
+          final boardSize = edgeSize * edgeSize;
+
+          var transposedDiagIndex = -1;
+
+          /// [1st] => Top left to bottom right.
+          /// [2nd] => Top right to bottom left.
+          /// To be filled in with either a playerId, or a -2 for an empty tile.
+          var checkCount = 0;
+
+          if (diagGroup == 0) {
+            // Check the [1st] diag group for a `bestTileIndex`.
+            // 1st pass example:
+            // |--> groupList: [-2, -2, -2, -2]
+            // |--> diagIndex 0 => rowIndex 0
+            for (var tileIndex = 0; tileIndex < boardSize; tileIndex += edgeSize + 1) {
+              // [0] += 3 + 1 == 4
+              // [4] += 3 + 1 == 8
+              // [8] += 3 + 1 == 12 (> boardSize)
+              if (bestTileIndex == checkCount) {
+                transposedDiagIndex = tileIndex;
+              }
+              checkCount++;
+            }
+          } else {
+            // Check the [2nd] diag group.
+            // 2nd pass example:
+            // |--> groupList: [-2, 1, -2, -2]
+            // |--> diagIndex 0 => rowIndex 3
+            for (var tileIndex = edgeSize - 1;
+                tileIndex < boardSize - 1;
+                tileIndex += edgeSize - 1) {
+              // 3 - 1 == [2] | 2 += 3 - 1 == [4]
+              //          [4] | 4 += 3 - 1 == [6]
+              //          [6] | 6 += 3 - 1 == [8] (! < boardSize - 1)
+              if (bestTileIndex == checkCount) {
+                transposedDiagIndex = tileIndex;
+              }
+              checkCount++;
+            }
+          }
+
+          if (maxRangeLength >= tupleDataLists[MatchTupleEnum.diagonal]!.tilesPlayedCount &&
+              transposedDiagIndex > -1) {
+            tupleDataLists[MatchTupleEnum.diagonal] =
+                tupleDataLists[MatchTupleEnum.diagonal]!.copyWith(
+              tilesPlayedCount: maxRangeLength,
+              groupIndex: diagGroup,
+              tileIndexToPlay: transposedDiagIndex,
+            );
+          }
+        }
+      },
+    );
+
+    // Find a tile to play from the list of 3 tuples.
+    // @TODO: If max tiles played per group is only 1, see if middle is available.
     final tupleRow = tupleDataLists[MatchTupleEnum.row]!;
     final tupleCol = tupleDataLists[MatchTupleEnum.column]!;
+    final tupleDiag = tupleDataLists[MatchTupleEnum.diagonal]!;
 
     return tupleRow.tilesPlayedCount > tupleCol.tilesPlayedCount
         ? tupleRow.tileIndexToPlay
-        : tupleCol.tileIndexToPlay;
+        : tupleCol.tilesPlayedCount > tupleDiag.tilesPlayedCount
+            ? tupleCol.tileIndexToPlay
+            : tupleDiag.tileIndexToPlay;
   }
 
-  // (bestTileIndex, maxRangeLength) = findBestTileIndex(
-  //
-  static (int, int) findBestTileIndex(
+  static (int bestTileIndex, int maxRangeLength) findBestTileIndex(
     List<int> tiles,
     int nonBotPlayerId,
   ) {
