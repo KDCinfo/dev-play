@@ -103,7 +103,12 @@ void main() {
           gamePlayBloc: mockGamePlayBloc,
         );
         when(() => mockGamePlayBloc.state).thenReturn(
-          GamePlayState(currentGame: GameData(players: [...playerList])),
+          GamePlayState(
+            currentGame: GameData(
+              players: [...playerList],
+              gameBoardData: const GameBoardData(edgeSize: 4),
+            ),
+          ),
         );
         when(() => mockScorebookRepository.scorebookDataStream).thenAnswer(
           (_) => Stream.value(const ScorebookData()),
@@ -143,7 +148,12 @@ void main() {
           gamePlayBloc: mockGamePlayBloc,
         );
         when(() => mockGamePlayBloc.state).thenReturn(
-          GamePlayState(currentGame: GameData(players: [...playerList])),
+          GamePlayState(
+            currentGame: GameData(
+              players: [...playerList],
+              gameBoardData: const GameBoardData(edgeSize: 5),
+            ),
+          ),
         );
       });
 

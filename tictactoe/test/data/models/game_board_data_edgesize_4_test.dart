@@ -54,6 +54,7 @@ void main() {
         edgeSize = edgeSizeConstant;
         edgeSize2 = 5;
       });
+
       test('works.', () {
         final gameBoardDataBase = GameBoardData(edgeSize: edgeSize);
         final gameBoardDataTarget = gameBoardDataBase.changeEdgeSize(edgeSize: edgeSize2);
@@ -413,10 +414,13 @@ void main() {
               playPlayer2(playerTurnId: 7, tileIndex: 12), // 12
             ];
 
-            final gameBoardData = GameBoardData(edgeSize: edgeSize);
-            final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+            final gameBoardData = GameBoardData(
+              plays: plays,
+              edgeSize: 4,
+            );
+            // final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-            final result = gameBoardCopy.checkAllDiags;
+            final result = gameBoardData.checkAllDiags;
             // ( Group index: 1, playerId: 1 (player 2) )
             expect(result, (1, 1));
           },

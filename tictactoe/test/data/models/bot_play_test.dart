@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('[BotPlay] Testing:', () {
     group('[runBotPlay]', () {
-      // @TODO: These only test the first row right now.
       test('runBotPlay should return 0 when there are no empty tiles.', () {
         //
         // [5] = player 1
@@ -15,9 +14,9 @@ void main() {
         final filledAllRows = {
           MatchTupleEnum.row: {
             0: [3, 5, 5, 3, 5],
-            1: [-2, -2, 5, 3, -2],
-            2: [3, 5, -2, 3, 5],
-            3: [3, 5, 5, -2, 5],
+            1: [-2, 3, 5, 3, -2],
+            2: [3, 5, 3, 3, 5],
+            3: [3, 5, 5, 5, 5],
             4: [3, 5, 5, 3, 5],
           },
         };
@@ -28,8 +27,7 @@ void main() {
         );
 
         // @TODO: Finish this test when `BotPlay.runBotPlay` is completed.
-        // expect(result, 0);
-        expect(result, 16);
+        expect(result, 0);
       });
 
       test('runBotPlay should return the tile index to play when there are empty tiles.', () {
@@ -38,7 +36,7 @@ void main() {
             0: [3, 5, 5, -2, 5],
             1: [-2, -2, 5, 3, -2],
             2: [3, 5, -2, 3, 5],
-            3: [3, 5, 5, -2, 5],
+            3: [3, 5, 5, -2, 5], // Only testing rows; tile 18 is the last empty tile with two 5s.
             4: [3, 5, 5, 3, 5],
           },
         };
@@ -48,9 +46,7 @@ void main() {
           nonBotPlayerId: 5,
         );
 
-        // @TODO: Finish this test when `BotPlay.runBotPlay` is completed.
-        // expect(result, 3);
-        expect(result, 16);
+        expect(result, 18);
       });
     });
 
