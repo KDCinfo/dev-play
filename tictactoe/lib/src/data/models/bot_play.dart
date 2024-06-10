@@ -3,23 +3,14 @@ import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 abstract class BotPlay {
   static int runBotPlay({
-    required Map<MatchTupleEnum, Map<int, List<int>>> filledAllRows,
+    required Map<MatchTupleEnum, Map<int, List<int>>> filledAllTuples,
     required int nonBotPlayerId,
   }) {
-    // Where `tilesMatched` = `edgeSize - 1` (because `== edgeSize` would have been a win, above).
     //
-    // `do while(final tilesMatched = edgeSize; tilesMatched > 0; tilesMatched--)`
-    // - Check rows filled with `tilesMatched`
-    // - Check cols filled with `tilesMatched`
-    // - Check diags filled with `tilesMatched`
-
-    // final fullMap = newScorebookData.currentGame.gameBoardData.filledAllRows;
-    // final countDownRows = fullMap[MatchTupleEnum.row] ?? {}; // Map<int, List<int>>
-
-    final countDownRows = filledAllRows[MatchTupleEnum.row] ?? {}; // Map<int, List<int>>
-    final countDownCols = filledAllRows[MatchTupleEnum.column] ?? {};
-    // final countDownDiags = filledAllRows[MatchTupleEnum.diagonal] ?? {};
-    //                               [Group]: [playerId, playerId] // List<int>
+    final countDownRows = filledAllTuples[MatchTupleEnum.row] ?? {}; // Map<int, List<int>>
+    final countDownCols = filledAllTuples[MatchTupleEnum.column] ?? {};
+    final countDownDiags = filledAllTuples[MatchTupleEnum.diagonal] ?? {};
+    //                               [Group]: [playerId, playerId, ...] // List<int>
     //                                   [0]: [ 0,  1,  1,  0,  1] // -2 = empty tile
     //                                   [1]: [-2, -2,  1,  0, -2]
     //                                   [2]: [ 0,  1, -2,  0,  1]

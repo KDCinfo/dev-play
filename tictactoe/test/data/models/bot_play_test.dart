@@ -23,7 +23,7 @@ void main() {
         };
 
         final result = BotPlay.runBotPlay(
-          filledAllRows: filledAllRows,
+          filledAllTuples: filledAllRows,
           nonBotPlayerId: 5,
         );
 
@@ -44,7 +44,7 @@ void main() {
         };
 
         final result = BotPlay.runBotPlay(
-          filledAllRows: filledAllRows,
+          filledAllTuples: filledAllRows,
           nonBotPlayerId: 5,
         );
 

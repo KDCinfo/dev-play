@@ -124,7 +124,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
           state.currentGame.players.firstWhere((player) => player.playerId != botId).playerId ??
               botId;
       final tileIndex = BotPlay.runBotPlay(
-        filledAllRows: filledAllRows,
+        filledAllTuples: filledAllRows,
         nonBotPlayerId: nonBotPlayerId,
       );
 
