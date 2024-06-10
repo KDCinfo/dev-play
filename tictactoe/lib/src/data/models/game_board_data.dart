@@ -206,33 +206,19 @@ class GameBoardData extends Equatable {
     // Tile indexes: [2, 4, 6], [4, 8, 12, 16, 20]
     final diag2Tiles = mapOfGroups[1]!.values.where((playerId) => playerId != -2);
 
-    /// Store each played `playerId` that matches a
-    /// stored group index for either `diag1` or `diag2`.
-    final diag1Players = <int>[];
-    final diag2Players = <int>[];
-
-    for (final play in plays) {
-      if (diag1Tiles.contains(play.tileIndex)) {
-        diag1Players.add(play.occupiedById);
-      }
-      if (diag2Tiles.contains(play.tileIndex)) {
-        diag2Players.add(play.occupiedById);
-      }
-    }
-
     /// Check if either group is full,
     /// and all matching the first `playerId` in the list.
-    if (diag1Players.isNotEmpty) {
-      final diag1FirstPlayerId = diag1Players.first;
-      if (diag1Players.length == edgeSize &&
-          diag1Players.every((playerId) => playerId == diag1FirstPlayerId)) {
+    if (diag1Tiles.isNotEmpty) {
+      final diag1FirstPlayerId = diag1Tiles.first;
+      if (diag1Tiles.length == edgeSize &&
+          diag1Tiles.every((playerId) => playerId == diag1FirstPlayerId)) {
         return (0, diag1FirstPlayerId);
       }
     }
-    if (diag2Players.isNotEmpty) {
-      final diag2FirstPlayerId = diag2Players.first;
-      if (diag2Players.length == edgeSize &&
-          diag2Players.every((playerId) => playerId == diag2FirstPlayerId)) {
+    if (diag2Tiles.isNotEmpty) {
+      final diag2FirstPlayerId = diag2Tiles.first;
+      if (diag2Tiles.length == edgeSize &&
+          diag2Tiles.every((playerId) => playerId == diag2FirstPlayerId)) {
         return (1, diag2FirstPlayerId);
       }
     }
