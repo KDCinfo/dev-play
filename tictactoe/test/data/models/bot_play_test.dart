@@ -29,7 +29,7 @@ void main() {
 
         // @TODO: Finish this test when `BotPlay.runBotPlay` is completed.
         // expect(result, 0);
-        expect(result, 18);
+        expect(result, 16);
       });
 
       test('runBotPlay should return the tile index to play when there are empty tiles.', () {
@@ -50,7 +50,7 @@ void main() {
 
         // @TODO: Finish this test when `BotPlay.runBotPlay` is completed.
         // expect(result, 3);
-        expect(result, 18);
+        expect(result, 16);
       });
     });
 

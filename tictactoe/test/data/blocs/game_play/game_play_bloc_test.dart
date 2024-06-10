@@ -14,9 +14,8 @@ void main() {
 
   group('[GamePlayBloc] Testing:', () {
     setUpAll(() {
-      registerFallbackValue(
-        const ScorebookData(),
-      );
+      registerFallbackValue(const ScorebookData());
+      registerFallbackValue(const GameData());
     });
 
     setUp(() {
@@ -98,8 +97,12 @@ void main() {
         build: () => gamePlayBloc,
         act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 4)),
         verify: (_) async {
-          verify(() => mockScorebookRepository.currentScorebookData).called(1);
-          verify(() => mockScorebookRepository.updateGame(any())).called(1);
+          verify(
+            () => mockScorebookRepository.playTurn(
+              currentGame: any(named: 'currentGame'),
+              tileIndex: any(named: 'tileIndex'),
+            ),
+          ).called(1);
         },
       );
 
@@ -127,8 +130,12 @@ void main() {
         build: () => gamePlayBloc,
         act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 4)),
         verify: (_) async {
-          verify(() => mockScorebookRepository.currentScorebookData).called(1);
-          verify(() => mockScorebookRepository.updateGame(any())).called(1);
+          verify(
+            () => mockScorebookRepository.playTurn(
+              currentGame: any(named: 'currentGame'),
+              tileIndex: any(named: 'tileIndex'),
+            ),
+          ).called(1);
         },
       );
 

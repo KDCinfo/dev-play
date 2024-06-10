@@ -96,7 +96,7 @@ void main() {
       setUp(() async {
         mockGamePlayBloc = MockGamePlayBloc();
 
-        widgetToTest = const GameBoardPanel(edgeSize: edgeSize);
+        widgetToTest = const GameBoardPanel();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
@@ -136,7 +136,7 @@ void main() {
       const countSize = edgeSize * edgeSize;
 
       setUp(() async {
-        widgetToTest = const GameBoardPanel(edgeSize: edgeSize);
+        widgetToTest = const GameBoardPanel();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
