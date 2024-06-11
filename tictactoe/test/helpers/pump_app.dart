@@ -153,6 +153,16 @@ abstract class PumpApp {
       ),
     );
   }
+
+  static Future<Widget> providerWrappedInternal({
+    required Widget child,
+    required WaitForBotBloc waitForBotBloc,
+  }) async {
+    return BlocProvider(
+      create: (context) => waitForBotBloc,
+      child: child,
+    );
+  }
 }
 
 /*

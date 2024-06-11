@@ -13,10 +13,6 @@ class MockStorageAPI extends Mock implements StorageServiceApi {}
 
 class MockScorebookRepository extends Mock implements ScorebookRepository {}
 
-class MockGameEntryBloc extends MockBloc<GameEntryEvent, GameEntryState> implements GameEntryBloc {}
-
-class MockGamePlayBloc extends MockBloc<GamePlayEvent, GamePlayState> implements GamePlayBloc {}
-
 class MockGameEntryState extends Mock implements GameEntryState {}
 
 /// Navigation Mocks
@@ -28,6 +24,13 @@ class MockRoute extends Mock implements Route<void> {}
 class FakeRoute extends Fake implements Route<void> {}
 
 /// Bloc Mocks
+
+class MockGameEntryBloc extends MockBloc<GameEntryEvent, GameEntryState> implements GameEntryBloc {}
+
+class MockGamePlayBloc extends MockBloc<GamePlayEvent, GamePlayState> implements GamePlayBloc {}
+
+class MockWaitForBotBloc extends MockBloc<WaitForBotEvent, WaitForBotState>
+    implements WaitForBotBloc {}
 
 class FakeBloc extends Fake implements Bloc<Object, Object> {}
 

@@ -12,6 +12,7 @@ void main() {
   group('GamePlay GameBoard Panel Testing:', () {
     late MockScorebookRepository mockScorebookRepository;
     late GamePlayBloc mockGamePlayBloc;
+    late WaitForBotBloc mockWaitForBotBloc;
 
     late Widget widgetToTest;
     late Widget wrappedWidget;
@@ -25,8 +26,10 @@ void main() {
     setUp(() {
       mockScorebookRepository = MockScorebookRepository();
       mockGamePlayBloc = MockGamePlayBloc();
+      mockWaitForBotBloc = MockWaitForBotBloc();
       when(() => mockScorebookRepository.scorebookDataStream)
           .thenAnswer((_) => Stream.value(const ScorebookData()));
+      when(() => mockWaitForBotBloc.state).thenReturn(const WaitForBotState());
     });
 
     ///
@@ -37,7 +40,10 @@ void main() {
       setUp(() async {
         widgetToTest = const GameBoardPanel();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: widgetToTest,
+          child: await PumpApp.providerWrappedInternal(
+            waitForBotBloc: mockWaitForBotBloc,
+            child: widgetToTest,
+          ),
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
         );
@@ -61,7 +67,10 @@ void main() {
       setUp(() async {
         widgetToTest = const GameBoardPanel(); // Default is 3.
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: widgetToTest,
+          child: await PumpApp.providerWrappedInternal(
+            waitForBotBloc: mockWaitForBotBloc,
+            child: widgetToTest,
+          ),
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
         );
@@ -98,7 +107,10 @@ void main() {
 
         widgetToTest = const GameBoardPanel();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: widgetToTest,
+          child: await PumpApp.providerWrappedInternal(
+            waitForBotBloc: mockWaitForBotBloc,
+            child: widgetToTest,
+          ),
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
         );
@@ -143,7 +155,10 @@ void main() {
       setUp(() async {
         widgetToTest = const GameBoardPanel();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: widgetToTest,
+          child: await PumpApp.providerWrappedInternal(
+            waitForBotBloc: mockWaitForBotBloc,
+            child: widgetToTest,
+          ),
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,
         );
