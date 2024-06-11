@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/app_provider_wrapper_bloc.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
@@ -17,11 +18,11 @@ abstract class PumpApp {
         child: MaterialApp(
           themeMode: ThemeMode.light,
           theme: ThemeData(
-            colorSchemeSeed: const Color(0xFF800000),
+            colorSchemeSeed: AppConstants.primaryTileColor,
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
-            colorSchemeSeed: const Color(0xFF800000),
+            colorSchemeSeed: AppConstants.primaryTileColor,
           ),
           navigatorObservers: mockObserver != null ? [mockObserver] : [],
           initialRoute: '/',
@@ -39,11 +40,11 @@ abstract class PumpApp {
       MaterialApp(
         themeMode: ThemeMode.light,
         theme: ThemeData(
-          colorSchemeSeed: const Color(0xFF800000),
+          colorSchemeSeed: AppConstants.primaryTileColor,
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-          colorSchemeSeed: const Color(0xFF800000),
+          colorSchemeSeed: AppConstants.primaryTileColor,
         ),
         // home: Scaffold(
         //   body: child,
@@ -62,11 +63,11 @@ abstract class PumpApp {
       MaterialApp(
         themeMode: ThemeMode.light,
         theme: ThemeData(
-          colorSchemeSeed: const Color(0xFF800000),
+          colorSchemeSeed: AppConstants.primaryTileColor,
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-          colorSchemeSeed: const Color(0xFF800000),
+          colorSchemeSeed: AppConstants.primaryTileColor,
         ),
         home: Scaffold(
           body: child,

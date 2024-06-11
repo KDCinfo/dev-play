@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class GameBoardPanelTile extends StatelessWidget {
@@ -13,7 +14,7 @@ class GameBoardPanelTile extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(
-          color: const Color(0xFF800000).withOpacity(0.5),
+          color: AppConstants.primaryTileColor.withOpacity(0.5),
           width: 2,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -21,7 +22,7 @@ class GameBoardPanelTile extends StatelessWidget {
           BoxShadow(color: Colors.white),
           BoxShadow(
             offset: Offset(2, 2),
-            color: Color(0xFF800000),
+            color: AppConstants.primaryTileColor,
             spreadRadius: -1,
             blurRadius: 4,
           ),

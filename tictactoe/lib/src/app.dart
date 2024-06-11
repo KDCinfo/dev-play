@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
@@ -25,11 +26,11 @@ class MyApp extends StatelessWidget {
 
       // themeMode: ThemeMode.system,
       theme: ThemeData(
-        colorSchemeSeed: const Color(0xFF800000),
+        colorSchemeSeed: AppConstants.primaryTileColor,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        colorSchemeSeed: const Color(0xFF800000),
+        colorSchemeSeed: AppConstants.primaryTileColor,
       ),
       initialRoute: '/',
       routes: {

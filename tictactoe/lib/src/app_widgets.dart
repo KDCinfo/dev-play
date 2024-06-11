@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:dev_play_tictactuple/src/app_constants.dart';
+
 import 'package:flutter/material.dart';
 
 class ButtonUp extends StatelessWidget {
@@ -11,7 +13,7 @@ class ButtonUp extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
       decoration: BoxDecoration(
         border: Border.all(
-          color: const Color(0xFF800000).withOpacity(0.5),
+          color: AppConstants.primaryTileColor.withOpacity(0.5),
           width: 2,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -19,7 +21,7 @@ class ButtonUp extends StatelessWidget {
           BoxShadow(color: Colors.white),
           BoxShadow(
             offset: Offset(2, 2),
-            color: Color(0xFF800000),
+            color: AppConstants.primaryTileColor,
             spreadRadius: -1,
             blurRadius: 4,
           ),
@@ -52,7 +54,7 @@ class ButtonDown extends StatelessWidget {
           BoxShadow(color: Color(0xFF400000)),
           BoxShadow(
             offset: Offset(3, 3),
-            color: Color(0xFF800000),
+            color: AppConstants.primaryTileColor,
             spreadRadius: -4,
             blurRadius: 6,
           ),

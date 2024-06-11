@@ -1,5 +1,7 @@
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
+import 'package:flutter/material.dart';
+
 typedef AppReturnObjDef = Map<String, List<dynamic>>;
 typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
 
@@ -42,6 +44,8 @@ abstract class AppConstants {
     ),
     playerBot,
   ];
+
+  static const primaryTileColor = Color(0xFF800000);
 
   /// Board Size
   static const boardSizeLabel = 'Board Size';
