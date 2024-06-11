@@ -15,22 +15,24 @@ class GameBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrePopScope(
-      currentRoutePath: '/play',
-      child: Builder(
-        builder: (context) {
-          return SafeArea(
-            child: Scaffold(
-              body: BlocListener<GamePlayBloc, GamePlayState>(
-                listenWhen: (previous, current) =>
-                    previous.currentGame.gameBoardData.plays.length !=
-                        current.currentGame.gameBoardData.plays.length &&
-                    current.currentGame.currentPlayerIndex == 1 &&
-                    current.currentGame.players[current.currentGame.currentPlayerIndex]
-                            .playerType ==
-                        const PlayerTypeBot(),
-                listener: (context, state) async {
                   /// @TODO: Show a . . . waiting . . . widget.
+    return BlocProvider(
+      create: (context) => WaitForBotBloc(),
+      child: PrePopScope(
+        currentRoutePath: '/play',
+        child: Builder(
+          builder: (context) {
+            return SafeArea(
+              child: Scaffold(
+                body: BlocListener<GamePlayBloc, GamePlayState>(
+                  listenWhen: (previous, current) =>
+                      previous.currentGame.gameBoardData.plays.length !=
+                          current.currentGame.gameBoardData.plays.length &&
+                      current.currentGame.currentPlayerIndex == 1 &&
+                      current.currentGame.players[current.currentGame.currentPlayerIndex]
+                              .playerType ==
+                          const PlayerTypeBot(),
+                  listener: (context, state) async {
 
                   /// Let the bot do its thing...
                   await Future<void>.delayed(
@@ -39,14 +41,15 @@ class GameBoardScreen extends StatelessWidget {
                   );
 
                   /// @TODO: Add another listener to stop showing waiting widget.
-                },
-                child: const GameOrientationLayout(
-                  orientationScreen: OrientationScreenGameBoard(),
+                  },
+                  child: const GameOrientationLayout(
+                    orientationScreen: OrientationScreenGameBoard(),
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
