@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/pre_pop_scope.dart';
@@ -15,7 +16,6 @@ class GameBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-                  /// @TODO: Show a . . . waiting . . . widget.
     return BlocProvider(
       create: (context) => WaitForBotBloc(),
       child: PrePopScope(
@@ -33,14 +33,21 @@ class GameBoardScreen extends StatelessWidget {
                               .playerType ==
                           const PlayerTypeBot(),
                   listener: (context, state) async {
+                    // Show a waiting widget.
+                    context.read<WaitForBotBloc>().add(
+                          const WaitForBotOnEvent(),
+                        );
 
-                  /// Let the bot do its thing...
-                  await Future<void>.delayed(
-                    const Duration(milliseconds: 500),
-                    () => context.read<GamePlayBloc>().add(const GamePlayBotMoveRequestedEvent()),
-                  );
-
-                  /// @TODO: Add another listener to stop showing waiting widget.
+                    // Let the bot do its thing...
+                    await Future<void>.delayed(
+                      const Duration(milliseconds: AppConstants.botDelay),
+                      () => context.read<GamePlayBloc>().add(const GamePlayBotMoveRequestedEvent()),
+                    ).then<void>((_) {
+                      // Stop showing the waiting widget.
+                      context.read<WaitForBotBloc>().add(
+                            const WaitForBotOffEvent(),
+                          );
+                    });
                   },
                   child: const GameOrientationLayout(
                     orientationScreen: OrientationScreenGameBoard(),

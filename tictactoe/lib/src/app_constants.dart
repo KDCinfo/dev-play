@@ -45,6 +45,8 @@ abstract class AppConstants {
     playerBot,
   ];
 
+  static const botDelay = 1200;
+
   static const primaryTileColor = Color(0xFF800000);
 
   /// Board Size
