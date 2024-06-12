@@ -142,7 +142,7 @@ void main() {
             ]),
           );
           await tester.pumpWidget(wrappedWidget);
-          await tester.pumpAndSettle();
+          await tester.pump();
 
           // Capture the mockObserver call.
           //

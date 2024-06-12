@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/screens/game_board/game_board.dart';
+import 'package:dev_play_tictactuple/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,21 +78,7 @@ class GameBoardPanel extends StatelessWidget {
                             );
                           },
                         ),
-                        // const ColoredBox(color: Colors.green),
-                        if (waitState.isWaiting)
-                          Center(
-                            child: SizedBox(
-                              height: 100,
-                              width: 120,
-                              child: LinearProgressIndicator(
-                                backgroundColor: AppConstants.primaryTileColor.withOpacity(0.7),
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.deepOrange.withOpacity(0.4),
-                                ),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                          ),
+                        WaitForBotIndicator(waitingOnBot: waitState.isWaiting),
                       ],
                     ),
                   ),

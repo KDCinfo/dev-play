@@ -45,9 +45,12 @@ abstract class AppConstants {
     playerBot,
   ];
 
-  static const botDelay = 1200;
+  static const botDelay = 1500;
 
   static const primaryTileColor = Color(0xFF800000);
+
+  /// Used in `BlocListener` in `GameBoardScreen`.
+  static const ignorePointerKey = Key('ignorePointerKey');
 
   /// Board Size
   static const boardSizeLabel = 'Board Size';
