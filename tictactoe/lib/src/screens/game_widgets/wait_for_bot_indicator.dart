@@ -1,4 +1,5 @@
 import 'package:dev_play_tictactuple/src/app_constants.dart';
+import 'package:dev_play_tictactuple/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
 
@@ -24,17 +25,12 @@ class _WaitForBotIndicatorState extends State<WaitForBotIndicator> {
       child: AnimatedOpacity(
         opacity: widget.waitingOnBot ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 800),
-        child: Center(
+        child: const Center(
           child: SizedBox(
             height: 100,
             width: 120,
-            child: LinearProgressIndicator(
-              backgroundColor: AppConstants.primaryTileColor.withOpacity(0.7),
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.deepOrange.withOpacity(0.4),
-              ),
-              borderRadius: BorderRadius.circular(50),
-            ),
+            // child: StaticProgressIndicator(),
+            child: AnimatedLinearProgressIndicator(),
           ),
         ),
       ),
