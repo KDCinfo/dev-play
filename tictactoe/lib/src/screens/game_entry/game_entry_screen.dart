@@ -33,14 +33,41 @@ class GameEntryScreen extends StatelessWidget {
                       // @TODO: Play a 'great game' popup animation.
                       //        For now, we'll just show a dialog screen with a message.
 
+                      // Check if there was a winner in the last game.
+                      // If so, use the winner's name in the end game status message.
+                      //
+                      // allGames.entries: { gameId, gameData }.value => gameData
+                      final lastGame = context
+                          .read<GamePlayBloc>()
+                          .currentScorebookData
+                          .allGames
+                          .entries
+                          .last
+                          .value;
+
+                      final winnerId = lastGame.winnerId;
+                      final lastPlayerWasWinner = winnerId != -1;
+                      final lastPlayerName = !lastPlayerWasWinner
+                          ? ''
+                          : lastGame.players
+                              .firstWhere(
+                                (PlayerData player) => player.playerId == winnerId,
+                                orElse: () => const PlayerData(playerNum: -1),
+                              )
+                              .playerName;
+
+                      final endGameStatusMessage = !lastPlayerWasWinner
+                          ? 'Well played!!'
+                          : 'Congratulations $lastPlayerName!!';
+
                       // @TODO: Show filled rows, columns, or diagonals.
                       await showDialog<void>(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Great Game!'),
-                            content: const Text('Well played!!'),
                             alignment: Alignment.bottomCenter,
+                            title: const Text(AppConstants.gameOverTitle),
+                            content: Text(endGameStatusMessage),
                             actions: [
                               TextButton(
                                 onPressed: () {

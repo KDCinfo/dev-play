@@ -50,7 +50,7 @@ abstract class AppConstants {
 
   static const primaryTileColor = Color(0xFF800000);
 
-  /// Used in `BlocListener` in `GameBoardScreen`.
+  /// Used in `WaitForBotIndicator` widget.
   static const ignorePointerKey = Key('ignorePointerKey');
 
   /// Board Size
@@ -71,6 +71,9 @@ abstract class AppConstants {
   static const buttonReturnHomeKey = 'ReturnToHomeKey';
   static const buttonReturnHomeMsg = '(game is saved)';
   static const buttonStartNewGame = 'Start a New Game';
+
+  /// End Game
+  static const gameOverTitle = 'Great Game!';
 
   /// Storage Keys
   static const storageKeyScorebook = 'scorebookData';

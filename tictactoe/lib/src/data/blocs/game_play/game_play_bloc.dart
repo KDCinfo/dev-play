@@ -38,6 +38,8 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
 
   late final StreamSubscription<ScorebookData> _scorebookStreamListener;
 
+  ScorebookData get currentScorebookData => _scorebookRepository.currentScorebookData;
+
   @override
   Future<void> close() {
     _scorebookStreamListener.cancel();
