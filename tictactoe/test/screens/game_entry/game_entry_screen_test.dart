@@ -1,9 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 
 import 'package:dev_play_tictactuple/src/app_constants.dart';
-import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
-import 'package:dev_play_tictactuple/src/data/models/models.dart';
-import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
+import 'package:dev_play_tictactuple/src/data/data.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';
@@ -20,6 +18,7 @@ void main() {
     late ScorebookRepository mockScorebookRepository;
     late GameEntryBloc mockGameEntryBloc;
     late GamePlayBloc mockGamePlayBloc;
+    late WaitForBotBloc mockWaitForBotBloc;
     late NavigatorObserver mockObserver;
 
     setUpAll(() {
@@ -37,6 +36,7 @@ void main() {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
         mockGamePlayBloc = MockGamePlayBloc();
+        mockWaitForBotBloc = MockWaitForBotBloc();
 
         widgetToTest = const GameEntryScreen();
         wrappedWidget = await PumpApp.providerWrappedMaterialApp(
@@ -44,11 +44,16 @@ void main() {
           gameEntryBloc: mockGameEntryBloc,
           gamePlayBloc: mockGamePlayBloc,
           mockObserver: mockObserver,
-          child: widgetToTest,
+          child: await PumpApp.providerWrappedInternal(
+            waitForBotBloc: mockWaitForBotBloc,
+            child: widgetToTest,
+          ),
         );
 
+        when(() => mockScorebookRepository.currentScorebookData).thenReturn(const ScorebookData());
         when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
         when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
+        when(() => mockWaitForBotBloc.state).thenReturn(const WaitForBotState());
       });
 
       group('rendering', () {
@@ -126,6 +131,17 @@ void main() {
         });
 
         testWidgets('calls Navigator.didPush when GamePlayState changes.', (tester) async {
+          when(() => mockGamePlayBloc.currentScorebookData).thenReturn(
+            ScorebookData(
+              allGames: {
+                1: GameData(
+                  gameId: 1,
+                  players: playerList,
+                  gameStatus: const GameStatusInProgress(),
+                ),
+              },
+            ),
+          );
           whenListen(
             mockGamePlayBloc,
             Stream.fromIterable([
@@ -137,11 +153,21 @@ void main() {
                   gameBoardData: const GameBoardData(
                     plays: [PlayerTurn(playerTurnId: 1, tileIndex: 0, occupiedById: 1)],
                   ),
+                  gameStatus: const GameStatusInProgress(),
                 ),
               ),
             ]),
           );
           await tester.pumpWidget(wrappedWidget);
+          // Using `pumpAndSettle()` on an infinite loop animation widget
+          // like a progress indicator will cause the pump to time out.
+          // await tester.pumpAndSettle();
+
+          // Using a pump with a 1-second duration exposed the alert dialog which
+          //   indicated the game status should be left as `GameStatusInProgress`.
+          // Otherwise, it works, but going with a simple `pump()` for this test.
+          // await tester.pump(const Duration(seconds: 1));
+
           await tester.pump();
 
           // Capture the mockObserver call.
@@ -201,6 +227,17 @@ void main() {
         });
 
         testWidgets('calls Navigator.didPop when gameStatus is changed.', (tester) async {
+          when(() => mockGamePlayBloc.currentScorebookData).thenReturn(
+            ScorebookData(
+              allGames: {
+                1: GameData(
+                  gameId: 1,
+                  players: playerList,
+                  gameStatus: const GameStatusInProgress(),
+                ),
+              },
+            ),
+          );
           whenListen(
             mockGamePlayBloc,
             Stream.fromIterable([
