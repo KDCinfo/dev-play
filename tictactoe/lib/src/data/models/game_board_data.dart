@@ -3,15 +3,7 @@ import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 import 'package:equatable/equatable.dart';
 
-/// Initial Data Design
-///
-/// [GameBoard](int edgeSize, List<PlayerTurn>[] plays)
-///   - _boardSize => edgeSize * edgeSize
-///   get rowFilled => checkRows(_boardSize)
-///   get colFilled => checkCols(_boardSize)
-///   get diagFilled => checkDiags(_boardSize)
-///   get usedTiles => plays.where(play.playerTurnId) // <Tiles>[]
-///   get availableTiles => _boardSize - usedTiles // <Tiles>[]
+/// This class holds the data for every game; both in-progress and archived.
 ///
 class GameBoardData extends Equatable {
   const GameBoardData({

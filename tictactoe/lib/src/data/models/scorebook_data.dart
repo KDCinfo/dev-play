@@ -2,33 +2,10 @@ import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:equatable/equatable.dart';
 
-/// `ScorebookData` is the app's global state.
+/// `ScorebookData` is the app's overall state.
 ///
-/// It houses the current game (if any), and all
-/// previously completed games (the current game
-/// is moved to the `allGames` Map when completed).
-
-/// Initial Data Design
-///
-///   // Reminder to convert `int` keys to `string` when JSONifying.
-/// + allPlayers: Map<int, PlayerData>(playerId: PlayerData).putIfAbsent(currentPlayers)
-///   // ^^^ This was changed to be a `List<PlayerData>`.
-/// + allGames: <int, GameData>{ gameId1: GameData, gameId2: GameData }.add(GameData)
-///
-///   // This was nixed: not needed; overkill; superfluous; a micro-optimization.
-/// + allGamesByPlayerId: Map<int, int>{ playerId: gameId1 }
-///
-///   // This was added.
-/// + currentGame: GameData
-///   ---
-/// > Called from repository when data is retrieved from local storage.
-/// + initGame(gameData.players) =>
-///     allGames.add(),
-///     allGamesByPlayerId.addAll(),
-/// x   // allPlayers.putIfAbsent(),
-///     allPlayers.addAll(),
-/// > Called from repository when a play is made.
-/// + updateGame(gameData) => allGames.updateWhere(gameData)
+/// It houses the current game (if any), and all previously completed games
+/// (the current game is moved to the `allGames` Map when completed).
 ///
 class ScorebookData extends Equatable {
   const ScorebookData({

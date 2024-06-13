@@ -7,30 +7,7 @@ import 'package:equatable/equatable.dart';
 ///
 /// It's the nuts and bolts for every game and is fed to the
 /// `GamePlay` bloc via a stream in the `Scorebook` repository.
-
-/// Initial Data Design
 ///
-/// [GameData](int gameId, <GamePlayer>[] players, gameBoard)
-///
-/// | Initial properties.
-///   + gameId
-///   + dateCreated => DateTime,
-///   + players => <Map<int, GamePlayer>>[
-///     { userId1, gamePlayer1 }, { userId2, gamePlayer2 },
-///   ]
-///
-/// | Properties updated during the game.
-///   + dateLastPlayed => DateTime,
-///   + plays => <PlayerTurn>[].add(PlayerTurn)
-///   + gameBoard
-///
-/// | Properties stored at the end of the game.
-///   + endGameScore => {
-///     userId1: score, // +1 for each game won; +0 for lost games.
-///     userId2: score,
-///   }
-///   + gameStatus => [GameStatus => GameStatusIP, GameStatusComplete]
-
 class GameData extends Equatable {
   const GameData({
     this.dateCreated, // This is set when a game is started.

@@ -11,38 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'game_entry_event.dart';
 part 'game_entry_state.dart';
 
-/// Initial Data Design
-///
-/// [[GameInit]]
-/// + Ask for - playerList [1-4]:
-///   - name(s) | or select from `ScoreBook.allPlayers`
-///   - symbol(s) | select from prefilled symbols list
-/// + Ask for board size (edgeSize) | Assert: 5 >= edgeSize[3] > players.length >= 1
-
-/// --> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
-/// --> players => List.of(playerList.forEach(PlayerData(name, symbol)))
-/// --> gameBoard => GameBoard(int edgeSize)
-/// --> gameData => [GameData](int gameId, <PlayerData>[] players, gameBoard)
-/// --> [GamePlay](gameData)
-/// --> [[ScoreBook]].initGame(gameData)
-
-/// Listen to Stream.allPlayers
-/// - Update `allSavedPlayerNames`
-///
-/// Update when UI is updated
-/// - `edgeSize`
-/// - `playerList`
-///
-/// Create when game is started
-/// --> gameData => [GameData](int gameId, <PlayerData>[] players, gameBoard)
-///   --> gameId => ScoreBook.allGames.keys.last+1 // Get last `gameId` from `ScoreBook.allGames`
-///   --> GameBoard(int edgeSize)
-///   --> [[ScoreBook]].initGame(gameData)
-///       Use existing `scorebookData` state;
-///       run with new `GameEntry` data:
-///       > scorebookData.startGame(GameData gameData)
-///       Update the repository with that new `scorebookData`.
-///       Having a ScorebookData with a currentGame gameID of -1 shows entry screen.
+/// The `GameEntryBloc` is responsible for
+/// managing the state of the `GameEntry` screen.
 ///
 class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
   GameEntryBloc({
