@@ -40,6 +40,7 @@ class GameEntryScreen extends StatelessWidget {
                           return AlertDialog(
                             title: const Text('Great Game!'),
                             content: const Text('Well played!!'),
+                            alignment: Alignment.bottomCenter,
                             actions: [
                               TextButton(
                                 onPressed: () {
