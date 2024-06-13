@@ -28,6 +28,7 @@ class GameBoardScreen extends StatelessWidget {
                   listenWhen: (previous, current) =>
                       previous.currentGame.gameBoardData.plays.length !=
                           current.currentGame.gameBoardData.plays.length &&
+                      current.currentGame.gameStatus == const GameStatusInProgress() &&
                       current.currentGame.currentPlayerIndex == 1 &&
                       current.currentGame.players[current.currentGame.currentPlayerIndex]
                               .playerType ==
