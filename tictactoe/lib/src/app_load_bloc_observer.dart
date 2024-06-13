@@ -3,14 +3,22 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:dev_play_tictactuple/src/app_constants.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppLoadBlocObserver extends BlocObserver {
+  AppLoadBlocObserver({this.showLogBlocObservers = AppConstants.showLogBlocObservers});
+
+  final bool showLogBlocObservers;
+
   @override
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     super.onEvent(bloc, event);
-    print('[base_bloc_observer.dart] onEvent(${bloc.runtimeType}, $event)');
+    if (showLogBlocObservers) {
+      print('[base_bloc_observer.dart] onEvent(${bloc.runtimeType}, $event)');
+    }
   }
 
   @override
@@ -19,7 +27,9 @@ class AppLoadBlocObserver extends BlocObserver {
     Change<dynamic> change,
   ) {
     super.onChange(bloc, change);
-    print('[base_bloc_observer.dart] onChange(${bloc.runtimeType}, $change)');
+    if (showLogBlocObservers) {
+      print('[base_bloc_observer.dart] onChange(${bloc.runtimeType}, $change)');
+    }
   }
 
   @override
@@ -28,8 +38,10 @@ class AppLoadBlocObserver extends BlocObserver {
     Transition<dynamic, dynamic> transition,
   ) {
     super.onTransition(bloc, transition);
-    print('[base_bloc_observer.dart] onTransition');
-    print(transition);
+    if (showLogBlocObservers) {
+      print('[base_bloc_observer.dart] onTransition');
+      print(transition);
+    }
   }
 
   @override
@@ -39,9 +51,12 @@ class AppLoadBlocObserver extends BlocObserver {
     StackTrace stackTrace,
   ) {
     super.onError(bloc, error, stackTrace);
-    print('[base_bloc_observer.dart] onError');
-    print(error);
-    print(stackTrace);
+    // Errors should always show when `canPrint` is enabled.
+    if (AppConstants.canPrint) {
+      print('[base_bloc_observer.dart] onError');
+      print(error);
+      print(stackTrace);
+    }
   }
 }
 

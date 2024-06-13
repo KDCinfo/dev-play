@@ -8,6 +8,7 @@ typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
 abstract class AppConstants {
   /// Do not allow printing or logging when `inProd: true`.
   static const canPrint = true;
+  static const showLogBlocObservers = false;
 
   /// Standard App Config Values
   static const defaultEdgeSize = 3;
