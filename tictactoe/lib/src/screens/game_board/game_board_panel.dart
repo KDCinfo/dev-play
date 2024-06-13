@@ -57,7 +57,6 @@ class GameBoardPanel extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     GameBoardPanelTile(index),
-                                    // @TODO: Maybe try to make the icon pop up when tapped.
                                     Positioned(
                                       // Max width and height of the clickable area.
                                       // height: double.infinity,

@@ -1,4 +1,5 @@
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
+import 'package:dev_play_tictactuple/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
 
@@ -37,26 +38,7 @@ class GameBoardPanelTileOverlay extends StatelessWidget {
                       .icon ??
                   const Icon(Icons.error).icon;
 
-              return SizedBox(
-                width: size,
-                height: size,
-                child: Icon(
-                  playerIcon,
-                  size: size * 0.75,
-                  color: Colors.yellowAccent.withOpacity(0.9),
-                  shadows: const [
-                    Shadow(
-                      offset: Offset(-4, -4),
-                      blurRadius: 14,
-                    ),
-                    Shadow(
-                      color: Colors.white54,
-                      offset: Offset(4, 4),
-                      blurRadius: 14,
-                    ),
-                  ],
-                ),
-              );
+              return IconPop(size: size, playerIcon: playerIcon);
             },
           );
   }
