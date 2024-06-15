@@ -131,41 +131,79 @@ void main() {
       });
     });
 
-    group('[GameStatusEnum]', () {
-      test('entryMode statusStr should be "Entry Mode".', () {
-        expect(GameStatusEnum.entryMode.statusStr, 'Entry Mode');
+    group('[Enums]', () {
+      group('[GameStatusEnum]', () {
+        test('entryMode statusStr should be "Entry Mode".', () {
+          expect(GameStatusEnum.entryMode.statusStr, 'Entry Mode');
+        });
+
+        test('inProgress statusStr should be "In Progress".', () {
+          expect(GameStatusEnum.inProgress.statusStr, 'In Progress');
+        });
+
+        test('complete statusStr should be "Complete".', () {
+          expect(GameStatusEnum.complete.statusStr, 'Complete');
+        });
       });
 
-      test('inProgress statusStr should be "In Progress".', () {
-        expect(GameStatusEnum.inProgress.statusStr, 'In Progress');
+      group('[PlayerTypeEnum]', () {
+        test('human should be an instance of PlayerTypeEnum.', () {
+          expect(PlayerTypeEnum.human, isA<PlayerTypeEnum>());
+        });
+
+        test('bot should be an instance of PlayerTypeEnum.', () {
+          expect(PlayerTypeEnum.bot, isA<PlayerTypeEnum>());
+        });
       });
 
-      test('complete statusStr should be "Complete".', () {
-        expect(GameStatusEnum.complete.statusStr, 'Complete');
-      });
-    });
+      group('[MatchTupleEnum]', () {
+        test('row should be an instance of MatchTupleEnum.', () {
+          expect(MatchTupleEnum.row, isA<MatchTupleEnum>());
+        });
 
-    group('[PlayerTypeEnum]', () {
-      test('human should be an instance of PlayerTypeEnum.', () {
-        expect(PlayerTypeEnum.human, isA<PlayerTypeEnum>());
-      });
+        test('column should be an instance of MatchTupleEnum.', () {
+          expect(MatchTupleEnum.column, isA<MatchTupleEnum>());
+        });
 
-      test('bot should be an instance of PlayerTypeEnum.', () {
-        expect(PlayerTypeEnum.bot, isA<PlayerTypeEnum>());
-      });
-    });
+        test('diagonal should be an instance of MatchTupleEnum.', () {
+          expect(MatchTupleEnum.diagonal, isA<MatchTupleEnum>());
+        });
 
-    group('[MatchTupleEnum]', () {
-      test('row should be an instance of MatchTupleEnum.', () {
-        expect(MatchTupleEnum.row, isA<MatchTupleEnum>());
-      });
+        test('row toJson should return "row".', () {
+          expect(MatchTupleEnum.row.toJson(), 'row');
+        });
 
-      test('column should be an instance of MatchTupleEnum.', () {
-        expect(MatchTupleEnum.column, isA<MatchTupleEnum>());
-      });
+        test('column toJson should return "column".', () {
+          expect(MatchTupleEnum.column.toJson(), 'column');
+        });
 
-      test('diagonal should be an instance of MatchTupleEnum.', () {
-        expect(MatchTupleEnum.diagonal, isA<MatchTupleEnum>());
+        test('diagonal toJson should return "diagonal".', () {
+          expect(MatchTupleEnum.diagonal.toJson(), 'diagonal');
+        });
+
+        test('fromJson("row") should return MatchTupleEnum.row.', () {
+          expect(MatchTupleEnum.fromJson('row'), MatchTupleEnum.row);
+        });
+
+        test('fromJson("column") should return MatchTupleEnum.column.', () {
+          expect(MatchTupleEnum.fromJson('column'), MatchTupleEnum.column);
+        });
+
+        test('fromJson("diagonal") should return MatchTupleEnum.diagonal.', () {
+          expect(MatchTupleEnum.fromJson('diagonal'), MatchTupleEnum.diagonal);
+        });
+
+        test('fromJson("invalid") should throw an error.', () {
+          expect(() => MatchTupleEnum.fromJson('invalid'), throwsStateError);
+        });
+
+        test('row compareTo column should return a negative number.', () {
+          expect(MatchTupleEnum.row.compareTo(MatchTupleEnum.column), lessThan(0));
+        });
+
+        test('column compareTo diagonal should return a negative number.', () {
+          expect(MatchTupleEnum.column.compareTo(MatchTupleEnum.diagonal), lessThan(0));
+        });
       });
     });
   });

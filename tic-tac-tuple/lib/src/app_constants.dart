@@ -123,8 +123,23 @@ enum PlayerTypeEnum {
   bot,
 }
 
-enum MatchTupleEnum {
-  row,
-  column,
-  diagonal,
+enum MatchTupleEnum implements Comparable<MatchTupleEnum> {
+  row('row'),
+  column('column'),
+  diagonal('diagonal');
+
+  const MatchTupleEnum(this.jsonValue);
+
+  final String jsonValue;
+
+  String toJson() {
+    return jsonValue;
+  }
+
+  static MatchTupleEnum fromJson(String jsonValue) {
+    return MatchTupleEnum.values.firstWhere((e) => e.jsonValue == jsonValue);
+  }
+
+  @override
+  int compareTo(MatchTupleEnum other) => jsonValue.length - other.jsonValue.length;
 }
