@@ -1,4 +1,5 @@
 export 'animated_linear_progress_indicator.dart';
+export 'draw_circle_overlay.dart';
 export 'game_orientation_layout.dart';
 export 'game_title_row.dart';
 export 'icon_pop.dart';
