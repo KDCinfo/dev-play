@@ -1,4 +1,5 @@
 // ignore_for_file: require_trailing_commas
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -55,6 +56,7 @@ void main() {
         expect(gameData.gameBoardData, gameBoardData);
         expect(gameData.winnerId, -1);
         expect(gameData.gameStatus, isA<GameStatusEntryMode>());
+        expect(gameData.winnerRowColDiag, isNull);
       });
 
       test('when populated and should be a [GameData].', () {
@@ -72,7 +74,7 @@ void main() {
 
           /// Properties stored at the end of the game.
           winnerId: 5,
-          gameStatus: const GameStatusComplete(),
+          gameStatus: const GameStatusInProgress(),
         );
 
         expect(gameData, isNotNull);
@@ -83,7 +85,8 @@ void main() {
         expect(gameData.dateLastPlayed, testDate);
         expect(gameData.gameBoardData, gameBoardData);
         expect(gameData.winnerId, 5); // playerId: score
-        expect(gameData.gameStatus, isA<GameStatusComplete>());
+        expect(gameData.gameStatus, isA<GameStatusInProgress>());
+        expect(gameData.winnerRowColDiag, isNull);
       });
 
       test('with correct [props] when empty.', () {
@@ -102,6 +105,7 @@ void main() {
             gameBoardData,
             -1,
             const GameStatusEntryMode(),
+            null,
           ]),
         );
       });
@@ -112,14 +116,14 @@ void main() {
         gameBoardData = const GameBoardData();
 
         gameData = GameData(
-          gameId: 0,
-          dateCreated: dateTime,
-          // players: const [],
-          dateLastPlayed: dateTime,
-          gameBoardData: gameBoardData,
-          winnerId: 3,
-          gameStatus: const GameStatusComplete(),
-        );
+            gameId: 0,
+            dateCreated: dateTime,
+            // players: const [],
+            dateLastPlayed: dateTime,
+            gameBoardData: gameBoardData,
+            winnerId: 3,
+            gameStatus: const GameStatusComplete(),
+            winnerRowColDiag: (MatchTupleEnum.row, 0));
 
         expect(
           gameData.props,
@@ -131,6 +135,7 @@ void main() {
             gameBoardData,
             3,
             const GameStatusComplete(),
+            (MatchTupleEnum.row, 0),
           ]),
         );
       });
@@ -150,6 +155,7 @@ void main() {
           gameBoardData: gameBoardData,
           winnerId: -1,
           gameStatus: const GameStatusComplete(),
+          winnerRowColDiag: (MatchTupleEnum.row, 0),
         );
 
         expect(gameDataWithData, isA<GameData>());
@@ -164,6 +170,10 @@ void main() {
         expect(gameDataWithData.gameBoardData, gameBoardData);
         expect(gameDataWithData.winnerId, -1);
         expect(gameDataWithData.gameStatus, isA<GameStatusComplete>());
+        expect(
+          gameDataWithData.winnerRowColDiag,
+          (MatchTupleEnum.row, 0),
+        );
       });
     });
 
@@ -220,6 +230,7 @@ void main() {
         final updatedGameData3 = updatedGameData2.endGame(
           // Player 2 wins.
           winnerId: 4, // playerId: score, // +1 for each game won
+          winnerRowColDiag: (MatchTupleEnum.row, 1),
         );
 
         /// Game ID should never change.

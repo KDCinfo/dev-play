@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 typedef AppReturnObjDef = Map<String, List<dynamic>>;
 typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
 
+/// (row/col/diag, index)
+typedef WinnerRowColDiagDef = (MatchTupleEnum, int)?;
+
 abstract class AppConstants {
   /// Do not allow printing or logging when `inProd: true`.
   static const canPrint = true;

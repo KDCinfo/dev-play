@@ -1,3 +1,4 @@
+import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:equatable/equatable.dart';
@@ -17,6 +18,7 @@ class GameData extends Equatable {
     this.dateLastPlayed,
     this.winnerId = -1,
     this.gameStatus = const GameStatusEntryMode(),
+    this.winnerRowColDiag,
   });
 
   factory GameData.startGame({
@@ -44,6 +46,7 @@ class GameData extends Equatable {
       dateLastPlayed: currentGameData.dateLastPlayed,
       winnerId: currentGameData.winnerId,
       gameStatus: currentGameData.gameStatus,
+      // winnerRowColDiag: null,
     );
   }
 
@@ -56,12 +59,15 @@ class GameData extends Equatable {
     );
   }
 
+  /// The `winnerRowColDiag` property is a nullable typedef: (MatchTupleEnum, int)?
   GameData endGame({
     required int winnerId,
+    required WinnerRowColDiagDef winnerRowColDiag,
   }) {
     return copyWith(
       winnerId: winnerId,
       gameStatus: const GameStatusComplete(),
+      winnerRowColDiag: winnerRowColDiag,
     );
   }
 
@@ -86,13 +92,15 @@ class GameData extends Equatable {
   ///
   final int winnerId; // was endGameScore
   final GameStatus gameStatus;
-  // @TODO: Add this `winnerRowColDiag` property
-  //        (to store the winning row, column, or diagonal).
-  //        - int:            WinnerId
-  //        - MatchTupleEnum: Row/Col/Diag
-  //        - int:            Which row, column, or diagonal
-  //          - Diagonals have 2 counts; #1 is top-left to bottom-right.
-  // final (int, MatchTupleEnum, int)? winnerRowColDiag;
+
+  /// The `winnerRowColDiag` property stores the winning `row`,
+  /// `column`, or `diagonal` and its index as a record: (MatchTupleEnum, int)?
+  ///
+  /// - $1: MatchTupleEnum: Row/Col/Diag
+  /// - $2: int:            Which row, column, or diagonal
+  ///                       - Diagonals have 2 counts; #1 is top-left to bottom-right.
+  ///
+  final WinnerRowColDiagDef winnerRowColDiag;
 
   GameData copyWith({
     // Used with `playTurn` method.
@@ -101,6 +109,7 @@ class GameData extends Equatable {
     // Used with `endGame` method.
     int? winnerId,
     GameStatus? gameStatus,
+    WinnerRowColDiagDef? winnerRowColDiag,
   }) {
     return GameData(
       gameId: gameId,
@@ -110,6 +119,7 @@ class GameData extends Equatable {
       gameBoardData: gameBoardData ?? this.gameBoardData,
       winnerId: winnerId ?? this.winnerId,
       gameStatus: gameStatus ?? this.gameStatus,
+      winnerRowColDiag: winnerRowColDiag ?? this.winnerRowColDiag,
     );
   }
 
@@ -122,6 +132,12 @@ class GameData extends Equatable {
         'gameBoardData': gameBoardData,
         'winnerId': winnerId,
         'gameStatus': gameStatus,
+        'winnerRowColDiag': winnerRowColDiag == null
+            ? null
+            : {
+                '0': winnerRowColDiag!.$1.toString(),
+                '1': winnerRowColDiag!.$2,
+              },
       };
 
   // fromJson
@@ -140,6 +156,14 @@ class GameData extends Equatable {
       gameBoardData: GameBoardData.fromJson(json['gameBoardData'] as Map<String, dynamic>),
       winnerId: json['winnerId'] as int,
       gameStatus: GameStatus.fromJson(json['gameStatus'] as Map<String, dynamic>),
+      winnerRowColDiag: json['winnerRowColDiag'] == null
+          ? null
+          : (
+              MatchTupleEnum.fromJson(
+                (json['winnerRowColDiag'] as dynamic)['0'] as String,
+              ),
+              (json['winnerRowColDiag'] as dynamic)['1'] as int,
+            ),
     );
   }
 
@@ -152,5 +176,6 @@ class GameData extends Equatable {
         gameBoardData,
         winnerId,
         gameStatus,
+        winnerRowColDiag,
       ];
 }

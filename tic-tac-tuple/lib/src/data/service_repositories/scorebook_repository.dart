@@ -82,6 +82,13 @@ class ScorebookRepository extends AppBaseRepository {
             : newScorebookData.currentGame.players[newScorebookData.currentGame.previousPlayerIndex]
                     .playerId ??
                 -1,
+        winnerRowColDiag: checkRows != null
+            ? (MatchTupleEnum.row, checkRows.$1)
+            : checkCols != null
+                ? (MatchTupleEnum.column, checkCols.$1)
+                : checkDiags != null
+                    ? (MatchTupleEnum.diagonal, checkDiags.$1)
+                    : null,
       );
 
       /// The `gameId` switch to `-1` in the `currentGame.endGame` call
