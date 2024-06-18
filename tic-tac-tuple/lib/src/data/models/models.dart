@@ -9,4 +9,5 @@ export 'player_data.dart';
 export 'player_turn.dart';
 export 'player_type.dart';
 export 'scorebook_data.dart';
+export 'tile_position_model.dart';
 export 'user_symbol.dart';
