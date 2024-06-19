@@ -42,10 +42,25 @@ class GameTitleRow extends StatelessWidget {
       child: Text(
         screenTitle,
         key: titleKey,
-        style: headlineLargeBold,
         softWrap: false,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
+        style: headlineLargeBold?.copyWith(
+              fontFamily: 'Quicksand', // Rounded
+              color: Colors.yellow,
+              shadows: [
+                const Shadow(
+                  color: AppConstants.primaryTileColor,
+                  offset: Offset(1, 1),
+                  blurRadius: 3,
+                ),
+              ],
+            ) ??
+            const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Lato',
+            ),
       ),
     );
   }
