@@ -38,18 +38,19 @@ class GameBoardPanel extends StatelessWidget {
             log('[check] availableTileIndexes: ${stateGamePlayOuter.currentGame.gameBoardData.availableTileIndexes}');
           }
 
-          return LayoutBuilder(
-            builder: (context, constraintsOuter) {
-              return BlocBuilder<WaitForBotBloc, WaitForBotState>(
-                builder: (context, waitState) {
-                  return Align(
-                    // alignment: Alignment.center,
-                    // Although `.center` is the default, the `Align` wrapper is still required
-                    // in conjunction with the `AspectRatio` widget wrapper to contain the grid
-                    // within the available viewing area, else it will expand and get cropped.
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Stack(
+          return BlocBuilder<WaitForBotBloc, WaitForBotState>(
+            builder: (context, waitState) {
+              return Align(
+                // alignment: Alignment.center,
+                // Although `.center` is the default, the `Align` wrapper is still required
+                // in conjunction with the `AspectRatio` widget wrapper to contain the grid
+                // within the available viewing area, else it will expand and get cropped.
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: LayoutBuilder(
+                    builder: (context, constraintsOuter) {
+                      final gridBox = context.findAncestorRenderObjectOfType<RenderBox>();
+                      return Stack(
                         children: [
                           KeyedSubtree(
                             key: const ValueKey('grid-view'),
@@ -60,95 +61,34 @@ class GameBoardPanel extends StatelessWidget {
                                 // childAspectRatio: 1, // Aspect ratio of each tile.
                               ),
                               itemBuilder: (context, index) {
-                                /// I'm not fond of swapping out these keys.
-                                /// They're assigned for a purpose, not a multi-purpose.
-                                /// Swapping them out feels to be not only an anti-pattern,
-                                /// but just flat out the wrong way of doing something.
-                                /// It's hacky.
-                                /// It's a hack.
-                                // final key = state.currentGame.winnerRowColDiag != null &&
-                                //         (state.currentGame.winnerRowColDiag!.$1 == index ||
-                                //             state.currentGame.lineData!.endIndex == index)
-                                //     ? GlobalObjectKey('grid-tile-$index')
-                                //     : ValueKey('grid-tile-$index');
                                 //
+                                // final tileKey = GlobalKey();
+                                // final tileKey =
+                                //     stateGamePlayOuter.currentGame.winnerRowColDiag != null &&
+                                //             (stateGamePlayOuter.currentGame.winnerRowColDiag!.$1 ==
+                                //                     index ||
+                                //                 stateGamePlayOuter.currentGame.lineData!.endIndex ==
+                                //                     index)
+                                //         ? GlobalKey()
+                                //         : ValueKey('grid-tile-$index');
+
                                 return InkWell(
                                   onTap: !waitState.isWaiting && clickableTile(index)
                                       ? () => gridTileCallback(index, context)
                                       : null,
                                   child: GridTile(
-                                    // key: Key('grid-tile-$index'), // Assign a unique key
-                                    // key: GlobalObjectKey('grid-tile-$index'), // Assign a unique key
-                                    key: ValueKey('grid-tile-$index'), // Assign a unique key
+                                    key: ValueKey('grid-tile-$index'),
+                                    // key: tileKey,
                                     child: Builder(
                                       builder: (context) {
-                                        // if (stateGamePlayOuter.currentGame.winnerRowColDiag !=
-                                        //         null &&
-                                        //     // stateGamePlayOuter.currentGame.gameStatus == const GameStatusInProgress() &&
-                                        //     stateGamePlayOuter.currentGame.winnerId > -1) {
-
+                                        //
                                         // We only need to calculate the positions once,
                                         // which we'll do here on the first move.
                                         if (stateGamePlayOuter
                                                 .currentGame.gameBoardData.plays.length ==
                                             1) {
-                                          // WidgetsBinding.instance.addPostFrameCallback((_) {
-                                          //   final box = context.findRenderObject() as RenderBox?;
-                                          //   final gridBox = context.findAncestorRenderObjectOfType<RenderBox>();
-                                          //   debugPrint('[check] Tile $index');
-                                          //   if (box != null && gridBox != null) {
-                                          //     final globalPosition = box.localToGlobal(Offset.zero);
-                                          //     debugPrint('[check] Global Position: $globalPosition');
-                                          //     // Draw a circle at this position
-                                          //     DrawCircleOverlay(
-                                          //       context: context,
-                                          //       globalPosition: globalPosition,
-                                          //       radius: 10,
-                                          //       index: index,
-                                          //     );
-                                          //     final size = box.size;
-                                          //     debugPrint('[check] Size $size');
-                                          //     // final centerPosition = relativePosition + Offset(size.width / 2, size.height / 2);
-                                          //     final centerPosition = Offset(
-                                          //       globalPosition.dx,
-                                          //       globalPosition.dy,
-                                          //       // globalPosition.dx + (size.width / 2),
-                                          //       // globalPosition.dy + (size.height / 2),
-                                          //       // globalPosition.dx - (size.width / 2),
-                                          //       // globalPosition.dy - (size.height / 2),
-                                          //     );
-                                          //     debugPrint('[check] globalPosition.dx | ${globalPosition.dx}');
-                                          //     debugPrint('[check] size.width | ${size.width / 2}');
-                                          //     debugPrint('[check] globalPosition.dy | ${globalPosition.dy}');
-                                          //     debugPrint('[check] size.height | ${size.height / 2}');
-                                          //     debugPrint('[check] Center: $centerPosition');
-                                          //     context.read<TilePositionModel>().updatePosition(index, centerPosition);
-                                          //     // Log the positions for debugging
-                                          //     debugPrint('[check] Grid Position: ${gridBox.localToGlobal(Offset.zero)}');
-                                          //   }
-                                          // });
-                                          // WidgetsBinding.instance.addPostFrameCallback((_) {
-                                          //   final box = context.findRenderObject() as RenderBox?;
-                                          //   final gridBox = context.findAncestorRenderObjectOfType<RenderBox>();
-                                          //   if (box != null && gridBox != null) {
-                                          //     final globalPosition = box.localToGlobal(Offset.zero);
-                                          //     // final relativePosition = gridBox.globalToLocal(globalPosition);
-                                          //     // final size = box.size;
-                                          //     // final centerPosition = relativePosition + Offset(size.width / 2, size.height / 2);
-                                          //     context.read<TilePositionModel>().updatePosition(index, globalPosition);
-                                          //     // .updatePosition(index, centerPosition);
-                                          //     debugPrint('[check] Tile $index - Global Position: $globalPosition');
-                                          //     // debugPrint('[check] Tile $index - '
-                                          //     //     'Global Position: $globalPosition, '
-                                          //     //     'Relative Position: $relativePosition, '
-                                          //     //     'Center: $centerPosition');
-                                          //   }
-                                          // });
                                           WidgetsBinding.instance.addPostFrameCallback((_) {
                                             final box = context.findRenderObject() as RenderBox?;
-                                            final gridBox =
-                                                context.findRenderObject() as RenderBox?;
-
                                             if (box != null && gridBox != null) {
                                               final globalPosition = box.localToGlobal(Offset.zero);
                                               final relativePosition =
@@ -157,10 +97,10 @@ class GameBoardPanel extends StatelessWidget {
                                               final centerPosition = relativePosition +
                                                   Offset(size.width / 2, size.height / 2);
 
-                                              final offsetGlobal = Offset(
-                                                globalPosition.dx + (size.width / 2),
-                                                globalPosition.dy + (size.height / 2),
-                                              );
+                                              // Update the model with the center position
+                                              context
+                                                  .read<TilePositionModel>()
+                                                  .updatePosition(index, centerPosition);
 
                                               DrawCircleOverlay(
                                                 context: context,
@@ -170,7 +110,7 @@ class GameBoardPanel extends StatelessWidget {
                                               );
                                               DrawCircleOverlay(
                                                 context: context,
-                                                globalPosition: offsetGlobal,
+                                                globalPosition: relativePosition,
                                                 radius: 4,
                                                 index: index,
                                                 color: Colors.green,
@@ -185,12 +125,12 @@ class GameBoardPanel extends StatelessWidget {
 
                                               context
                                                   .read<TilePositionModel>()
-                                                  .updatePosition(index, offsetGlobal);
-                                              // .updatePosition(index, centerPosition);
+                                                  .updatePosition(index, centerPosition);
+                                              // .updatePosition(index, globalPosition);
 
                                               debugPrint('[check] Tile $index - '
                                                   'Global Position: $globalPosition, '
-                                                  'offsetGlobal Position: $offsetGlobal, '
+                                                  // 'offsetGlobal Position: $offsetGlobal, '
                                                   'Relative Position: $relativePosition, '
                                                   'Center: $centerPosition');
                                             }
@@ -225,26 +165,7 @@ class GameBoardPanel extends StatelessWidget {
                           ),
                           WaitForBotIndicator(waitingOnBot: waitState.isWaiting),
                           Builder(
-                            // buildWhen: (previousGamePlay, currentGamePlay) {
-                            //   final diagChanged = previousGamePlay.currentGame.winnerRowColDiag !=
-                            //       currentGamePlay.currentGame.winnerRowColDiag;
-                            //   final winnerRowColDiag =
-                            //       currentGamePlay.currentGame.winnerRowColDiag != null;
-                            //   final winnerIdValid = currentGamePlay.currentGame.winnerId > -1;
-                            //   // final isInProgress = currentGamePlay.currentGame.gameStatus ==
-                            //   //     const GameStatusInProgress();
-
-                            //   debugPrint('[check] diagChanged: $diagChanged');
-                            //   debugPrint('[check] winnerRowColDiag: $winnerRowColDiag');
-                            //   // debugPrint('[check] isInProgress: $isInProgress');
-                            //   debugPrint('[check] winnerIdValid: $winnerIdValid');
-                            //   return diagChanged &&
-                            //       winnerRowColDiag &&
-                            //       // isInProgress &&
-                            //       winnerIdValid;
-                            // },
-                            // builder: (context, stateGamePlay) {
-                            builder: (context) {
+                            builder: (contextBuilder) {
                               if (stateGamePlayOuter.currentGame.winnerRowColDiag != null &&
                                   stateGamePlayOuter.currentGame.winnerId > -1 &&
                                   stateGamePlayOuter.currentGame.gameStatus ==
@@ -252,7 +173,6 @@ class GameBoardPanel extends StatelessWidget {
                                 final lineData = stateGamePlayOuter.currentGame.winnerRowColDiag;
                                 if (lineData != null) {
                                   final keyIndexes = transposeLineIndex(lineData, edgeSize);
-                                  // final positions = context.watch<TilePositionModel>();
                                   final positions = context.read<TilePositionModel>();
 
                                   if (keyIndexes != null) {
@@ -274,10 +194,10 @@ class GameBoardPanel extends StatelessWidget {
                             },
                           ),
                         ],
-                      ),
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ),
               );
             },
           );
