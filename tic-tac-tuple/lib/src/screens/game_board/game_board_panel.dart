@@ -1,12 +1,9 @@
-// ignore_for_file: avoid_print
-
 import 'dart:developer';
 
 import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/screens/game_board/game_board.dart';
-import 'package:dev_play_tictactuple/src/screens/game_widgets/draw_circle_overlay.dart';
 import 'package:dev_play_tictactuple/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
@@ -62,23 +59,12 @@ class GameBoardPanel extends StatelessWidget {
                               ),
                               itemBuilder: (context, index) {
                                 //
-                                // final tileKey = GlobalKey();
-                                // final tileKey =
-                                //     stateGamePlayOuter.currentGame.winnerRowColDiag != null &&
-                                //             (stateGamePlayOuter.currentGame.winnerRowColDiag!.$1 ==
-                                //                     index ||
-                                //                 stateGamePlayOuter.currentGame.lineData!.endIndex ==
-                                //                     index)
-                                //         ? GlobalKey()
-                                //         : ValueKey('grid-tile-$index');
-
                                 return InkWell(
                                   onTap: !waitState.isWaiting && clickableTile(index)
                                       ? () => gridTileCallback(index, context)
                                       : null,
                                   child: GridTile(
                                     key: ValueKey('grid-tile-$index'),
-                                    // key: tileKey,
                                     child: Builder(
                                       builder: (context) {
                                         //
@@ -90,49 +76,18 @@ class GameBoardPanel extends StatelessWidget {
                                           WidgetsBinding.instance.addPostFrameCallback((_) {
                                             final box = context.findRenderObject() as RenderBox?;
                                             if (box != null && gridBox != null) {
+                                              final size = box.size;
+
                                               final globalPosition = box.localToGlobal(Offset.zero);
                                               final relativePosition =
                                                   gridBox.globalToLocal(globalPosition);
-                                              final size = box.size;
                                               final centerPosition = relativePosition +
                                                   Offset(size.width / 2, size.height / 2);
 
-                                              // Update the model with the center position
+                                              // Update the model with the center position.
                                               context
                                                   .read<TilePositionModel>()
                                                   .updatePosition(index, centerPosition);
-
-                                              DrawCircleOverlay(
-                                                context: context,
-                                                globalPosition: globalPosition,
-                                                radius: 10,
-                                                index: index,
-                                              );
-                                              DrawCircleOverlay(
-                                                context: context,
-                                                globalPosition: relativePosition,
-                                                radius: 4,
-                                                index: index,
-                                                color: Colors.green,
-                                              );
-                                              DrawCircleOverlay(
-                                                context: context,
-                                                globalPosition: centerPosition,
-                                                radius: 7,
-                                                index: index,
-                                                color: Colors.orange,
-                                              );
-
-                                              context
-                                                  .read<TilePositionModel>()
-                                                  .updatePosition(index, centerPosition);
-                                              // .updatePosition(index, globalPosition);
-
-                                              debugPrint('[check] Tile $index - '
-                                                  'Global Position: $globalPosition, '
-                                                  // 'offsetGlobal Position: $offsetGlobal, '
-                                                  'Relative Position: $relativePosition, '
-                                                  'Center: $centerPosition');
                                             }
                                           });
                                         }
