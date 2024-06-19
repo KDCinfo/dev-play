@@ -39,11 +39,15 @@ void main() {
         startIndex: startIndex,
         endIndex: endIndex,
         positions: positions,
+        lineColor: Colors.red,
+        strokeWidth: 20,
       );
       final oldDelegate = LinePainter(
         startIndex: startIndex,
         endIndex: endIndex,
         positions: positions,
+        lineColor: Colors.red,
+        strokeWidth: 20,
       );
 
       final shouldRepaint = linePainter.shouldRepaint(oldDelegate);
@@ -57,6 +61,12 @@ void main() {
         linePainter.positions.getPosition(startIndex),
         equals(oldDelegate.positions.getPosition(startIndex)),
       );
+      expect(
+        linePainter.positions.getPosition(endIndex),
+        equals(oldDelegate.positions.getPosition(endIndex)),
+      );
+      expect(linePainter.lineColor, equals(oldDelegate.lineColor));
+      expect(linePainter.strokeWidth, equals(oldDelegate.strokeWidth));
     });
   });
 }
