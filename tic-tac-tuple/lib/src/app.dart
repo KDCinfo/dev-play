@@ -27,10 +27,20 @@ class MyApp extends StatelessWidget {
       // themeMode: ThemeMode.system,
       theme: ThemeData(
         colorSchemeSeed: AppConstants.primaryTileColor,
+        textTheme: TextTheme(
+          headlineSmall: AppConstants.headlineSmallTextStyle,
+          headlineMedium: AppConstants.headlineMediumTextStyle,
+          headlineLarge: AppConstants.headlineLargeTextStyle,
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         colorSchemeSeed: AppConstants.primaryTileColor,
+        textTheme: TextTheme(
+          headlineSmall: AppConstants.headlineSmallTextStyle,
+          headlineMedium: AppConstants.headlineMediumTextStyle,
+          headlineLarge: AppConstants.headlineLargeTextStyle,
+        ),
       ),
       initialRoute: '/',
       routes: {

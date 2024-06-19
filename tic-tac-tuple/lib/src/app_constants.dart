@@ -101,6 +101,57 @@ abstract class AppConstants {
       }
     }
   }
+
+  static TextStyle get headlineLargeTextStyle => const TextStyle(
+        fontFamily: 'Quicksand', // Rounded
+        color: Colors.yellow,
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        shadows: [
+          Shadow(
+            color: AppConstants.primaryTileColor,
+            offset: Offset(1, 1),
+            blurRadius: 3,
+          ),
+        ],
+      );
+
+  static TextStyle get headlineMediumTextStyle => const TextStyle(
+        fontFamily: 'Quicksand', // Rounded
+        color: AppConstants.primaryTileColor,
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        shadows: [
+          Shadow(
+            color: Colors.yellow,
+            offset: Offset(-1.2, -1.2),
+            blurRadius: 3,
+          ),
+          Shadow(
+            color: Colors.blueGrey,
+            offset: Offset(1.5, 1.5),
+            blurRadius: 2,
+          ),
+        ],
+      );
+
+  static TextStyle get headlineSmallTextStyle => const TextStyle(
+        color: AppConstants.primaryTileColor,
+        fontFamily: 'Quicksand',
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0,
+        height: 1.3,
+        leadingDistribution: TextLeadingDistribution.even,
+        decoration: TextDecoration.none,
+        shadows: [
+          Shadow(
+            color: Colors.yellow,
+            offset: Offset(1, 1),
+            blurRadius: 15,
+          ),
+        ],
+      );
 }
 
 enum GameStatusEnum implements Comparable<GameStatusEnum> {

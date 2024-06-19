@@ -21,14 +21,14 @@ class GameEntryButtonsRow extends StatelessWidget {
       runSpacing: 10,
       children: [
         ElevatedButton(
+          style: ElevatedButton.styleFrom(elevation: 3),
           onPressed: () => startNewGame(context),
-          child: const Text(
+          child: Text(
             buttonPlayText,
             key: buttonPlayKey,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontSize: 24,
+                ),
           ),
         ),
         TextButton(

@@ -47,8 +47,6 @@ class _GameEntryBoardSizeRowState extends State<GameEntryBoardSizeRow> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -57,9 +55,15 @@ class _GameEntryBoardSizeRowState extends State<GameEntryBoardSizeRow> {
           Text(
             boardSizeLabel,
             key: boardSizeLabelKey,
-            style: textTheme.headlineSmall,
+            style: AppConstants.headlineSmallTextStyle,
             softWrap: false,
             overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 4),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.4,
+            height: 1,
+            color: AppConstants.primaryTileColor.withOpacity(0.1),
           ),
           const SizedBox(height: 10),
           Padding(
