@@ -8,7 +8,7 @@ class LinePainter extends CustomPainter {
     required this.endIndex,
     required this.positions,
     this.lineColor = Colors.lightBlueAccent,
-    this.strokeWidth = 12.0,
+    this.strokeWidth = 6.0,
   });
 
   final int startIndex;
