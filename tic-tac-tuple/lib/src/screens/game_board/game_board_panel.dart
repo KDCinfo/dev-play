@@ -204,15 +204,14 @@ class GameBoardPanel extends StatelessWidget {
       // [0, 4, 8] =>     | 0
       if (lineIndex == 0) {
         tileIndexStart = 0;
-        // tileIndexEnd = edgeSize * (edgeSize - 1);
-        tileIndexEnd = edgeSize * (edgeSize + 1) - 1;
+        tileIndexEnd = edgeSize * edgeSize - 1;
       }
 
       // Example 3x3 grid.
       // [2, 4, 6] =>     | 1
       if (lineIndex == 1) {
         tileIndexStart = edgeSize - 1;
-        tileIndexEnd = edgeSize * (edgeSize - 1) + edgeSize - 1;
+        tileIndexEnd = edgeSize * (edgeSize - 1);
       }
     }
 
