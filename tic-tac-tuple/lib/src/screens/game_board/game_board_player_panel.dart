@@ -27,7 +27,12 @@ class GameBoardPlayerPanel extends StatelessWidget {
                       const SizedBox(height: 8),
                       GameBoardPlayerPanelNames(
                         players: state.currentGame.players,
-                        currentPlayerIndex: state.currentGame.currentPlayerIndex,
+                        currentPlayerIndex:
+                            state.currentGame.gameStatus == const GameStatusComplete()
+                                ? state.currentGame.currentPlayerIndex == 0
+                                    ? state.currentGame.players.length - 1
+                                    : state.currentGame.currentPlayerIndex - 1
+                                : state.currentGame.currentPlayerIndex,
                       ),
                     ],
                   );
