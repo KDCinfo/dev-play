@@ -19,9 +19,9 @@ void main() {
     late GameEntryBloc mockGameEntryBloc;
     late GamePlayBloc mockGamePlayBloc;
 
-    ///
-    /// [ GameEntry Buttons ]
-    ///
+    //
+    // [ GameEntry Buttons ]
+    //
 
     group('GameEntry Buttons', () {
       setUp(() async {
@@ -70,7 +70,9 @@ void main() {
       testWidgets(
         '[GameEntry Buttons] play button onPressed calls StartGameEvent.',
         (WidgetTester tester) async {
-          when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
+          when(() => mockGameEntryBloc.state).thenReturn(
+            GameEntryState(players: [...playerList]),
+          );
 
           await tester.pumpWidget(wrappedWidget);
 
@@ -84,6 +86,7 @@ void main() {
 
           await tester.tap(find.byWidget(buttonWidget));
 
+          // MockGameEntryBloc.stream, MockGameEntryBloc.state
           verify(() => mockGameEntryBloc.add(const GameEntryStartGameEvent())).called(1);
           verifyNever(() => mockGameEntryBloc.add(const GameEntryResetGameEvent()));
         },
@@ -127,6 +130,120 @@ void main() {
           verify(() => mockGameEntryBloc.add(const GameEntryResetGameEvent())).called(1);
         },
       );
+    });
+
+    //
+    // [ Unit Tests ]
+    //
+
+    group('[Unit Tests]', () {
+      group('[validateFields]', () {
+        // - Edge size must be between 3-5.
+        // - The game must have between 2-4 players.
+        // - All players must have a name.
+        // - No two player names can be the same.
+        test('returns empty list when all fields are valid.', () async {
+          const gameEntryButtonsRow = GameEntryButtonsRow();
+          final messageList = gameEntryButtonsRow.validateFields(
+            statePlayers: [...playerList],
+            stateEdgeSize: 3,
+          );
+          expect(messageList, isEmpty);
+        });
+        test('returns list with 1 item when edgeSize is too small.', () async {
+          const gameEntryButtonsRow = GameEntryButtonsRow();
+          final messageList = gameEntryButtonsRow.validateFields(
+            statePlayers: [...playerList],
+            stateEdgeSize: 2,
+          );
+          expect(messageList, isNotEmpty);
+          expect(messageList, hasLength(1));
+          expect(messageList, contains(AppConstants.boardSizeMinMsg));
+        });
+        test('returns list with 1 item when edgeSize is too large.', () async {
+          const gameEntryButtonsRow = GameEntryButtonsRow();
+          final messageList = gameEntryButtonsRow.validateFields(
+            statePlayers: [...playerList],
+            stateEdgeSize: 10,
+          );
+          expect(messageList, isNotEmpty);
+          expect(messageList, hasLength(1));
+          expect(messageList, contains(AppConstants.boardSizeMaxMsg));
+        });
+        test('returns list with 1 item when playerList is too small.', () async {
+          const gameEntryButtonsRow = GameEntryButtonsRow();
+          final messageList = gameEntryButtonsRow.validateFields(
+            statePlayers: [...playerListSingle],
+            stateEdgeSize: 3,
+          );
+          debugPrint('messageList - list too small: $messageList');
+          expect(messageList, isNotEmpty);
+          expect(messageList, hasLength(1));
+          expect(messageList, contains(AppConstants.playerListMinMsg));
+        });
+        test('returns list with 1 item when playerList is too large.', () async {
+          const gameEntryButtonsRow = GameEntryButtonsRow();
+          final messageList = gameEntryButtonsRow.validateFields(
+            statePlayers: [
+              ...playerListAddFourth,
+              playerListPlayer1a[0],
+            ],
+            stateEdgeSize: 3,
+          );
+          debugPrint('messageList - list too large: $messageList');
+          expect(messageList, isNotEmpty);
+          expect(messageList, hasLength(1));
+          expect(messageList, contains(AppConstants.playerListMaxMsg));
+        });
+        test('returns list with 1 item when playerList has empty name.', () async {
+          final playerListEmptyName = List<PlayerData>.of(playerList);
+          playerListEmptyName[0] = playerListEmptyName[0].copyWith(playerName: '');
+          const gameEntryButtonsRow = GameEntryButtonsRow();
+          final messageList = gameEntryButtonsRow.validateFields(
+            statePlayers: playerListEmptyName,
+            stateEdgeSize: 3,
+          );
+          debugPrint('messageList - empty name: $messageList');
+          expect(messageList, isNotEmpty);
+          expect(messageList, hasLength(1));
+          expect(messageList, contains(AppConstants.emptyNameMsg));
+        });
+        test('returns list with 1 item when playerList has duplicate name.', () async {
+          final playerListDuplicateName = List<PlayerData>.of(playerList);
+          playerListDuplicateName[1] = playerListDuplicateName[0];
+          const gameEntryButtonsRow = GameEntryButtonsRow();
+          final messageList = gameEntryButtonsRow.validateFields(
+            statePlayers: playerListDuplicateName,
+            stateEdgeSize: 3,
+          );
+          debugPrint('messageList - duplicate name: $messageList');
+          expect(messageList, isNotEmpty);
+          expect(messageList, hasLength(1));
+          expect(messageList, contains(AppConstants.uniqueNameMsg));
+        });
+        test(
+          'returns list with 2 items with 4 players '
+          'having an empty player name and 2 duplicate names.',
+          () async {
+            final playerListDuplicateName = List<PlayerData>.of(playerListAddFourth);
+            // Duplicate player check.
+            playerListDuplicateName[1] = playerListDuplicateName[0];
+            // Empty name check.
+            playerListDuplicateName[2] = playerListDuplicateName[0].copyWith(playerName: '');
+
+            const gameEntryButtonsRow = GameEntryButtonsRow();
+            final messageList = gameEntryButtonsRow.validateFields(
+              statePlayers: playerListDuplicateName,
+              stateEdgeSize: 3,
+            );
+            debugPrint('messageList - 2 issues: $messageList');
+            expect(messageList, isNotEmpty);
+            expect(messageList, hasLength(2));
+            expect(messageList, contains(AppConstants.uniqueNameMsg));
+            expect(messageList, contains(AppConstants.emptyNameMsg));
+          },
+        );
+      });
     });
   });
 }

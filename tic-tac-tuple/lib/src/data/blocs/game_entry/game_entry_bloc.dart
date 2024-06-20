@@ -121,36 +121,6 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
           (player) => player.playerNum == state.players.length && player.playerName.isEmpty,
         );
 
-      /// Then let's ensure we have the proper data to start a game.
-      /// - Edge size must be between 3-5.
-      /// - The game must have between 2-4 players.
-      /// - All players must have a name.
-      /// - No two player names can be the same.
-      if (state.edgeSize < AppConstants.defaultEdgeSizeMin ||
-          state.edgeSize > AppConstants.defaultEdgeSizeMax ||
-          workingList.length < AppConstants.playerListMin ||
-          workingList.length > AppConstants.playerListMax ||
-          workingList.any((player) => player.playerName.isEmpty) ||
-          workingList.map((player) => player.playerName).toSet().length != workingList.length) {
-        return;
-      }
-
-      // If `players` has only 1 player, add a `bot` to the player list.
-      //
-      // @Note: This should no longer be necessary as the default
-      //        player list now has 2 players, a human and a bot.
-      if (workingList.length == 1) {
-        workingList.add(
-          const PlayerData(
-            playerId: -1,
-            playerNum: 2,
-            playerName: 'Botuple',
-            userSymbol: UserSymbolX(),
-            // playerType: const PlayerTypeBot(),
-          ),
-        );
-      }
-
       final lastPlayerId = _scorebookRepository.currentScorebookData.allPlayers.isNotEmpty
           ? _scorebookRepository.currentScorebookData.allPlayers
                   .map((player) => player.playerId)
