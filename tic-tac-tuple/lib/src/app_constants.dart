@@ -81,6 +81,17 @@ abstract class AppConstants {
   /// Storage Keys
   static const storageKeyScorebook = 'scorebookData';
 
+  /// Validation Messages
+  static const boardSizeMinMsg = 'Board size must be at least '
+      '${AppConstants.defaultEdgeSizeMin}x${AppConstants.defaultEdgeSizeMin}.';
+  static const boardSizeMaxMsg = 'Board size is currently maxed at '
+      '${AppConstants.defaultEdgeSizeMax}x${AppConstants.defaultEdgeSizeMax}.';
+  static const playerListMinMsg = 'There must be at least ${AppConstants.playerListMin} players.';
+  static const playerListMaxMsg = 'Players are currently maxed at ${AppConstants.playerListMax}.';
+  static const emptyNameMsg = 'All players need names.';
+  static const uniqueNameMsg = 'Player names should be unique.';
+  static const errorOccurredMsg = 'An error occurred. Please try again.';
+
   static void appPrint({
     String? message,
     Object? error,
