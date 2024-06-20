@@ -50,7 +50,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     on<GameEntryStartGameEvent>(_updateBlocStartGame);
     on<GameEntryResetGameEvent>(_updateBlocResetGame);
 
-    /// This will update the `allSavedPlayerNames` list in the UI.
+    // This will update the `allSavedPlayerNames` list in the UI.
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
       _updateBlocFromStream,
       onError: (Object err, StackTrace stacktrace) => AppConstants.appPrint(
@@ -115,28 +115,63 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     Emitter<GameEntryState> emit,
   ) {
     try {
-      /// First let's remove the last player if the name is empty.
+      // First let's remove the last player if the name is empty.
       final workingList = List<PlayerData>.of(state.players)
         ..removeWhere(
           (player) => player.playerNum == state.players.length && player.playerName.isEmpty,
         );
 
+      // This call distills the highest playerId from the list of players.
+      // New players will be assigned a playerId starting at +1 from this highest playerId.
       final lastPlayerId = _scorebookRepository.currentScorebookData.allPlayers.isNotEmpty
           ? _scorebookRepository.currentScorebookData.allPlayers
                   .map((player) => player.playerId)
                   .reduce((a, b) => a != null && b != null && b > a ? b : a) ??
               0
           : 0;
-      var nextPlayerId = lastPlayerId + 1;
-      final playersWithIds = workingList.map((player) {
-        final newPlayer = player.copyWith(playerId: nextPlayerId);
-        nextPlayerId++;
-        return newPlayer;
-      }).toList();
 
-      /// We'll prep the game by creating a new `GameData` object
-      /// using the `startGame` method which will prepopulate the
-      /// gameData with things like the game creation date.
+      // This will be incremented if needed.
+      var nextPlayerId = lastPlayerId;
+
+      // Isolate new players for storing in the `allPlayers` list,
+      // and pull out existing players for reuse.
+      final playersMap = {
+        'existing': <PlayerData>[],
+        'new': <PlayerData>[],
+      };
+      for (final player in workingList) {
+        final existingPlayerIndex = _scorebookRepository.currentScorebookData.allPlayers.indexWhere(
+          (existingPlayer) =>
+              existingPlayer.playerName.trim().toLowerCase() ==
+              player.playerName.trim().toLowerCase(),
+        );
+
+        if (existingPlayerIndex > -1) {
+          final existingPlayer =
+              _scorebookRepository.currentScorebookData.allPlayers[existingPlayerIndex];
+          playersMap['existing'] = [
+            ...playersMap['existing']!,
+            player.copyWith(playerId: existingPlayer.playerId),
+          ];
+        } else {
+          nextPlayerId++;
+          playersMap['new'] = [
+            ...playersMap['new']!,
+            player.copyWith(playerId: nextPlayerId),
+          ];
+        }
+      }
+
+      // Combine and resort new list based on `playerNum`.
+      final playersWithIds = [
+        ...playersMap['existing']!,
+        ...playersMap['new']!,
+      ].toList()
+        ..sort((a, b) => a.playerNum.compareTo(b.playerNum));
+
+      // We'll prep the game by creating a new `GameData` object
+      // using the `startGame` method which will prepopulate the
+      // gameData with things like the game creation date.
       final gameData = GameData.startGame(
         gameId: _scorebookRepository.currentScorebookData.allGames.isNotEmpty
             ? _scorebookRepository.currentScorebookData.allGames.keys.last + 1
@@ -148,14 +183,18 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
         gameBoardData: GameBoardData(edgeSize: state.edgeSize),
       );
 
-      /// We'll then populate the `currentGame` property in `ScorebookData`
-      /// using the new gameData. When this change hits the stream, it will
-      /// be what triggers the UI to navigate to the `GamePlay` screen.
-      final newScorebookData = _scorebookRepository.currentScorebookData.startGame(gameData);
+      // We'll then populate the `currentGame` property in `ScorebookData` using
+      // the new gameData. When this change hits the stream, it will be what
+      // triggers the UI to navigate to the `GamePlay` screen. We'll also be
+      // providing the new players for storing in the `allPlayers` list in `ScorebookData`.
+      final newScorebookData = _scorebookRepository.currentScorebookData.startGame(
+        gameData: gameData,
+        newAllPlayers: playersMap['new']!,
+      );
 
-      /// The new scorebook data will be stored in local storage,
-      /// then the stream will be updated with the new data,
-      /// triggering the actual start of the new game.
+      // The new scorebook data will be stored in local storage,
+      // then the stream will be updated with the new data,
+      // triggering the actual start of the new game.
       _scorebookRepository.processScorebookData(newScorebookData);
 
       //
@@ -210,26 +249,26 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     GameEntryChangeNameEvent event,
     Emitter<GameEntryState> emit,
   ) {
-    /// The default player list has 2 players, a human and a bot.
-    ///
-    /// This first condition ensures
-    /// - the list indeed has at least 2 players.
-    ///
+    // The default player list has 2 players, a human and a bot.
+    //
+    // This first condition ensures
+    // - the list indeed has at least 2 players.
+    //
     if (state.players.length >= 2 && state.players.length <= AppConstants.playerListMax) {
       late final List<PlayerData> newPlayerList;
 
-      /// This second condition checks if
-      /// - the 2nd player is a bot.
-      ///
+      // This second condition checks if
+      // - the 2nd player is a bot.
+      //
       if (event.playerNum == 2 && state.players[event.playerNum - 1].playerType is PlayerTypeBot) {
-        ///
-        /// This condition can only ever be met when the player list
-        ///   is in its default state, where the 2nd player is a bot,
-        ///   and so there will only ever be 2 rows at this stage.
-        /// When the 3rd player is added, it will be in the list
-        ///   until the fields are reset (using either the reset button,
-        ///   or selecting the bot name in the 2nd row's saved player list).
-        ///
+        //
+        // This condition can only ever be met when the player list
+        //   is in its default state, where the 2nd player is a bot,
+        //   and so there will only ever be 2 rows at this stage.
+        // When the 3rd player is added, it will be in the list
+        //   until the fields are reset (using either the reset button,
+        //   or selecting the bot name in the 2nd row's saved player list).
+        //
         newPlayerList = List.of(state.players)
           // Update the 2nd player's name and type'.
           ..replaceRange(
@@ -254,28 +293,28 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       } else if (event.playerNum == 2 &&
           state.players[event.playerNum - 1].playerType is! PlayerTypeBot &&
           event.playerName == AppConstants.playerBotName) {
-        ///
-        /// When selecting the default bot name ('TicTacBot') from the
-        /// saved player list (available from the 2nd row), or when
-        /// entering the name directly in the 2nd row's name field,
-        /// the 3rd and 4th player fields will be removed from the
-        /// list, and the 2nd player will be set back to a bot.
-        ///
-        /// This condition is met when the 2nd player is being
-        /// reset back to a bot by matching the default bot name.
-        ///
+        //
+        // When selecting the default bot name ('TicTacBot') from the
+        // saved player list (available from the 2nd row), or when
+        // entering the name directly in the 2nd row's name field,
+        // the 3rd and 4th player fields will be removed from the
+        // list, and the 2nd player will be set back to a bot.
+        //
+        // This condition is met when the 2nd player is being
+        // reset back to a bot by matching the default bot name.
+        //
         final playerListCopy = List.of(state.players).take(1).toList();
         newPlayerList = playerListCopy..add(AppConstants.playerBot);
 
         //
       } else if (event.playerNum < AppConstants.playerListMax &&
           event.playerNum == state.players.length) {
-        ///
-        /// Because `playerListMax = 4`, this condition will only ever be met
-        /// when the 3rd player name is changed, and a 4th player slot has
-        /// not yet been added. If the max were ever increased to 5, this
-        /// condition would also be met when the 4th player name is changed.
-        ///
+        //
+        // Because `playerListMax = 4`, this condition will only ever be met
+        // when the 3rd player name is changed, and a 4th player slot has
+        // not yet been added. If the max were ever increased to 5, this
+        // condition would also be met when the 4th player name is changed.
+        //
         newPlayerList = List.of(state.players)
           // Update the 2nd player's name and type'.
           ..replaceRange(
@@ -298,7 +337,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
             ),
           );
       } else {
-        /// Otherwise, let's just update the list with the player's name.
+        // Otherwise, let's just update the list with the player's name.
         newPlayerList = List.of(state.players)
           // Update this [nth] player's name.
           ..replaceRange(

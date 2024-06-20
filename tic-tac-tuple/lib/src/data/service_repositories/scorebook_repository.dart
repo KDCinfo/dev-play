@@ -93,6 +93,9 @@ class ScorebookRepository extends AppBaseRepository {
 
       /// The `gameId` switch to `-1` in the `currentGame.endGame` call
       /// triggers the `BlocListener` in the `GameEntryScreen`.
+      ///
+      /// This call updates: `allGames`, `currentGame` => `Complete`, `endGameScores`
+      /// It does not set the `gameId` to -1 (yet, until the dialog is dismissed).
       newScorebookDataTmp = newScorebookData.endGame(newGameData);
 
       //

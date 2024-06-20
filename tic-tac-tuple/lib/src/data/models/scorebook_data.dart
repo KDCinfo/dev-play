@@ -93,15 +93,13 @@ class ScorebookData extends Equatable {
 
   /// Initialize the Scorebook with a new game
   /// with data provided by the `GameEntry` screen.
-  ScorebookData startGame(GameData gameData) {
-    // Isolate new players for storing in the `allPlayers` list.
-    final newPlayers = gameData.players.where((player) {
-      return !allPlayers.any((existingPlayer) => existingPlayer.playerId == player.playerId);
-    }).toList();
-
+  ScorebookData startGame({
+    required GameData gameData,
+    required List<PlayerData> newAllPlayers,
+  }) {
     return copyWith(
       currentGame: gameData,
-      allPlayers: List.of(allPlayers)..addAll(newPlayers),
+      allPlayers: List.of(allPlayers)..addAll(newAllPlayers),
     );
   }
 

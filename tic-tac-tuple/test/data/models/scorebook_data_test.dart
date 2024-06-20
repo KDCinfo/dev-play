@@ -12,7 +12,10 @@ void main() {
           PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
         ],
       );
-      final scorebookData = const ScorebookData().startGame(gameData);
+      final scorebookData = const ScorebookData().startGame(
+        gameData: gameData,
+        newAllPlayers: gameData.players,
+      );
 
       // Assert that the current game is set correctly.
       expect(scorebookData.currentGame, gameData);

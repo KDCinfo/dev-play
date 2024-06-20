@@ -176,7 +176,6 @@ void main() {
             statePlayers: [...playerListSingle],
             stateEdgeSize: 3,
           );
-          debugPrint('messageList - list too small: $messageList');
           expect(messageList, isNotEmpty);
           expect(messageList, hasLength(1));
           expect(messageList, contains(AppConstants.playerListMinMsg));
@@ -190,7 +189,6 @@ void main() {
             ],
             stateEdgeSize: 3,
           );
-          debugPrint('messageList - list too large: $messageList');
           expect(messageList, isNotEmpty);
           expect(messageList, hasLength(1));
           expect(messageList, contains(AppConstants.playerListMaxMsg));
@@ -203,7 +201,6 @@ void main() {
             statePlayers: playerListEmptyName,
             stateEdgeSize: 3,
           );
-          debugPrint('messageList - empty name: $messageList');
           expect(messageList, isNotEmpty);
           expect(messageList, hasLength(1));
           expect(messageList, contains(AppConstants.emptyNameMsg));
@@ -216,7 +213,6 @@ void main() {
             statePlayers: playerListDuplicateName,
             stateEdgeSize: 3,
           );
-          debugPrint('messageList - duplicate name: $messageList');
           expect(messageList, isNotEmpty);
           expect(messageList, hasLength(1));
           expect(messageList, contains(AppConstants.uniqueNameMsg));
@@ -236,7 +232,6 @@ void main() {
               statePlayers: playerListDuplicateName,
               stateEdgeSize: 3,
             );
-            debugPrint('messageList - 2 issues: $messageList');
             expect(messageList, isNotEmpty);
             expect(messageList, hasLength(2));
             expect(messageList, contains(AppConstants.uniqueNameMsg));

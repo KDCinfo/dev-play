@@ -156,7 +156,7 @@ void main() {
         act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
         verify: (_) async {
           verify(() => mockScorebookRepository.scorebookDataStream).called(1);
-          verify(() => mockScorebookRepository.currentScorebookData).called(3);
+          verify(() => mockScorebookRepository.currentScorebookData).called(5); // 3, 6
           verify(() => mockScorebookRepository.processScorebookData(any())).called(1);
         },
       );
@@ -298,7 +298,7 @@ void main() {
         await Future<void>.delayed(Duration.zero);
 
         verify(() => mockScorebookRepository.scorebookDataStream).called(1);
-        verify(() => mockScorebookRepository.currentScorebookData).called(4);
+        verify(() => mockScorebookRepository.currentScorebookData).called(6); // 4, 7
         verify(() => mockScorebookRepository.processScorebookData(any())).called(1);
       });
     });
