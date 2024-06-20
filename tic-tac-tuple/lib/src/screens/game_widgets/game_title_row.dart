@@ -39,28 +39,45 @@ class GameTitleRow extends StatelessWidget {
           context.read<ScorebookRepository>().printLocalStorage();
         }
       },
-      child: Text(
-        screenTitle,
+      child: RichText(
         key: titleKey,
-        softWrap: false,
-        overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.center,
-        style: headlineLargeBold?.copyWith(
-              fontFamily: 'Quicksand', // Rounded
-              color: Colors.yellow,
-              shadows: [
-                const Shadow(
-                  color: AppConstants.primaryTileColor,
-                  offset: Offset(1, 1),
-                  blurRadius: 3,
-                ),
-              ],
-            ) ??
-            const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Lato',
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: screenTitle.split(' ').sublist(0, 2).join(' '),
+              style: headlineLargeBold?.copyWith(
+                fontFamily: 'Quicksand', // Rounded
+                color: Colors.yellow,
+                shadows: [
+                  const Shadow(
+                    color: AppConstants.primaryTileColor,
+                    offset: Offset(1, 1),
+                    blurRadius: 3,
+                  ),
+                ],
+              ),
             ),
+            TextSpan(
+              text: ' ${screenTitle.split(' ').sublist(2, 3).join(' ')}',
+              style: headlineLargeBold?.copyWith(
+                fontFamily: 'Quicksand', // Rounded
+                color: AppConstants.primaryTileColor,
+                shadows: [
+                  const Shadow(
+                    color: Colors.lightBlue,
+                    offset: Offset(1, 1),
+                    blurRadius: 6,
+                  ),
+                  const Shadow(
+                    color: Colors.yellow,
+                    offset: Offset(-1, -1),
+                    blurRadius: 6,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

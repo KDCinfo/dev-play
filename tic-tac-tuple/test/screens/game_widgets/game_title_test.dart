@@ -11,9 +11,9 @@ void main() {
     late Widget widgetToTest;
     late Widget wrappedWidget;
 
-    ///
-    /// [ GameWidget Title ]
-    ///
+    //
+    // [ GameWidget Title ]
+    //
 
     group('GameWidget Title', () {
       setUp(() {
@@ -27,14 +27,12 @@ void main() {
         final widgetFinderTitleText = find.byKey(const ValueKey(AppConstants.appTitleKey));
         expect(widgetFinderTitleText, findsOneWidget);
 
-        final appTitleWidget = tester.widget(widgetFinderTitleText) as Text;
         expect(
-          appTitleWidget,
-          isA<Text>().having(
-            (t) => t.data,
-            'text',
-            equals(AppConstants.appTitle),
+          find.text(
+            AppConstants.appTitle,
+            findRichText: true,
           ),
+          findsOneWidget,
         );
       });
     });
