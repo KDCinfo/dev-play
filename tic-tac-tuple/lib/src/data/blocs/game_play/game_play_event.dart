@@ -4,19 +4,26 @@ sealed class GamePlayEvent extends Equatable {
   const GamePlayEvent();
 }
 
-class GamePlayEndGameEvent extends GamePlayEvent {
-  const GamePlayEndGameEvent({
-    required this.gameData,
+/// This is equivalent to pausing the game.
+/// It is used during game play when the 'Return Home' button is pressed.
+class GamePlayReturnHomeEvent extends GamePlayEvent {
+  const GamePlayReturnHomeEvent({
+    required this.gameDataReset,
+    required this.gameDataPaused,
   });
 
-  final GameData gameData;
+  final GameData gameDataReset;
+  final GameData gameDataPaused;
 
   @override
   List<Object> get props => [
-        gameData,
+        gameDataReset,
+        gameDataPaused,
       ];
 }
 
+/// This will reset both `currentGame` and `pausedGame`.
+/// It is used when a game is complete.
 class GamePlayResetGameEvent extends GamePlayEvent {
   const GamePlayResetGameEvent();
 

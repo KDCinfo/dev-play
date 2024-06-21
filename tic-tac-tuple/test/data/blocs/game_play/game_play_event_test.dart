@@ -62,16 +62,18 @@ void main() {
     group('[GamePlayEndGameEvent]', () {
       test('supports value [equality]', () {
         expect(
-          GamePlayEndGameEvent(
-            gameData: GameData(
+          GamePlayReturnHomeEvent(
+            gameDataReset: GameData(
               gameStatus: const GameStatusComplete(),
             ),
+            gameDataPaused: GameData(),
           ),
           equals(
-            GamePlayEndGameEvent(
-              gameData: GameData(
+            GamePlayReturnHomeEvent(
+              gameDataReset: GameData(
                 gameStatus: const GameStatusComplete(),
               ),
+              gameDataPaused: GameData(),
             ),
           ),
         );
@@ -79,17 +81,19 @@ void main() {
 
       test('[props] are correct', () {
         expect(
-          GamePlayEndGameEvent(
-            gameData: GameData(
+          GamePlayReturnHomeEvent(
+            gameDataReset: GameData(
               winnerId: 6,
               gameStatus: const GameStatusComplete(),
             ),
+            gameDataPaused: GameData(),
           ).props,
           equals(<Object?>[
             GameData(
               winnerId: 6,
               gameStatus: const GameStatusComplete(),
             ),
+            GameData(),
           ]),
         );
       });

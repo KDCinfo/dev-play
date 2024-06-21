@@ -35,7 +35,7 @@ class GameBoardButtonPanel extends StatelessWidget {
             ),
             onPressed: () {
               // Navigator.pop(context);
-              endGame(context);
+              returnHome(context);
             },
             child: const Text(
               buttonReturn,
@@ -59,12 +59,18 @@ class GameBoardButtonPanel extends StatelessWidget {
     );
   }
 
-  void endGame(BuildContext context) {
+  void returnHome(BuildContext context) {
+    // The `currentGame` will be stored in `pausedGame` to allow for pausing the game.
+    // This is primarily to preserve its `gameId` before being reset to `-1`.
     final currentGameData = context.read<GamePlayBloc>().state.currentGame;
+
+    // All this reset call does is reset the `gameId` to `-1`.
     final resetGameData = GameData.resetGame(currentGameData);
+
     context.read<GamePlayBloc>().add(
-          GamePlayEndGameEvent(
-            gameData: resetGameData,
+          GamePlayReturnHomeEvent(
+            gameDataPaused: currentGameData,
+            gameDataReset: resetGameData,
           ),
         );
   }

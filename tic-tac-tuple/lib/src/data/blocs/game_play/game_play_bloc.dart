@@ -18,7 +18,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     on<GamePlayMoveEvent>(_makeMove);
     on<GamePlayBotMoveRequestedEvent>(_botMove);
     on<GamePlayUpdatedEvent>(_updateGameData);
-    on<GamePlayEndGameEvent>(_endGameData);
+    on<GamePlayReturnHomeEvent>(_returningHomeGameData);
     on<GamePlayResetGameEvent>(_resetGameData);
 
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
@@ -55,11 +55,20 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     );
   }
 
-  void _endGameData(
-    GamePlayEndGameEvent event,
+  void _returningHomeGameData(
+    GamePlayReturnHomeEvent event,
     Emitter<GamePlayState> emit,
   ) {
-    emit(state.copyWith(currentGame: event.gameData));
+    final gameDataReset = event.gameDataReset;
+    final gameDataPaused = event.gameDataPaused;
+
+    final newScorebookData = _scorebookRepository.currentScorebookData.pauseGame(
+      newCurrentGame: gameDataReset,
+      pausedGame: gameDataPaused,
+    );
+
+    // Store scorebookData in stream and local storage.
+    _scorebookRepository.processScorebookData(newScorebookData);
   }
 
   void _updateGameData(
@@ -69,11 +78,12 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     emit(state.copyWith(currentGame: event.gameData));
   }
 
+  /// Resetting `ScorebookData` will add an empty `GameData()` to `currentGame`,
+  /// but will retain the current players to help facilitate starting a new game.
   void _resetGameData(
     GamePlayResetGameEvent event,
     Emitter<GamePlayState> emit,
   ) {
-    // Update `ScorebookData`.
     final newScorebookData = _scorebookRepository.currentScorebookData.resetGame(
       state.currentGame,
     );
