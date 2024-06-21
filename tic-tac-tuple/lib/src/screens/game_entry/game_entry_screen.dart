@@ -29,7 +29,7 @@ class GameEntryScreen extends StatelessWidget {
                         previous.currentGame.gameStatus != current.currentGame.gameStatus &&
                         current.currentGame.gameStatus == const GameStatusComplete(),
                     listener: (context, state) async {
-                      await winnerWinnerListener(context);
+                      await gameEndProcess(context);
                     },
                   ),
                   BlocListener<GamePlayBloc, GamePlayState>(
@@ -56,7 +56,7 @@ class GameEntryScreen extends StatelessWidget {
     );
   }
 
-  Future<void> winnerWinnerListener(BuildContext context) async {
+  Future<void> gameEndProcess(BuildContext context) async {
     //
     // @TODO: Play a 'great game' popup animation.
     //        For now, we'll just show a dialog screen with a message.
@@ -99,6 +99,8 @@ class GameEntryScreen extends StatelessWidget {
         );
       },
     ).then<void>((_) {
+      // This reset will add an empty `GameData()` to the `currentGame` property,
+      // but will retain the current players to help facilitate starting a new game.
       context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
     });
   }

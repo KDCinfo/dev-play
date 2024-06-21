@@ -23,7 +23,7 @@ class GameEntryButtonsRow extends StatelessWidget {
       children: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(elevation: 3),
-          onPressed: () => startNewGame(context),
+          onPressed: () => validationProcess(context),
           child: Text(
             buttonPlayText,
             key: buttonPlayKey,
@@ -43,7 +43,7 @@ class GameEntryButtonsRow extends StatelessWidget {
     );
   }
 
-  Future<void> startNewGame(BuildContext context) async {
+  Future<void> validationProcess(BuildContext context) async {
     // Let's validate the fields.
     final validateMessage = validateFields(
       statePlayers: context.read<GameEntryBloc>().state.players,
@@ -75,13 +75,12 @@ class GameEntryButtonsRow extends StatelessWidget {
             ],
           );
         },
-      ).then<void>((_) {
-        context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
-      });
+      );
     }
   }
 
-  void resetGame(BuildContext context) {
+  void resetGameEntry(BuildContext context) {
+    // @TODO: What happens (to changed names that don't reset) if a game is started after this?
     context.read<GameEntryBloc>().add(const GameEntryResetGameEvent());
   }
 
