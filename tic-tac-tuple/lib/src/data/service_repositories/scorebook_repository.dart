@@ -164,6 +164,16 @@ class ScorebookRepository extends AppBaseRepository {
     updateGame(newScorebookData);
   }
 
+  void resumeGame() {
+    if (currentScorebookData.pausedGame == null) {
+      return;
+    }
+    final newScorebookData = currentScorebookData.resumeGame(
+      pausedGame: currentScorebookData.pausedGame!,
+    );
+    processScorebookData(newScorebookData);
+  }
+
   void printLocalStorage() {
     final keyListK = <String, Object?>{};
 

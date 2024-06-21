@@ -75,6 +75,13 @@ class GameEntryEdgeSizeEvent extends GameEntryEvent {
       ];
 }
 
+class GameEntryStartGameEvent extends GameEntryEvent {
+  const GameEntryStartGameEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class GameEntryResetGameEvent extends GameEntryEvent {
   const GameEntryResetGameEvent();
 
@@ -82,8 +89,8 @@ class GameEntryResetGameEvent extends GameEntryEvent {
   List<Object> get props => [];
 }
 
-class GameEntryStartGameEvent extends GameEntryEvent {
-  const GameEntryStartGameEvent();
+class GameEntryResumeGameEvent extends GameEntryEvent {
+  const GameEntryResumeGameEvent();
 
   @override
   List<Object> get props => [];

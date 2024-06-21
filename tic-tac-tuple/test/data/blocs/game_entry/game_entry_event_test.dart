@@ -154,5 +154,23 @@ void main() {
         );
       });
     });
+
+    group('[GameEntryResumeGameEvent]', () {
+      test('supports value [equality]', () {
+        expect(
+          GameEntryResumeGameEvent(),
+          equals(
+            GameEntryResumeGameEvent(),
+          ),
+        );
+      });
+
+      test('[props] are correct', () {
+        expect(
+          GameEntryResumeGameEvent().props,
+          equals(<Object?>[]),
+        );
+      });
+    });
   });
 }

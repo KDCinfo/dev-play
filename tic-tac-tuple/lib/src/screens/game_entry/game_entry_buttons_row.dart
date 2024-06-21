@@ -12,10 +12,10 @@ class GameEntryButtonsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const buttonPlayText = AppConstants.buttonPlayText;
     const buttonPlayKey = Key(AppConstants.buttonPlayKey);
+    const buttonResume = AppConstants.buttonResume;
+    const buttonResumeKey = Key(AppConstants.buttonResumeKey);
     // const buttonReset = AppConstants.buttonReset;
     // const buttonResetKey = Key(AppConstants.buttonResetKey);
-    // const buttonResume = AppConstants.buttonResume;
-    // const buttonResumeKey = Key(AppConstants.buttonResumeKey);
 
     return Wrap(
       direction: Axis.vertical,
@@ -34,12 +34,13 @@ class GameEntryButtonsRow extends StatelessWidget {
                 ),
           ),
         ),
-        // @TODO: Add back in to reset the form fields.
-        // This currently doesn't work due to the input fields not
+        // @TODO: Add back in this reset for the `GameEntry` form fields.
+        // It currently doesn't work due to the input fields not
         // being reset and synced when the bloc state is updated,
         // because the input fields are not controlled by bloc state,
         // but rather by their own controllers, and currently those
-        // controllers are in a sibling widget tree from the reset button.
+        // controllers are in a sibling widget tree from the reset button,
+        // and there's nothing for a `BlocListener` to latch on to (yet).
         //
         // The bot can still be reset by selecting the
         // bot's name in the previous player dropdown list.
@@ -51,13 +52,13 @@ class GameEntryButtonsRow extends StatelessWidget {
         //     key: buttonResetKey,
         //   ),
         // ),
-        // TextButton(
-        //   onPressed: () => resumeGame(context),
-        //   child: const Text(
-        //     buttonResume,
-        //     key: buttonResumeKey,
-        //   ),
-        // ),
+        TextButton(
+          onPressed: () => resumeGame(context),
+          child: const Text(
+            buttonResume,
+            key: buttonResumeKey,
+          ),
+        ),
       ],
     );
   }
@@ -98,8 +99,12 @@ class GameEntryButtonsRow extends StatelessWidget {
     }
   }
 
+  void resumeGame(BuildContext context) {
+    context.read<GameEntryBloc>().add(const GameEntryResumeGameEvent());
+  }
+
   void resetGameEntry(BuildContext context) {
-    // @TODO: What happens (to changed names that don't reset) if a game is started after this?
+    // @TODO: Names changed via bloc state don't reset text input fields.
     context.read<GameEntryBloc>().add(const GameEntryResetGameEvent());
   }
 

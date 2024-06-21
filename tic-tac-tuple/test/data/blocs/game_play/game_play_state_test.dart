@@ -26,6 +26,7 @@ void main() {
         createSubject().props,
         equals(<Object?>[
           createSubject().currentGame,
+          createSubject().pausedGame,
         ]),
       );
     });

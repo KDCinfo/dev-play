@@ -70,6 +70,8 @@ abstract class AppConstants {
   static const buttonPlayKey = 'LetsPlayButtonKey';
   static const buttonReset = 'Reset';
   static const buttonResetKey = 'ResetButtonKey';
+  static const buttonResume = 'Resume';
+  static const buttonResumeKey = 'ResumeButtonKey';
   static const buttonReturnHome = 'Return to Home';
   static const buttonReturnHomeKey = 'ReturnToHomeKey';
   static const buttonReturnHomeMsg = '(game is saved)';

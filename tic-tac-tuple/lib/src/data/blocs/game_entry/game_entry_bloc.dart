@@ -49,6 +49,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     on<GameEntryEdgeSizeEvent>(_updateBlocEdgeSize);
     on<GameEntryStartGameEvent>(_updateBlocStartGame);
     on<GameEntryResetGameEvent>(_updateBlocResetGame);
+    on<GameEntryResumeGameEvent>(_resumeGameData);
 
     // This will update the `allSavedPlayerNames` list in the UI.
     _scorebookStreamListener = _scorebookRepository.scorebookDataStream.listen(
@@ -108,6 +109,13 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
         allSavedPlayerNames: state.allSavedPlayerNames,
       ),
     );
+  }
+
+  void _resumeGameData(
+    GameEntryResumeGameEvent event,
+    Emitter<GameEntryState> emit,
+  ) {
+    _scorebookRepository.resumeGame();
   }
 
   void _updateBlocStartGame(

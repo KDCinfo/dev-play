@@ -137,6 +137,7 @@ class ScorebookData extends Equatable {
   ScorebookData resetGame(GameData gameData) {
     return copyWith(
       currentGame: GameData(
+        // gameId: -1,
         players: gameData.players,
       ),
     );
@@ -149,6 +150,15 @@ class ScorebookData extends Equatable {
     return copyWith(
       currentGame: newCurrentGame,
       pausedGame: pausedGame,
+    );
+  }
+
+  ScorebookData resumeGame({
+    required GameData pausedGame,
+  }) {
+    return copyWith(
+      currentGame: pausedGame,
+      pausedGame: const GameData(),
     );
   }
 
