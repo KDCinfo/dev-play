@@ -12,15 +12,9 @@ class ScorebookData extends Equatable {
     this.allPlayers = const [],
     this.allGames = const {},
     this.currentGame = const GameData(),
+    this.pausedGame,
     this.endGameScores = const {},
   });
-
-  factory ScorebookData.initGame(GameData gameData) {
-    return ScorebookData(
-      currentGame: gameData,
-      allPlayers: gameData.players,
-    );
-  }
 
   // JSON
   /// Instantiate from JSON.
@@ -34,6 +28,9 @@ class ScorebookData extends Equatable {
     final tempCurrentGame = GameData.fromJson(
       json['currentGame'] as Map<String, dynamic>,
     );
+    final tempPausedGame = GameData.fromJson(
+      json['pausedGame'] as Map<String, dynamic>,
+    );
     final tempEndGameScores = Map<int, int>.of(
       (json['endGameScores'] as Map<String, dynamic>).map(
         (key, value) => MapEntry(int.parse(key), value as int),
@@ -43,6 +40,7 @@ class ScorebookData extends Equatable {
       allPlayers: tempAllPlayers,
       allGames: tempAllGames,
       currentGame: tempCurrentGame,
+      pausedGame: tempPausedGame,
       endGameScores: tempEndGameScores,
     );
   }
@@ -55,6 +53,7 @@ class ScorebookData extends Equatable {
         (key, value) => MapEntry(key.toString(), value.toJson()),
       ),
       'currentGame': currentGame.toJson(),
+      'pausedGame': pausedGame?.toJson(),
       'endGameScores': endGameScores.map(
         (key, value) => MapEntry(key.toString(), value),
       ),
@@ -68,6 +67,7 @@ class ScorebookData extends Equatable {
         '  allPlayers: $allPlayers,\n'
         '  allGames: $allGames,\n'
         '  currentGame: $currentGame\n'
+        '  pausedGame: $pausedGame\n'
         '  endGameScores: $endGameScores\n'
         '}';
   }
@@ -91,6 +91,10 @@ class ScorebookData extends Equatable {
   /// Current Game
   final GameData currentGame;
 
+  /// When a game is paused, the current game with a `gameId` is stored here.
+  /// Then the `gameId` is reset to `-1` in `currentGame`.
+  final GameData? pausedGame;
+
   /// Initialize the Scorebook with a new game
   /// with data provided by the `GameEntry` screen.
   ScorebookData startGame({
@@ -99,6 +103,7 @@ class ScorebookData extends Equatable {
   }) {
     return copyWith(
       currentGame: gameData,
+      pausedGame: const GameData(),
       allPlayers: List.of(allPlayers)..addAll(newAllPlayers),
     );
   }
@@ -117,6 +122,7 @@ class ScorebookData extends Equatable {
       currentGame: gameData.copyWith(
         gameStatus: const GameStatusComplete(),
       ),
+      pausedGame: const GameData(),
       endGameScores: Map<int, int>.of(endGameScores)
         ..update(
           gameData.winnerId,
@@ -136,6 +142,16 @@ class ScorebookData extends Equatable {
     );
   }
 
+  ScorebookData pauseGame({
+    required GameData newCurrentGame,
+    required GameData pausedGame,
+  }) {
+    return copyWith(
+      currentGame: newCurrentGame,
+      pausedGame: pausedGame,
+    );
+  }
+
   ScorebookData clearGame() {
     return copyWith(
       currentGame: const GameData(),
@@ -146,12 +162,14 @@ class ScorebookData extends Equatable {
     List<PlayerData>? allPlayers,
     Map<int, GameData>? allGames,
     GameData? currentGame,
+    GameData? pausedGame,
     Map<int, int>? endGameScores,
   }) {
     return ScorebookData(
       allPlayers: allPlayers ?? this.allPlayers,
       allGames: allGames ?? this.allGames,
       currentGame: currentGame ?? this.currentGame,
+      pausedGame: pausedGame ?? this.pausedGame,
       endGameScores: endGameScores ?? this.endGameScores,
     );
   }
@@ -161,6 +179,7 @@ class ScorebookData extends Equatable {
         allPlayers,
         allGames,
         currentGame,
+        pausedGame,
         endGameScores,
       ];
 }

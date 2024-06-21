@@ -19,6 +19,7 @@ void main() {
 
       // Assert that the current game is set correctly.
       expect(scorebookData.currentGame, gameData);
+      expect(scorebookData.pausedGame, const GameData());
 
       // Assert that the `allPlayers` list is updated with the players from the game data.
       expect(scorebookData.allPlayers, gameData.players);
@@ -36,6 +37,7 @@ void main() {
 
       // Assert that the current game is updated correctly.
       expect(scorebookData.currentGame, gameData);
+      expect(scorebookData.pausedGame, isNull);
     });
 
     test('[endGame] should record the game in the scorebook.', () {
