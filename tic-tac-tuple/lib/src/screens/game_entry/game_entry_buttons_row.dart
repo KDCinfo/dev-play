@@ -12,8 +12,10 @@ class GameEntryButtonsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const buttonPlayText = AppConstants.buttonPlayText;
     const buttonPlayKey = Key(AppConstants.buttonPlayKey);
-    const buttonReset = AppConstants.buttonReset;
-    const buttonResetKey = Key(AppConstants.buttonResetKey);
+    // const buttonReset = AppConstants.buttonReset;
+    // const buttonResetKey = Key(AppConstants.buttonResetKey);
+    // const buttonResume = AppConstants.buttonResume;
+    // const buttonResumeKey = Key(AppConstants.buttonResumeKey);
 
     return Wrap(
       direction: Axis.vertical,
@@ -32,13 +34,30 @@ class GameEntryButtonsRow extends StatelessWidget {
                 ),
           ),
         ),
-        TextButton(
-          onPressed: () => resetGame(context),
-          child: const Text(
-            buttonReset,
-            key: buttonResetKey,
-          ),
-        ),
+        // @TODO: Add back in to reset the form fields.
+        // This currently doesn't work due to the input fields not
+        // being reset and synced when the bloc state is updated,
+        // because the input fields are not controlled by bloc state,
+        // but rather by their own controllers, and currently those
+        // controllers are in a sibling widget tree from the reset button.
+        //
+        // The bot can still be reset by selecting the
+        // bot's name in the previous player dropdown list.
+        //
+        // TextButton(
+        //   onPressed: () => resetGameEntry(context),
+        //   child: const Text(
+        //     buttonReset,
+        //     key: buttonResetKey,
+        //   ),
+        // ),
+        // TextButton(
+        //   onPressed: () => resumeGame(context),
+        //   child: const Text(
+        //     buttonResume,
+        //     key: buttonResumeKey,
+        //   ),
+        // ),
       ],
     );
   }
