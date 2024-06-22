@@ -46,13 +46,30 @@ class _PlayerListState extends State<PlayerList> {
           width: 150,
           // Hintext should be a label less than 10 characters
           hintText: AppConstants.playerListHintText,
+          textStyle: const TextStyle(
+            color: AppConstants.primaryTileColor,
+            fontSize: 14,
+          ),
           inputDecorationTheme: InputDecorationTheme(
             labelStyle: const TextStyle(fontWeight: FontWeight.bold),
             isDense: true,
+            hintStyle: const TextStyle(
+              color: AppConstants.primaryTileColor,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+            ),
+            suffixStyle: const TextStyle(
+              color: AppConstants.primaryTileColor,
+            ),
             border: UnderlineInputBorder(
               borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor.withOpacity(0.5),
+                width: 2,
+              ),
             ),
             contentPadding: const EdgeInsets.only(left: 10),
+            constraints: const BoxConstraints(maxHeight: 48),
           ),
           dropdownMenuEntries: [
             /// 'Select from previously used names:'
