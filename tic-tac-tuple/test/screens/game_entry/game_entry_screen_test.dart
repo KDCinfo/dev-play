@@ -122,12 +122,13 @@ void main() {
 
       group('checking BlocListener', () {
         testWidgets('for GamePlayBloc.', (WidgetTester tester) async {
-          // There are two `GamePlayBloc` listeners:
+          // There are three `GamePlayBloc` listeners:
           // - One listens for the `GameStatus` to change (and shows the 'Great Game!' dialog).
           // - The other listens for `gameId >= -1`, which pushes and pops the `/play` route.
+          // - The 3rd listens for `pausedGame.gameId > -1` which toggles the 'resume game' button.
           await tester.pumpWidget(wrappedWidget);
           final widgetFinderBlocListener = find.byType(BlocListener<GamePlayBloc, GamePlayState>);
-          expect(widgetFinderBlocListener, findsNWidgets(2));
+          expect(widgetFinderBlocListener, findsNWidgets(3));
         });
 
         testWidgets('calls Navigator.didPush when GamePlayState changes.', (tester) async {

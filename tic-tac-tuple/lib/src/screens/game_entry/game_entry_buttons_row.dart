@@ -52,12 +52,21 @@ class GameEntryButtonsRow extends StatelessWidget {
         //     key: buttonResetKey,
         //   ),
         // ),
-        TextButton(
-          onPressed: () => resumeGame(context),
-          child: const Text(
-            buttonResume,
-            key: buttonResumeKey,
-          ),
+        BlocBuilder<GamePlayBloc, GamePlayState>(
+          buildWhen: (previous, current) =>
+              previous.pausedGame.gameId != current.pausedGame.gameId &&
+              current.pausedGame.gameId > -1,
+          builder: (context, state) {
+            return state.pausedGame.gameId > -1
+                ? TextButton(
+                    onPressed: () => resumeGame(context),
+                    child: const Text(
+                      buttonResume,
+                      key: buttonResumeKey,
+                    ),
+                  )
+                : const SizedBox();
+          },
         ),
       ],
     );
