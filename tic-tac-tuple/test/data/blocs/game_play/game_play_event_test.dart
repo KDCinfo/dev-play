@@ -11,11 +11,11 @@ void main() {
       test('supports value [equality]', () {
         expect(
           GamePlayUpdatedEvent(
-            gameData: GameData(),
+            gameDataCurrent: GameData(),
           ),
           equals(
             GamePlayUpdatedEvent(
-              gameData: GameData(),
+              gameDataCurrent: GameData(),
             ),
           ),
         );
@@ -24,7 +24,7 @@ void main() {
       test('[props] are correct', () {
         expect(
           GamePlayUpdatedEvent(
-            gameData: GameData(),
+            gameDataCurrent: GameData(),
           ).props,
           equals(<Object?>[
             GameData(),

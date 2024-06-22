@@ -51,7 +51,10 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
   ///
   void _updateBlocFromStream(ScorebookData scorebookData) {
     add(
-      GamePlayUpdatedEvent(gameData: scorebookData.currentGame),
+      GamePlayUpdatedEvent(
+        gameDataCurrent: scorebookData.currentGame,
+        gameDataPaused: scorebookData.pausedGame,
+      ),
     );
   }
 
@@ -75,7 +78,12 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
     GamePlayUpdatedEvent event,
     Emitter<GamePlayState> emit,
   ) {
-    emit(state.copyWith(currentGame: event.gameData));
+    emit(
+      state.copyWith(
+        currentGame: event.gameDataCurrent,
+        pausedGame: event.gameDataPaused,
+      ),
+    );
   }
 
   /// Resetting `ScorebookData` will add an empty `GameData()` to `currentGame`,

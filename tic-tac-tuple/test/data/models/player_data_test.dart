@@ -20,7 +20,7 @@ void main() {
     test('PlayerData [label] should return the correct player label', () {
       const playerData = PlayerData(playerNum: 2);
 
-      expect(playerData.label, equals('Player 2 Name:'));
+      expect(playerData.label, equals('Player 2 Name'));
     });
 
     test('PlayerData [toString] should return the correct string representation', () {

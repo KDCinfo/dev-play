@@ -33,7 +33,7 @@ class GameTitleRow extends StatelessWidget {
           log('GamePlayBloc state: ${context.read<GamePlayBloc>().state}');
 
           // Print `currentScorebookData` in `scorebookRepository`.
-          log(context.read<ScorebookRepository>().currentScorebookData.toString());
+          log('currentScorebookData: ${context.read<ScorebookRepository>().currentScorebookData}');
 
           // Print all local storage keys (i.e. `SharedPreferences`).
           context.read<ScorebookRepository>().printLocalStorage();

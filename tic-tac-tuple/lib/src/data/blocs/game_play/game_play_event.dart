@@ -53,13 +53,16 @@ class GamePlayMoveEvent extends GamePlayEvent {
 
 class GamePlayUpdatedEvent extends GamePlayEvent {
   const GamePlayUpdatedEvent({
-    required this.gameData,
+    required this.gameDataCurrent,
+    required this.gameDataPaused,
   });
 
-  final GameData gameData;
+  final GameData gameDataCurrent;
+  final GameData? gameDataPaused;
 
   @override
-  List<Object> get props => [
-        gameData,
+  List<Object?> get props => [
+        gameDataCurrent,
+        gameDataPaused,
       ];
 }

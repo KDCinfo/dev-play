@@ -25,7 +25,7 @@ abstract class AppConstants {
   /// Player Names List
   static const playerListMin = 2;
   static const playerListMax = 4;
-  static String playerLabel(int playerNum) => 'Player $playerNum Name:';
+  static String playerLabel(int playerNum) => 'Player $playerNum Name';
   static const playerNameHintText = 'Enter name';
   static const playerListHintText = 'Previous';
   static const playerBotName = 'TicTacBot';
@@ -70,9 +70,9 @@ abstract class AppConstants {
   static const buttonPlayKey = 'LetsPlayButtonKey';
   static const buttonReset = 'Reset';
   static const buttonResetKey = 'ResetButtonKey';
-  static const buttonResume = 'Resume';
+  static const buttonResume = 'Resume Game';
   static const buttonResumeKey = 'ResumeButtonKey';
-  static const buttonReturnHome = 'Return to Home';
+  static const buttonReturnHome = 'Return Home';
   static const buttonReturnHomeKey = 'ReturnToHomeKey';
   static const buttonReturnHomeMsg = '(game is saved)';
   static const buttonStartNewGame = 'Start a New Game';

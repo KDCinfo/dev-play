@@ -40,7 +40,7 @@ void main() {
         },
         build: () => gamePlayBloc,
         act: (bloc) => bloc.add(
-          const GamePlayUpdatedEvent(gameData: GameData(gameStatus: GameStatusComplete())),
+          const GamePlayUpdatedEvent(gameDataCurrent: GameData(gameStatus: GameStatusComplete())),
         ),
         expect: () => const <GamePlayState>[
           GamePlayState(currentGame: GameData(gameStatus: GameStatusComplete())),
@@ -55,7 +55,7 @@ void main() {
           );
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
-              gameData: GameData(
+              gameDataCurrent: GameData(
                 players: AppConstants.playerListDefault
                     .map(
                       (e) => e.copyWith(playerId: e.playerNum),
@@ -84,7 +84,7 @@ void main() {
           );
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
-              gameData: GameData(
+              gameDataCurrent: GameData(
                 players: AppConstants.playerListDefault
                     .map(
                       (e) => e.copyWith(playerId: e.playerNum),
@@ -113,7 +113,7 @@ void main() {
               .thenReturn(const ScorebookData());
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
-              gameData: GameData(
+              gameDataCurrent: GameData(
                 players: AppConstants.playerListDefault
                     .map((e) => e.copyWith(playerId: e.playerNum))
                     .toList(),
@@ -146,7 +146,7 @@ void main() {
               .thenReturn(const ScorebookData());
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
-              gameData: GameData(
+              gameDataCurrent: GameData(
                 players: AppConstants.playerListDefault
                     .map((e) => e.copyWith(playerId: e.playerNum))
                     .toList(),
@@ -196,7 +196,7 @@ void main() {
 
         gamePlayBloc.add(
           const GamePlayUpdatedEvent(
-            gameData: GameData(gameStatus: GameStatusComplete()),
+            gameDataCurrent: GameData(gameStatus: GameStatusComplete()),
           ),
         );
 

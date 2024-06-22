@@ -38,7 +38,12 @@ void main() {
           child: widgetToTest,
         );
 
+        // ScorebookData Stream.
+        when(() => mockScorebookRepository.scorebookDataStream).thenAnswer(
+          (_) => Stream.value(const ScorebookData()),
+        );
         when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
+        when(() => mockGamePlayBloc.state).thenReturn(const GamePlayState());
       });
 
       testWidgets('[GameOrientationLayout] renders.', (WidgetTester tester) async {

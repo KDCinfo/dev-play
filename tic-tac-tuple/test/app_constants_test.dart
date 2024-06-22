@@ -1,5 +1,6 @@
 import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
@@ -35,7 +36,10 @@ void main() {
       });
 
       test('playerLabel should return the correct label for player 1.', () {
-        expect(AppConstants.playerLabel(1), 'Player 1 Name:');
+        expect(AppConstants.playerLabel(1), 'Player 1 Name');
+      });
+      test('playerLabel should return the correct label for player 2.', () {
+        expect(AppConstants.playerLabel(2), 'Player 2 Name');
       });
 
       test('playerNameHintText should be "Enter name".', () {
@@ -111,7 +115,7 @@ void main() {
       });
 
       test('buttonReturnHome should be "Return to Home".', () {
-        expect(AppConstants.buttonReturnHome, 'Return to Home');
+        expect(AppConstants.buttonReturnHome, 'Return Home');
       });
 
       test('buttonReturnHomeKey should be "ReturnToHomeKey".', () {
@@ -128,6 +132,64 @@ void main() {
 
       test('storageKeyScorebook should be "scorebookData".', () {
         expect(AppConstants.storageKeyScorebook, 'scorebookData');
+      });
+    });
+
+    group('additional checks', () {
+      test('botDelay should be 1500.', () {
+        expect(AppConstants.botDelay, 1500);
+      });
+
+      test('primaryTileColor should be Color(0xFF800000).', () {
+        expect(AppConstants.primaryTileColor, const Color(0xFF800000));
+      });
+
+      test('ignorePointerKey should be a Key.', () {
+        expect(AppConstants.ignorePointerKey, isA<Key>());
+      });
+
+      test('gameOverTitle should be "Great Game!".', () {
+        expect(AppConstants.gameOverTitle, 'Great Game!');
+      });
+
+      test('boardSizeMinMsg should be "Board size must be at least 3x3."', () {
+        expect(AppConstants.boardSizeMinMsg, 'Board size must be at least 3x3.');
+      });
+
+      test('boardSizeMaxMsg should be "Board size is currently maxed at 5x5."', () {
+        expect(AppConstants.boardSizeMaxMsg, 'Board size is currently maxed at 5x5.');
+      });
+
+      test('playerListMinMsg should be "There must be at least 2 players."', () {
+        expect(AppConstants.playerListMinMsg, 'There must be at least 2 players.');
+      });
+
+      test('playerListMaxMsg should be "Players are currently maxed at 4."', () {
+        expect(AppConstants.playerListMaxMsg, 'Players are currently maxed at 4.');
+      });
+
+      test('emptyNameMsg should be "All players need names."', () {
+        expect(AppConstants.emptyNameMsg, 'All players need names.');
+      });
+
+      test('uniqueNameMsg should be "Player names should be unique."', () {
+        expect(AppConstants.uniqueNameMsg, 'Player names should be unique.');
+      });
+
+      test('errorOccurredMsg should be "An error occurred. Please try again."', () {
+        expect(AppConstants.errorOccurredMsg, 'An error occurred. Please try again.');
+      });
+
+      test('headlineLargeTextStyle should be a TextStyle.', () {
+        expect(AppConstants.headlineLargeTextStyle, isA<TextStyle>());
+      });
+
+      test('headlineMediumTextStyle should be a TextStyle.', () {
+        expect(AppConstants.headlineMediumTextStyle, isA<TextStyle>());
+      });
+
+      test('headlineSmallTextStyle should be a TextStyle.', () {
+        expect(AppConstants.headlineSmallTextStyle, isA<TextStyle>());
       });
     });
 
