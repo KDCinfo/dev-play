@@ -1,4 +1,4 @@
-package com.kdcinfo.tictactoe.dev_play_tictactoe
+package com.example.tictactuple.dev_play_tictactuple
 
 import io.flutter.embedding.android.FlutterActivity
 

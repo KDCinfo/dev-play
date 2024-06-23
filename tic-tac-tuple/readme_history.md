@@ -37,7 +37,7 @@ This then made senese because it can store GameData, and the GameData can repres
 ```
   > `flutter create tictactoe
     --description "Dev Play: Tic Tac Toe"
-    --org "com.kdcinfo.tictactoe"
+    --org "com.example.tictactoe"
     --project-name "dev_play_tictactoe"
     -t skeleton`
 ```
