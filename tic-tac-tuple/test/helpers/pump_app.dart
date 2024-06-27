@@ -1,5 +1,5 @@
 import 'package:dev_play_tictactuple/src/app_constants.dart';
-import 'package:dev_play_tictactuple/src/app_provider_wrapper_bloc.dart';
+import 'package:dev_play_tictactuple/src/app_main/app_provider_wrapper_bloc.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';

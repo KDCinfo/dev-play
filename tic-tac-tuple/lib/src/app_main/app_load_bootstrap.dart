@@ -27,6 +27,8 @@ class BootstrapLoader {
       canPrint: AppConstants.canPrint,
     );
 
+    // storageApi.prefsClearAll();
+
     final scorebookRepository = ScorebookRepository(
       storageService: storageApi,
     );

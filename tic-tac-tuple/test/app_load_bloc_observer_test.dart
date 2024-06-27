@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:dev_play_tictactuple/src/app_load_bloc_observer.dart';
+import 'package:dev_play_tictactuple/src/app_main/app_load_bloc_observer.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 

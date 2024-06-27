@@ -1,7 +1,7 @@
 import 'package:dev_play_tictactuple/src/app_constants.dart';
+import 'package:dev_play_tictactuple/src/app_main/pre_pop_scope.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
-import 'package:dev_play_tictactuple/src/pre_pop_scope.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';
 
 import 'package:flutter/material.dart';

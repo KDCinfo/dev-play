@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactuple/src/app_provider_wrapper_bloc.dart';
+import 'package:dev_play_tictactuple/src/app_main/app_provider_wrapper_bloc.dart';
 import 'package:dev_play_tictactuple/src/data/data.dart';
 
 import 'package:flutter/material.dart';

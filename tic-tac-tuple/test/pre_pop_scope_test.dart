@@ -1,5 +1,5 @@
+import 'package:dev_play_tictactuple/src/app_main/pre_pop_scope.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
-import 'package:dev_play_tictactuple/src/pre_pop_scope.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
