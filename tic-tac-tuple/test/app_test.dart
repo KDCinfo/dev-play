@@ -1,4 +1,4 @@
-import 'package:dev_play_tictactuple/src/app.dart';
+import 'package:dev_play_tictactuple/src/app_main/app_main.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';
@@ -22,7 +22,7 @@ void main() {
       mockGameEntryBloc = MockGameEntryBloc();
       mockGamePlayBloc = MockGamePlayBloc();
 
-      widgetToTest = const MyApp();
+      widgetToTest = const AppWrapper();
       wrappedWidget = await PumpApp.providerWrappedWithNoMaterialApp(
         scorebookRepository: mockScorebookRepository,
         gameEntryBloc: mockGameEntryBloc,
