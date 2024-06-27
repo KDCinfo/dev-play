@@ -40,7 +40,10 @@ void main() {
         },
         build: () => gamePlayBloc,
         act: (bloc) => bloc.add(
-          const GamePlayUpdatedEvent(gameDataCurrent: GameData(gameStatus: GameStatusComplete())),
+          const GamePlayUpdatedEvent(
+            gameDataCurrent: GameData(gameStatus: GameStatusComplete()),
+            gameDataPaused: GameData(),
+          ),
         ),
         expect: () => const <GamePlayState>[
           GamePlayState(currentGame: GameData(gameStatus: GameStatusComplete())),
@@ -62,6 +65,7 @@ void main() {
                     )
                     .toList(),
               ),
+              gameDataPaused: const GameData(),
             ),
           );
         },
@@ -91,6 +95,7 @@ void main() {
                     )
                     .toList(),
               ),
+              gameDataPaused: const GameData(),
             ),
           );
         },
@@ -124,6 +129,7 @@ void main() {
                   ],
                 ),
               ),
+              gameDataPaused: const GameData(),
             ),
           );
         },
@@ -157,6 +163,7 @@ void main() {
                   ],
                 ),
               ),
+              gameDataPaused: const GameData(),
             ),
           );
         },
@@ -197,6 +204,7 @@ void main() {
         gamePlayBloc.add(
           const GamePlayUpdatedEvent(
             gameDataCurrent: GameData(gameStatus: GameStatusComplete()),
+            gameDataPaused: GameData(),
           ),
         );
 

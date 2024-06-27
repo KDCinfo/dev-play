@@ -12,10 +12,12 @@ void main() {
         expect(
           GamePlayUpdatedEvent(
             gameDataCurrent: GameData(),
+            gameDataPaused: GameData(),
           ),
           equals(
             GamePlayUpdatedEvent(
               gameDataCurrent: GameData(),
+              gameDataPaused: GameData(),
             ),
           ),
         );
@@ -25,8 +27,10 @@ void main() {
         expect(
           GamePlayUpdatedEvent(
             gameDataCurrent: GameData(),
+            gameDataPaused: GameData(),
           ).props,
           equals(<Object?>[
+            GameData(),
             GameData(),
           ]),
         );
