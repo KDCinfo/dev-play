@@ -8,8 +8,8 @@ class BootParameters {
   const BootParameters();
 }
 
-class BootstrapLoader {
-  const BootstrapLoader(this.params);
+class AppBootstrapLoader {
+  const AppBootstrapLoader(this.params);
 
   final BootParameters params;
 
@@ -43,7 +43,7 @@ class BootstrapLoader {
       () => AppProviderWrapperRepository(
         repositories: repositories,
         child: const AppProviderWrapperBloc<AppBaseRepository>(
-          child: MyApp(),
+          child: AppWrapper(),
         ),
       ),
     );
