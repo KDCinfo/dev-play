@@ -49,7 +49,7 @@ void main() {
         gameBoardData = const GameBoardData();
         gameData = const GameData();
 
-        expect(gameData, isNotNull);
+        expect(() => gameData, returnsNormally);
         expect(gameData, isA<GameData>());
         expect(gameData.gameId, -1);
         expect(gameData.players, isEmpty);
@@ -77,7 +77,7 @@ void main() {
           gameStatus: const GameStatusInProgress(),
         );
 
-        expect(gameData, isNotNull);
+        expect(() => gameData, returnsNormally);
         expect(gameData, isA<GameData>());
         expect(gameData.gameId, 0);
         expect(gameData.dateCreated, testDate);

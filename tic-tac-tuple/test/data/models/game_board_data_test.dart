@@ -140,8 +140,8 @@ void main() {
       group('[constructor]', () {
         test('works properly.', () {
           expect(
-            GameBoardData(edgeSize: edgeSize),
-            isNotNull,
+            () => GameBoardData(edgeSize: edgeSize),
+            returnsNormally,
           );
         });
 
