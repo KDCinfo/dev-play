@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:base_services/base_services.dart';
 
-import 'package:dev_play_tictactuple/src/src.dart';
+import 'package:dev_play_tictactuple/src/app_constants.dart';
+import 'package:dev_play_tictactuple/src/app_main/app_main.dart';
+import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 
-class BootParameters {
-  const BootParameters();
-}
-
-class AppBootstrapLoader {
-  const AppBootstrapLoader(this.params);
+class BootstrapLoader {
+  const BootstrapLoader(this.params);
 
   final BootParameters params;
 

@@ -6,14 +6,14 @@ import '../../helpers/mocks.dart';
 
 void main() {
   group('RepositoryTypeWrapper', () {
-    test('should store the repository correctly', () {
+    test('should store a MockRepository correctly', () {
       final repository = MockRepository();
       final wrapper = RepositoryTypeWrapper<MockRepository>(repository: repository);
 
       expect(wrapper.repository, equals(repository));
     });
 
-    test('should store the repository correctly', () {
+    test('should store the ScorebookRepository correctly', () {
       final repository = ScorebookRepository(storageService: MockStorageAPI());
       final wrapper = RepositoryTypeWrapper<ScorebookRepository>(repository: repository);
 
@@ -21,5 +21,3 @@ void main() {
     });
   });
 }
-
-class MockRepository {}

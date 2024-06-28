@@ -1,0 +1,3 @@
+class BootParameters {
+  const BootParameters();
+}
