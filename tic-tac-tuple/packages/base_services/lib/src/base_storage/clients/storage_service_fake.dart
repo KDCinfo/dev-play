@@ -3,7 +3,7 @@ import 'package:base_services/base_services.dart';
 /// This service class has not been implemented.
 /// It is mostly just to show how fake data could be used during development.
 ///
-class FakeStorageService implements StorageServiceApi {
+class StorageServiceFake implements StorageServiceApi {
   @override
   Future<void> prefsSetString({required String key, required String value}) async {}
   @override

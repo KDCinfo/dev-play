@@ -7,8 +7,8 @@ import 'package:base_services/base_services.dart';
 // implementation detail that no other class in the app knows about. Swapping
 // out shared preferences with a SQL database should be as simple as creating
 // a new [StorageService] implementation.
-class StorageServiceImpl implements StorageServiceApi {
-  StorageServiceImpl({
+class StorageServiceProd implements StorageServiceApi {
+  StorageServiceProd({
     required LocalStorageApi localStorageApi,
     required LocalSecureStorageApi localSecureStorageApi,
     // required WebApi webApi,

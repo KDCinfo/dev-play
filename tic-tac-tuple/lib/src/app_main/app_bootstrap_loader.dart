@@ -21,7 +21,7 @@ class AppBootstrapLoader {
 
     /// Services and Repositories
     ///
-    final storageApi = StorageServiceImpl(
+    final storageApi = StorageServiceProd(
       localStorageApi: sharedPrefsApi,
       localSecureStorageApi: secureStorageApi,
       canPrint: AppConstants.canPrint,
