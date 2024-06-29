@@ -9,7 +9,7 @@ void main() {
   group('AppProviderWrapperBloc', () {
     testWidgets('should successfully find a Container widget.', (WidgetTester tester) async {
       // Arrange
-      final appProviderWrapperBloc = AppProviderWrapperBloc<AppBaseRepository>(
+      final appProviderWrapperBloc = AppProviderWrapperBloc(
         child: Container(),
       );
 
@@ -23,7 +23,7 @@ void main() {
 
     testWidgets('should find the [GameEntryBloc BlocProvider].', (WidgetTester tester) async {
       // Arrange
-      final appProviderWrapperBloc = AppProviderWrapperBloc<AppBaseRepository>(
+      final appProviderWrapperBloc = AppProviderWrapperBloc(
         child: Container(),
       );
 

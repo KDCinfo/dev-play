@@ -40,7 +40,7 @@ class BootstrapLoader {
     await appLoadBlocObserver(
       () => AppProviderWrapperRepository(
         repositories: repositories,
-        child: const AppProviderWrapperBloc<AppBaseRepository>(
+        child: const AppProviderWrapperBloc(
           child: AppWrapper(),
         ),
       ),

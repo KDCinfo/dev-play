@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// For testing purposes, this widget allows for blocs to
 /// be injected, allowing for the use of mocked repositories.
 ///
-class AppProviderWrapperBloc<T extends AppBaseRepository> extends StatelessWidget {
+class AppProviderWrapperBloc extends StatelessWidget {
   const AppProviderWrapperBloc({
     required this.child,
     this.gameEntryBloc,
