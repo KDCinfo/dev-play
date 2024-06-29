@@ -34,7 +34,7 @@ class AppWrapper extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         colorSchemeSeed: AppConstants.primaryTileColor,
         textTheme: TextTheme(
           headlineSmall: AppConstants.headlineSmallTextStyle,
