@@ -1,4 +1,5 @@
 import 'package:dev_play_tictactuple/src/app_constants.dart';
+
 import 'package:equatable/equatable.dart';
 
 abstract class GameStatus extends Equatable {
@@ -32,7 +33,7 @@ abstract class GameStatus extends Equatable {
 }
 
 class GameStatusEntryMode extends GameStatus {
-  const GameStatusEntryMode() : super();
+  const GameStatusEntryMode();
 
   @override
   String get statusMessage => GameStatusEnum.entryMode.statusStr;
@@ -42,7 +43,7 @@ class GameStatusEntryMode extends GameStatus {
 }
 
 class GameStatusInProgress extends GameStatus {
-  const GameStatusInProgress() : super();
+  const GameStatusInProgress();
 
   @override
   String get statusMessage => GameStatusEnum.inProgress.statusStr;
@@ -52,7 +53,7 @@ class GameStatusInProgress extends GameStatus {
 }
 
 class GameStatusComplete extends GameStatus {
-  const GameStatusComplete() : super();
+  const GameStatusComplete();
 
   @override
   String get statusMessage => GameStatusEnum.complete.statusStr;
