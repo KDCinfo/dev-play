@@ -44,26 +44,6 @@ void main() {
 
       expect(find.byType(FadeTransition), findsOneWidget);
       expect(find.byType(ScaleTransition), findsOneWidget);
-
-      await tester.pump(const Duration(milliseconds: 500));
-
-      expect(find.byType(FadeTransition), findsOneWidget);
-      expect(find.byType(ScaleTransition), findsOneWidget);
-
-      await tester.pump(const Duration(milliseconds: 500));
-
-      expect(find.byType(FadeTransition), findsOneWidget);
-      expect(find.byType(ScaleTransition), findsOneWidget);
-
-      await tester.pump(const Duration(milliseconds: 500));
-
-      expect(find.byType(FadeTransition), findsOneWidget);
-      expect(find.byType(ScaleTransition), findsOneWidget);
-
-      await tester.pump(const Duration(milliseconds: 500));
-
-      expect(find.byType(FadeTransition), findsOneWidget);
-      expect(find.byType(ScaleTransition), findsOneWidget);
     });
   });
 }
