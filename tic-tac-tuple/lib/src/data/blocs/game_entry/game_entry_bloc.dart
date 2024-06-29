@@ -158,13 +158,16 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
           final existingPlayer =
               _scorebookRepository.currentScorebookData.allPlayers[existingPlayerIndex];
           playersMap['existing'] = [
-            ...playersMap['existing']!,
+            // Prefer null-aware spread (...?) instead of null-assertions.
+            // dcm prefer-null-aware-spread
+            // ...playersMap['existing']!,
+            ...?playersMap['existing'],
             player.copyWith(playerId: existingPlayer.playerId),
           ];
         } else {
           nextPlayerId++;
           playersMap['new'] = [
-            ...playersMap['new']!,
+            ...?playersMap['new'],
             player.copyWith(playerId: nextPlayerId),
           ];
         }
@@ -172,8 +175,8 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
 
       // Combine and resort new list based on `playerNum`.
       final playersWithIds = [
-        ...playersMap['existing']!,
-        ...playersMap['new']!,
+        ...?playersMap['existing'],
+        ...?playersMap['new'],
       ].toList()
         ..sort((a, b) => a.playerNum.compareTo(b.playerNum));
 
