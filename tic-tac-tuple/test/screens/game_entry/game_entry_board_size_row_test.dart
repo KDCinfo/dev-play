@@ -122,63 +122,67 @@ void main() {
         // when(() => mockGameEntryBloc.state).thenReturn(const GameEntryState());
       });
 
-      testWidgets('should add an event when the slider is incremented.',
-          (WidgetTester tester) async {
-        const testEdgeSize = 3;
+      testWidgets(
+        'should add an event when the slider is incremented.',
+        (WidgetTester tester) async {
+          const testEdgeSize = 3;
 
-        when(() => mockGameEntryBloc.state).thenReturn(
-          const GameEntryState(), // edgeSize: testEdgeSize | Default: 3
-        );
+          when(() => mockGameEntryBloc.state).thenReturn(
+            const GameEntryState(), // edgeSize: testEdgeSize | Default: 3
+          );
 
-        await tester.pumpWidget(wrappedWidget);
+          await tester.pumpWidget(wrappedWidget);
 
-        final sliderFinder = find.byKey(const Key(AppConstants.boardSizeSliderKey));
-        expect(sliderFinder, findsOneWidget);
+          final sliderFinder = find.byKey(const Key(AppConstants.boardSizeSliderKey));
+          expect(sliderFinder, findsOneWidget);
 
-        /// Initial Slider Value
-        /// 3x3 = 0, 4x4 = 1, 5x5 = 2
-        final slider = tester.widget(sliderFinder) as Slider;
-        expect(slider.value, testEdgeSize - AppConstants.boardSizesOffset);
+          /// Initial Slider Value
+          /// 3x3 = 0, 4x4 = 1, 5x5 = 2
+          final slider = tester.widget(sliderFinder) as Slider;
+          expect(slider.value, testEdgeSize - AppConstants.boardSizesOffset);
 
-        /// Small Drag
-        await tester.drag(sliderFinder, const Offset(50, 0));
-        await tester.pumpAndSettle();
-        verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
+          /// Small Drag
+          await tester.drag(sliderFinder, const Offset(50, 0));
+          await tester.pumpAndSettle();
+          verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
 
-        /// Large Drag
-        await tester.drag(sliderFinder, const Offset(180, 0));
-        await tester.pumpAndSettle();
-        verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
-      });
+          /// Large Drag
+          await tester.drag(sliderFinder, const Offset(180, 0));
+          await tester.pumpAndSettle();
+          verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
+        },
+      );
 
-      testWidgets('should add an event when the slider is decremented.',
-          (WidgetTester tester) async {
-        const testEdgeSize = 5;
+      testWidgets(
+        'should add an event when the slider is decremented.',
+        (WidgetTester tester) async {
+          const testEdgeSize = 5;
 
-        when(() => mockGameEntryBloc.state).thenReturn(
-          const GameEntryState(edgeSize: testEdgeSize),
-        );
+          when(() => mockGameEntryBloc.state).thenReturn(
+            const GameEntryState(edgeSize: testEdgeSize),
+          );
 
-        await tester.pumpWidget(wrappedWidget);
+          await tester.pumpWidget(wrappedWidget);
 
-        final sliderFinder = find.byKey(const Key(AppConstants.boardSizeSliderKey));
-        expect(sliderFinder, findsOneWidget);
+          final sliderFinder = find.byKey(const Key(AppConstants.boardSizeSliderKey));
+          expect(sliderFinder, findsOneWidget);
 
-        /// Initial Slider Value
-        /// 3x3 = 0, 4x4 = 1, 5x5 = 2
-        final slider = tester.widget(sliderFinder) as Slider;
-        expect(slider.value, testEdgeSize - AppConstants.boardSizesOffset);
+          /// Initial Slider Value
+          /// 3x3 = 0, 4x4 = 1, 5x5 = 2
+          final slider = tester.widget(sliderFinder) as Slider;
+          expect(slider.value, testEdgeSize - AppConstants.boardSizesOffset);
 
-        /// Small Drag
-        await tester.drag(sliderFinder, const Offset(-50, 0));
-        await tester.pumpAndSettle();
-        verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
+          /// Small Drag
+          await tester.drag(sliderFinder, const Offset(-50, 0));
+          await tester.pumpAndSettle();
+          verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
 
-        /// Large Drag
-        await tester.drag(sliderFinder, const Offset(-180, 0));
-        await tester.pumpAndSettle();
-        verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
-      });
+          /// Large Drag
+          await tester.drag(sliderFinder, const Offset(-180, 0));
+          await tester.pumpAndSettle();
+          verify(() => mockGameEntryBloc.add(any(that: isA<GameEntryEdgeSizeEvent>()))).called(1);
+        },
+      );
     });
   });
 }

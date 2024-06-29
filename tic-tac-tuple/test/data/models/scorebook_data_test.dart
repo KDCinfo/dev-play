@@ -101,55 +101,56 @@ void main() {
     });
 
     test(
-        'ScorebookData [should be equal] to another ScorebookData object with the same properties.',
-        () {
-      const scorebookData1 = ScorebookData(
-        allPlayers: [
-          PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
-          PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
-        ],
-        allGames: {
-          0: GameData(
-            gameId: 0,
+      'ScorebookData [should be equal] to another ScorebookData object with the same properties.',
+      () {
+        const scorebookData1 = ScorebookData(
+          allPlayers: [
+            PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
+            PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
+          ],
+          allGames: {
+            0: GameData(
+              gameId: 0,
+              players: [
+                PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
+                PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
+              ],
+            ),
+          },
+          currentGame: GameData(
+            gameId: 1,
             players: [
-              PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
-              PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
+              PlayerData(playerId: 2, playerName: 'Player 3', playerNum: 1),
+              PlayerData(playerId: 3, playerName: 'Player 4', playerNum: 2),
             ],
           ),
-        },
-        currentGame: GameData(
-          gameId: 1,
-          players: [
-            PlayerData(playerId: 2, playerName: 'Player 3', playerNum: 1),
-            PlayerData(playerId: 3, playerName: 'Player 4', playerNum: 2),
+        );
+        const scorebookData2 = ScorebookData(
+          allPlayers: [
+            PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
+            PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
           ],
-        ),
-      );
-      const scorebookData2 = ScorebookData(
-        allPlayers: [
-          PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
-          PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
-        ],
-        allGames: {
-          0: GameData(
-            gameId: 0,
+          allGames: {
+            0: GameData(
+              gameId: 0,
+              players: [
+                PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
+                PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
+              ],
+            ),
+          },
+          currentGame: GameData(
+            gameId: 1,
             players: [
-              PlayerData(playerId: 0, playerName: 'Player 1', playerNum: 1),
-              PlayerData(playerId: 1, playerName: 'Player 2', playerNum: 2),
+              PlayerData(playerId: 2, playerName: 'Player 3', playerNum: 1),
+              PlayerData(playerId: 3, playerName: 'Player 4', playerNum: 2),
             ],
           ),
-        },
-        currentGame: GameData(
-          gameId: 1,
-          players: [
-            PlayerData(playerId: 2, playerName: 'Player 3', playerNum: 1),
-            PlayerData(playerId: 3, playerName: 'Player 4', playerNum: 2),
-          ],
-        ),
-      );
+        );
 
-      // Assert that the two ScorebookData objects are equal.
-      expect(scorebookData1, scorebookData2);
-    });
+        // Assert that the two ScorebookData objects are equal.
+        expect(scorebookData1, scorebookData2);
+      },
+    );
   });
 }

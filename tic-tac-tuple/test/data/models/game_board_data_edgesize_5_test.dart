@@ -498,30 +498,32 @@ void main() {
 
       group('[tile availability] for', () {
         test(
-            '[usedTiles] should return a list of indices '
-            'that have been used by any player turn', () {
-          final plays = [
-            playPlayer1(playerTurnId: 0, tileIndex: 11),
-            playPlayer2(playerTurnId: 1, tileIndex: 1),
-            playPlayer3(playerTurnId: 2, tileIndex: 13),
-            playPlayer4(playerTurnId: 3, tileIndex: 22),
-            playPlayer1(playerTurnId: 4, tileIndex: 4),
-            playPlayer2(playerTurnId: 5, tileIndex: 5),
-            playPlayer3(playerTurnId: 6, tileIndex: 6),
-            playPlayer4(playerTurnId: 7, tileIndex: 17),
-            playPlayer1(playerTurnId: 8, tileIndex: 8),
-            playPlayer2(playerTurnId: 9, tileIndex: 9),
-            playPlayer3(playerTurnId: 10, tileIndex: 20),
-          ];
+          '[usedTiles] should return a list of indices '
+          'that have been used by any player turn',
+          () {
+            final plays = [
+              playPlayer1(playerTurnId: 0, tileIndex: 11),
+              playPlayer2(playerTurnId: 1, tileIndex: 1),
+              playPlayer3(playerTurnId: 2, tileIndex: 13),
+              playPlayer4(playerTurnId: 3, tileIndex: 22),
+              playPlayer1(playerTurnId: 4, tileIndex: 4),
+              playPlayer2(playerTurnId: 5, tileIndex: 5),
+              playPlayer3(playerTurnId: 6, tileIndex: 6),
+              playPlayer4(playerTurnId: 7, tileIndex: 17),
+              playPlayer1(playerTurnId: 8, tileIndex: 8),
+              playPlayer2(playerTurnId: 9, tileIndex: 9),
+              playPlayer3(playerTurnId: 10, tileIndex: 20),
+            ];
 
-          final gameBoardData = GameBoardData(edgeSize: edgeSize);
-          final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+            final gameBoardData = GameBoardData(edgeSize: edgeSize);
+            final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-          // This returns a simple incremental list with all used indexes.
-          // Note: it will not be in the played tile index order.
-          final result = gameBoardCopy.usedTileIndexes;
-          expect(result, [1, 4, 5, 6, 8, 9, 11, 13, 17, 20, 22]);
-        });
+            // This returns a simple incremental list with all used indexes.
+            // Note: it will not be in the played tile index order.
+            final result = gameBoardCopy.usedTileIndexes;
+            expect(result, [1, 4, 5, 6, 8, 9, 11, 13, 17, 20, 22]);
+          },
+        );
 
         test(
           '[availableTiles] should return a list of indices '

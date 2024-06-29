@@ -426,26 +426,28 @@ void main() {
 
       group('[tile availability] for', () {
         test(
-            '[usedTiles] should return a list of indices '
-            'that have been used by any player turn', () {
-          final plays = [
-            playPlayer1(playerTurnId: 0, tileIndex: 0),
-            playPlayer2(playerTurnId: 1, tileIndex: 2),
-            playPlayer1(playerTurnId: 2, tileIndex: 1),
-            playPlayer2(playerTurnId: 3, tileIndex: 4),
-            playPlayer1(playerTurnId: 4, tileIndex: 5),
-            playPlayer2(playerTurnId: 5, tileIndex: 6),
-          ];
+          '[usedTiles] should return a list of indices '
+          'that have been used by any player turn',
+          () {
+            final plays = [
+              playPlayer1(playerTurnId: 0, tileIndex: 0),
+              playPlayer2(playerTurnId: 1, tileIndex: 2),
+              playPlayer1(playerTurnId: 2, tileIndex: 1),
+              playPlayer2(playerTurnId: 3, tileIndex: 4),
+              playPlayer1(playerTurnId: 4, tileIndex: 5),
+              playPlayer2(playerTurnId: 5, tileIndex: 6),
+            ];
 
-          final gameBoardData = GameBoardData(edgeSize: edgeSize);
-          final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+            final gameBoardData = GameBoardData(edgeSize: edgeSize);
+            final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-          // This returns a simple incremental list with all used indexes.
-          // Note: it will not be in the played tile index order;
-          //       notice `tileIndex` [2, 1] becomes [1, 2].
-          final result = gameBoardCopy.usedTileIndexes;
-          expect(result, [0, 1, 2, 4, 5, 6]);
-        });
+            // This returns a simple incremental list with all used indexes.
+            // Note: it will not be in the played tile index order;
+            //       notice `tileIndex` [2, 1] becomes [1, 2].
+            final result = gameBoardCopy.usedTileIndexes;
+            expect(result, [0, 1, 2, 4, 5, 6]);
+          },
+        );
 
         test(
           '[availableTiles] should return a list of indices '

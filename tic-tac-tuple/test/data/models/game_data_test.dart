@@ -116,14 +116,15 @@ void main() {
         gameBoardData = const GameBoardData();
 
         gameData = GameData(
-            gameId: 0,
-            dateCreated: dateTime,
-            // players: const [],
-            dateLastPlayed: dateTime,
-            gameBoardData: gameBoardData,
-            winnerId: 3,
-            gameStatus: const GameStatusComplete(),
-            winnerRowColDiag: (MatchTupleEnum.row, 0));
+          gameId: 0,
+          dateCreated: dateTime,
+          // players: const [],
+          dateLastPlayed: dateTime,
+          gameBoardData: gameBoardData,
+          winnerId: 3,
+          gameStatus: const GameStatusComplete(),
+          winnerRowColDiag: (MatchTupleEnum.row, 0),
+        );
 
         expect(
           gameData.props,
@@ -277,7 +278,7 @@ void main() {
 
         expect(updatedGameData2.gameBoardData.plays, [
           playPlayer1(playerTurnId: 0, tileIndex: 0),
-          playPlayer2(playerTurnId: 1, tileIndex: 2)
+          playPlayer2(playerTurnId: 1, tileIndex: 2),
         ]);
         expect(updatedGameData2.gameBoardData, gameBoardData.copyWith(plays: plays2));
         expect(updatedGameData2.winnerId, -1);
@@ -286,7 +287,7 @@ void main() {
         /// `endGameScore` should be updated when the game is over.
         expect(updatedGameData3.gameBoardData.plays, [
           playPlayer1(playerTurnId: 0, tileIndex: 0),
-          playPlayer2(playerTurnId: 1, tileIndex: 2)
+          playPlayer2(playerTurnId: 1, tileIndex: 2),
         ]);
         expect(updatedGameData3.gameBoardData, gameBoardData.copyWith(plays: plays2));
         expect(updatedGameData3.winnerId, 4);

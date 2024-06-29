@@ -74,28 +74,32 @@ void main() {
         expect(widgetFinderScreen, findsOneWidget);
       });
 
-      testWidgets('should not pop when currentRoutePath is in pathsToNotPop.',
-          (WidgetTester tester) async {
-        await tester.pumpWidget(wrappedWidgetRoot);
+      testWidgets(
+        'should not pop when currentRoutePath is in pathsToNotPop.',
+        (WidgetTester tester) async {
+          await tester.pumpWidget(wrappedWidgetRoot);
 
-        await tester.tap(find.byType(IconButton));
-        await tester.pump();
+          await tester.tap(find.byType(IconButton));
+          await tester.pump();
 
-        // Assert specific navigation did not occur.
-        verifyNever(() => mockObserver.didPop(captureAny(), any()));
-      });
+          // Assert specific navigation did not occur.
+          verifyNever(() => mockObserver.didPop(captureAny(), any()));
+        },
+      );
 
-      testWidgets('should pop once when currentRoutePath is not in pathsToNotPop.',
-          (WidgetTester tester) async {
-        await tester.pumpWidget(wrappedWidgetPlay);
+      testWidgets(
+        'should pop once when currentRoutePath is not in pathsToNotPop.',
+        (WidgetTester tester) async {
+          await tester.pumpWidget(wrappedWidgetPlay);
 
-        await tester.tap(find.byType(IconButton));
-        await tester.pump();
+          await tester.tap(find.byType(IconButton));
+          await tester.pump();
 
-        verify(() => mockObserver.navigator).called(1);
-        verify(() => mockObserver.didPush(any(), any())).called(1);
-        verify(() => mockObserver.didPop(any(), any())).called(1);
-      });
+          verify(() => mockObserver.navigator).called(1);
+          verify(() => mockObserver.didPush(any(), any())).called(1);
+          verify(() => mockObserver.didPop(any(), any())).called(1);
+        },
+      );
     });
   });
 }

@@ -45,19 +45,21 @@ void main() {
       expect(ignorePointerWidget.ignoring, false);
     });
 
-    testWidgets('does not ignore pointer events when not waiting on bot.',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: WaitForBotIndicator(waitingOnBot: false),
-        ),
-      );
+    testWidgets(
+      'does not ignore pointer events when not waiting on bot.',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: WaitForBotIndicator(waitingOnBot: false),
+          ),
+        );
 
-      final ignorePointerFinderKey = find.byKey(AppConstants.ignorePointerKey);
-      expect(ignorePointerFinderKey, findsOneWidget);
+        final ignorePointerFinderKey = find.byKey(AppConstants.ignorePointerKey);
+        expect(ignorePointerFinderKey, findsOneWidget);
 
-      final ignorePointerWidget = tester.widget<IgnorePointer>(ignorePointerFinderKey);
-      expect(ignorePointerWidget.ignoring, true);
-    });
+        final ignorePointerWidget = tester.widget<IgnorePointer>(ignorePointerFinderKey);
+        expect(ignorePointerWidget.ignoring, true);
+      },
+    );
   });
 }

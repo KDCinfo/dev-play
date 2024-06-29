@@ -429,27 +429,29 @@ void main() {
 
       group('[tile availability] for', () {
         test(
-            '[usedTiles] should return a list of indices '
-            'that have been used by any player turn', () {
-          final plays = [
-            playPlayer1(playerTurnId: 0, tileIndex: 0),
-            playPlayer2(playerTurnId: 1, tileIndex: 2),
-            playPlayer1(playerTurnId: 2, tileIndex: 1),
-            playPlayer2(playerTurnId: 3, tileIndex: 4),
-            playPlayer1(playerTurnId: 4, tileIndex: 12),
-            playPlayer2(playerTurnId: 5, tileIndex: 9),
-            playPlayer1(playerTurnId: 6, tileIndex: 7),
-          ];
+          '[usedTiles] should return a list of indices '
+          'that have been used by any player turn',
+          () {
+            final plays = [
+              playPlayer1(playerTurnId: 0, tileIndex: 0),
+              playPlayer2(playerTurnId: 1, tileIndex: 2),
+              playPlayer1(playerTurnId: 2, tileIndex: 1),
+              playPlayer2(playerTurnId: 3, tileIndex: 4),
+              playPlayer1(playerTurnId: 4, tileIndex: 12),
+              playPlayer2(playerTurnId: 5, tileIndex: 9),
+              playPlayer1(playerTurnId: 6, tileIndex: 7),
+            ];
 
-          final gameBoardData = GameBoardData(edgeSize: edgeSize);
-          final gameBoardCopy = gameBoardData.copyWith(plays: plays);
+            final gameBoardData = GameBoardData(edgeSize: edgeSize);
+            final gameBoardCopy = gameBoardData.copyWith(plays: plays);
 
-          // This returns a simple incremental list with all used indexes.
-          // Note: it will not be in the played tile index order;
-          //       notice `tileIndex` [2, 1] becomes [1, 2].
-          final result = gameBoardCopy.usedTileIndexes;
-          expect(result, [0, 1, 2, 4, 7, 9, 12]);
-        });
+            // This returns a simple incremental list with all used indexes.
+            // Note: it will not be in the played tile index order;
+            //       notice `tileIndex` [2, 1] becomes [1, 2].
+            final result = gameBoardCopy.usedTileIndexes;
+            expect(result, [0, 1, 2, 4, 7, 9, 12]);
+          },
+        );
 
         test(
           '[availableTiles] should return a list of indices '
