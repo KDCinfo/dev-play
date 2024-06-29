@@ -3,7 +3,7 @@ import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:flutter/material.dart';
 
 class LinePainter extends CustomPainter {
-  LinePainter({
+  const LinePainter({
     required this.startIndex,
     required this.endIndex,
     required this.positions,

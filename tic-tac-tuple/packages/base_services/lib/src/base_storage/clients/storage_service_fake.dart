@@ -4,6 +4,8 @@ import 'package:base_services/base_services.dart';
 /// It is mostly just to show how fake data could be used during development.
 ///
 class StorageServiceFake implements StorageServiceApi {
+  const StorageServiceFake();
+
   @override
   Future<void> prefsSetString({required String key, required String value}) async {}
   @override

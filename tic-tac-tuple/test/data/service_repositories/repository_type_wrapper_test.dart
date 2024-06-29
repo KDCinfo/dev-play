@@ -7,8 +7,8 @@ import '../../helpers/mocks.dart';
 void main() {
   group('RepositoryTypeWrapper', () {
     test('should store a MockRepository correctly', () {
-      final repository = MockRepository();
-      final wrapper = RepositoryTypeWrapper<MockRepository>(repository: repository);
+      const repository = MockRepository();
+      const wrapper = RepositoryTypeWrapper<MockRepository>(repository: repository);
 
       expect(wrapper.repository, equals(repository));
     });

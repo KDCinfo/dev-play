@@ -29,7 +29,7 @@
 ///               ),
 ///
 class RepositoryTypeWrapper<T> {
-  RepositoryTypeWrapper({required this.repository});
+  const RepositoryTypeWrapper({required this.repository});
 
   final T repository;
 }

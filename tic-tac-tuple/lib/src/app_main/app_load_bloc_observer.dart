@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppLoadBlocObserver extends BlocObserver {
-  AppLoadBlocObserver({this.showLogBlocObservers = AppConstants.showLogBlocObservers});
+  const AppLoadBlocObserver({this.showLogBlocObservers = AppConstants.showLogBlocObservers});
 
   final bool showLogBlocObservers;
 
@@ -64,7 +64,7 @@ class AppLoadBlocObserver extends BlocObserver {
 Future<void> appLoadBlocObserver(
   FutureOr<Widget> Function() childBaseApp,
 ) async {
-  Bloc.observer = AppLoadBlocObserver();
+  Bloc.observer = const AppLoadBlocObserver();
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);

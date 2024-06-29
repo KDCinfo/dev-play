@@ -9,11 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 
-class Mocks {}
+class Mocks {
+  const Mocks();
+}
 
 class MockStorageAPI extends Mock implements StorageServiceApi {}
 
-class MockRepository {}
+class MockRepository {
+  const MockRepository();
+}
 
 class MockAppBaseRepository extends Mock implements AppBaseRepository {}
 
