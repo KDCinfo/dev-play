@@ -1,6 +1,7 @@
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 typedef AppReturnObjDef = Map<String, List<dynamic>>;
 typedef PlayerListMapsByIdDef = List<Map<int, PlayerData>>;
@@ -51,6 +52,10 @@ abstract class AppConstants {
 
   static const botDelay = 1500;
 
+  static final primaryBackgroundColor =
+      SchedulerBinding.instance.platformDispatcher.platformBrightness == Brightness.dark
+          ? Colors.white54
+          : Colors.white;
   static const primaryTileColor = Color(0xFF800000);
 
   /// Used in `WaitForBotIndicator` widget.

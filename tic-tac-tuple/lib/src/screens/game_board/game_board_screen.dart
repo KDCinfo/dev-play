@@ -24,6 +24,7 @@ class GameBoardScreen extends StatelessWidget {
           builder: (context) {
             return SafeArea(
               child: Scaffold(
+                backgroundColor: AppConstants.primaryBackgroundColor,
                 body: BlocListener<GamePlayBloc, GamePlayState>(
                   listenWhen: (previous, current) =>
                       previous.currentGame.gameBoardData.plays.length !=

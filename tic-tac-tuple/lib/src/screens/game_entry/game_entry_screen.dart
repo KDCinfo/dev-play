@@ -22,6 +22,7 @@ class GameEntryScreen extends StatelessWidget {
         builder: (context) {
           return SafeArea(
             child: Scaffold(
+              backgroundColor: AppConstants.primaryBackgroundColor,
               body: MultiBlocListener(
                 listeners: [
                   BlocListener<GamePlayBloc, GamePlayState>(
