@@ -161,10 +161,8 @@ class GameBoardPanel extends StatelessWidget {
     );
   }
 
-  // final (GlobalObjectKey startKey, GlobalObjectKey endKey) keyIndexes =
-  //   transposeLineIndex(state.currentGame.winnerRowColDiag,);
-  // (GlobalObjectKey startKey, GlobalObjectKey endKey)? transposeLineIndex(
-  (int startIndex, int endIndex)? transposeLineIndex(
+  /// :: (int startIndex, int endIndex)
+  (int, int)? transposeLineIndex(
     WinnerRowColDiagDef winnerRowColDiag,
     int edgeSize,
   ) {

@@ -158,7 +158,8 @@ abstract class BotPlay {
             : tupleDiag.tileIndexToPlay;
   }
 
-  static (int bestTileIndex, int maxRangeLength) findBestTileIndex(
+  /// :: (int bestTileIndex, int maxRangeLength)
+  static (int, int) findBestTileIndex(
     List<int> tiles,
     int nonBotPlayerId,
   ) {
