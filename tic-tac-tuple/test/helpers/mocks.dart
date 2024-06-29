@@ -119,24 +119,24 @@ final playerListPlayer1b = List<PlayerData>.of(defaultPlayerList)
     ),
   ]);
 
-const playerData1 = PlayerData(
+const kPlayerData1 = PlayerData(
   playerNum: 1,
   playerName: 'Player 1',
   playerType: PlayerTypeHuman(),
   userSymbol: UserSymbolX(),
 );
-const playerData2 = PlayerData(
+const kPlayerData2 = PlayerData(
   playerNum: 2,
   playerName: 'Player 2',
   playerType: PlayerTypeHuman(),
   userSymbol: UserSymbolO(),
 );
-const playerData3 = PlayerData(
+const kPlayerData3 = PlayerData(
   playerNum: 3,
   playerType: PlayerTypeHuman(),
   userSymbol: UserSymbolEmpty(),
 );
-const playerData4 = PlayerData(
+const kPlayerData4 = PlayerData(
   playerNum: 4,
   playerType: PlayerTypeHuman(),
   userSymbol: UserSymbolEmpty(),

@@ -101,9 +101,9 @@ void main() {
             GameEntryState(
               edgeSize: 5,
               players: [
-                playerData1,
-                playerData2,
-                playerData3.copyWith(
+                kPlayerData1,
+                kPlayerData2,
+                kPlayerData3.copyWith(
                   userSymbol: const UserSymbolPlus(),
                 ),
               ],
@@ -111,13 +111,13 @@ void main() {
             GameEntryState(
               edgeSize: 5,
               players: [
-                playerData1,
-                playerData2,
-                playerData3.copyWith(
+                kPlayerData1,
+                kPlayerData2,
+                kPlayerData3.copyWith(
                   playerName: 'Player 3',
                   userSymbol: const UserSymbolPlus(),
                 ),
-                playerData4.copyWith(
+                kPlayerData4.copyWith(
                   userSymbol: const UserSymbolStar(),
                 ),
               ],
@@ -125,13 +125,13 @@ void main() {
             GameEntryState(
               edgeSize: 5,
               players: [
-                playerData1,
-                playerData2,
-                playerData3.copyWith(
+                kPlayerData1,
+                kPlayerData2,
+                kPlayerData3.copyWith(
                   playerName: 'Player 3',
                   userSymbol: const UserSymbolPlus(),
                 ),
-                playerData4.copyWith(
+                kPlayerData4.copyWith(
                   playerName: 'Player 4',
                   userSymbol: const UserSymbolStar(),
                 ),
