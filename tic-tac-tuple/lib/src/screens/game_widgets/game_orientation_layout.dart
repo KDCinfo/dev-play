@@ -59,7 +59,7 @@ class GameOrientationLayout extends StatelessWidget {
                     // Hack Solution: Do not calculate screen layout if the keyboard is up.
                     //                Note that this cripples landscape mode (noted below).
                     //
-                    if (MediaQuery.of(context).viewInsets.bottom > 0) {
+                    if (MediaQuery.viewInsetsOf(context).bottom > 0) {
                       // Determine available height minus static elements.
                       final availableHeight = checkConstraints.maxHeight - 60 - 40 - 10;
 
