@@ -173,14 +173,14 @@ abstract class BotPlay {
         currentSublist.add(i);
       } else {
         if (currentSublist.isNotEmpty) {
-          sublists.add(List.from(currentSublist));
+          sublists.add(List.of(currentSublist));
           currentSublist.clear();
         }
       }
     }
 
     if (currentSublist.isNotEmpty) {
-      sublists.add(List.from(currentSublist));
+      sublists.add(List.of(currentSublist));
     }
 
     // Find the largest sublist.
