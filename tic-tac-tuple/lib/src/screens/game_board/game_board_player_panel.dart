@@ -1,5 +1,6 @@
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
+import 'package:dev_play_tictactuple/src/screens/game_board/game_board.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,47 +43,6 @@ class GameBoardPlayerPanel extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class GameBoardPlayerPanelTitle extends StatelessWidget {
-  const GameBoardPlayerPanelTitle({
-    required this.playerCount,
-    super.key,
-  });
-
-  final int playerCount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text('Players: [ $playerCount ]');
-  }
-}
-
-class GameBoardPlayerPanelNames extends StatelessWidget {
-  const GameBoardPlayerPanelNames({
-    required this.players,
-    required this.currentPlayerIndex,
-    super.key,
-  });
-
-  final List<PlayerData> players;
-  final int currentPlayerIndex;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 10,
-      children: [
-        for (var idx = 0; idx < players.length; idx++)
-          Text(
-            '[ ${players.elementAtOrNull(idx)?.playerName ?? 'Missing a name'} ]',
-            style: TextStyle(
-              fontWeight: idx == currentPlayerIndex ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-      ],
     );
   }
 }

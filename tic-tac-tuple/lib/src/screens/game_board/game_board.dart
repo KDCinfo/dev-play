@@ -1,6 +1,10 @@
 export 'game_board_button_panel.dart';
+export 'game_board_layout_landscape.dart';
+export 'game_board_layout_portrait.dart';
 export 'game_board_panel.dart';
 export 'game_board_panel_tile.dart';
 export 'game_board_panel_tile_overlay.dart';
 export 'game_board_player_panel.dart';
+export 'game_board_player_panel_names.dart';
+export 'game_board_player_panel_title.dart';
 export 'game_board_screen.dart';

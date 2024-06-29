@@ -2,7 +2,7 @@ import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/app_main/pre_pop_scope.dart';
 import 'package:dev_play_tictactuple/src/data/blocs/blocs.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
-import 'package:dev_play_tictactuple/src/screens/screens.dart';
+import 'package:dev_play_tictactuple/src/screens/game_widgets/game_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,61 +104,5 @@ class GameEntryScreen extends StatelessWidget {
       // but will retain the current players to help facilitate starting a new game.
       context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
     });
-  }
-}
-
-class GameEntryLayoutPortrait extends StatelessWidget {
-  const GameEntryLayoutPortrait({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    /// This `Column` has a fixed size from within the `GameOrientationLayout()`.
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          GameTitleRow(),
-          SizedBox(height: 35),
-          GameEntryNameList(),
-          SizedBox(height: 20),
-          GameEntryBoardSizeRow(),
-          SizedBox(height: 20),
-          GameEntryButtonsRow(),
-        ],
-      ),
-    );
-  }
-}
-
-class GameEntryLayoutLandscape extends StatelessWidget {
-  const GameEntryLayoutLandscape({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: 40),
-              child: GameEntryNameList(),
-            ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                GameTitleRow(),
-                SizedBox(height: 10),
-                GameEntryBoardSizeRow(),
-                SizedBox(height: 20),
-                Expanded(child: GameEntryButtonsRow()),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
