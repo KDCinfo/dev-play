@@ -54,23 +54,23 @@ abstract class BotPlay {
         if (!colHasAllEmptyTiles && colHasEmptyTile) {
           final (bestTileIndex, maxRangeLength) = findBestTileIndex(groupList, nonBotPlayerId);
 
-          final edgeSize = groupList.length;
-          final colIndex = bestTileIndex + (colGroup * edgeSize);
-          // Need to convert the 'col index' to a 'row index' based on
-          // how many tiles there are to transpose (i.e. the board size).
-          //
-          // For a 4-edge column:
-          // 	9 (col count) belongs at 6 (row count)
-          //
-          // 	Find the col cell index to convert (9).
-          // 	Use it and boardSize to find row cell index (6).
-          //
-          // - colIndex: 9 => rowIndex: 6
-          // - colIndex: 5 => rowIndex: 5 (same both ways)
-          //
-          final rowIndex = transposeColumnToRowIndex(colIndex, edgeSize);
-
           if (maxRangeLength >= tupleDataLists[MatchTupleEnum.column]!.tilesPlayedCount) {
+            final edgeSize = groupList.length;
+            final colIndex = bestTileIndex + (colGroup * edgeSize);
+            // Need to convert the 'col index' to a 'row index' based on
+            // how many tiles there are to transpose (i.e. the board size).
+            //
+            // For a 4-edge column:
+            // 	9 (col count) belongs at 6 (row count)
+            //
+            // 	Find the col cell index to convert (9).
+            // 	Use it and boardSize to find row cell index (6).
+            //
+            // - colIndex: 9 => rowIndex: 6
+            // - colIndex: 5 => rowIndex: 5 (same both ways)
+            //
+            final rowIndex = transposeColumnToRowIndex(colIndex, edgeSize);
+
             tupleDataLists[MatchTupleEnum.column] = tupleDataLists[MatchTupleEnum.column]!.copyWith(
               tilesPlayedCount: maxRangeLength,
               groupIndex: colGroup,

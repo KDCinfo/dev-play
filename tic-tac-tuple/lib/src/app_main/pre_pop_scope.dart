@@ -26,12 +26,11 @@ class PrePopScope extends StatelessWidget {
         if (didPop) {
           return;
         }
-        final navigator = Navigator.of(context);
 
         final pathsToNotPop = ['/'];
 
         if (!pathsToNotPop.contains(currentRoutePath)) {
-          navigator.pop();
+          Navigator.of(context).pop();
         }
       },
     );

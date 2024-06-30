@@ -92,9 +92,9 @@ class GameBoardData extends Equatable {
       /// Per-row group index: 0, 1, 2, [3, 4]
       ///
       final groupIndexRow = play.tileIndex ~/ edgeSize;
-      final indexInRowList = play.tileIndex % edgeSize;
 
       if (mapOfRowGroups[groupIndexRow] != null) {
+        final indexInRowList = play.tileIndex % edgeSize;
         final newRowList = List.of(mapOfRowGroups[groupIndexRow]!)
           ..replaceRange(indexInRowList, indexInRowList + 1, [play.occupiedById]);
 
@@ -114,9 +114,9 @@ class GameBoardData extends Equatable {
       /// Per-column group index: 0, 1, 2, [3, 4]
       ///
       final groupIndexCol = play.tileIndex % edgeSize;
-      final indexInColList = play.tileIndex ~/ edgeSize;
 
       if (mapOfColGroups[groupIndexCol] != null) {
+        final indexInColList = play.tileIndex ~/ edgeSize;
         final newColList = List.of(mapOfColGroups[groupIndexCol]!)
           ..replaceRange(indexInColList, indexInColList + 1, [play.occupiedById]);
         mapOfColGroups.update(groupIndexCol, (_) => newColList);

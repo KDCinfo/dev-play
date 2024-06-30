@@ -128,9 +128,9 @@ class GameBoardPanel extends StatelessWidget {
                                 final lineData = stateGamePlayOuter.currentGame.winnerRowColDiag;
                                 if (lineData != null) {
                                   final keyIndexes = transposeLineIndex(lineData, edgeSize);
-                                  final positions = context.read<TilePositionModel>();
 
                                   if (keyIndexes != null) {
+                                    final positions = context.read<TilePositionModel>();
                                     return CustomPaint(
                                       size: Size(
                                         constraintsOuter.maxWidth,
