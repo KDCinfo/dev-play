@@ -107,10 +107,10 @@ class _GameEntryNameListRowState extends State<GameEntryNameListRow> {
   ///
   /// PlayerList | onSelected: (int value) => useSavedName(value, context),
   void useSavedName(int value, BuildContext context) {
-    final newName = widget.listRowPlayerList[value];
+    final newName = widget.listRowPlayerList.elementAtOrNull(value) ?? '';
 
     // Don't fire if the selected name is the same as the player's current name.
-    if (newName.toLowerCase() != widget.playerData.playerName.toLowerCase()) {
+    if (newName.isNotEmpty && newName.toLowerCase() != widget.playerData.playerName.toLowerCase()) {
       // log('Selected Index: $value');
       // log('Selected Name: $newName');
 

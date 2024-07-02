@@ -75,7 +75,7 @@ class GameData extends Equatable {
       ? -1
       : (gameBoardData.plays.length - 1) % players.length;
   int get currentPlayerIndex => players.isEmpty ? -1 : gameBoardData.plays.length % players.length;
-  int get currentPlayerId => players[currentPlayerIndex].playerId!;
+  int get currentPlayerId => players.elementAtOrNull(currentPlayerIndex)?.playerId ?? -3;
 
   /// Initial game properties.
   ///

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 import 'package:flutter/material.dart';
@@ -209,7 +210,11 @@ enum MatchTupleEnum implements Comparable<MatchTupleEnum> {
   }
 
   static MatchTupleEnum fromJson(String jsonValue) {
-    return MatchTupleEnum.values.firstWhere((e) => e.jsonValue == jsonValue);
+    return (MatchTupleEnum.values.isNotEmpty &&
+            MatchTupleEnum.values.any((e) => e.jsonValue == jsonValue))
+        ? MatchTupleEnum.values.firstWhereOrNull((e) => e.jsonValue == jsonValue) ??
+            MatchTupleEnum.row
+        : MatchTupleEnum.row;
   }
 
   @override

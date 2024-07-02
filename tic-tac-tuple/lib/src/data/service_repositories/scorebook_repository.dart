@@ -79,8 +79,9 @@ class ScorebookRepository extends AppBaseRepository {
       final newGameData = newScorebookData.currentGame.endGame(
         winnerId: noMorePlays
             ? -1
-            : newScorebookData.currentGame.players[newScorebookData.currentGame.previousPlayerIndex]
-                    .playerId ??
+            : newScorebookData.currentGame.players
+                    .elementAtOrNull(newScorebookData.currentGame.previousPlayerIndex)
+                    ?.playerId ??
                 -1,
         winnerRowColDiag: checkRows != null
             ? (MatchTupleEnum.row, checkRows.$1)

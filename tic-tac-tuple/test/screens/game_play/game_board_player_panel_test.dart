@@ -79,14 +79,14 @@ void main() {
         WidgetTester tester,
       ) async {
         final players = <String>[
-          AppConstants.playerListDefault[0].playerName,
-          AppConstants.playerListDefault[1].playerName,
+          AppConstants.playerListDefault.elementAtOrNull(0)?.playerName ?? 'Oops 0a',
+          AppConstants.playerListDefault.elementAtOrNull(1)?.playerName ?? 'Oops 1a',
         ];
 
         await tester.pumpWidget(wrappedWidget);
 
-        expect(find.text('[ ${players.elementAtOrNull(0) ?? 'Oops'} ]'), findsOneWidget);
-        expect(find.text('[ ${players.elementAtOrNull(1) ?? 'Oops'} ]'), findsOneWidget);
+        expect(find.text('[ ${players.elementAtOrNull(0) ?? 'Oops 0b'} ]'), findsOneWidget);
+        expect(find.text('[ ${players.elementAtOrNull(1) ?? 'Oops 1b'} ]'), findsOneWidget);
       });
 
       testWidgets('[GameBoard Player Panel] should highlight the current player', (
@@ -94,17 +94,17 @@ void main() {
       ) async {
         const currentPlayer = 0;
         final players = <String>[
-          AppConstants.playerListDefault[0].playerName,
-          AppConstants.playerListDefault[1].playerName,
+          AppConstants.playerListDefault.elementAtOrNull(0)?.playerName ?? 'Oops 0c',
+          AppConstants.playerListDefault.elementAtOrNull(1)?.playerName ?? 'Oops 1c',
         ];
 
         await tester.pumpWidget(wrappedWidget);
 
         final player1Text = tester.widget<Text>(
-          find.text('[ ${players.elementAtOrNull(currentPlayer) ?? 'Oops'} ]'),
+          find.text('[ ${players.elementAtOrNull(currentPlayer) ?? 'Oops 0d'} ]'),
         );
         final player2Text = tester.widget<Text>(
-          find.text('[ ${players.elementAtOrNull(1) ?? 'Oops'} ]'),
+          find.text('[ ${players.elementAtOrNull(1) ?? 'Oops 1d'} ]'),
         );
 
         expect(player1Text.style?.fontWeight, equals(FontWeight.bold));

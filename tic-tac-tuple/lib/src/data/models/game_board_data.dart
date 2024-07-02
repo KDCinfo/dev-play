@@ -135,10 +135,11 @@ class GameBoardData extends Equatable {
       final checkPlayerIdList = playerIdList.where((playerId) => playerId != -2);
       if (checkPlayerIdList.isNotEmpty) {
         // Establish a baseline playerId to check against.
-        final firstPlayerId = checkPlayerIdList.first;
+        final firstPlayerId = checkPlayerIdList.firstOrNull;
 
         // Check for a full list of the same player.
-        if (checkPlayerIdList.length == edgeSize &&
+        if (firstPlayerId != null &&
+            checkPlayerIdList.length == edgeSize &&
             checkPlayerIdList.every(
               (playerId) => playerId == firstPlayerId,
             )) {
@@ -201,15 +202,17 @@ class GameBoardData extends Equatable {
     /// Check if either group is full,
     /// and all matching the first `playerId` in the list.
     if (diag1Tiles.isNotEmpty) {
-      final diag1FirstPlayerId = diag1Tiles.first;
-      if (diag1Tiles.length == edgeSize &&
+      final diag1FirstPlayerId = diag1Tiles.firstOrNull;
+      if (diag1FirstPlayerId != null &&
+          diag1Tiles.length == edgeSize &&
           diag1Tiles.every((playerId) => playerId == diag1FirstPlayerId)) {
         return (0, diag1FirstPlayerId);
       }
     }
     if (diag2Tiles.isNotEmpty) {
-      final diag2FirstPlayerId = diag2Tiles.first;
-      if (diag2Tiles.length == edgeSize &&
+      final diag2FirstPlayerId = diag2Tiles.firstOrNull;
+      if (diag2FirstPlayerId != null &&
+          diag2Tiles.length == edgeSize &&
           diag2Tiles.every((playerId) => playerId == diag2FirstPlayerId)) {
         return (1, diag2FirstPlayerId);
       }

@@ -93,7 +93,8 @@ class _PlayerListState extends State<PlayerList> {
   void processOnSelected(int? value) {
     if (value != null) {
       widget.onSelected(value);
-      if (widget.playerList[value] == AppConstants.playerBotName) {
+      final playerAtIndex = widget.playerList.elementAtOrNull(value);
+      if (playerAtIndex != null && playerAtIndex == AppConstants.playerBotName) {
         _dropdownController.text = AppConstants.playerListResetMsg;
         Future.delayed(
           const Duration(milliseconds: 800),
@@ -102,7 +103,9 @@ class _PlayerListState extends State<PlayerList> {
           },
         );
       } else {
-        _dropdownController.text = widget.playerList[value];
+        if (playerAtIndex != null) {
+          _dropdownController.text = playerAtIndex;
+        }
       }
     }
   }

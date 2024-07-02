@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
@@ -140,9 +141,10 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
       final botId = state.currentGame.currentPlayerId;
       // There are always only 2 players when a bot is in play.
       // We'll be passing along the non-bot player to the tile checker.
-      final nonBotPlayerId =
-          state.currentGame.players.firstWhere((player) => player.playerId != botId).playerId ??
-              botId;
+      final nonBotPlayerId = state.currentGame.players
+              .firstWhereOrNull((player) => player.playerId != botId)
+              ?.playerId ??
+          botId;
       final tileIndex = BotPlay.runBotPlay(
         filledAllTuples: filledAllRows,
         nonBotPlayerId: nonBotPlayerId,

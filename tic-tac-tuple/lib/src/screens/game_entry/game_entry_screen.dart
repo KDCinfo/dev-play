@@ -66,43 +66,46 @@ class GameEntryScreen extends StatelessWidget {
     // If so, use the winner's name in the end game status message.
     //
     // allGames.entries: { gameId, gameData }.value => gameData
-    final lastGame = context.read<GamePlayBloc>().currentScorebookData.allGames.entries.last.value;
+    final lastGame =
+        context.read<GamePlayBloc>().currentScorebookData.allGames.entries.lastOrNull?.value;
 
-    final winnerId = lastGame.winnerId;
-    final lastPlayerWasWinner = winnerId != -1;
-    final lastPlayerName = !lastPlayerWasWinner
-        ? ''
-        : lastGame.players
-            .firstWhere(
-              (PlayerData player) => player.playerId == winnerId,
-              orElse: () => const PlayerData(playerNum: -1),
-            )
-            .playerName;
+    if (lastGame != null) {
+      final winnerId = lastGame.winnerId;
+      final lastPlayerWasWinner = winnerId != -1;
+      final lastPlayerName = !lastPlayerWasWinner
+          ? ''
+          : lastGame.players
+              .firstWhere(
+                (PlayerData player) => player.playerId == winnerId,
+                orElse: () => const PlayerData(playerNum: -1),
+              )
+              .playerName;
 
-    final endGameStatusMessage =
-        !lastPlayerWasWinner ? 'Well played!!' : 'Congratulations $lastPlayerName!!';
+      final endGameStatusMessage =
+          !lastPlayerWasWinner ? 'Well played!!' : 'Congratulations $lastPlayerName!!';
 
-    await showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          alignment: Alignment.bottomCenter,
-          title: const Text(AppConstants.gameOverTitle),
-          content: Text(endGameStatusMessage),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text(AppConstants.buttonStartNewGame),
-            ),
-          ],
-        );
-      },
-    ).then<void>((_) {
-      // This reset will add an empty `GameData()` to the `currentGame` property,
-      // but will retain the current players to help facilitate starting a new game.
-      context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
-    });
+      await showDialog<void>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            alignment: Alignment.bottomCenter,
+            title: const Text(AppConstants.gameOverTitle),
+            content: Text(endGameStatusMessage),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(AppConstants.buttonStartNewGame),
+              ),
+            ],
+          );
+        },
+      ).then<void>((_) {
+        // This reset will add an empty `GameData()` to the `currentGame` property,
+        // but will retain the current players to help facilitate starting a new game.
+        context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
+      });
+    }
   }
 }

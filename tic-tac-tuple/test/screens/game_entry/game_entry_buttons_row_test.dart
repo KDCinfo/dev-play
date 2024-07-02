@@ -190,61 +190,82 @@ void main() {
           expect(messageList, contains(AppConstants.playerListMinMsg));
         });
         test('returns list with 1 item when playerList is too large.', () async {
-          const gameEntryButtonsRow = GameEntryButtonsRow();
-          final messageList = gameEntryButtonsRow.validateFields(
-            statePlayers: [
-              ...playerListAddFourth,
-              playerListPlayer1a[0],
-            ],
-            stateEdgeSize: 3,
-          );
-          expect(messageList, isNotEmpty);
-          expect(messageList, hasLength(1));
-          expect(messageList, contains(AppConstants.playerListMaxMsg));
+          final playerAtIndex = playerListPlayer1a.elementAtOrNull(0);
+          if (playerAtIndex != null) {
+            const gameEntryButtonsRow = GameEntryButtonsRow();
+            final messageList = gameEntryButtonsRow.validateFields(
+              statePlayers: [
+                ...playerListAddFourth,
+                // playerListPlayer1a[0],
+                playerAtIndex,
+              ],
+              stateEdgeSize: 3,
+            );
+            expect(messageList, isNotEmpty);
+            expect(messageList, hasLength(1));
+            expect(messageList, contains(AppConstants.playerListMaxMsg));
+          } else {
+            fail('too large - playerAtIndex is null.');
+          }
         });
         test('returns list with 1 item when playerList has empty name.', () async {
           final playerListEmptyName = List<PlayerData>.of(playerList);
-          playerListEmptyName[0] = playerListEmptyName[0].copyWith(playerName: '');
-          const gameEntryButtonsRow = GameEntryButtonsRow();
-          final messageList = gameEntryButtonsRow.validateFields(
-            statePlayers: playerListEmptyName,
-            stateEdgeSize: 3,
-          );
-          expect(messageList, isNotEmpty);
-          expect(messageList, hasLength(1));
-          expect(messageList, contains(AppConstants.emptyNameMsg));
+          final playerAtIndex = playerListEmptyName.elementAtOrNull(0);
+          if (playerAtIndex != null) {
+            playerListEmptyName[0] = playerAtIndex.copyWith(playerName: '');
+            const gameEntryButtonsRow = GameEntryButtonsRow();
+            final messageList = gameEntryButtonsRow.validateFields(
+              statePlayers: playerListEmptyName,
+              stateEdgeSize: 3,
+            );
+            expect(messageList, isNotEmpty);
+            expect(messageList, hasLength(1));
+            expect(messageList, contains(AppConstants.emptyNameMsg));
+          } else {
+            fail('empty name - playerAtIndex is null.');
+          }
         });
         test('returns list with 1 item when playerList has duplicate name.', () async {
           final playerListDuplicateName = List<PlayerData>.of(playerList);
-          playerListDuplicateName[1] = playerListDuplicateName[0];
-          const gameEntryButtonsRow = GameEntryButtonsRow();
-          final messageList = gameEntryButtonsRow.validateFields(
-            statePlayers: playerListDuplicateName,
-            stateEdgeSize: 3,
-          );
-          expect(messageList, isNotEmpty);
-          expect(messageList, hasLength(1));
-          expect(messageList, contains(AppConstants.uniqueNameMsg));
-        });
-        test(
-          'returns list with 2 items with 4 players '
-          'having an empty player name and 2 duplicate names.',
-          () async {
-            final playerListDuplicateName = List<PlayerData>.of(playerListAddFourth);
-            // Duplicate player check.
-            playerListDuplicateName[1] = playerListDuplicateName[0];
-            // Empty name check.
-            playerListDuplicateName[2] = playerListDuplicateName[0].copyWith(playerName: '');
-
+          final playerAtIndex = playerListDuplicateName.elementAtOrNull(0);
+          if (playerAtIndex != null) {
+            playerListDuplicateName[1] = playerAtIndex;
             const gameEntryButtonsRow = GameEntryButtonsRow();
             final messageList = gameEntryButtonsRow.validateFields(
               statePlayers: playerListDuplicateName,
               stateEdgeSize: 3,
             );
             expect(messageList, isNotEmpty);
-            expect(messageList, hasLength(2));
+            expect(messageList, hasLength(1));
             expect(messageList, contains(AppConstants.uniqueNameMsg));
-            expect(messageList, contains(AppConstants.emptyNameMsg));
+          } else {
+            fail('duplicate name - playerAtIndex is null.');
+          }
+        });
+        test(
+          'returns list with 2 items with 4 players '
+          'having an empty player name and 2 duplicate names.',
+          () async {
+            final playerListDuplicateName = List<PlayerData>.of(playerListAddFourth);
+            final playerAtIndex = playerListDuplicateName.elementAtOrNull(0);
+            if (playerAtIndex != null) {
+              // Duplicate player check.
+              playerListDuplicateName[1] = playerAtIndex;
+              // Empty name check.
+              playerListDuplicateName[2] = playerAtIndex.copyWith(playerName: '');
+
+              const gameEntryButtonsRow = GameEntryButtonsRow();
+              final messageList = gameEntryButtonsRow.validateFields(
+                statePlayers: playerListDuplicateName,
+                stateEdgeSize: 3,
+              );
+              expect(messageList, isNotEmpty);
+              expect(messageList, hasLength(2));
+              expect(messageList, contains(AppConstants.uniqueNameMsg));
+              expect(messageList, contains(AppConstants.emptyNameMsg));
+            } else {
+              fail('2 duplicate names - playerAtIndex is null.');
+            }
           },
         );
       });

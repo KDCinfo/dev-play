@@ -12,6 +12,7 @@ environment:
 dependencies:
   base_services:
     path: packages/base_services
+  collection: ^1.18.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter

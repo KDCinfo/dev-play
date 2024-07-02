@@ -31,8 +31,9 @@ class GameBoardScreen extends StatelessWidget {
                           current.currentGame.gameBoardData.plays.length &&
                       current.currentGame.gameStatus == const GameStatusInProgress() &&
                       current.currentGame.currentPlayerIndex == 1 &&
-                      current.currentGame.players[current.currentGame.currentPlayerIndex]
-                              .playerType ==
+                      current.currentGame.players
+                              .elementAtOrNull(current.currentGame.currentPlayerIndex)
+                              ?.playerType ==
                           const PlayerTypeBot(),
                   listener: (context, state) async {
                     // Show a waiting widget.

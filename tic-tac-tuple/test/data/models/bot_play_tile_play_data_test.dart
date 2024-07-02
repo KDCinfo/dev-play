@@ -46,10 +46,10 @@ void main() {
       final props = data.props;
 
       expect(props.length, 4);
-      expect(props[0], MatchTupleEnum.row);
-      expect(props[1], 5);
-      expect(props[2], 2);
-      expect(props[3], 3);
+      expect(props.elementAtOrNull(0), MatchTupleEnum.row);
+      expect(props.elementAtOrNull(1), 5);
+      expect(props.elementAtOrNull(2), 2);
+      expect(props.elementAtOrNull(3), 3);
     });
   });
 }

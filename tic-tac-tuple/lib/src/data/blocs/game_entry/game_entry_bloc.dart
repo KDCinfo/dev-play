@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/data/models/models.dart';
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
@@ -156,14 +157,15 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
 
         if (existingPlayerIndex > -1) {
           final existingPlayer =
-              _scorebookRepository.currentScorebookData.allPlayers[existingPlayerIndex];
-          playersMap['existing'] = [
-            // Prefer null-aware spread (...?) instead of null-assertions.
-            // dcm prefer-null-aware-spread
-            // ...playersMap['existing']!,
-            ...?playersMap['existing'],
-            player.copyWith(playerId: existingPlayer.playerId),
-          ];
+              _scorebookRepository.currentScorebookData.allPlayers.elementAtOrNull(
+            existingPlayerIndex,
+          );
+          if (existingPlayer != null) {
+            playersMap['existing'] = [
+              ...?playersMap['existing'],
+              player.copyWith(playerId: existingPlayer.playerId),
+            ];
+          }
         } else {
           nextPlayerId++;
           playersMap['new'] = [
@@ -185,7 +187,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       // gameData with things like the game creation date.
       final gameData = GameData.startGame(
         gameId: _scorebookRepository.currentScorebookData.allGames.isNotEmpty
-            ? _scorebookRepository.currentScorebookData.allGames.keys.last + 1
+            ? _scorebookRepository.currentScorebookData.allGames.keys.lastOrNull ?? 1
             : 1,
         // players: state.players,
         // Give each player a playerId that is +1 from the
@@ -226,21 +228,26 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     Emitter<GameEntryState> emit,
   ) {
     final playerNum = event.playerNum;
-    final selectedSymbolKey = event.selectedSymbolKey;
 
-    final playerToUpdate = state.players.firstWhere(
-      (player) => player.playerNum == playerNum,
-    );
-    final updatedPlayer = playerToUpdate.copyWith(
-      userSymbol: UserSymbol.markerListTypes[selectedSymbolKey],
-    );
+    if (state.players.isNotEmpty && state.players.any((player) => player.playerNum == playerNum)) {
+      final playerToUpdate = state.players.firstWhereOrNull(
+        (PlayerData player) => player.playerNum == playerNum,
+      );
 
-    final newPlayerList = List.of(state.players)
-      ..replaceRange(playerNum - 1, playerNum, [updatedPlayer]);
+      if (playerToUpdate != null) {
+        final selectedSymbolKey = event.selectedSymbolKey;
+        final updatedPlayer = playerToUpdate.copyWith(
+          userSymbol: UserSymbol.markerListTypes[selectedSymbolKey],
+        );
 
-    emit(
-      state.copyWith(players: newPlayerList),
-    );
+        final newPlayerList = List.of(state.players)
+          ..replaceRange(playerNum - 1, playerNum, [updatedPlayer]);
+
+        emit(
+          state.copyWith(players: newPlayerList),
+        );
+      }
+    }
   }
 
   /// Updating the player list happens
@@ -265,28 +272,35 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
     // This first condition ensures
     // - the list indeed has at least 2 players.
     //
-    if (state.players.length >= 2 && state.players.length <= AppConstants.playerListMax) {
+    final players = state.players;
+
+    if (players.length >= 2 && players.length <= AppConstants.playerListMax) {
+      //
+      final playerNum = event.playerNum;
+
       late final List<PlayerData> newPlayerList;
 
       // This second condition checks if
       // - the 2nd player is a bot.
       //
-      if (event.playerNum == 2 && state.players[event.playerNum - 1].playerType is PlayerTypeBot) {
+      final currentPlayer = players.elementAtOrNull(playerNum - 1);
+
+      if (playerNum == 2 && currentPlayer != null && currentPlayer.playerType is PlayerTypeBot) {
         //
         // This condition can only ever be met when the player list
         //   is in its default state, where the 2nd player is a bot,
         //   and so there will only ever be 2 rows at this stage.
         // When the 3rd player is added, it will be in the list
-        //   until the fields are reset (using either the reset button,
-        //   or selecting the bot name in the 2nd row's saved player list).
+        //   until the fields are reset (by selecting the bot name
+        //   in the 2nd row's saved player list).
         //
-        newPlayerList = List.of(state.players)
+        newPlayerList = List.of(players)
           // Update the 2nd player's name and type'.
           ..replaceRange(
-            event.playerNum - 1,
-            event.playerNum,
+            playerNum - 1,
+            playerNum,
             [
-              state.players[event.playerNum - 1].copyWith(
+              currentPlayer.copyWith(
                 playerName: event.playerName,
                 playerType: const PlayerTypeHuman(),
               ),
@@ -297,12 +311,14 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
             PlayerData(
               playerNum: 3,
               // Grab the first available symbol.
-              userSymbol: state.unusedSymbolTypesList.entries.first.value,
+              userSymbol:
+                  state.unusedSymbolTypesList.entries.firstOrNull?.value ?? const UserSymbolEmpty(),
               playerType: const PlayerTypeHuman(),
             ),
           );
-      } else if (event.playerNum == 2 &&
-          state.players[event.playerNum - 1].playerType is! PlayerTypeBot &&
+      } else if (playerNum == 2 &&
+          currentPlayer != null &&
+          currentPlayer.playerType is! PlayerTypeBot &&
           event.playerName == AppConstants.playerBotName) {
         //
         // When selecting the default bot name ('TicTacBot') from the
@@ -314,52 +330,72 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
         // This condition is met when the 2nd player is being
         // reset back to a bot by matching the default bot name.
         //
-        final playerListCopy = List.of(state.players).take(1).toList();
+        final playerListCopy = List.of(players).take(1).toList();
         newPlayerList = playerListCopy..add(AppConstants.playerBot);
 
         //
-      } else if (event.playerNum < AppConstants.playerListMax &&
-          event.playerNum == state.players.length) {
+      } else if (currentPlayer != null &&
+          playerNum > 2 &&
+          playerNum < AppConstants.playerListMax &&
+          playerNum == players.length) {
         //
-        // Because `playerListMax = 4`, this condition will only ever be met
-        // when the 3rd player name is changed, and a 4th player slot has
-        // not yet been added. If the max were ever increased to 5, this
+        // Given: players.length >= 2
+        // Given: playerListMax == 4
+        // - playerNum == players.length
+        // - playerNum < 4
+        // - playerNum == 3
+        //
+        // Given: players.length >= 2
+        // Given: playerListMax == 5
+        // - playerNum == players.length
+        // - playerNum < 5
+        // - playerNum == 4
+        //
+        // This condition will only ever be met when the 2nd to last
+        // player name is changed, and the last player slot has not
+        // yet been added. If the max were ever increased to 5, this
         // condition would also be met when the 4th player name is changed.
         //
-        newPlayerList = List.of(state.players)
+        final newPlayerListTemp = List.of(players)
           // Update the 2nd player's name and type'.
           ..replaceRange(
-            event.playerNum - 1,
-            event.playerNum,
+            playerNum - 1,
+            playerNum,
             [
-              state.players[event.playerNum - 1].copyWith(
+              currentPlayer.copyWith(
                 playerName: event.playerName,
               ),
             ],
-          )
-          // Add a new empty PlayerData.
-          ..add(
-            PlayerData(
-              playerNum: 4,
-              playerName: state.players[2].playerName,
-              // Grab the first available symbol.
-              userSymbol: state.unusedSymbolTypesList.entries.first.value,
-              playerType: const PlayerTypeHuman(),
-            ),
           );
+        // Add a new empty PlayerData.
+        if (state.unusedSymbolTypesList.entries.isNotEmpty) {
+          newPlayerList = List.of(newPlayerListTemp)
+            ..add(
+              PlayerData(
+                playerNum: 4,
+                playerName: players.lastOrNull?.playerName ?? '',
+                // Grab the first available symbol.
+                userSymbol: state.unusedSymbolTypesList.entries.firstOrNull?.value ??
+                    const UserSymbolEmpty(),
+                playerType: const PlayerTypeHuman(),
+              ),
+            );
+        }
       } else {
         // Otherwise, let's just update the list with the player's name.
-        newPlayerList = List.of(state.players)
-          // Update this [nth] player's name.
-          ..replaceRange(
-            event.playerNum - 1,
-            event.playerNum,
-            [
-              state.players[event.playerNum - 1].copyWith(
-                playerName: event.playerName,
-              ),
-            ],
-          );
+        if (currentPlayer != null) {
+          newPlayerList = List.of(players)
+            // Update this [nth] player's name.
+            ..replaceRange(
+              playerNum - 1,
+              playerNum,
+              [
+                currentPlayer.copyWith(
+                  playerName: event.playerName,
+                ),
+              ],
+            );
+        }
       }
 
       emit(

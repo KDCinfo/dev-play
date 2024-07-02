@@ -187,14 +187,18 @@ abstract class BotPlay {
     final largestSublist = sublists.fold(<int>[], (a, b) => a.length > b.length ? a : b);
 
     // Check for empty tiles adjacent to the largest sublist.
-    final leftIndex = largestSublist.isEmpty ? -1 : largestSublist.first - 1;
-    final rightIndex = largestSublist.isEmpty ? -1 : largestSublist.last + 1;
+    final leftIndex = largestSublist.isEmpty || largestSublist.firstOrNull == null
+        ? -1
+        : largestSublist.firstOrNull! - 1;
+    final rightIndex = largestSublist.isEmpty || largestSublist.lastOrNull == null
+        ? -1
+        : largestSublist.lastOrNull! + 1;
 
     // We need to check both sides and choose the first valid one.
-    if (leftIndex >= 0 && tiles[leftIndex] == -2) {
+    if (leftIndex >= 0 && tiles.elementAtOrNull(leftIndex) == -2) {
       return (leftIndex, largestSublist.length);
     }
-    if (rightIndex < tiles.length && rightIndex >= 0 && tiles[rightIndex] == -2) {
+    if (rightIndex < tiles.length && rightIndex >= 0 && tiles.elementAtOrNull(rightIndex) == -2) {
       return (rightIndex, largestSublist.length);
     }
 
@@ -202,8 +206,8 @@ abstract class BotPlay {
     // check the first and last elements.
     for (var i = 0; i < tiles.length; i++) {
       if (tiles[i] == -2) {
-        if ((i > 0 && tiles[i - 1] == nonBotPlayerId) ||
-            (i < tiles.length - 1 && tiles[i + 1] == nonBotPlayerId)) {
+        if ((i > 0 && tiles.elementAtOrNull(i - 1) == nonBotPlayerId) ||
+            (i < tiles.length - 1 && tiles.elementAtOrNull(i + 1) == nonBotPlayerId)) {
           return (i, 1);
         }
       }

@@ -64,7 +64,7 @@ void main() {
 
           // Expect 2nd player in `GameState` 'players:' list to be a bot.
           expect(
-            mockGameEntryBloc.state.players[1].playerType,
+            mockGameEntryBloc.state.players.elementAtOrNull(1)?.playerType,
             isA<PlayerTypeBot>(),
           );
 
@@ -111,7 +111,7 @@ void main() {
 
           // Expect 2nd player in `GameState` 'players:' list to be a human.
           expect(
-            mockGameEntryBloc.state.players[1].playerType,
+            mockGameEntryBloc.state.players.elementAtOrNull(1)?.playerType,
             isA<PlayerTypeHuman>(),
           );
 

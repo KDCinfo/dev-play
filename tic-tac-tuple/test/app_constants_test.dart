@@ -256,7 +256,9 @@ void main() {
         });
 
         test('fromJson("invalid") should throw an error.', () {
-          expect(() => MatchTupleEnum.fromJson('invalid'), throwsStateError);
+          // This no longer throws an error to prevent the app from crashing.
+          // expect(() => MatchTupleEnum.fromJson('invalid'), throwsStateError);
+          expect(MatchTupleEnum.fromJson('invalid'), MatchTupleEnum.row);
         });
 
         test('row compareTo column should return a negative number.', () {
