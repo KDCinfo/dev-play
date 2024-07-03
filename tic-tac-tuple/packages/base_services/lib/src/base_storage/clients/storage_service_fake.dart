@@ -8,8 +8,9 @@ class StorageServiceFake implements StorageServiceApi {
 
   @override
   Future<void> prefsSetString({required String key, required String value}) async {}
+
   @override
-  String? prefsGetString(String key) {
+  String prefsGetString(String key) {
     return '';
   }
 
@@ -47,13 +48,13 @@ class StorageServiceFake implements StorageServiceApi {
   }
 
   @override
-  bool? prefsGetBool(String key) {
+  bool prefsGetBool(String key) {
     // Implement prefsGetBool
     throw UnimplementedError();
   }
 
   @override
-  int? prefsGetInt(String key) {
+  int prefsGetInt(String key) {
     // Implement prefsGetInt
     throw UnimplementedError();
   }
