@@ -36,7 +36,7 @@ class ScorebookRepository extends AppBaseRepository {
   }
 
   void updateGame(ScorebookData newScorebookData) {
-    late final ScorebookData newScorebookDataTmp;
+    ScorebookData newScorebookDataTmp;
 
     /// If there are no more plays, nobody wins.
     var noMorePlays = false;
