@@ -154,7 +154,7 @@ void main() {
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
-        verify: (_) async {
+        verify: (_) {
           verify(() => mockScorebookRepository.scorebookDataStream).called(1);
           verify(() => mockScorebookRepository.currentScorebookData).called(5); // 3, 6
           verify(() => mockScorebookRepository.processScorebookData(any())).called(1);
@@ -172,7 +172,7 @@ void main() {
         },
         build: () => gameEntryBloc,
         act: (bloc) => bloc.add(const GameEntryStartGameEvent()),
-        verify: (_) async {
+        verify: (_) {
           verify(() => mockScorebookRepository.scorebookDataStream).called(1);
         },
       );
@@ -286,8 +286,7 @@ void main() {
         when(() => mockScorebookRepository.scorebookDataStream)
             .thenAnswer((_) => Stream.value(scorebookData));
         when(() => mockScorebookRepository.currentScorebookData).thenReturn(scorebookData);
-        when(() => mockScorebookRepository.updateScorebookDataStream(any()))
-            .thenAnswer((_) async {});
+        when(() => mockScorebookRepository.updateScorebookDataStream(any())).thenAnswer((_) {});
 
         gameEntryBloc
           ..add(const GameEntryEdgeSizeEvent(edgeSize: 5))

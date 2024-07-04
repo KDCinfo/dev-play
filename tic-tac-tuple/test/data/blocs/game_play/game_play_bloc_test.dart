@@ -101,7 +101,7 @@ void main() {
         },
         build: () => gamePlayBloc,
         act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 4)),
-        verify: (_) async {
+        verify: (_) {
           verify(
             () => mockScorebookRepository.playTurn(
               currentGame: any(named: 'currentGame'),
@@ -135,7 +135,7 @@ void main() {
         },
         build: () => gamePlayBloc,
         act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 4)),
-        verify: (_) async {
+        verify: (_) {
           verify(
             () => mockScorebookRepository.playTurn(
               currentGame: any(named: 'currentGame'),
@@ -169,7 +169,7 @@ void main() {
         },
         build: () => gamePlayBloc,
         act: (bloc) => bloc.add(const GamePlayMoveEvent(tileIndex: 3)),
-        verify: (_) async {
+        verify: (_) {
           verifyNever(() => mockScorebookRepository.currentScorebookData);
           verifyNever(() => mockScorebookRepository.updateGame(any()));
         },

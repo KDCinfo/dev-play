@@ -17,13 +17,13 @@ void main() {
     late GameEntryBloc mockGameEntryBloc;
     late GamePlayBloc mockGamePlayBloc;
 
-    setUp(() async {
+    setUp(() {
       mockScorebookRepository = MockScorebookRepository();
       mockGameEntryBloc = MockGameEntryBloc();
       mockGamePlayBloc = MockGamePlayBloc();
 
       widgetToTest = const AppWrapper();
-      wrappedWidget = await PumpApp.providerWrappedWithNoMaterialApp(
+      wrappedWidget = PumpApp.providerWrappedWithNoMaterialApp(
         scorebookRepository: mockScorebookRepository,
         gameEntryBloc: mockGameEntryBloc,
         gamePlayBloc: mockGamePlayBloc,

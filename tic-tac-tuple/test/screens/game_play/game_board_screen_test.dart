@@ -22,12 +22,12 @@ void main() {
     ///
 
     group('GameBoard Screen', () {
-      setUp(() async {
+      setUp(() {
         mockScorebookRepository = MockScorebookRepository();
         mockGamePlayBloc = MockGamePlayBloc();
 
         widgetToTest = const GameBoardScreen();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,

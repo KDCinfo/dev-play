@@ -76,13 +76,13 @@ abstract class PumpApp {
 
   /// Passing in the `scorebookRepository` allows tests
   /// to maintain a handle on any mocked dependencies.
-  static Future<Widget> providerWrappedMaterialApp({
+  static Widget providerWrappedMaterialApp({
     required Widget child,
     required ScorebookRepository scorebookRepository,
     GameEntryBloc? gameEntryBloc,
     GamePlayBloc? gamePlayBloc,
     NavigatorObserver? mockObserver,
-  }) async {
+  }) {
     final repositories = [
       RepositoryTypeWrapper<ScorebookRepository>(
         repository: scorebookRepository,
@@ -123,12 +123,12 @@ abstract class PumpApp {
     );
   }
 
-  static Future<Widget> providerWrappedWithNoMaterialApp({
+  static Widget providerWrappedWithNoMaterialApp({
     required Widget child,
     required ScorebookRepository scorebookRepository,
     GameEntryBloc? gameEntryBloc,
     GamePlayBloc? gamePlayBloc,
-  }) async {
+  }) {
     final repositories = [
       RepositoryTypeWrapper<ScorebookRepository>(
         repository: scorebookRepository,
@@ -154,10 +154,10 @@ abstract class PumpApp {
     );
   }
 
-  static Future<Widget> providerWrappedInternal({
+  static Widget providerWrappedInternal({
     required Widget child,
     required WaitForBotBloc waitForBotBloc,
-  }) async {
+  }) {
     return BlocProvider(
       create: (context) => waitForBotBloc,
       child: child,

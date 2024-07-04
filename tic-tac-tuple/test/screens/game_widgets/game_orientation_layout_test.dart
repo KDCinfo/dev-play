@@ -23,7 +23,7 @@ void main() {
     ///
 
     group('[GameEntry Layout] Screen', () {
-      setUp(() async {
+      setUp(() {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
         mockGamePlayBloc = MockGamePlayBloc();
@@ -32,7 +32,7 @@ void main() {
         widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameEntry(),
         );
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
           scorebookRepository: mockScorebookRepository,
           gameEntryBloc: mockGameEntryBloc,
           child: widgetToTest,
@@ -95,7 +95,7 @@ void main() {
     ///
 
     group('[GameBoard Layout] Screen', () {
-      setUp(() async {
+      setUp(() {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
         mockGamePlayBloc = MockGamePlayBloc();
@@ -104,8 +104,8 @@ void main() {
         widgetToTest = const GameOrientationLayout(
           orientationScreen: OrientationScreenGameBoard(),
         );
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: await PumpApp.providerWrappedInternal(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
+          child: PumpApp.providerWrappedInternal(
             waitForBotBloc: mockWaitForBotBloc,
             child: widgetToTest,
           ),

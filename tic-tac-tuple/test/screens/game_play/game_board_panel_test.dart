@@ -37,10 +37,10 @@ void main() {
     ///
 
     group('GamePlay GameBoard Panel', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanel();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: await PumpApp.providerWrappedInternal(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
+          child: PumpApp.providerWrappedInternal(
             waitForBotBloc: mockWaitForBotBloc,
             child: widgetToTest,
           ),
@@ -64,10 +64,10 @@ void main() {
       const edgeSize = 3;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanel(); // Default is 3.
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: await PumpApp.providerWrappedInternal(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
+          child: PumpApp.providerWrappedInternal(
             waitForBotBloc: mockWaitForBotBloc,
             child: widgetToTest,
           ),
@@ -102,12 +102,12 @@ void main() {
       const edgeSize = 4;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() async {
+      setUp(() {
         mockGamePlayBloc = MockGamePlayBloc();
 
         widgetToTest = const GameBoardPanel();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: await PumpApp.providerWrappedInternal(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
+          child: PumpApp.providerWrappedInternal(
             waitForBotBloc: mockWaitForBotBloc,
             child: widgetToTest,
           ),
@@ -152,10 +152,10 @@ void main() {
       const edgeSize = 5;
       const countSize = edgeSize * edgeSize;
 
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPanel();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
-          child: await PumpApp.providerWrappedInternal(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
+          child: PumpApp.providerWrappedInternal(
             waitForBotBloc: mockWaitForBotBloc,
             child: widgetToTest,
           ),

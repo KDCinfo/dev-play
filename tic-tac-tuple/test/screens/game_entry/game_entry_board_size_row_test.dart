@@ -23,12 +23,12 @@ void main() {
       registerFallbackValue(const GameEntryEdgeSizeEvent(edgeSize: 3));
     });
 
-    setUp(() async {
+    setUp(() {
       mockScorebookRepository = MockScorebookRepository();
       mockGameEntryBloc = MockGameEntryBloc();
 
       widgetToTest = const GameEntryBoardSizeRow();
-      wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+      wrappedWidget = PumpApp.providerWrappedMaterialApp(
         scorebookRepository: mockScorebookRepository,
         gameEntryBloc: mockGameEntryBloc,
         child: widgetToTest,
@@ -41,7 +41,7 @@ void main() {
 
     group('[Widget]', () {
       // Stub stream
-      setUp(() async {
+      setUp(() {
         when(() => mockScorebookRepository.currentScorebookData).thenReturn(const ScorebookData());
         when(() => mockScorebookRepository.scorebookDataStream).thenAnswer(
           (_) => Stream.value(const ScorebookData()),

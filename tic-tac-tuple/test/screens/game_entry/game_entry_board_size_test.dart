@@ -21,12 +21,12 @@ void main() {
     ///
 
     group('GameEntry Board Size', () {
-      setUp(() async {
+      setUp(() {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
 
         widgetToTest = const GameEntryBoardSizeRow();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
           scorebookRepository: mockScorebookRepository,
           gameEntryBloc: mockGameEntryBloc,
           child: widgetToTest,

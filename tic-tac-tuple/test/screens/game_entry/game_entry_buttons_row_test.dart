@@ -24,13 +24,13 @@ void main() {
     //
 
     group('GameEntry Buttons', () {
-      setUp(() async {
+      setUp(() {
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
         mockGamePlayBloc = MockGamePlayBloc();
 
         widgetToTest = const GameEntryButtonsRow();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
           scorebookRepository: mockScorebookRepository,
           gameEntryBloc: mockGameEntryBloc,
           gamePlayBloc: mockGamePlayBloc,
@@ -151,7 +151,7 @@ void main() {
         // - The game must have between 2-4 players.
         // - All players must have a name.
         // - No two player names can be the same.
-        test('returns empty list when all fields are valid.', () async {
+        test('returns empty list when all fields are valid.', () {
           const gameEntryButtonsRow = GameEntryButtonsRow();
           final messageList = gameEntryButtonsRow.validateFields(
             statePlayers: [...playerList],
@@ -159,7 +159,7 @@ void main() {
           );
           expect(messageList, isEmpty);
         });
-        test('returns list with 1 item when edgeSize is too small.', () async {
+        test('returns list with 1 item when edgeSize is too small.', () {
           const gameEntryButtonsRow = GameEntryButtonsRow();
           final messageList = gameEntryButtonsRow.validateFields(
             statePlayers: [...playerList],
@@ -169,7 +169,7 @@ void main() {
           expect(messageList, hasLength(1));
           expect(messageList, contains(AppConstants.boardSizeMinMsg));
         });
-        test('returns list with 1 item when edgeSize is too large.', () async {
+        test('returns list with 1 item when edgeSize is too large.', () {
           const gameEntryButtonsRow = GameEntryButtonsRow();
           final messageList = gameEntryButtonsRow.validateFields(
             statePlayers: [...playerList],
@@ -179,7 +179,7 @@ void main() {
           expect(messageList, hasLength(1));
           expect(messageList, contains(AppConstants.boardSizeMaxMsg));
         });
-        test('returns list with 1 item when playerList is too small.', () async {
+        test('returns list with 1 item when playerList is too small.', () {
           const gameEntryButtonsRow = GameEntryButtonsRow();
           final messageList = gameEntryButtonsRow.validateFields(
             statePlayers: [...playerListSingle],
@@ -189,7 +189,7 @@ void main() {
           expect(messageList, hasLength(1));
           expect(messageList, contains(AppConstants.playerListMinMsg));
         });
-        test('returns list with 1 item when playerList is too large.', () async {
+        test('returns list with 1 item when playerList is too large.', () {
           final playerAtIndex = playerListPlayer1a.elementAtOrNull(0);
           if (playerAtIndex != null) {
             const gameEntryButtonsRow = GameEntryButtonsRow();
@@ -208,7 +208,7 @@ void main() {
             fail('too large - playerAtIndex is null.');
           }
         });
-        test('returns list with 1 item when playerList has empty name.', () async {
+        test('returns list with 1 item when playerList has empty name.', () {
           final playerListEmptyName = List<PlayerData>.of(playerList);
           final playerAtIndex = playerListEmptyName.elementAtOrNull(0);
           if (playerAtIndex != null) {
@@ -225,7 +225,7 @@ void main() {
             fail('empty name - playerAtIndex is null.');
           }
         });
-        test('returns list with 1 item when playerList has duplicate name.', () async {
+        test('returns list with 1 item when playerList has duplicate name.', () {
           final playerListDuplicateName = List<PlayerData>.of(playerList);
           final playerAtIndex = playerListDuplicateName.elementAtOrNull(0);
           if (playerAtIndex != null) {
@@ -245,7 +245,7 @@ void main() {
         test(
           'returns list with 2 items with 4 players '
           'having an empty player name and 2 duplicate names.',
-          () async {
+          () {
             final playerListDuplicateName = List<PlayerData>.of(playerListAddFourth);
             final playerAtIndex = playerListDuplicateName.elementAtOrNull(0);
             if (playerAtIndex != null) {

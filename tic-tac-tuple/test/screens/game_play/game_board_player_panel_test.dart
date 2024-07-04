@@ -36,9 +36,9 @@ void main() {
     ///
 
     group('GameBoard Player Panel', () {
-      setUp(() async {
+      setUp(() {
         widgetToTest = const GameBoardPlayerPanel();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
           child: widgetToTest,
           scorebookRepository: mockScorebookRepository,
           gamePlayBloc: mockGamePlayBloc,

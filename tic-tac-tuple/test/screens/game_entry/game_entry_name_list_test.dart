@@ -21,12 +21,12 @@ void main() {
       registerFallbackValue(const ScorebookData());
     });
 
-    setUp(() async {
+    setUp(() {
       mockScorebookRepository = MockScorebookRepository();
       mockGameEntryBloc = MockGameEntryBloc();
 
       widgetToTest = const GameEntryNameList();
-      wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+      wrappedWidget = PumpApp.providerWrappedMaterialApp(
         scorebookRepository: mockScorebookRepository,
         gameEntryBloc: mockGameEntryBloc,
         child: widgetToTest,

@@ -20,7 +20,7 @@ class PrePopScope extends StatelessWidget {
       // canPop: !AppPaths.pathsToNotPop.contains(currentRoutePath),
       canPop: false,
       child: child,
-      onPopInvoked: (bool didPop) async {
+      onPopInvoked: (bool didPop) {
         log('[pre_pop_scope] [onPopInvoked] [$currentRoutePath] [$didPop]');
 
         if (didPop) {

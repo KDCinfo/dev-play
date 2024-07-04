@@ -31,7 +31,7 @@ void main() {
     ///
 
     group('setUp for', () {
-      setUp(() async {
+      setUp(() {
         mockObserver = MockNavigatorObserver();
         mockScorebookRepository = MockScorebookRepository();
         mockGameEntryBloc = MockGameEntryBloc();
@@ -39,12 +39,12 @@ void main() {
         mockWaitForBotBloc = MockWaitForBotBloc();
 
         widgetToTest = const GameEntryScreen();
-        wrappedWidget = await PumpApp.providerWrappedMaterialApp(
+        wrappedWidget = PumpApp.providerWrappedMaterialApp(
           scorebookRepository: mockScorebookRepository,
           gameEntryBloc: mockGameEntryBloc,
           gamePlayBloc: mockGamePlayBloc,
           mockObserver: mockObserver,
-          child: await PumpApp.providerWrappedInternal(
+          child: PumpApp.providerWrappedInternal(
             waitForBotBloc: mockWaitForBotBloc,
             child: widgetToTest,
           ),
