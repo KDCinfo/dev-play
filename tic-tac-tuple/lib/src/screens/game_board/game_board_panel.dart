@@ -10,17 +10,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-class GameBoardPanel extends StatelessWidget {
+class GameBoardPanel extends StatefulWidget {
   const GameBoardPanel({super.key});
 
+  @override
+  State<GameBoardPanel> createState() => _GameBoardPanelState();
+}
+
+class _GameBoardPanelState extends State<GameBoardPanel> {
   void gridTileCallback(int index, BuildContext context) {
     context.read<GamePlayBloc>().add(GamePlayMoveEvent(tileIndex: index));
   }
 
+  late TilePositionModel tilePositionModel;
+
+  @override
+  void initState() {
+    super.initState();
+    tilePositionModel = TilePositionModel();
+  }
+
+  @override
+  void dispose() {
+    tilePositionModel.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TilePositionModel(),
+    return ChangeNotifierProvider.value(
+      value: tilePositionModel,
       child: BlocBuilder<GamePlayBloc, GamePlayState>(
         buildWhen: (previous, current) => previous.currentGame != current.currentGame,
         builder: (context, stateGamePlayOuter) {

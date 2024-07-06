@@ -132,6 +132,9 @@ void main() {
         });
 
         testWidgets('calls Navigator.didPush when GamePlayState changes.', (tester) async {
+          const gameBoardData = GameBoardData(
+            plays: [PlayerTurn(playerTurnId: 1, tileIndex: 0, occupiedById: 1)],
+          );
           when(() => mockGamePlayBloc.currentScorebookData).thenReturn(
             ScorebookData(
               allGames: {
@@ -151,9 +154,7 @@ void main() {
                 currentGame: GameData(
                   gameId: 1,
                   players: playerList,
-                  gameBoardData: const GameBoardData(
-                    plays: [PlayerTurn(playerTurnId: 1, tileIndex: 0, occupiedById: 1)],
-                  ),
+                  gameBoardData: gameBoardData,
                   gameStatus: const GameStatusInProgress(),
                 ),
               ),
