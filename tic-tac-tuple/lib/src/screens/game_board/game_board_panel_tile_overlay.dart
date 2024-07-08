@@ -20,7 +20,6 @@ class GameBoardPanelTileOverlay extends StatelessWidget {
     return isClickableTile
         ? const SizedBox()
         : LayoutBuilder(
-            // ignore: avoid-shadowing
             builder: (context, constraints) {
               final size = constraints.maxWidth;
 

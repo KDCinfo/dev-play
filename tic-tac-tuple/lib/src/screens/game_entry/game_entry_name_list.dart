@@ -15,7 +15,6 @@ class GameEntryNameList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GameEntryBloc, GameEntryState>(
-      // ignore: avoid-shadowing
       builder: (context, state) {
         /// A base list without the saved name `TicTacBot`.
         final allSavedPlayerNames =

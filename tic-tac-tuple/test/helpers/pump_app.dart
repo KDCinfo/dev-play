@@ -104,7 +104,6 @@ abstract class PumpApp {
             child: mockObserver != null
                 ? materialAppScreenTest(
                     Builder(
-                      // ignore: avoid-shadowing
                       builder: (context) {
                         return child;
                       },
@@ -113,7 +112,6 @@ abstract class PumpApp {
                   )
                 : materialApp(
                     Builder(
-                      // ignore: avoid-shadowing
                       builder: (context) {
                         return child;
                       },

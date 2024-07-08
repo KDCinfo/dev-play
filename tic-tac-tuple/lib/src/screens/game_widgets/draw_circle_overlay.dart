@@ -11,7 +11,6 @@ class DrawCircleOverlay {
     debugPrint('[check] Drawing circle at [ $globalPosition ] with radius [ $radius ]');
 
     final overlay = OverlayEntry(
-      // ignore: avoid-shadowing
       builder: (context) {
         return Positioned(
           left: globalPosition.dx - radius,

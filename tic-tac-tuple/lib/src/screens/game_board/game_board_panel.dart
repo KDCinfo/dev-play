@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-shadowing
-
 import 'dart:developer';
 
 import 'package:dev_play_tictactuple/src/app_constants.dart';
