@@ -37,6 +37,7 @@ class _PlayerListState extends State<PlayerList> {
   @override
   Widget build(BuildContext context) {
     return Builder(
+      // ignore: avoid-shadowing
       builder: (context) {
         //
         return DropdownMenu<int>(

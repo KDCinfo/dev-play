@@ -56,6 +56,7 @@ class GameEntryButtonsRow extends StatelessWidget {
           buildWhen: (previous, current) =>
               previous.pausedGame.gameId != current.pausedGame.gameId &&
               current.pausedGame.gameId > -1,
+          // ignore: avoid-shadowing
           builder: (context, state) {
             return state.pausedGame.gameId > -1
                 ? TextButton(
@@ -85,6 +86,7 @@ class GameEntryButtonsRow extends StatelessWidget {
       // Show a dialog with validation message.
       await showDialog<void>(
         context: context,
+        // ignore: avoid-shadowing
         builder: (context) {
           return AlertDialog(
             alignment: Alignment.bottomCenter,

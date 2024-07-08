@@ -77,13 +77,13 @@ class ScorebookRepository extends AppBaseRepository {
       //   int get currentPlayerId => players[currentPlayerIndex].playerId!;
       //
       final newGameData = newScorebookData.currentGame.endGame(
-        winnerId: noMorePlays
+        newWinnerId: noMorePlays
             ? -1
             : newScorebookData.currentGame.players
                     .elementAtOrNull(newScorebookData.currentGame.previousPlayerIndex)
                     ?.playerId ??
                 -1,
-        winnerRowColDiag: checkRows != null
+        newWinnerRowColDiag: checkRows != null
             ? (MatchTupleEnum.row, checkRows.$1)
             : checkCols != null
                 ? (MatchTupleEnum.column, checkCols.$1)
@@ -155,7 +155,7 @@ class ScorebookRepository extends AppBaseRepository {
     );
 
     // Update `GameData` => `PlayerTurn`.
-    final newGameData = currentGame.gameDataPlayTurn(gameBoardData: newGameBoardData);
+    final newGameData = currentGame.gameDataPlayTurn(newGameBoardData: newGameBoardData);
 
     // Update `ScorebookData`
     final newScorebookData = currentScorebookData.updateGame(newGameData);
@@ -170,7 +170,7 @@ class ScorebookRepository extends AppBaseRepository {
       return;
     }
     final newScorebookData = currentScorebookData.resumeGame(
-      pausedGame: currentScorebookData.pausedGame!,
+      newPausedGame: currentScorebookData.pausedGame!,
     );
     processScorebookData(newScorebookData);
   }

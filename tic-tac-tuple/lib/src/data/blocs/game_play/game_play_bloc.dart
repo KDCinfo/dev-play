@@ -68,7 +68,7 @@ class GamePlayBloc extends Bloc<GamePlayEvent, GamePlayState> {
 
     final newScorebookData = _scorebookRepository.currentScorebookData.pauseGame(
       newCurrentGame: gameDataReset,
-      pausedGame: gameDataPaused,
+      newPausedGame: gameDataPaused,
     );
 
     // Store scorebookData in stream and local storage.

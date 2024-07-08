@@ -145,19 +145,19 @@ class ScorebookData extends Equatable {
 
   ScorebookData pauseGame({
     required GameData newCurrentGame,
-    required GameData pausedGame,
+    required GameData newPausedGame,
   }) {
     return copyWith(
       currentGame: newCurrentGame,
-      pausedGame: pausedGame,
+      pausedGame: newPausedGame,
     );
   }
 
   ScorebookData resumeGame({
-    required GameData pausedGame,
+    required GameData newPausedGame,
   }) {
     return copyWith(
-      currentGame: pausedGame,
+      currentGame: newPausedGame,
       pausedGame: const GameData(),
     );
   }

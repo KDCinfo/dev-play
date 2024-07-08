@@ -56,10 +56,10 @@ class GameBoardData extends Equatable {
   /// This is used when a game is started, when transitioning
   /// from `GameEntry` to `GamePlay` initialization.
   GameBoardData changeEdgeSize({
-    required int edgeSize,
+    required int newEdgeSize,
   }) {
     return GameBoardData(
-      edgeSize: edgeSize,
+      edgeSize: newEdgeSize,
       plays: plays,
     );
   }

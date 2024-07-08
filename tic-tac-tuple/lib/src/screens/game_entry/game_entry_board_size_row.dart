@@ -49,6 +49,7 @@ class _GameEntryBoardSizeRowState extends State<GameEntryBoardSizeRow> {
   Widget build(BuildContext context) {
     return BlocListener<GameEntryBloc, GameEntryState>(
       listenWhen: (previous, current) => previous.edgeSize != current.edgeSize,
+      // ignore: avoid-shadowing
       listener: (context, state) {
         setState(() {
           currentBoardSize = state.edgeSize.toDouble() - boardSizesOffset;
@@ -87,6 +88,7 @@ class _GameEntryBoardSizeRowState extends State<GameEntryBoardSizeRow> {
               ),
             ),
             BlocBuilder<GameEntryBloc, GameEntryState>(
+              // ignore: avoid-shadowing
               builder: (context, state) {
                 return Slider(
                   key: boardSizeSliderKey,

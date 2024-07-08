@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-shadowing
+
 import 'package:dev_play_tictactuple/src/app_constants.dart';
 import 'package:dev_play_tictactuple/src/screens/screens.dart';
 

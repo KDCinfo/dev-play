@@ -11,6 +11,7 @@ class GameBoardPlayerPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
+      // ignore: avoid-shadowing
       builder: (context, constraints) {
         return SizedBox(
           width: constraints.maxWidth * 0.9,
@@ -19,6 +20,7 @@ class GameBoardPlayerPanel extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: BlocBuilder<GamePlayBloc, GamePlayState>(
+                // ignore: avoid-shadowing
                 builder: (context, state) {
                   return Column(
                     children: [

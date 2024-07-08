@@ -210,7 +210,7 @@ void main() {
             tileIndex: 0,
           ));
         final updatedGameData1 = updatedGameData0.gameDataPlayTurn(
-          gameBoardData: gameBoardData.copyWith(plays: plays1),
+          newGameBoardData: gameBoardData.copyWith(plays: plays1),
         );
 
         ///
@@ -222,7 +222,7 @@ void main() {
             tileIndex: 2,
           ));
         final updatedGameData2 = updatedGameData1.gameDataPlayTurn(
-          gameBoardData: gameBoardData.copyWith(plays: plays2),
+          newGameBoardData: gameBoardData.copyWith(plays: plays2),
         );
 
         ///
@@ -230,8 +230,8 @@ void main() {
         ///
         final updatedGameData3 = updatedGameData2.endGame(
           // Player 2 wins.
-          winnerId: 4, // playerId: score, // +1 for each game won
-          winnerRowColDiag: (MatchTupleEnum.row, 1),
+          newWinnerId: 4, // playerId: score, // +1 for each game won
+          newWinnerRowColDiag: (MatchTupleEnum.row, 1),
         );
 
         /// Game ID should never change.

@@ -51,23 +51,23 @@ class GameData extends Equatable {
   }
 
   GameData gameDataPlayTurn({
-    required GameBoardData gameBoardData,
+    required GameBoardData newGameBoardData,
   }) {
     return copyWith(
       dateLastPlayed: DateTime.now(),
-      gameBoardData: gameBoardData,
+      gameBoardData: newGameBoardData,
     );
   }
 
   /// The `winnerRowColDiag` property is a nullable typedef: (MatchTupleEnum, int)?
   GameData endGame({
-    required int winnerId,
-    required WinnerRowColDiagDef winnerRowColDiag,
+    required int newWinnerId,
+    required WinnerRowColDiagDef newWinnerRowColDiag,
   }) {
     return copyWith(
-      winnerId: winnerId,
+      winnerId: newWinnerId,
       gameStatus: const GameStatusComplete(),
-      winnerRowColDiag: winnerRowColDiag,
+      winnerRowColDiag: newWinnerRowColDiag,
     );
   }
 

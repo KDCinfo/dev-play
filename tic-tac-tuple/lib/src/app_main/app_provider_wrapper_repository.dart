@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-shadowing
+
 import 'package:dev_play_tictactuple/src/data/service_repositories/service_repositories.dart';
 
 import 'package:flutter/material.dart';

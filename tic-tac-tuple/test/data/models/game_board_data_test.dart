@@ -56,7 +56,7 @@ void main() {
       });
       test('works.', () {
         final gameBoardDataBase = GameBoardData(edgeSize: edgeSize);
-        final gameBoardDataTarget = gameBoardDataBase.changeEdgeSize(edgeSize: edgeSize2);
+        final gameBoardDataTarget = gameBoardDataBase.changeEdgeSize(newEdgeSize: edgeSize2);
         expect(
           gameBoardDataBase.edgeSize,
           equals(edgeSize),
