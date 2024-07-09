@@ -25,8 +25,8 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
-          flutter-version-file: ../../tic-tac-tuple/pubspec.yaml
+          channel: beta
+          flutter-version-file: pubspec.yaml
           # flutter-version-file: pubspec.yaml | environment: flutter: 3.22.0
           cache: true
 
