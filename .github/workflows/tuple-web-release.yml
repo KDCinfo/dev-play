@@ -16,6 +16,9 @@ jobs:
       # https://github.com/marketplace/actions/setup-java-jdk#basic-configuration
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+      - name: install tooling
+        run: |
+          brew install yq
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
@@ -27,7 +30,6 @@ jobs:
         with:
           channel: beta
           flutter-version-file: pubspec.yaml
-          # flutter-version-file: pubspec.yaml | environment: flutter: 3.22.0
           cache: true
 
       # Note: This workflow uses the latest stable version of the Dart SDK.

@@ -4,11 +4,11 @@ description: "Dev Play: Tic Tac Tuple"
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 0.0.1+1
 
 environment:
   sdk: '>=3.4.0-282.3.beta <4.0.0'
-  flutter: '3.22.0-0.3.pre'
+  flutter: 3.22.0
 
 dependencies:
   base_services:
