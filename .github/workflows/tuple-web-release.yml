@@ -43,9 +43,9 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: beta
-          # flutter-version-file: pubspec.yaml
+          flutter-version-file: pubspec.yaml
           # flutter-version-file: pubspec.yaml | environment: flutter: 3.22.0
-          flutter-version-file: ${{ steps.get_flutter_version.outputs.result }}
+          # flutter-version-file: ${{ steps.get_flutter_version.outputs.result }}
           cache: true
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
