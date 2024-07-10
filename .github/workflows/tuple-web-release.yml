@@ -43,7 +43,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: beta
-          flutter-version-file: pubspec.yaml
+          flutter-version-file: ./tic-tac-tuple/pubspec.yaml
           # flutter-version-file: pubspec.yaml | environment: flutter: 3.22.0
           # flutter-version-file: ${{ steps.get_flutter_version.outputs.result }}
           cache: true
