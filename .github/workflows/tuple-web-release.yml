@@ -43,10 +43,13 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: beta
-          flutter-version-file: ./tic-tac-tuple/pubspec.yaml
+          # flutter-version: 3.22.0
+          flutter-version: ${{ steps.get_flutter_version.outputs.result }}
+          # flutter-version-file: pubspec.yaml
           # flutter-version-file: pubspec.yaml | environment: flutter: 3.22.0
           # flutter-version-file: ${{ steps.get_flutter_version.outputs.result }}
           cache: true
+        working-directory: ./tic-tac-tuple
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
