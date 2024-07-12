@@ -68,7 +68,7 @@ jobs:
         run: flutter test
       - name: Start Web Release Build
         # run: flutter build web --release
-        run: flutter build web --release --base-href /dev-play/
+        run: flutter build web --release --base-href /dev-play/tic-tac-tuple/
       - name: Upload Web Build Files
         uses: actions/upload-artifact@v4
         with:
