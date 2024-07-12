@@ -94,9 +94,8 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
         # publish_branch: your-branch  # default: gh-pages
-        # destination_dir: ./tic-tac-tuple/build/web
+        destination_dir: tic-tac-tuple
         publish_dir: ./tic-tac-tuple/build/web
         # enable_jekyll: true
         # jekyll_build_options: --trace
