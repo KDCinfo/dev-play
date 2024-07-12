@@ -67,7 +67,8 @@ jobs:
       - name: Run tests
         run: flutter test
       - name: Start Web Release Build
-        run: flutter build web --release
+        # run: flutter build web --release
+        run: flutter build web --release --base-href /dev-play/
       - name: Upload Web Build Files
         uses: actions/upload-artifact@v4
         with:
@@ -88,8 +89,13 @@ jobs:
         name: web-release
         path: ./tic-tac-tuple/build/web
 
+    # https://github.com/peaceiris/actions-gh-pages
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        # destination_dir: ./tic-tac-tuple/build/web
         publish_dir: ./tic-tac-tuple/build/web
+        # enable_jekyll: true
+        # jekyll_build_options: --trace
+        # keep_files: true
