@@ -38,7 +38,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '21'
-          cache: 'gradle'
+          # cache: 'gradle'
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: web-release
-          path: ./tic-tac-tuple/build/web
+          path: ./tic-tac-tuple
       - name: List Files
         run: ls -R
 
@@ -86,10 +86,11 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: web-release
-        path: ./tic-tac-tuple/build/web
+        path: ./tic-tac-tuple
 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
+        # publish_dir: ./
+        publish_dir: ./tic-tac-tuple
