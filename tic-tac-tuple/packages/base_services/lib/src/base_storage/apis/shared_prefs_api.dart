@@ -109,9 +109,8 @@ class SharedPrefsApi extends LocalStorageApi {
     } else if (T == bool) {
       /// Reads a value from persistent storage, throwing an exception if it's not a bool.
       return instance.getBool(key) as T?;
-    } else {
-      throw ArgumentError('Unsupported type "$T"');
     }
+    throw ArgumentError('Unsupported type "$T"');
   }
 
   /// Write a value type [T] with the given [key].

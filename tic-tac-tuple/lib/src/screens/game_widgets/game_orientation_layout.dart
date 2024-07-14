@@ -69,26 +69,25 @@ class GameOrientationLayout extends StatelessWidget {
                           // buttons placed to the right of the player list.
                           ? orientationScreen.landscape
                           : orientationScreen.portrait;
-                    } else {
-                      //
-                      // @TODO: Find a way to detect the actual orientation of the device
-                      //        (i.e. not based on the layout constraints).
-                      //
-                      // If in landscape mode, when the keyboard comes up,
-                      //   the return below will cause the same issue as above.
-                      //
-                      // So in effect, landscape can only be used when playing
-                      //   with the default names (i.e. cannot use `TextFormField`s).
-                      //
-                      return orientationScreen.portrait;
-                      //
-                      // Maybe we can store the portrait/landscape mode on initial load,
-                      //   then only perform the logic above when the screen actually rotates.
-                      //
-                      // The fallacy of that is the orientation detection also
-                      //   detects based on the view constraints (i.e. when the keyboard
-                      //   comes up, it will still think the device flipped orientation).
                     }
+                    //
+                    // @TODO: Find a way to detect the actual orientation of the device
+                    //        (i.e. not based on the layout constraints).
+                    //
+                    // If in landscape mode, when the keyboard comes up,
+                    //   the return below will cause the same issue as above.
+                    //
+                    // So in effect, landscape can only be used when playing
+                    //   with the default names (i.e. cannot use `TextFormField`s).
+                    //
+                    return orientationScreen.portrait;
+                    //
+                    // Maybe we can store the portrait/landscape mode on initial load,
+                    //   then only perform the logic above when the screen actually rotates.
+                    //
+                    // The fallacy of that is the orientation detection also
+                    //   detects based on the view constraints (i.e. when the keyboard
+                    //   comes up, it will still think the device flipped orientation).
                   },
                 );
               },
