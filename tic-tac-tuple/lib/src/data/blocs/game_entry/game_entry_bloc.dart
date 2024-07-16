@@ -187,7 +187,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       // gameData with things like the game creation date.
       final gameData = GameData.startGame(
         gameId: _scorebookRepository.currentScorebookData.allGames.isNotEmpty
-            ? _scorebookRepository.currentScorebookData.allGames.keys.lastOrNull ?? 1
+            ? (_scorebookRepository.currentScorebookData.allGames.keys.lastOrNull ?? 0) + 1
             : 1,
         // players: state.players,
         // Give each player a playerId that is +1 from the
