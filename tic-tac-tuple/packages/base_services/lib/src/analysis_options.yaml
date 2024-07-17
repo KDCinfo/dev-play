@@ -1,14 +1,26 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
+# This file configures lint analyzers, which statically analyze
+# Dart code to check for errors, warnings, and lints.
 #
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# The issues identified by the analyzers are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). Analyzers can also be
 # invoked from the command line by running `flutter analyze`.
 
+# Flutter Lints
+# https://pub.dev/packages/flutter_lints
+#
+# Flutter Lints have been disabled to allow Very Good Analysis to take precedence.
+#
+# include: package:flutter_lints/flutter.yaml
+
+# Very Good Analysis (VGV)
+# https://pub.dev/packages/very_good_analysis
+#
+# Very Good Analysis tracks development of new Dart and
+# Flutter lint rules well and is updated regularly.
+#
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
-# include: package:flutter_lints/flutter.yaml
-include: package:very_good_analysis/analysis_options.5.1.0.yaml
+include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
   # strong-mode:
