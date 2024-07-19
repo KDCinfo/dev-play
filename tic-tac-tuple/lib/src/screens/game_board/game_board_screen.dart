@@ -44,12 +44,18 @@ class GameBoardScreen extends StatelessWidget {
                     // Let the bot do its thing...
                     await Future<void>.delayed(
                       const Duration(milliseconds: AppConstants.botDelay),
-                      () => context.read<GamePlayBloc>().add(const GamePlayBotMoveRequestedEvent()),
+                      () {
+                        if (context.mounted) {
+                          context.read<GamePlayBloc>().add(const GamePlayBotMoveRequestedEvent());
+                        }
+                      },
                     ).then<void>((_) {
                       // Stop showing the waiting widget.
-                      context.read<WaitForBotBloc>().add(
-                            const WaitForBotOffEvent(),
-                          );
+                      if (context.mounted) {
+                        context.read<WaitForBotBloc>().add(
+                              const WaitForBotOffEvent(),
+                            );
+                      }
                     });
                   },
                   child: const GameOrientationLayout(

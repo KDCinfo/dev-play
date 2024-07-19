@@ -104,7 +104,9 @@ class GameEntryScreen extends StatelessWidget {
       ).then<void>((_) {
         // This reset will add an empty `GameData()` to the `currentGame` property,
         // but will retain the current players to help facilitate starting a new game.
-        context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
+        if (context.mounted) {
+          context.read<GamePlayBloc>().add(const GamePlayResetGameEvent());
+        }
       });
     }
   }
