@@ -19,7 +19,7 @@ class FlutterSecureStorageApi implements LocalSecureStorageApi {
   }
 
   @override
-  Future<String?> read(String key) async {
+  Future<String?> read(String key) {
     return _instance.read(key: key);
   }
 
@@ -44,7 +44,7 @@ class FlutterSecureStorageApi implements LocalSecureStorageApi {
   }
 
   @override
-  Future<Map<String, String>> storedKeys() async {
+  Future<Map<String, String>> storedKeys() {
     return _instance.readAll();
   }
 }

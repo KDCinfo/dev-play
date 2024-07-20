@@ -35,7 +35,7 @@ class StorageServiceProd implements StorageServiceApi {
   }
 
   @override
-  Future<Map<String, String>> secureStoredKeys() async {
+  Future<Map<String, String>> secureStoredKeys() {
     // Future<Map<String, String>> storedKeys(String key)
     // return _instance.getKeys();
     return _localSecureStorageApi.storedKeys();
