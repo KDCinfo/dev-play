@@ -25,6 +25,7 @@ class BootstrapLoader {
       canPrint: AppConstants.canPrint,
     );
 
+    // @TODO: Add this as an option on a preference panel.
     // storageApi.prefsClearAll();
 
     final scorebookRepository = ScorebookRepository(

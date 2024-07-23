@@ -131,6 +131,8 @@ class GameBoardData extends Equatable {
   (int, int)? _checkFilled(Map<int, List<int>> mapOfGroups) {
     var groupIndex = 0;
     for (final playerIdList in mapOfGroups.values) {
+      // @TODO: Make this `= -2` into a configurable option on the `GameEntry` screen.
+      //        `!= -2` => all defensive; `== 1` => more offensive.
       // A `playerId: -2` indicates a tile that has not been played.
       final checkPlayerIdList = playerIdList.where((playerId) => playerId != -2);
       if (checkPlayerIdList.isNotEmpty) {

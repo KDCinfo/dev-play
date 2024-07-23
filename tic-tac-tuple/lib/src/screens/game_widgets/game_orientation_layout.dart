@@ -82,6 +82,8 @@ class GameOrientationLayout extends StatelessWidget {
                     //
                     return orientationScreen.portrait;
                     //
+                    // @TODO: Try: MediaQuery.of(context).orientation
+                    //
                     // Maybe we can store the portrait/landscape mode on initial load,
                     //   then only perform the logic above when the screen actually rotates.
                     //
