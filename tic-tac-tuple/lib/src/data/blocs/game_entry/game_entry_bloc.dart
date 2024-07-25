@@ -107,7 +107,7 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
       state.copyWith(
         edgeSize: AppConstants.defaultEdgeSize,
         players: AppConstants.playerListDefault,
-        allSavedPlayerNames: state.allSavedPlayerNames,
+        allSavedPlayerNames: <String>[...state.allSavedPlayerNames],
       ),
     );
   }

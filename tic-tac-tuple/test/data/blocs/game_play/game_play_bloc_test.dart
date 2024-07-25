@@ -59,11 +59,10 @@ void main() {
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
               gameDataCurrent: GameData(
-                players: AppConstants.playerListDefault
-                    .map(
-                      (e) => e.copyWith(playerId: e.playerNum),
-                    )
-                    .toList(),
+                players: AppConstants.playerListDefault.map((e) {
+                  final playerNum = e.playerNum;
+                  return e.copyWith(playerId: playerNum);
+                }).toList(),
               ),
               gameDataPaused: const GameData(),
             ),
@@ -89,11 +88,12 @@ void main() {
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
               gameDataCurrent: GameData(
-                players: AppConstants.playerListDefault
-                    .map(
-                      (e) => e.copyWith(playerId: e.playerNum),
-                    )
-                    .toList(),
+                players: AppConstants.playerListDefault.map(
+                  (e) {
+                    final playerNum = e.playerNum;
+                    return e.copyWith(playerId: playerNum);
+                  },
+                ).toList(),
               ),
               gameDataPaused: const GameData(),
             ),
@@ -119,9 +119,10 @@ void main() {
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
               gameDataCurrent: GameData(
-                players: AppConstants.playerListDefault
-                    .map((e) => e.copyWith(playerId: e.playerNum))
-                    .toList(),
+                players: AppConstants.playerListDefault.map((e) {
+                  final playerNum = e.playerNum;
+                  return e.copyWith(playerId: playerNum);
+                }).toList(),
                 gameBoardData: const GameBoardData(
                   plays: [
                     PlayerTurn(tileIndex: 0, playerTurnId: 0, occupiedById: 0),
@@ -153,9 +154,10 @@ void main() {
           gamePlayBloc.add(
             GamePlayUpdatedEvent(
               gameDataCurrent: GameData(
-                players: AppConstants.playerListDefault
-                    .map((e) => e.copyWith(playerId: e.playerNum))
-                    .toList(),
+                players: AppConstants.playerListDefault.map((e) {
+                  final playerNum = e.playerNum;
+                  return e.copyWith(playerId: playerNum);
+                }).toList(),
                 gameBoardData: const GameBoardData(
                   plays: [
                     PlayerTurn(tileIndex: 0, playerTurnId: 0, occupiedById: 0),
