@@ -29,16 +29,16 @@ class GameEntryScreen extends StatelessWidget {
                     listenWhen: (previous, current) =>
                         previous.currentGame.gameStatus != current.currentGame.gameStatus &&
                         current.currentGame.gameStatus == const GameStatusComplete(),
-                    listener: (context, state) async {
-                      await gameEndProcess(context);
+                    listener: (context, state) {
+                      gameEndProcess(context);
                     },
                   ),
                   BlocListener<GamePlayBloc, GamePlayState>(
                     listenWhen: (previous, current) =>
                         previous.currentGame.gameId != current.currentGame.gameId,
-                    listener: (context, state) async {
+                    listener: (context, state) {
                       if (state.currentGame.gameId > -1) {
-                        await Navigator.pushNamed(context, '/play');
+                        Navigator.pushNamed(context, '/play');
                       } else {
                         // Pop to root.
                         Navigator.popUntil(context, (route) => route.isFirst);

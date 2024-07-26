@@ -35,14 +35,14 @@ class GameBoardScreen extends StatelessWidget {
                               .elementAtOrNull(current.currentGame.currentPlayerIndex)
                               ?.playerType ==
                           const PlayerTypeBot(),
-                  listener: (context, state) async {
+                  listener: (context, state) {
                     // Show a waiting widget.
                     context.read<WaitForBotBloc>().add(
                           const WaitForBotOnEvent(),
                         );
 
                     // Let the bot do its thing...
-                    await Future<void>.delayed(
+                    Future<void>.delayed(
                       const Duration(milliseconds: AppConstants.botDelay),
                       () {
                         if (context.mounted) {
