@@ -3,7 +3,7 @@ import 'dart:async';
 final testPrintLogs = <String>[];
 
 List<String> getLog(String method, Object? event) {
-  return ['[base_bloc_observer.dart] $method(FakeBloc, $event)'];
+  return ['[base_bloc_observer.dart] $method(FakeBloc, ${event ?? 'null-event'})'];
 }
 
 void Function() overridePrint(void Function() testFn) {

@@ -50,8 +50,12 @@ class _GameBoardPanelState extends State<GameBoardPanel> {
               stateGamePlayOuter.currentGame.gameBoardData.availableTileIndexes.contains(index);
 
           if (AppConstants.canPrint) {
-            log('[check] winnerRowColDiag: ${stateGamePlayOuter.currentGame.winnerRowColDiag}');
-            log('[check] availableTileIndexes: ${stateGamePlayOuter.currentGame.gameBoardData.availableTileIndexes}');
+            log(
+              '[check] winnerRowColDiag: ${stateGamePlayOuter.currentGame.winnerRowColDiag ?? 'null'}',
+            );
+            log(
+              '[check] availableTileIndexes: ${stateGamePlayOuter.currentGame.gameBoardData.availableTileIndexes}',
+            );
           }
 
           return BlocBuilder<WaitForBotBloc, WaitForBotState>(

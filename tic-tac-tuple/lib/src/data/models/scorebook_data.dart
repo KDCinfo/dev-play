@@ -67,7 +67,7 @@ class ScorebookData extends Equatable {
         '  allPlayers: $allPlayers,\n'
         '  allGames: $allGames,\n'
         '  currentGame: $currentGame\n'
-        '  pausedGame: $pausedGame\n'
+        '  pausedGame: ${pausedGame ?? 'null'}\n'
         '  endGameScores: $endGameScores\n'
         '}';
   }

@@ -17,7 +17,7 @@ class AppLoadBlocObserver extends BlocObserver {
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     super.onEvent(bloc, event);
     if (showLogBlocObservers) {
-      print('[base_bloc_observer.dart] onEvent(${bloc.runtimeType}, $event)');
+      print('[base_bloc_observer.dart] onEvent(${bloc.runtimeType}, ${event ?? 'null-event'})');
     }
   }
 
