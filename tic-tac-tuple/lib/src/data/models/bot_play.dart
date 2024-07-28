@@ -3,7 +3,7 @@ import 'package:dev_play_tictactuple/src/data/models/models.dart';
 
 abstract class BotPlay {
   static int runBotPlay({
-    required Map<MatchTupleEnum, Map<int, List<int>>> filledAllTuples,
+    required Map<MatchTupleEnum, Map<int, List<int>>?> filledAllTuples,
     required int nonBotPlayerId,
   }) {
     //

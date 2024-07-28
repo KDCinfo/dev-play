@@ -12,6 +12,8 @@ void main() {
         // [3] = bot
         //
         final filledAllRows = {
+          MatchTupleEnum.diagonal: null,
+          MatchTupleEnum.column: null,
           MatchTupleEnum.row: {
             0: [3, 5, 5, 3, 5],
             1: [-2, 3, 5, 3, -2],
@@ -32,6 +34,8 @@ void main() {
 
       test('runBotPlay should return the tile index to play when there are empty tiles.', () {
         final filledAllRows = {
+          MatchTupleEnum.diagonal: null,
+          MatchTupleEnum.column: null,
           MatchTupleEnum.row: {
             0: [3, 5, 5, -2, 5],
             1: [-2, -2, 5, 3, -2],
