@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-inferrable-type-arguments
+
 import 'dart:developer';
 
 import 'package:base_services/base_services.dart';

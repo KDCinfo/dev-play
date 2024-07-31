@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-inferrable-type-arguments
+
 part of 'game_entry_bloc.dart';
 
 class GameEntryState extends Equatable {

@@ -7,7 +7,7 @@ class IconPopAnimation extends StatelessWidget {
     required this.controller,
     super.key,
   })  : scaleAnimation = TweenSequence(
-          <TweenSequenceItem<double>>[
+          [
             TweenSequenceItem<double>(
               tween: Tween<double>(begin: 0.5, end: 2.5).chain(
                 CurveTween(curve: Curves.easeOut),

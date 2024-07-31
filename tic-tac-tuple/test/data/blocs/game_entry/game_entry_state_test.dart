@@ -32,7 +32,7 @@ void main() {
         createSubject(
           edgeSize: 4,
           players: playerList,
-          allSavedPlayerNames: const <String>[],
+          allSavedPlayerNames: const [],
         ).props,
         equals(<Object?>[
           4,
@@ -66,13 +66,13 @@ void main() {
           createSubject().copyWith(
             edgeSize: 5,
             players: playerListAddOne,
-            allSavedPlayerNames: const <String>['player1'],
+            allSavedPlayerNames: const ['player1'],
           ),
           equals(
             createSubject(
               edgeSize: 5,
               players: playerListAddOne,
-              allSavedPlayerNames: const <String>['player1'],
+              allSavedPlayerNames: const ['player1'],
             ),
           ),
         );

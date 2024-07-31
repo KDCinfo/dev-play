@@ -14,13 +14,13 @@ void main() {
           GameEntryUpdateEvent(
             edgeSize: 4,
             players: playerList,
-            allSavedPlayerNames: const <String>['Player 1', 'Player 2'],
+            allSavedPlayerNames: const ['Player 1', 'Player 2'],
           ),
           equals(
             GameEntryUpdateEvent(
               edgeSize: 4,
               players: playerList,
-              allSavedPlayerNames: const <String>['Player 1', 'Player 2'],
+              allSavedPlayerNames: const ['Player 1', 'Player 2'],
             ),
           ),
         );
@@ -31,7 +31,7 @@ void main() {
           GameEntryUpdateEvent(
             edgeSize: 4,
             players: playerList,
-            allSavedPlayerNames: const <String>['Player 1', 'Player 2'],
+            allSavedPlayerNames: const ['Player 1', 'Player 2'],
           ).props,
           equals(<Object?>[
             4,
