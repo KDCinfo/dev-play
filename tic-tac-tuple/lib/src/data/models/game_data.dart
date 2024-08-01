@@ -102,6 +102,7 @@ class GameData extends Equatable {
   ///
   final WinnerRowColDiagDef winnerRowColDiag;
 
+  // ignore: avoid-incomplete-copy-with
   GameData copyWith({
     // Used with `playTurn` method.
     DateTime? dateLastPlayed,

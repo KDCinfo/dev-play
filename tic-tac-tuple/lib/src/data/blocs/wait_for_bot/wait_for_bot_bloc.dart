@@ -14,13 +14,13 @@ class WaitForBotBloc extends Bloc<WaitForBotEvent, WaitForBotState> {
     WaitForBotOnEvent event,
     Emitter<WaitForBotState> emit,
   ) {
-    emit(state.copyWith(botIsThinking: true));
+    emit(state.copyWith(isWaiting: true));
   }
 
   void _updateWaiterOff(
     WaitForBotOffEvent event,
     Emitter<WaitForBotState> emit,
   ) {
-    emit(state.copyWith(botIsThinking: false));
+    emit(state.copyWith(isWaiting: false));
   }
 }

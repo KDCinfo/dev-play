@@ -28,7 +28,7 @@ void main() {
       test('returns the [same object if no arguments] are provided.', () {
         expect(
           createSubject().copyWith(
-            botIsThinking: false,
+            isWaiting: false,
           ),
           equals(
             createSubject(),
@@ -39,7 +39,7 @@ void main() {
       test('retains the old value for every parameter if [null] is provided.', () {
         expect(
           createSubject().copyWith(
-            botIsThinking: true,
+            isWaiting: true,
           ),
           equals(
             WaitForBotState(isWaiting: true),
@@ -50,7 +50,7 @@ void main() {
       test('replaces every [non-null] parameter.', () {
         expect(
           createSubject().copyWith(
-            botIsThinking: true,
+            isWaiting: true,
           ),
           equals(
             WaitForBotState(isWaiting: true),

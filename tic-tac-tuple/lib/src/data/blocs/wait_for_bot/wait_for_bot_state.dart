@@ -8,10 +8,10 @@ class WaitForBotState extends Equatable {
   final bool isWaiting;
 
   WaitForBotState copyWith({
-    required bool botIsThinking,
+    required bool isWaiting,
   }) {
     return WaitForBotState(
-      isWaiting: botIsThinking,
+      isWaiting: isWaiting,
     );
   }
 

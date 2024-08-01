@@ -34,6 +34,7 @@ class GameBoardData extends Equatable {
 
   int get boardSize => edgeSize * edgeSize;
 
+  // ignore: avoid-incomplete-copy-with
   GameBoardData copyWith({
     required List<PlayerTurn> plays,
   }) {

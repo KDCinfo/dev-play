@@ -67,7 +67,7 @@ void main() {
 
       test('updates the bot wait state to off.', () {
         final expectedState = waitForBotBloc.state.copyWith(
-          botIsThinking: false,
+          isWaiting: false,
         );
 
         waitForBotBloc.add(
@@ -79,7 +79,7 @@ void main() {
 
       test('updates the bot wait state to on.', () {
         final expectedState = waitForBotBloc.state.copyWith(
-          botIsThinking: true,
+          isWaiting: true,
         );
 
         waitForBotBloc.add(
