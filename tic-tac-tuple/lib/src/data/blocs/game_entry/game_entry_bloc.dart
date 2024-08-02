@@ -144,9 +144,12 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
 
       // Isolate new players for storing in the `allPlayers` list,
       // and pull out existing players for reuse.
+      const existingKey = 'existing';
+      const newKey = 'new';
+
       final playersMap = {
-        'existing': <PlayerData>[],
-        'new': <PlayerData>[],
+        existingKey: <PlayerData>[],
+        newKey: <PlayerData>[],
       };
       for (final player in workingList) {
         final existingPlayerIndex = _scorebookRepository.currentScorebookData.allPlayers.indexWhere(
@@ -161,15 +164,15 @@ class GameEntryBloc extends Bloc<GameEntryEvent, GameEntryState> {
             existingPlayerIndex,
           );
           if (existingPlayer != null) {
-            playersMap['existing'] = [
-              ...?playersMap['existing'],
+            playersMap[existingKey] = [
+              ...?playersMap[existingKey],
               player.copyWith(playerId: existingPlayer.playerId),
             ];
           }
         } else {
           nextPlayerId++;
-          playersMap['new'] = [
-            ...?playersMap['new'],
+          playersMap[newKey] = [
+            ...?playersMap[newKey],
             player.copyWith(playerId: nextPlayerId),
           ];
         }

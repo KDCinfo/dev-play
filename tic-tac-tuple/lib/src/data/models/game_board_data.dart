@@ -166,13 +166,15 @@ class GameBoardData extends Equatable {
       0: <int, int>{}, // 1st diag group
       1: <int, int>{}, // 2nd diag group
     };
+    const index0 = 0;
+    const index1 = 1;
 
     /// [1] Record all the indexes that make up the [1st] diag group.
     for (var tileIndex = 0; tileIndex < boardSize; tileIndex += edgeSize + 1) {
       // [0] += 3 + 1 == 4
       // [4] += 3 + 1 == 8
       // [8] += 3 + 1 == 12 (> boardSize)
-      mapOfDiagTiles[0]!.putIfAbsent(tileIndex, () => -2);
+      mapOfDiagTiles[index0]!.putIfAbsent(tileIndex, () => -2);
     }
 
     /// [2] Record all the indexes that make up the [2nd] diag group.
@@ -180,7 +182,7 @@ class GameBoardData extends Equatable {
       // 3 - 1 == [2] | 2 += 3 - 1 == [4]
       //          [4] | 4 += 3 - 1 == [6]
       //          [6] | 6 += 3 - 1 == [8] (! < boardSize - 1)
-      mapOfDiagTiles[1]!.putIfAbsent(tileIndex, () => -2);
+      mapOfDiagTiles[index1]!.putIfAbsent(tileIndex, () => -2);
     }
 
     for (final play in plays) {
