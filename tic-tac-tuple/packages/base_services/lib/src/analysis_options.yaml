@@ -30,6 +30,7 @@ analyzer:
     # strict-raw-types: true
   exclude:
     - "**/*.g.dart"
+    - "assets/**"
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -48,7 +49,7 @@ linter:
     lines_longer_than_80_chars: false
     public_member_api_docs: false
 
-# This is for anyone using DCM.
+# The analysis rules below are for anyone using DCM.
 #
 # dart_code_metrics:
 #   extends:
@@ -62,3 +63,65 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+### For those using DCM:
+###
+### Uncomment all the lines below,
+###   then uncomment or comment the individual rules.
+###
+### The commented rules below are those applied to this app as of: 2024-08-03
+
+# dart_code_metrics:
+#   rules-exclude:
+#     - assets/**
+#   extends:
+#     - recommended
+#   rules:
+#     # - avoid-accessing-collections-by-constant-index: false
+#     # - avoid-duplicate-initializers: false
+#     - avoid-dynamic: false
+#     # - avoid-empty-setstate: false
+#     # - avoid-incomplete-copy-with: false
+#     # - avoid-inferrable-type-arguments: false
+#     # - avoid-missed-calls: false
+#     # - avoid-missing-enum-constant-in-map: false
+#     # - avoid-missing-image-alt: false
+#     # - avoid-nullable-interpolation: false
+#     # - avoid-nullable-tostring: false
+#     # - avoid-passing-async-when-sync-expected: false
+#     # - avoid-passing-self-as-argument: false
+#     # - avoid-redundant-async: false
+#     # - avoid-redundant-else: false
+#     - avoid-shadowing:
+#         ignored-names:
+#           - context
+#     # - avoid-unassigned-late-fields: false
+#     # - avoid-undisposed-instances: false
+#     # - avoid-unnecessary-futures: false
+#     # - avoid-unnecessary-local-late: false
+#     # - avoid-unnecessary-nullable-return-type: false
+#     # - avoid-unnecessary-reassignment: false
+#     # - avoid-unnecessary-setstate: false
+#     # - avoid-unnecessary-stateful-widgets: false
+#     # - avoid-unused-parameters: false
+#     # - dispose-fields: false
+#     - match-getter-setter-field-names: false
+
+#     # Some of these are needed (for now) for context-after-await calls.
+#     # - move-variable-closer-to-its-usage: false
+
+#     # - no-equal-then-else: false
+#     # - prefer-correct-callback-field-name: false
+#     # - prefer-correct-json-casts: false
+#     # - prefer-declaring-const-constructor: false
+#     # - prefer-match-file-name: false
+#     # - prefer-prefixed-global-constants: false
+#     # - prefer-single-widget-per-file: false
+#     # - prefer-switch-with-enums: false
+#     # - prefer-trailing-comma: false
+#     # - proper-super-calls: false
+#     # - use-setstate-synchronously: false
+#     #
+#     - unnecessary-trailing-comma: false
+#     - avoid-unused-instances: false
+#     - no-empty-block: false
