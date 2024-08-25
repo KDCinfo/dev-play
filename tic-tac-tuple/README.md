@@ -2,12 +2,11 @@
 
 > Dev Play: Tic Tac Tuple
 
-See the [TicTacTuple Readme](readme_tictactoe.md) file for design notes and thought process log.
-
 -----
 
-> This `DevPlay` repository is intended for creating simple open source
-> Flutter app games and utilities for practicing app design, TDD, OOP, and SOLID.
+- See the running `Tic Tac Tuple` app via [GitHub Pages](https://kdcinfo.github.io/dev-play/tic-tac-tuple).
+
+- See the [TicTacTuple Readme](readme_tictactoe.md) file for design notes and thought process log.
 
 -----
 
