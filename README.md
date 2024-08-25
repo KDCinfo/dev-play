@@ -4,6 +4,12 @@
 
 # dev-play
 
-This `dev-play` repository is intended for creating simple open source Flutter app games and utilities for practicing app design, TDD, OOP, and SOLID.
+> This `dev-play` repository is intended for creating simple open source Flutter app games and utilities for practicing app design, TDD, OOP, design patterns and SOLID.
+
+-----
+
+- App #1: **Tic Tac Tuple**
+  - [Code](https://github.com/KDCinfo/dev-play/tree/main/tic-tac-tuple)
+  - [Demo](https://kdcinfo.github.io/dev-play/tic-tac-tuple)
 
 _
