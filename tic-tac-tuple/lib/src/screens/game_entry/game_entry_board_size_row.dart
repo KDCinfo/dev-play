@@ -70,7 +70,7 @@ class _GameEntryBoardSizeRowState extends State<GameEntryBoardSizeRow> {
             Container(
               width: MediaQuery.sizeOf(context).width * 0.4,
               height: 1,
-              color: AppConstants.primaryTileColor.withOpacity(0.1),
+              color: AppConstants.primaryTileColor.withValues(alpha: 0.1),
             ),
             const SizedBox(height: 10),
             Padding(

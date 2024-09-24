@@ -9,9 +9,9 @@ class AnimatedLinearProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
-      backgroundColor: AppConstants.primaryTileColor.withOpacity(0.7),
+      backgroundColor: AppConstants.primaryTileColor.withValues(alpha: 0.7),
       valueColor: AlwaysStoppedAnimation<Color>(
-        Colors.deepOrange.withOpacity(0.4),
+        Colors.deepOrange.withValues(alpha: 0.4),
       ),
       borderRadius: BorderRadius.circular(50),
     );

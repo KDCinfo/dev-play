@@ -14,7 +14,7 @@ class StaticProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppConstants.primaryTileColor.withOpacity(0.7),
+        color: AppConstants.primaryTileColor.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(50),
       ),
       child: const Center(

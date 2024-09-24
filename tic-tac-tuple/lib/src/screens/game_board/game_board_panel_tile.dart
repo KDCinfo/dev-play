@@ -14,7 +14,7 @@ class GameBoardPanelTile extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppConstants.primaryTileColor.withOpacity(0.5),
+          color: AppConstants.primaryTileColor.withValues(alpha: 0.5),
           width: 2,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(5)),

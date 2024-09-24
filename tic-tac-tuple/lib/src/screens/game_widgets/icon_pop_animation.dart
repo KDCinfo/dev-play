@@ -51,7 +51,7 @@ class IconPopAnimation extends StatelessWidget {
           child: Icon(
             playerIcon,
             size: size * 0.75,
-            color: Colors.yellowAccent.withOpacity(0.9),
+            color: Colors.yellowAccent.withValues(alpha: 0.9),
             shadows: const [
               Shadow(
                 offset: Offset(-4, -4),

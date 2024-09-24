@@ -11,7 +11,7 @@ class ButtonUp extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppConstants.primaryTileColor.withOpacity(0.5),
+          color: AppConstants.primaryTileColor.withValues(alpha: 0.5),
           width: 2,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(5)),

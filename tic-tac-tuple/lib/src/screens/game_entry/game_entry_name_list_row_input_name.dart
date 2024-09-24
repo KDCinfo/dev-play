@@ -26,17 +26,17 @@ class GameEntryNameListRowInputName extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border(
-          left: BorderSide(color: AppConstants.primaryTileColor.withOpacity(0.3), width: 2),
-          right: BorderSide(color: AppConstants.primaryTileColor.withOpacity(0.3), width: 2),
-          bottom: BorderSide(color: AppConstants.primaryTileColor.withOpacity(0.3), width: 2),
+          left: BorderSide(color: AppConstants.primaryTileColor.withValues(alpha: 0.3), width: 2),
+          right: BorderSide(color: AppConstants.primaryTileColor.withValues(alpha: 0.3), width: 2),
+          bottom: BorderSide(color: AppConstants.primaryTileColor.withValues(alpha: 0.3), width: 2),
         ),
         borderRadius: const BorderRadius.all(Radius.circular(6)),
         gradient: LinearGradient(
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
           colors: [
-            Colors.yellow.withOpacity(0.3),
-            Colors.yellow.withOpacity(0.1),
+            Colors.yellow.withValues(alpha: 0.3),
+            Colors.yellow.withValues(alpha: 0.1),
             Colors.white12,
             Colors.white,
           ],
